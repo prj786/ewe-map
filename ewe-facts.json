@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "project": "ewe",
+  "generated": "2026-09-18",
+  "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
+  "versions": {
+    "ewe_de": "0.21.2-beta",
+    "ewe_os": "0.12.4-beta",
+    "ewe_repo": "rolling-x86_64",
+    "komble": "early-skeleton",
+    "ewe_sync": "shipped",
+    "ewe_cast": "phases-A+B",
+    "target_1_0": "Dolly"
+  },
+  "repos": [
+    { "name": "ewe", "role": "desktop environment + ewe package + CLI tools + design system", "stack": "Hyprland, Quickshell/QML, Bash, Python", "license": "GPL-2.0-only" },
+    { "name": "ewe-os", "role": "distro: archiso profile -> live/install ISO", "stack": "archiso, bash, Tauri (installer)" },
+    { "name": "ewe-repo", "role": "[ewe] pacman repository on GitHub releases", "stack": "pacman, GitHub Actions" },
+    { "name": "komble-arch", "role": "Komble software manager", "stack": "Tauri v2 + Svelte 5 + Tailwind 4", "license": "MIT" },
+    { "name": "ewe-settings", "role": "Settings app", "stack": "Tauri v2 + Svelte 5" },
+    { "name": "ewe-sync", "role": "account & sync app (RFC-006)", "stack": "Tauri v2 + Svelte 5" },
+    { "name": "ewe-cast", "role": "ewe-castd headless casting daemon (RFC-004)", "stack": "Python on GLib + GStreamer" },
+    { "name": "prj786.github.io", "role": "website", "stack": "SvelteKit 2 + Svelte 5, static" },
+    { "name": "ewe-plugin-clipboard", "role": "plugin: clipboard history + emoji" },
+    { "name": "ewe-plugin-screenshot", "role": "plugin: screenshots" },
+    { "name": "ewe-plugin-passwords", "role": "plugin: password fill" },
+    { "name": "ewe-plugin-example", "role": "reference plugin" }
+  ],
+  "rules": [
+    "ewe-conf is the only writer of ewe.conf",
+    "secrets never enter ewe.conf or any synced file",
+    "layer-shell surfaces stay in the shell",
+    "IPC verbs are public API",
+    "every CLI tool prints JSON and exits 0",
+    "nothing else has a sync button",
+    "no Google client ships",
+    "no raw colour/size/duration in QML",
+    "never edit generated files or deployed ~/.config",
+    "arch only, pacman only, no partial upgrades",
+    "state that outlives the shell lives outside the shell",
+    "the design system is the source of truth for every surface"
+  ],
+  "cli_tools": [
+    { "tool": "ewe-conf", "job": "the one file - only writer", "verbs": ["get", "set", "dump", "import", "apply", "push", "pull", "path", "sync-status"] },
+    { "tool": "ewe-plugin", "job": "shell plugins", "verbs": ["add", "list", "info", "enable", "disable", "update", "remove", "restore", "validate", "seed", "path", "create", "dev", "place", "set", "get"] },
+    { "tool": "ewe-auth", "job": "Google auth broker", "verbs": ["status", "login", "token", "logout", "keyring-reset"] },
+    { "tool": "ewe-drive", "job": "Drive as a folder", "verbs": ["setup", "mount", "unmount", "status"] },
+    { "tool": "ewe-cloud", "job": "Nextcloud account (Login Flow v2)", "verbs": ["login", "status", "token"] },
+    { "tool": "ewe-files", "job": "mount account at ~/Nextcloud", "verbs": ["setup"] },
+    { "tool": "ewe-caldav", "job": "CalDAV calendar sync", "verbs": [] },
+    { "tool": "ewe-mail", "job": "IMAP mailbox for Control Centre", "verbs": [] },
+    { "tool": "ewe-theme", "job": "design system: schemes, tokens, imports", "verbs": ["scheme", "set", "build"] },
+    { "tool": "ewe-bt", "job": "bluetooth pairing for Settings", "verbs": [] },
+    { "tool": "ewe-globalshortcuts", "job": "portal global shortcuts", "verbs": [] },
+    { "tool": "ewe-pass", "job": "password fill picker backend", "verbs": ["status"] },
+    { "tool": "ewe-setup", "job": "per-user deployment", "verbs": [] },
+    { "tool": "ewe-share-picker", "job": "portal screen-share picker", "verbs": [] }
+  ],
+  "ipc": {
+    "targets": ["bar", "cast", "picker", "quicksettings", "launcher", "lock", "osd", "overview", "places", "player", "preview", "settings", "applauncher", "store", "updates", "plugins", "widgets"],
+    "plugin_targets": ["ewe.clipboard", "ewe.screenshot", "ewe.passwords", "example.hello"],
+    "public_verbs": ["reload", "ping", "version"],
+    "gotchas": [
+      "qs ipc call <t> show collides with the qs ipc show subcommand and no-ops - bind to toggle",
+      "ewe-plugin verbs restart ewe.service unless --no-restart"
+    ]
+  },
+  "ewe_conf_domains": [
+    "desktop.theme", "desktop.dock", "desktop.layout", "desktop.input",
+    "desktop.wallpaper", "desktop.screensaver", "apps.installed",
+    "plugins.enabled", "plugins.removed", "plugins.sources",
+    "plugins.widgets", "plugins.settings", "sync", "sync.folders"
+  ],
+  "keyring_services": [
+    { "service": "ewe-cloud", "holds": "Nextcloud app password" },
+    { "service": "google", "holds": "Google refresh token (ewe-auth only)" }
+  ],
+  "cloud_layout": {
+    "nextcloud": ["ewe/ewe.conf", "ewe/ewe.conf.meta.json", "ewe/machines/<name>.json"]
+  },
+  "rfc_status": [
+    { "rfc": "RFC-001", "topic": "one file ewe.conf", "status": "shipping (phases 1-5 landed)" },
+    { "rfc": "RFC-002", "topic": "ewe-auth broker + sync", "status": "superseded for account (RFC-005); Google extras remain" },
+    { "rfc": "RFC-003", "topic": "does not exist in the repos", "status": "absent - do not hunt for it" },
+    { "rfc": "RFC-004", "topic": "ewe-castd (Python not Rust)", "status": "phases A+B built; C field-proof pending; text only in ewe-cast/README" },
+    { "rfc": "RFC-005", "topic": "Nextcloud account", "status": "accepted 2026-09-02; nextcloud branch across 5 repos; merges as one wave" },
+    { "rfc": "RFC-006", "topic": "ewe-sync account app (ex-Flock)", "status": "built; shipped preinstalled" }
+  ],
+  "sync_contract": {
+    "engine": "ewe-conf push/pull over WebDAV",
+    "guard": "If-Match on the ETag recorded at the last sync (412 = remote newer)",
+    "folder_engines": ["nextcloudcmd (two-way)", "rclone copy (one-way, never deletes)"],
+    "owner": "ewe-sync only - nothing else has a sync button"
+  },
+  "known_limits": [
+    "Komble: not yet run against a live pacman",
+    "ewe-cast Chromecast: seconds of latency (HLS); true mirroring is a future milestone",
+    "ewe-repo: packages unsigned (SigLevel = Optional TrustAll) until signing ships",
+    "ewe-sync: cannot create Nextcloud accounts; no selective sync inside a pair; no bandwidth limits",
+    "Google Gmail: restricted scope - <=100 test users without a CASA audit"
+  ]
+}

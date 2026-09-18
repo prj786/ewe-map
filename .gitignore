@@ -1,0 +1,5 @@
+# local tooling
+.quartz/
+node_modules/
+.vault/__pycache__/
+*.pyc
