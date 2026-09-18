@@ -33,25 +33,50 @@ for key in ("schema", "project", "versions", "repos", "rules", "cli_tools",
     if key not in facts:
         bad(f"ewe-facts.json missing key: {key}")
 
-# 2. repos exist in the workspace
-known_repos = {r["name"] for r in facts.get("repos", [])}
-for name in known_repos:
-    if not os.path.isdir(os.path.join(WORKSPACE, name)):
-        bad(f"facts repo '{name}' has no checkout in the workspace")
+# 2. repos exist in the workspace (local mode only — CI has no workspace)
+CI_MODE = bool(os.environ.get("CI")) or bool(os.environ.get("GITHUB_ACTIONS"))
+if not CI_MODE:
+    known_repos = {r["name"] for r in facts.get("repos", [])}
+    for name in known_repos:
+        if not os.path.isdir(os.path.join(WORKSPACE, name)):
+            bad(f"facts repo '{name}' has no checkout in the workspace")
 
-# 3. versions match the repos' VERSION files
+# 3. versions match the repos' VERSION files (local) / GitHub releases (CI)
 def repo_version(repo):
     p = os.path.join(WORKSPACE, repo, "VERSION")
     return open(p).read().strip() if os.path.isfile(p) else None
 
+def github_release_tag(repo):
+    """The repo's default-branch VERSION file — the same truth as a local
+    checkout. (Not the latest GitHub release: the branch may hold unreleased
+    work, and the vault documents the checkout.)"""
+    try:
+        import urllib.request
+        with urllib.request.urlopen(
+            f"https://raw.githubusercontent.com/prj786/{repo}/main/VERSION", timeout=15
+        ) as r:
+            return r.read().decode().strip()
+    except Exception:
+        return None  # network hiccup: report, don't fail CI on flakiness
+
 for repo, key in (("ewe", "ewe_de"), ("ewe-os", "ewe_os")):
-    actual = repo_version(repo)
     claimed = facts["versions"].get(key)
-    if actual and claimed and actual != claimed:
-        bad(f"facts versions.{key} = {claimed!r} but {repo}/VERSION says {actual!r} "
-            f"— update ewe-facts.json AND 12-Reference/Version Ledger.md together")
-    if actual and not claimed:
-        bad(f"facts versions missing '{key}' ({repo}/VERSION says {actual!r})")
+    if CI_MODE:
+        actual = github_release_tag(repo)
+        if actual and claimed and actual != claimed:
+            bad(f"facts versions.{key} = {claimed!r} but prj786/{repo} main/VERSION says {actual!r} "
+                f"— update ewe-facts.json AND 12-Reference/Version Ledger.md together")
+        if actual and not claimed:
+            bad(f"facts versions missing '{key}' ({repo} main/VERSION says {actual!r})")
+        if not actual:
+            print(f"! could not fetch {repo} main/VERSION (network) — skipping")
+    else:
+        actual = repo_version(repo)
+        if actual and claimed and actual != claimed:
+            bad(f"facts versions.{key} = {claimed!r} but {repo}/VERSION says {actual!r} "
+                f"— update ewe-facts.json AND 12-Reference/Version Ledger.md together")
+        if actual and not claimed:
+            bad(f"facts versions missing '{key}' ({repo}/VERSION says {actual!r})")
 
 # 4. RFC-003 accounting must be present (it is absent from the repos)
 rfc = {r["rfc"]: r for r in facts.get("rfc_status", [])}
