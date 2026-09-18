@@ -1,0 +1,68 @@
+name: deploy-quartz
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: clone quartz (pinned)
+        run: git clone --depth 1 --branch v4.5.1 https://github.com/jackyzha0/quartz.git /tmp/quartz
+
+      - name: apply our quartz config
+        run: |
+          cp quartz-config/quartz.config.ts /tmp/quartz/quartz.config.ts
+
+      - name: copy the vault into quartz content
+        run: |
+          shopt -s extglob
+          mkdir -p /tmp/quartz/content
+          cp -r ./* /tmp/quartz/content/
+          rm -rf /tmp/quartz/content/.github /tmp/quartz/content/.vault \
+                 /tmp/quartz/content/quartz-config /tmp/quartz/content/.git /tmp/quartz/content/.gitignore
+          # quartz's own README placeholder would shadow ours
+          rm -f /tmp/quartz/content/README.md
+          # the site's landing page
+          cp quartz-config/index.md /tmp/quartz/content/index.md
+
+      - name: install deps
+        working-directory: /tmp/quartz
+        run: npm ci
+
+      - name: build
+        working-directory: /tmp/quartz
+        run: npx quartz build
+
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: /tmp/quartz/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

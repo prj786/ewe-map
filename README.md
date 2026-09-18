@@ -24,6 +24,17 @@ Start at [[00 Onboarding]] — it's written to you. Then:
 - [[Roadmap and Status]] + `10-Roadmap/` — what's next
 - [[Development Loops]] — how to build/test safely
 
+## Tooling around the vault
+
+| tool | what |
+|---|---|
+| `AGENTS.md` (workspace root) | auto-loaded by AI agents — points every session at the vault and its rules |
+| `.vault/vault-check.sh` | one command: wikilinks · tags · fences · orphans · facts · diagrams. `--diagrams` renders every Mermaid block; `--render-svg` also exports them |
+| `ewe-facts.json` | machine-readable mirror of the contracts (versions, rules, IPC, schema, repos) — validated against the repos by vault-check |
+| `attachments/diagrams/` | committed SVG renders of every diagram (GitHub previews) |
+| `quartz-config/` + `.github/workflows/` | CI publishes this vault as a website (Quartz + GitHub Pages → `prj786.github.io/ewe-map/`) |
+| Skills (`.opencode/skills/` in the workspace) | `ewe-smoke` (test the desktop), `ewe-release` (the release runbook), `ewe-diag` (gather failure evidence) |
+
 ## Layout
 
 | folder | what |

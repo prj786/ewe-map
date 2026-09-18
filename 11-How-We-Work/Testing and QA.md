@@ -52,7 +52,7 @@ it.
 | design tokens hold to source | `ewe/design/check-spec.sh` |
 | contrast rules hold | `ewe/design/check-contrast.sh` |
 | icons / components | `ewe/design/check-icons.sh`, `check-tokens.sh` |
-| vault diagrams render | extract all `mermaid` blocks → `npx @mermaid-js/mermaid-cli` (all 36 pass as of 2026-09-18) |
+| vault honesty | `project-map/.vault/vault-check.sh` — links, tags, fences, orphans, `ewe-facts.json` vs repos, diagram renders (also runs in CI) |
 
 ## The accessibility audit trail
 

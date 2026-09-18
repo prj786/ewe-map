@@ -37,13 +37,13 @@ while IFS= read -r -d '' f; do
       bad "unresolved [[$name]] in $f"
     fi
   done < <(grep -oP '\[\[[^\]|]+\]\]' "$f" | sort -u)
-done < <(find . -name '*.md' -not -path './.quartz/*' -print0)
+done < <(find . -name '*.md' -not -path './quartz-config/*' -not -path './.quartz/*' -print0)
 [ "$FAIL" -eq 0 ] && ok "all links resolve"
 
 # -------------------------------------------------------------------- tags
 note "frontmatter tags"
 while IFS= read -r -d '' f; do
-  case "$f" in ./README.md|./Home.md) continue;; esac
+  case "$f" in ./README.md|./Home.md|./quartz-config/*) continue;; esac
   if ! sed -n '1,10p' "$f" | grep -q 'ewe-map'; then
     bad "missing 'ewe-map' tag: $f"
   fi
@@ -65,7 +65,7 @@ while IFS= read -r -d '' f; do
   [ "$base" = "Home" ] || [ "$base" = "README" ] && continue
   n=$(grep -rl --include='*.md' "\[\[$base\]\]" . 2>/dev/null | grep -v -F "$f" | wc -l)
   if [ "$n" -eq 0 ]; then bad "orphan note: $f"; fi
-done < <(find . -name '*.md' -not -path './.quartz/*' -print0)
+done < <(find . -name '*.md' -not -path './quartz-config/*' -not -path './.quartz/*' -print0)
 [ "$FAIL" -eq 0 ] && ok "no orphans"
 
 # ------------------------------------------------------------- facts.json

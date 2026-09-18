@@ -59,12 +59,22 @@ When you change reality — a decision reversed, a contract renamed, a version
 bumped, a phase landed — **update the vault in the same commit**:
 
 - Decision changed → update `08-Decisions/` + [[Decision Index]]
-- Contract changed → update `09-Rules/` + the `12-Reference/` sheet
+- Contract changed → update `09-Rules/` + the `12-Reference/` sheet + `ewe-facts.json`
 - Version/status changed → update `01-Overview/Roadmap and Status.md` + [[Version Ledger]]
 - New gotcha → add it to the relevant "Build guard" line and [[Troubleshooting Knowledge]]
 
-If you don't, the next session will make exactly the mistake this vault was
-built to prevent.
+Then run `.vault/vault-check.sh --diagrams` in `project-map/` and make it
+green — it checks links, tags, fences, orphans, facts-vs-repos, and that
+every diagram renders. CI runs the same check on every push.
+
+## The tools (load them, use them)
+
+- **Skills:** `ewe-smoke` (test the desktop without installing), `ewe-release`
+  (the release runbook), `ewe-diag` (gather failure evidence).
+- **Facts:** `project-map/ewe-facts.json` — the machine-readable version of
+  the contracts; `vault-check` verifies it against the repos.
+- **Published:** the vault also builds to `prj786.github.io/ewe-map/`
+  (Quartz + Pages).
 
 ## The one-line summary for every future session
 
