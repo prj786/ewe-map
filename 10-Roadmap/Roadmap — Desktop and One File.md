@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Roadmap — the desktop & the one file
 
-Current: ewe DE **0.21.2-beta** (VERSION). The README speaks of the `0.9.x`
+Current: ewe DE **0.22.1-beta** (VERSION). The README speaks of the `0.9.x`
 beta line; **1.0-beta is "Dolly"**.
 
 ## The one-file rollout (RFC-001)
