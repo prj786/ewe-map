@@ -70,6 +70,32 @@ the fix for each.**
   never `Repeater` (needs an Item parent, silently creates nothing).
 - **`qs ipc call <t> show` no-ops** — collides with the `qs ipc show`
   subcommand; bind `toggle`.
+- **Shell aborts at start with "pure virtual method called"** (2026-09-20)
+  — Quickshell 0.3.1's icon loader on its image thread, when a themed icon
+  misses (`QIcon::pixmap → QPlatformPixmap::fromFile`). Intermittent (≈1 in
+  3) in the driver's sandbox until it linked the live `qt6ct` (icon theme);
+  a machine with a broken icon theme would see it too. Not the polkit
+  warning that happens to precede it.
+- **Never destroy a refused `PolkitAgent`** — a Loader flip on a failed
+  registration also crashes 0.3.1; `Auth.qml` parks refused agents and caps
+  the retries.
+- **"Plugins disabled for this session" after a few manual restarts** —
+  the crash guard used to count every start; since 2026-09-20 `ewe-plugin
+  list --boot` counts only starts that follow a Quickshell crash report or
+  a systemd automatic restart (`NRestarts` resets on `systemctl restart`).
+- **Clipboard history records nothing** — the `wl-paste --watch` guard was
+  `pgrep -f "wl-paste …"`, which matched its own `sh -c` wrapper; the
+  pattern must be anchored (`^wl-paste`). Plugin ewe.clipboard ≥ 1.1.1.
+- **Low-battery warnings / hibernate never fire** — Quickshell's
+  `UPowerDevice.percentage` is a 0–1 fraction; `Battery.qml` refused every
+  reading as "ambiguous" until 2026-09-20.
+- **Settings app: Glass / bar opacity / corners / accessibility persist but
+  the desktop does not repaint** — `set_conf` wrote with `--no-hooks` and
+  never poked the shell; it now sends `settings reload` + `hyprctl reload`.
+- **`nmcli` state strings** — device states carry a parenthetical
+  (`connecting (getting IP configuration)`, `connected (externally)`): match
+  the word, never the whole string. `nmcli -t` escapes `:` and `\` in
+  values (SSIDs): unescape after splitting.
 
 ## Installer
 
@@ -85,6 +111,18 @@ the fix for each.**
   is missing or not enabled; it's what activates `xdg-desktop-portal` on a
   non-uwsm session. It is "the single most important step" of the install
   (MANUAL.md).
+
+- **Blue text flashes on tty1 while the greeter loads and again right
+  after login** (2026-09-20) — greetd hands the greeter its VT as stdio and
+  cage runs wlroots at INFO, whose lines are bold blue on a tty. The
+  `ewe-greeter` wrapper (phase 30) now clears the VT and logs to
+  `$XDG_CACHE_HOME/greeter.log` (`/tmp/ewe-greeter/`). A packaged install
+  gets the new wrapper only when `install.sh` (the system side) is re-run —
+  the same run that puts `theme-tokens.json` beside the greeter QML; without
+  it the greeter is the pre-v3 file with a blue accent.
+- **Anything with the old `#0a84ff` blue is stale** — the v3 default accent
+  is `#eeb407`; `colorscheme.sh`'s fallback, `ewe-setup`, phase 60,
+  kitty.conf and ewe-os's `os-release ANSI_COLOR` were updated 2026-09-20.
 
 ## VPN
 

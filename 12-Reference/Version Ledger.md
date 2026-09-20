@@ -13,7 +13,7 @@ this note on every release (see [[Release Checklist]]).
 
 | component | version | notes |
 |---|---|---|
-| ewe (DE) | **0.22.1-beta** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z` |
+| ewe (DE) | **0.22.3-beta** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z` |
 | ewe-os (distro) | **0.12.4-beta** | its own version line, separate from the DE |
 | ewe-repo | rolling `x86_64` | no version — the release *is* the repository |
 | komble-arch | early skeleton | "not yet run against a live pacman" |

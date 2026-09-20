@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-09-18**. The `VERSION` files say: **ewe (DE) 0.22.1-beta**,
+Snapshot as of **2026-09-20**. The `VERSION` files say: **ewe (DE) 0.22.3-beta**,
 **ewe-os (distro) 0.12.4-beta**. The README speaks of a `0.9.x` beta line and
 names the **1.0-beta release "Dolly"**.
 
@@ -30,7 +30,7 @@ project's memory:
 ```mermaid
 flowchart LR
     subgraph shipping["shipping / beta"]
-        EWE["ewe DE 0.22.1-beta"]
+        EWE["ewe DE 0.22.3-beta"]
         OS["ewe-os 0.12.4-beta"]
         REPO["ewe-repo — rolling"]
         K["Komble — early,<br/>skeleton vs live pacman"]
