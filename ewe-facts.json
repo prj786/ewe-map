@@ -4,7 +4,7 @@
   "generated": "2026-09-18",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.22.1-beta",
+    "ewe_de": "0.22.3-beta",
     "ewe_os": "0.12.4-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "early-skeleton",
