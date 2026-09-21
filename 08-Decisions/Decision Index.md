@@ -25,6 +25,8 @@ read the note first — these were settled deliberately, most with RFCs.
 | 9 | Komble: no partial upgrades, PKGBUILD-first AUR, one polkit path | shipped (early) | [[Komble — Arch Forced Decisions]] |
 | 10 | ewe-repo unsigned for now, `Optional TrustAll` | temporary | [[Unsigned Repo — for now]] |
 | 11 | Everything rejected or parked | — | [[Parked and Rejected Ideas]] |
+| 12 | The terminal shell is zsh with plugins, started by kitty; the LOGIN shell stays bash | built 2026-09-21 | [[Terminal Shell — zsh in kitty, bash at login]] |
+| 13 | One brand mark: the line-art logo everywhere, two weights; app launcher icons stay per-app | built 2026-09-21 | [[One Mark — the line-art logo]] |
 
 > **Numbering note:** RFC-003 does not exist in `ewe/docs/` (the sequence
 > is 001, 002, 005, 006), and RFC-004's text lives only as references in
