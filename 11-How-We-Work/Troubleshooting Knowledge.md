@@ -96,6 +96,18 @@ the fix for each.**
   (`connecting (getting IP configuration)`, `connected (externally)`): match
   the word, never the whole string. `nmcli -t` escapes `:` and `\` in
   values (SSIDs): unescape after splitting.
+- **`Behavior on y` animates the map** — an item whose `y` depends on
+  `parent.height` inside a lazily-mapped `PanelWindow` slides across hundreds
+  of pixels the first time the window maps. Put the motion on a
+  `transform: Translate`, or drop it. Bit `LauncherPanel.qml`, `Places.qml`,
+  `AppStore.qml` and `Launcher.qml`.
+- **A surface's backdrop image arrives late** — `sourceSize` bound to a
+  `PanelWindow`'s `width`/`height` re-keys Qt's pixmap cache on every map and
+  re-decodes. Bind it to `screen.width`/`height` and warm it in
+  `Wallpaper.qml`.
+- **Never put a state-dependent duration (`cond ? a : b`) inside a Behavior's
+  animation** — the Behavior fires before the binding re-evaluates and plays
+  the other direction's value. Sequence with an explicit flag + Timer.
 
 ## Installer
 
