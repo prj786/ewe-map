@@ -27,6 +27,8 @@ read the note first — these were settled deliberately, most with RFCs.
 | 11 | Everything rejected or parked | — | [[Parked and Rejected Ideas]] |
 | 12 | The terminal shell is zsh with plugins, started by kitty; the LOGIN shell stays bash | built 2026-09-21 | [[Terminal Shell — zsh in kitty, bash at login]] |
 | 13 | One brand mark: the line-art logo everywhere, two weights; app launcher icons stay per-app | built 2026-09-21 | [[One Mark — the line-art logo]] |
+| 14 | The Overview takes the whole screen, wallpaper first; bar slides up, dock slides down; exclusive zones stay reserved | built 2026-09-21 | [[Overview Takes the Screen]] |
+| 15 | App launcher icons: one Lucide line glyph per app on a dark tile | built 2026-09-21 | [[App Icons — one line glyph per app]] |
 
 > **Numbering note:** RFC-003 does not exist in `ewe/docs/` (the sequence
 > is 001, 002, 005, 006), and RFC-004's text lives only as references in

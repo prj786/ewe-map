@@ -8,17 +8,17 @@ up: "[[Home]]"
 
 # Version Ledger
 
-Versions as of **2026-09-18** (from the repos' `VERSION` files). Update
+Versions as of **2026-09-21** (from the repos' `VERSION` files). Update
 this note on every release (see [[Release Checklist]]).
 
 | component | version | notes |
 |---|---|---|
-| ewe (DE) | **0.23.0-beta** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z` |
+| ewe (DE) | **0.24.0-beta** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z` |
 | ewe-os (distro) | **0.12.4-beta** | its own version line, separate from the DE |
 | ewe-repo | rolling `x86_64` | no version — the release *is* the repository |
-| komble-arch | early skeleton | "not yet run against a live pacman" |
-| ewe-settings | — | footer shows **ewe's** version, by design |
-| ewe-sync | shipped | RFC-006; preinstalled from ISO 0.9-alpha on |
+| komble-arch | **0.18.1-beta** | icon line-glyph release; still not run against a live pacman |
+| ewe-settings | **0.16.4-beta** | icon line-glyph release; footer shows **ewe's** version, by design |
+| ewe-sync | **0.14.3-beta** | icon line-glyph release; RFC-006; preinstalled from ISO 0.9-alpha on |
 | ewe-cast | phases A+B | built 2026-08-30; C = field-proven gate |
 
 ## Versioning rules

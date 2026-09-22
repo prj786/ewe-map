@@ -21,9 +21,10 @@ Komble, ewe-settings and ewe-sync.
   tinted by a `MultiEffect`; the apps inline the SVG (`fill="currentColor"`).
   The dock draws it 1.35x the plain glyphs beside it, because it carries inner
   detail.
-- **The three launcher icons stay per-app** (gear, shepherd's crook, cloud
-  sheep): they identify different apps in the dock and launcher; one shared
-  icon would make them indistinguishable.
+- **The three launcher icons stay per-app** — now one Lucide line glyph each
+  on a dark tile (see [[App Icons — one line glyph per app]]); the in-app
+  sidebars keep the line-art mark. They identify different apps in the dock
+  and launcher; one shared icon would make them indistinguishable.
 - Re-tracing: bitmap from the PNG's alpha (`-morphology Close Disk:14` then
   `Dilate Disk:7` for the bold cut), traced with `potracer` (pure Python, a
   virtualenv is enough). potracer fills the FALSE pixels of the mask you hand
