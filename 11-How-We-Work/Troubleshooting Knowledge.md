@@ -59,6 +59,19 @@ the fix for each.**
 
 ## Shell / QML
 
+- **The whole shell vanishes at random, Hyprland keeps running** (0.23–0.24,
+  fixed 0.24.1-beta). Journal: `wl_display#1: error 0: invalid object N` →
+  `The Wayland connection experienced a fatal error: Invalid argument` →
+  `ewe.service: … status=255`. Hyprland 0.56 bug: `captureToplevel()` returns
+  without creating the frame when the window closed that instant, and qs's
+  later `frame.destroy()` names an id the server never had. Trigger = a live
+  toplevel `ScreencopyView` (the Overview cards). Fix: cards capture only
+  while the Overview is mapped, ✕ drops the capture before closing, and
+  `qs-launch.sh` turns "255 after ≥ 15 s with Hyprland still answering" into
+  exit 1 so the unit restarts it. Still racy by design while the Overview is
+  open → the restart is the safety net. Repro: nested harness, open kitty
+  windows, Overview open, `pkill` them → dead in round 1 (`WAYLAND_DEBUG=client`
+  shows the id). Never capture toplevels in a hidden surface.
 - **`qs` dies on `up`** — read `driver.sh log`; QML errors name file:line.
   Ignore benign "already registered" D-Bus / PolkitAgent /
   "hyprland-guiutils not installed" warnings (nesting artifacts).
@@ -138,6 +151,13 @@ the fix for each.**
 
 ## VPN
 
+- **"Only the VPN works" — no internet on home Wi-Fi without it.** DNS, not
+  routing: `/etc/resolv.conf` was a plain file and Tailscale (MagicDNS)
+  rewrote it to `nameserver 100.100.100.100`; resolved was disabled. Check
+  `ls -l /etc/resolv.conf` (must → `/run/systemd/resolve/stub-resolv.conf`)
+  and `resolvectl status`. Phase 30 (0.24.1-beta) enables resolved, drops
+  `/etc/NetworkManager/conf.d/10-ewe-dns.conf` (`dns=systemd-resolved`) and
+  relinks resolv.conf; phase 90 checks it.
 - **Every L2TP profile fails with "The VPN service failed to start"** —
   strongSwan 6.1 (as Arch ships it) no longer speaks IKEv1, and L2TP/IPsec
   *is* IKEv1. The installer ships libreswan with `ikev1-policy=accept`;

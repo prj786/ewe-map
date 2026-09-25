@@ -58,6 +58,12 @@ establish IPsec connection"). The installer ships **libreswan** with
 `ikev1-policy=accept`. Re-running `install.sh` (or `--check-only` to look)
 swaps the backend and flips the policy.
 
+> **Build guard:** DNS belongs to systemd-resolved (phase 30:
+> `10-ewe-dns.conf` `dns=systemd-resolved`, resolv.conf → the stub). A plain
+> resolv.conf lets a VPN client own every lookup — Tailscale wrote
+> `100.100.100.100` and nothing resolved with it down ("only the VPN works",
+> 0.24.1-beta).
+
 Add a VPN in Settings → Network → Add VPN (L2TP from four facts, OpenVPN/
 WireGuard from file) or `nmcli connection import type openvpn file x.ovpn`.
 

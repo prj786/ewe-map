@@ -49,6 +49,12 @@ Reduce motion: everything cross-fades at `durFast`; nothing slides.
 > `parent.height` inside a lazily-mapped PanelWindow animates the map. Put
 > the motion on a `transform: Translate`, or drop it.
 
+> **Build guard:** window cards capture (`ScreencopyView.captureSource`) only
+> while the Overview window is visible, and ✕ drops the capture before it
+> closes the window. A toplevel capture racing a window close gets the whole
+> shell disconnected by Hyprland 0.56 (`invalid object N`, 0.24.1-beta) — see
+> [[Troubleshooting Knowledge]].
+
 ## Related
 
 - [[Decision Index]] · [[Design System]] · [[Desktop Shell]]
