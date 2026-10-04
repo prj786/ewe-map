@@ -8,12 +8,12 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-04**. Released: **ewe (DE) 0.24.1-beta**,
-**ewe-os (distro) 0.12.4-beta**. **In progress, NOT released: ewe
-0.25.0-beta** on branch `release/0.25.0-beta`. The README speaks of a
+Snapshot as of **2026-10-04**. Released: **ewe (DE) 0.25.0-beta** (2026-10-04, with Komble
+0.19.0-beta and ewe-settings 0.17.0-beta), **ewe-os (distro) 0.12.4-beta**
+(no ISO for 0.25 — the release stops at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
-## 0.25.0-beta — what is in it (unreleased, 2026-10-04)
+## 0.25.0-beta — what is in it (released 2026-10-04)
 
 | piece | branch / repo | state |
 |---|---|---|
@@ -25,8 +25,10 @@ Snapshot as of **2026-10-04**. Released: **ewe (DE) 0.24.1-beta**,
 | Komble: Add-ons catalogue, `--addons`, `plugin_install` | komble-arch `feat/addons` (0.18.1-beta base) | built, dev-mock tested; untested in Tauri |
 | ewe-settings: `addons_state`/`open_addons`, add-on aware panes, Insomnia, guarded hypridle | ewe-settings `feat/addons` (0.16.4-beta base) | built, dev-mock tested |
 
-Decisions: [[Decision Index]] rows 16–26. Release stops at the ewe-repo
-publish (no ISO tag unless asked). Nothing above is pushed or tagged yet.
+Decisions: [[Decision Index]] rows 16–26. Released as one wave (ewe#46,
+komble-arch#10, ewe-settings#18, ewe-map#3), then the ewe-repo publish; no
+ISO tag. Real-device checks (lid, add-ons on the live box, Komble/Settings in
+Tauri) are the open part.
 
 ## The RFCs
 
@@ -45,17 +47,12 @@ project's memory:
 
 ```mermaid
 flowchart LR
-    subgraph inprogress["in progress (unreleased)"]
-        NEXT["ewe DE 0.25.0-beta<br/>add-ons · quiet lid · snappy Overview"]
-        KA["Komble feat/addons"]
-        SA["ewe-settings feat/addons"]
-    end
     subgraph shipping["shipping / beta"]
-        EWE["ewe DE 0.24.1-beta"]
+        EWE["ewe DE 0.25.0-beta<br/>add-ons · quiet lid · snappy Overview"]
         OS["ewe-os 0.12.4-beta"]
         REPO["ewe-repo — rolling"]
-        K["Komble — early,<br/>skeleton vs live pacman"]
-        S["ewe-settings — shipped"]
+        K["Komble 0.19.0-beta — Add-ons catalogue,<br/>early vs live pacman"]
+        S["ewe-settings 0.17.0-beta — shipped"]
         SY["ewe-sync — shipped"]
         CAST["ewe-cast — phases A+B"]
         WEB["website — live"]
@@ -68,9 +65,6 @@ flowchart LR
     REPO -.-> SIGN
     CAST -.-> MIRROR
     SY -.-> REST
-    NEXT -.->|"release wave"| EWE
-    KA -.-> K
-    SA -.-> S
 ```
 
 ## Known honest limits
