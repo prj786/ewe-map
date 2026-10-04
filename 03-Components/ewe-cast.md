@@ -12,7 +12,13 @@ up: "[[Home]]"
 **RFC-004** · phases A+B built (2026-08-30), Miracast proven against a
 loopback sink — first real-TV field test pending
 
-**Casting without the foreign app.** Today ewe's Cast card spawns
+> **Since 0.25 the shell side is the [[Cast Plugin]]** (`ewe.cast`, repo
+> `prj786/ewe-plugin-cast`), not `Cast.qml`: tile, page, pill glyph,
+> `Super+Shift+C`, the `cast` IPC alias and the `cast-check.sh` /
+> `cast-audio.sh` scripts (now under `~/.config/ewe/plugins/ewe.cast/`). The
+> daemon, phase 30's system setup and SharePicker stay core.
+
+**Casting without the foreign app.** Before `ewe-castd`, ewe's Cast card spawned
 `gnome-network-displays` — a gtk4/libadwaita window in a DE that deliberately
 has neither, driven by SIGTERM. The screen-sharing *plumbing* is already
 ours (xdg-desktop-portal + PipeWire + the shell's own SharePicker); only the
@@ -61,10 +67,12 @@ sequenceDiagram
 
 ## Related
 
-- [[Cast Flow]] · [[Desktop Shell]] · [[Roadmap and Status]]
+- [[Cast Flow]] · [[Cast Plugin]] · [[Desktop Shell]] · [[Roadmap and Status]]
 
 > **Build guard:** it's Python on GLib — a documented RFC-004 deviation,
 > not a bug; revisit only if profiling demands. gnd stays behind
-> `qs ipc call cast legacy` until phase C. Before debugging any cast bug,
-> run the four known failure classes:
+> `qs ipc call ewe.cast legacy` (alias `cast legacy`) until phase C. Before
+> debugging any cast bug, run the preflight
+> `sh ~/.config/ewe/plugins/ewe.cast/cast-check.sh` — and know the portal
+> threshold is **1.4.1-2.1** (stock Arch `1.4.1-2` froze again):
 > [[Troubleshooting Knowledge]].

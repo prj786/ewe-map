@@ -24,10 +24,19 @@ flowchart LR
     AUTH -->|"refresh token"| KEY["keyring"]
     AUTH -->|"short-lived access tokens"| SH["shell Google.qml — consumer"]
     SH -->|"calendar.readonly"| CAL["Calendar API"]
-    SH -->|"gmail.readonly"| GMAIL["Gmail API"]
+    AUTH -->|"ewe-auth token --json"| MAIL["ewe.mail add-on (0.25)"]
+    MAIL -->|"gmail.readonly"| GMAIL["Gmail API"]
     SH -->|"drive.appdata"| DRIVE["Drive (ewe-drive mount)"]
     SH -.->|"fallback when signed out"| EDS["EDS (evolution-data-server)<br/>contacts + Accounts.events"]
 ```
+
+> **The Gmail split (0.25):** `Google.qml` keeps OAuth, Calendar, Drive and
+> the settings-sync verbs (`google syncSoon`, `google status`); the **Gmail
+> unread polling, Gmail notifications, the Inbox page, the bar envelope and
+> the `mail` IPC** live in the [[Mail Plugin]] (`ewe.mail`), which obtains
+> tokens from the core broker via `ewe-auth token --json`. Rationale:
+> [[Gmail Split — core Google, Mail add-on]]. The Gmail bullet below
+> describes what the add-on does now.
 
 ## The operations (how it actually runs)
 
@@ -88,4 +97,4 @@ id/secret) — under `~/.config/quickshell/`. The refresh token is keyring-only.
 ## Related
 
 - [[Auth Broker]] · [[Account and Sync]] · [[RFC-005 — Nextcloud Account]] ·
-  [[CLI Tools]]
+  [[CLI Tools]] · [[Mail Plugin]]

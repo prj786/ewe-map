@@ -17,7 +17,10 @@ dropping gnome-network-displays. Until then gnd stays behind
 
 Casting moves out of `gnome-network-displays` (a gtk4/libadwaita window in a
 DE that deliberately has neither, driven by SIGTERM) into **ewe's own
-headless daemon**, driven entirely from the Quick Settings Cast card.
+headless daemon**, driven entirely from the Quick settings Cast tile/page —
+since 0.25 the [[Cast Plugin]] (`ewe.cast`), not a core `Cast.qml`; the
+daemon and phase 30's system setup stay core. The legacy door is
+`qs ipc call ewe.cast legacy` (alias `cast legacy`).
 
 ## Why a daemon and not a library in the shell
 

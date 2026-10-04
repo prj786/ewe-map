@@ -8,8 +8,12 @@ up: "[[Home]]"
 
 # Cast Flow — mirror the desktop to a TV
 
-The whole flow lives in the Control Centre's **Cast card**. No foreign
-window, no gnome-network-displays, no DE it doesn't belong to.
+The whole flow lives in Quick settings — the **Cast tile and page**, which
+since 0.25 are the [[Cast Plugin]] (`ewe.cast`, installed on request; the
+"Cast card" below). No foreign window, no gnome-network-displays, no DE it
+doesn't belong to. `Super+Shift+C` is the add-on's manifest keybind
+(`ewe.cast toggle`); the legacy door is `qs ipc call ewe.cast legacy`
+(alias `cast legacy`).
 
 ```mermaid
 sequenceDiagram
@@ -46,11 +50,13 @@ sequenceDiagram
 | Miracast (Samsung…) | NetworkManager Wi-Fi P2P D-Bus | hand-rolled WFD RTSP source, port 7236; RTP/UDP MPEG-TS pt 33 | **real-time** |
 | Chromecast / Google TV | avahi | cast-channel v2 (protobuf, TLS 8009), Default Media Receiver playing local HLS | seconds — honest; true mirroring is a future milestone |
 
-## Status (2026-08-30)
+## Status
 
-Phases A+B built; Miracast proven against a **loopback sink**. First
-real-TV field test pending.
+Phases A+B built (2026-08-30); Miracast proven against a **loopback sink**.
+First real-TV field test pending. Preflight before any debugging:
+`sh ~/.config/ewe/plugins/ewe.cast/cast-check.sh`; the portal must be the
+patched `xdg-desktop-portal-hyprland` **≥ 1.4.1-2.1**.
 
 ## Related
 
-- [[ewe-cast]] · [[Desktop Shell]] · [[Roadmap and Status]]
+- [[ewe-cast]] · [[Cast Plugin]] · [[Desktop Shell]] · [[Roadmap and Status]]

@@ -8,13 +8,21 @@ up: "[[Home]]"
 
 # Phone link & VPN — the optional integrations
 
-Two optional system integrations, both driven from the Control Centre, both
+Two optional system integrations, both driven from Quick settings, both
 built on existing daemons (no reimplementation).
+
+> **Add-ons since 0.25:** the phone UI is the [[Phone Plugin]] (`ewe.phone`,
+> repo `prj786/ewe-plugin-phone`) and the VPN tile/page is the [[VPN Plugin]]
+> (`ewe.vpn`, repo `prj786/ewe-plugin-vpn`); the SSH tile/page is the
+> [[SSH Plugin]] (`ewe.ssh`). Neither is installed on a fresh machine
+> (Komble → Add-ons or `ewe-plugin install <id>`). What stays **core**: the
+> `network.vpn` / `network.ssh` ewe-conf sections, the NM backends, the
+> libreswan setup and the ewe-settings Network pane; the Auth secret prompt.
 
 ## Phone (KDE Connect)
 
-The Control Centre's **Mobile** card pairs an Android phone through **KDE
-Connect's daemon** — only the daemon; the UI is all ewe:
+The **Mobile** page (`quicksettings tab mobile`) pairs an Android phone
+through **KDE Connect's daemon** — only the daemon; the UI is all ewe:
 
 - device discovery + pairing (both directions)
 - phone battery in the bar
@@ -22,12 +30,13 @@ Connect's daemon** — only the daemon; the UI is all ewe:
 - **SMS** — full conversation list and thread view with send, right in the
   control centre
 
-**Plumbing:** `kdeconnect` ships in the package set (phase 20);
-`kdeconnectd` is started by autostart and D-Bus-activated on demand; the
-shell talks to it through `scripts/kdeconnect-bridge.py` — Quickshell has no
+**Plumbing:** `kdeconnect` ships in the package set (phase 20, declared in
+the add-on's `requires`); `kdeconnectd` is started by the add-on's service
+when missing and D-Bus-activated on demand; the add-on talks to it through
+its own `kdeconnect-bridge.py` (run from `pluginDir`) — Quickshell has no
 generic QML D-Bus client, so the Python bridge owns every D-Bus call and
-speaks NDJSON over stdio to `KdeConnect.qml` (same pattern as BtAgent — see
-[[Shell Singletons]]).
+speaks NDJSON over stdio to the `Phone` singleton (same pattern as BtAgent
+— see [[Shell Singletons]]).
 
 **Secrets/state:** pairing keys stay in kdeconnectd; the shell persists
 only seen-notification ids (unread badge) and the chosen device
@@ -42,7 +51,7 @@ ewe ships the NetworkManager plugins for **OpenVPN** and **L2TP/IPsec**
 
 ```mermaid
 flowchart LR
-    CC["Control Centre → VPN card"] --> NM["NetworkManager"]
+    CC["Quick settings → VPN tile / page<br/>(ewe.vpn add-on)"] --> NM["NetworkManager"]
     NM --> OV["OpenVPN (import from file)"]
     NM --> WG["WireGuard (native, import from file)"]
     NM --> L2TP["L2TP/IPsec — libreswan, IKEv1"]
@@ -69,5 +78,5 @@ WireGuard from file) or `nmcli connection import type openvpn file x.ovpn`.
 
 ## Related
 
-- [[Shell Singletons]] · [[Google Extras]] · [[System Architecture]] ·
-  [[Troubleshooting Knowledge]]
+- [[Phone Plugin]] · [[VPN Plugin]] · [[SSH Plugin]] · [[Shell Singletons]] ·
+  [[Google Extras]] · [[System Architecture]] · [[Troubleshooting Knowledge]]

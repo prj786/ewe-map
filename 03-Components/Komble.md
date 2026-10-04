@@ -37,6 +37,32 @@ flowchart LR
   the account and the restore live in [[ewe-sync]] (RFC-005). A restore done
   there shows up in For you on the next look.
 
+## The Add-ons catalogue (0.25, branch `feat/addons`)
+
+Komble is the **one-click installer for ewe's add-ons** — the sidebar entry
+is "Add-ons" (the Plugins page renamed), and the core shell deep-links to
+it: `Shell.openStore("addons")` → `komble --addons` (alias `--plugins`);
+ewe-settings' "Browse add-ons" does the same.
+
+```mermaid
+flowchart LR
+    LIST["ewe-plugin list --json<br/>available[] · removed[]"] --> CARDS["cards: name · description ·<br/>Theme icon (THEME_ICONS snapshot, unknown → puzzle) ·<br/>installed / enabled · missing packages"]
+    CARDS -->|"Install"| PKGS{"missing.packages?"}
+    PKGS -->|yes| HELPER["pacman helper: install-repo<br/>batch install_packages_named<br/>(NO [apps.installed] entry — deps, not apps)"]
+    PKGS -->|no| INST["ewe-plugin install <id>"]
+    HELPER --> INST
+    INST --> SHELL["shell restarts, add-on live"]
+    CARDS -->|"settings form · enable/disable · remove"| TOOL["ewe-plugin set · enable · disable · remove"]
+```
+
+- Komble **never decides what is missing** — the catalogue (`missing`) does
+  ([[Add-on deps declared, not split]]); an older ewe without `available`
+  hides the group.
+- Public CLI flags: `--updates --settings --search[=q] --addons --plugins`
+  (`komble --search` is also the desktop's gnome-software stand-in).
+- Open: `plugin_create` KINDS in `plugins.rs` still list API 2 kinds — add
+  the four API 3 kinds. Untested in a real Tauri window (dev-mock only).
+
 ## What Arch forced (not stylistic choices)
 
 Structural differences vs the earlier Debian-targeted build — Arch is not
@@ -56,8 +82,10 @@ Debian with different command names:
 ## Related
 
 - [[The One File]] · [[ewe-sync]] · [[Update Flow]] · [[ewe-repo]] ·
-  [[Roadmap and Status]]
+  [[Roadmap and Status]] · [[Plugin System]] · [[Add-ons — opt-in, not preinstalled]]
 
 > **Build guard:** no per-package upgrades, no shell in the privilege
 > path, PKGBUILD on screen before any AUR build, and Komble never syncs
 > the file. The full reasoning: [[Komble — Arch Forced Decisions]].
+> Add-ons: Komble never decides what is missing (the catalogue does) and
+> never records an add-on's package dependencies as apps.
