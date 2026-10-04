@@ -11,7 +11,9 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-screenshot` ·
 [github.com/prj786/ewe-plugin-screenshot](https://github.com/prj786/ewe-plugin-screenshot)
 
-First-party, shipped with ewe, removable.
+First-party **add-on since 0.25** (API 2 manifest, v1.1.0): shipped inside
+the payload, **not installed on a fresh machine**, migrated once for
+upgraders who had it.
 
 A **camera in the top bar**, with three click modes and three keys:
 
@@ -33,12 +35,16 @@ flowchart LR
   `pop <path>`, `dismiss`.
 - **Deps:** `grim`, `slurp`, `wl-clipboard` (ewe dependencies).
 
-Remove / re-add:
+Install / remove / re-add (Komble → Add-ons, or):
 
 ```sh
+ewe-plugin install ewe.screenshot
 ewe-plugin remove ewe.screenshot
-ewe-plugin add https://github.com/prj786/ewe-plugin-screenshot.git --enable
+ewe-plugin install ewe.screenshot     # not `add <url>` — that failed for a reserved id before 0.25
 ```
+
+The Print keybinds exist only while the add-on is enabled
+(`generated/plugin-keybinds.lua`).
 
 ## Related
 
