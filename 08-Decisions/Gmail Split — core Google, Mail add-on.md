@@ -26,6 +26,10 @@ along one line:
   Google" still goes to ewe-sync.
 - `status` field set and order are **byte-identical** to the old `mail
   status` (test-asserted) because ewe-settings → Account reads them.
+- Provenance (for a future diff): in `Google.qml` at `3fc700d` the Gmail
+  block was lines 459–663, the api layer 665–692 (copied), the token
+  plumbing 267–329 (re-implemented in the add-on), plus the mail halves of
+  340–341 / 169–186, 137–149 and 453–455.
 - Open: core `google status` still reports `mailUnread`/`mailState`
   (ewe-settings reads them) — drop or proxy later; should ewe-sync poke
   `mail refresh` after sign-in?
