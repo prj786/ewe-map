@@ -1,30 +1,135 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-09-21",
+  "generated": "2026-10-04",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
     "ewe_de": "0.24.1-beta",
+    "ewe_de_next": "0.25.0-beta",
+    "ewe_de_next_status": "in progress on ewe branch release/0.25.0-beta - NOT released; add-ons (D1-D8), quiet lid, snappy Overview, X11 scale",
     "ewe_os": "0.12.4-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "early-skeleton",
-    "ewe_sync": "shipped",
+    "komble": "0.18.1-beta (feat/addons: Add-ons catalogue, unreleased)",
+    "ewe_sync": "0.14.3-beta",
     "ewe_cast": "phases-A+B",
-    "target_1_0": "Dolly"
+    "target_1_0": "Dolly",
+    "ewe_settings": "0.16.4-beta (feat/addons: add-on awareness, unreleased)",
+    "plugin_api": 3,
+    "addons": {
+      "ewe.clipboard": "1.1.1",
+      "ewe.screenshot": "1.1.0",
+      "ewe.passwords": "1.1.0",
+      "ewe.insomnia": "1.0.0",
+      "ewe.sysmon": "1.0.0",
+      "ewe.ssh": "1.0.0",
+      "ewe.vpn": "1.0.0",
+      "ewe.media": "1.0.0",
+      "ewe.places": "1.0.0",
+      "ewe.phone": "1.0.0",
+      "ewe.mail": "1.0.0",
+      "ewe.cast": "1.0.0",
+      "ewe.dock": "1.0.0"
+    }
   },
   "repos": [
-    { "name": "ewe", "role": "desktop environment + ewe package + CLI tools + design system", "stack": "Hyprland, Quickshell/QML, Bash, Python", "license": "GPL-2.0-only" },
-    { "name": "ewe-os", "role": "distro: archiso profile -> live/install ISO", "stack": "archiso, bash, Tauri (installer)" },
-    { "name": "ewe-repo", "role": "[ewe] pacman repository on GitHub releases", "stack": "pacman, GitHub Actions" },
-    { "name": "komble-arch", "role": "Komble software manager", "stack": "Tauri v2 + Svelte 5 + Tailwind 4", "license": "MIT" },
-    { "name": "ewe-settings", "role": "Settings app", "stack": "Tauri v2 + Svelte 5" },
-    { "name": "ewe-sync", "role": "account & sync app (RFC-006)", "stack": "Tauri v2 + Svelte 5" },
-    { "name": "ewe-cast", "role": "ewe-castd headless casting daemon (RFC-004)", "stack": "Python on GLib + GStreamer" },
-    { "name": "prj786.github.io", "role": "website", "stack": "SvelteKit 2 + Svelte 5, static" },
-    { "name": "ewe-plugin-clipboard", "role": "plugin: clipboard history + emoji" },
-    { "name": "ewe-plugin-screenshot", "role": "plugin: screenshots" },
-    { "name": "ewe-plugin-passwords", "role": "plugin: password fill" },
-    { "name": "ewe-plugin-example", "role": "reference plugin" }
+    {
+      "name": "ewe",
+      "role": "desktop environment + ewe package + CLI tools + design system",
+      "stack": "Hyprland, Quickshell/QML, Bash, Python",
+      "license": "GPL-2.0-only"
+    },
+    {
+      "name": "ewe-os",
+      "role": "distro: archiso profile -> live/install ISO",
+      "stack": "archiso, bash, Tauri (installer)"
+    },
+    {
+      "name": "ewe-repo",
+      "role": "[ewe] pacman repository on GitHub releases",
+      "stack": "pacman, GitHub Actions"
+    },
+    {
+      "name": "komble-arch",
+      "role": "Komble software manager",
+      "stack": "Tauri v2 + Svelte 5 + Tailwind 4",
+      "license": "MIT"
+    },
+    {
+      "name": "ewe-settings",
+      "role": "Settings app",
+      "stack": "Tauri v2 + Svelte 5"
+    },
+    {
+      "name": "ewe-sync",
+      "role": "account & sync app (RFC-006)",
+      "stack": "Tauri v2 + Svelte 5"
+    },
+    {
+      "name": "ewe-cast",
+      "role": "ewe-castd headless casting daemon (RFC-004)",
+      "stack": "Python on GLib + GStreamer"
+    },
+    {
+      "name": "prj786.github.io",
+      "role": "website",
+      "stack": "SvelteKit 2 + Svelte 5, static"
+    },
+    {
+      "name": "ewe-plugin-clipboard",
+      "role": "add-on: clipboard history + emoji"
+    },
+    {
+      "name": "ewe-plugin-screenshot",
+      "role": "add-on: screenshots"
+    },
+    {
+      "name": "ewe-plugin-passwords",
+      "role": "add-on: password fill"
+    },
+    {
+      "name": "ewe-plugin-insomnia",
+      "role": "add-on: Insomnia (keep awake)"
+    },
+    {
+      "name": "ewe-plugin-sysmon",
+      "role": "add-on: CPU + memory meters"
+    },
+    {
+      "name": "ewe-plugin-ssh",
+      "role": "add-on: SSH hosts + tunnels"
+    },
+    {
+      "name": "ewe-plugin-vpn",
+      "role": "add-on: NetworkManager VPNs"
+    },
+    {
+      "name": "ewe-plugin-media",
+      "role": "add-on: Music (MPRIS)"
+    },
+    {
+      "name": "ewe-plugin-places",
+      "role": "add-on: Places file browser"
+    },
+    {
+      "name": "ewe-plugin-phone",
+      "role": "add-on: Phone (KDE Connect)"
+    },
+    {
+      "name": "ewe-plugin-mail",
+      "role": "add-on: Mail (IMAP + Gmail visuals)"
+    },
+    {
+      "name": "ewe-plugin-cast",
+      "role": "add-on: Cast to TV (shell end of ewe-castd)"
+    },
+    {
+      "name": "ewe-plugin-dock",
+      "role": "add-on: the Dock + pinned-apps popup"
+    },
+    {
+      "name": "ewe-plugin-example",
+      "role": "reference plugin"
+    }
   ],
   "rules": [
     "ewe-conf is the only writer of ewe.conf",
@@ -41,55 +146,288 @@
     "the design system is the source of truth for every surface"
   ],
   "cli_tools": [
-    { "tool": "ewe-conf", "job": "the one file - only writer", "verbs": ["get", "set", "dump", "import", "apply", "push", "pull", "path", "sync-status"] },
-    { "tool": "ewe-plugin", "job": "shell plugins", "verbs": ["add", "list", "info", "enable", "disable", "update", "remove", "restore", "validate", "seed", "path", "create", "dev", "place", "set", "get"] },
-    { "tool": "ewe-auth", "job": "Google auth broker", "verbs": ["status", "login", "token", "logout", "keyring-reset"] },
-    { "tool": "ewe-drive", "job": "Drive as a folder", "verbs": ["setup", "mount", "unmount", "status"] },
-    { "tool": "ewe-cloud", "job": "Nextcloud account (Login Flow v2)", "verbs": ["login", "status", "token"] },
-    { "tool": "ewe-files", "job": "mount account at ~/Nextcloud", "verbs": ["setup"] },
-    { "tool": "ewe-caldav", "job": "CalDAV calendar sync", "verbs": [] },
-    { "tool": "ewe-mail", "job": "IMAP mailbox for Control Centre", "verbs": [] },
-    { "tool": "ewe-theme", "job": "design system: schemes, tokens, imports", "verbs": ["scheme", "set", "build"] },
-    { "tool": "ewe-bt", "job": "bluetooth pairing for Settings", "verbs": [] },
-    { "tool": "ewe-globalshortcuts", "job": "portal global shortcuts", "verbs": [] },
-    { "tool": "ewe-pass", "job": "password fill picker backend", "verbs": ["status"] },
-    { "tool": "ewe-setup", "job": "per-user deployment", "verbs": [] },
-    { "tool": "ewe-share-picker", "job": "portal screen-share picker", "verbs": [] }
+    {
+      "tool": "ewe-conf",
+      "job": "the one file - only writer",
+      "verbs": [
+        "get",
+        "set",
+        "dump",
+        "import",
+        "apply",
+        "push",
+        "pull",
+        "path",
+        "sync-status"
+      ]
+    },
+    {
+      "tool": "ewe-plugin",
+      "job": "shell plugins and the add-ons",
+      "verbs": [
+        "add",
+        "list",
+        "info",
+        "install",
+        "migrate",
+        "enable",
+        "disable",
+        "update",
+        "remove",
+        "restore",
+        "validate",
+        "seed",
+        "path",
+        "create",
+        "dev",
+        "place",
+        "set",
+        "get"
+      ]
+    },
+    {
+      "tool": "ewe-auth",
+      "job": "Google auth broker",
+      "verbs": [
+        "status",
+        "login",
+        "token",
+        "logout",
+        "keyring-reset"
+      ]
+    },
+    {
+      "tool": "ewe-drive",
+      "job": "Drive as a folder",
+      "verbs": [
+        "setup",
+        "mount",
+        "unmount",
+        "status"
+      ]
+    },
+    {
+      "tool": "ewe-cloud",
+      "job": "Nextcloud account (Login Flow v2)",
+      "verbs": [
+        "login",
+        "status",
+        "token"
+      ]
+    },
+    {
+      "tool": "ewe-files",
+      "job": "mount account at ~/Nextcloud",
+      "verbs": [
+        "setup"
+      ]
+    },
+    {
+      "tool": "ewe-caldav",
+      "job": "CalDAV calendar sync",
+      "verbs": []
+    },
+    {
+      "tool": "ewe-mail",
+      "job": "IMAP mailbox for Control Centre",
+      "verbs": []
+    },
+    {
+      "tool": "ewe-theme",
+      "job": "design system: schemes, tokens, imports",
+      "verbs": [
+        "scheme",
+        "set",
+        "build"
+      ]
+    },
+    {
+      "tool": "ewe-bt",
+      "job": "bluetooth pairing for Settings",
+      "verbs": []
+    },
+    {
+      "tool": "ewe-globalshortcuts",
+      "job": "portal global shortcuts",
+      "verbs": []
+    },
+    {
+      "tool": "ewe-pass",
+      "job": "password fill picker backend",
+      "verbs": [
+        "status"
+      ]
+    },
+    {
+      "tool": "ewe-setup",
+      "job": "per-user deployment",
+      "verbs": []
+    },
+    {
+      "tool": "ewe-share-picker",
+      "job": "portal screen-share picker",
+      "verbs": []
+    },
+    {
+      "tool": "komble",
+      "job": "software manager + add-ons catalogue (not in ewe/bin)",
+      "verbs": [
+        "--updates",
+        "--settings",
+        "--search[=q]",
+        "--addons",
+        "--plugins"
+      ]
+    }
   ],
   "ipc": {
-    "targets": ["bar", "cast", "picker", "quicksettings", "launcher", "lock", "osd", "overview", "places", "player", "preview", "settings", "applauncher", "store", "updates", "plugins", "widgets"],
-    "plugin_targets": ["ewe.clipboard", "ewe.screenshot", "ewe.passwords", "example.hello"],
-    "public_verbs": ["reload", "ping", "version"],
+    "targets": [
+      "bar",
+      "picker",
+      "quicksettings",
+      "lock",
+      "osd",
+      "overview",
+      "preview",
+      "settings",
+      "applauncher",
+      "store",
+      "updates",
+      "plugins",
+      "widgets",
+      "google",
+      "cloud"
+    ],
+    "plugin_targets": [
+      "example.hello"
+    ],
+    "public_verbs": [
+      "reload",
+      "ping",
+      "version"
+    ],
     "gotchas": [
       "qs ipc call <t> show collides with the qs ipc show subcommand and no-ops - bind to toggle",
-      "ewe-plugin verbs restart ewe.service unless --no-restart"
+      "ewe-plugin verbs restart ewe.service unless --no-restart",
+      "ewe-plugin install/enable run hyprctl reload and set/place poke plugins reload against the CURRENT HYPRLAND_INSTANCE_SIGNATURE/WAYLAND_DISPLAY even with --no-restart - unset both from a harness",
+      "qs matches plugins reload by config path: in the nested harness use driver.sh ipc plugins reload"
+    ],
+    "addon_targets": {
+      "ewe.cast": [
+        "cast"
+      ],
+      "ewe.dock": [
+        "launcher"
+      ],
+      "ewe.places": [
+        "places"
+      ],
+      "ewe.media": [
+        "player"
+      ],
+      "ewe.mail": [
+        "mail"
+      ],
+      "ewe.insomnia": [],
+      "ewe.clipboard": [],
+      "ewe.screenshot": [],
+      "ewe.passwords": []
+    },
+    "addon_quick_page_keys": [
+      "ssh",
+      "vpn",
+      "mobile",
+      "mail",
+      "cast"
+    ],
+    "reserved_quick_page_keys": [
+      "home",
+      "wifi",
+      "bt",
+      "audio",
+      "cal",
+      "notifs"
+    ],
+    "global_shortcuts": [
+      "ewe:overview"
     ]
   },
   "ewe_conf_domains": [
-    "desktop.theme", "desktop.dock", "desktop.layout", "desktop.input",
-    "desktop.wallpaper", "desktop.screensaver", "apps.installed",
-    "plugins.enabled", "plugins.removed", "plugins.sources",
-    "plugins.widgets", "plugins.settings", "sync", "sync.folders"
+    "desktop.theme",
+    "desktop.dock",
+    "desktop.layout",
+    "desktop.input",
+    "desktop.wallpaper",
+    "desktop.screensaver",
+    "apps.installed",
+    "plugins.enabled",
+    "plugins.removed",
+    "plugins.sources",
+    "plugins.widgets",
+    "plugins.settings",
+    "sync",
+    "sync.folders",
+    "apps.pinned",
+    "apps.places",
+    "network.vpn",
+    "network.ssh"
   ],
   "keyring_services": [
-    { "service": "ewe-cloud", "holds": "Nextcloud app password" },
-    { "service": "google", "holds": "Google refresh token (ewe-auth only)" }
+    {
+      "service": "ewe-cloud",
+      "holds": "Nextcloud app password"
+    },
+    {
+      "service": "google",
+      "holds": "Google refresh token (ewe-auth only)"
+    }
   ],
   "cloud_layout": {
-    "nextcloud": ["ewe/ewe.conf", "ewe/ewe.conf.meta.json", "ewe/machines/<name>.json"]
+    "nextcloud": [
+      "ewe/ewe.conf",
+      "ewe/ewe.conf.meta.json",
+      "ewe/machines/<name>.json"
+    ]
   },
   "rfc_status": [
-    { "rfc": "RFC-001", "topic": "one file ewe.conf", "status": "shipping (phases 1-5 landed)" },
-    { "rfc": "RFC-002", "topic": "ewe-auth broker + sync", "status": "superseded for account (RFC-005); Google extras remain" },
-    { "rfc": "RFC-003", "topic": "does not exist in the repos", "status": "absent - do not hunt for it" },
-    { "rfc": "RFC-004", "topic": "ewe-castd (Python not Rust)", "status": "phases A+B built; C field-proof pending; text only in ewe-cast/README" },
-    { "rfc": "RFC-005", "topic": "Nextcloud account", "status": "accepted 2026-09-02; nextcloud branch across 5 repos; merges as one wave" },
-    { "rfc": "RFC-006", "topic": "ewe-sync account app (ex-Flock)", "status": "built; shipped preinstalled" }
+    {
+      "rfc": "RFC-001",
+      "topic": "one file ewe.conf",
+      "status": "shipping (phases 1-5 landed)"
+    },
+    {
+      "rfc": "RFC-002",
+      "topic": "ewe-auth broker + sync",
+      "status": "superseded for account (RFC-005); Google extras remain"
+    },
+    {
+      "rfc": "RFC-003",
+      "topic": "does not exist in the repos",
+      "status": "absent - do not hunt for it"
+    },
+    {
+      "rfc": "RFC-004",
+      "topic": "ewe-castd (Python not Rust)",
+      "status": "phases A+B built; C field-proof pending; text only in ewe-cast/README"
+    },
+    {
+      "rfc": "RFC-005",
+      "topic": "Nextcloud account",
+      "status": "accepted 2026-09-02; nextcloud branch across 5 repos; merges as one wave"
+    },
+    {
+      "rfc": "RFC-006",
+      "topic": "ewe-sync account app (ex-Flock)",
+      "status": "built; shipped preinstalled"
+    }
   ],
   "sync_contract": {
     "engine": "ewe-conf push/pull over WebDAV",
     "guard": "If-Match on the ETag recorded at the last sync (412 = remote newer)",
-    "folder_engines": ["nextcloudcmd (two-way)", "rclone copy (one-way, never deletes)"],
+    "folder_engines": [
+      "nextcloudcmd (two-way)",
+      "rclone copy (one-way, never deletes)"
+    ],
     "owner": "ewe-sync only - nothing else has a sync button"
   },
   "known_limits": [
@@ -97,6 +435,50 @@
     "ewe-cast Chromecast: seconds of latency (HLS); true mirroring is a future milestone",
     "ewe-repo: packages unsigned (SigLevel = Optional TrustAll) until signing ships",
     "ewe-sync: cannot create Nextcloud accounts; no selective sync inside a pair; no bandwidth limits",
-    "Google Gmail: restricted scope - <=100 test users without a CASA audit"
-  ]
+    "Google Gmail: restricted scope - <=100 test users without a CASA audit",
+    "0.25.0-beta unreleased: Welcome Add-ons step, Shell.toggleOverview/primaryScreenName/dockItems/closePopups, VERSION bump and 90-postcheck 1.4.1-2.1 were still being integrated on 2026-10-04",
+    "Komble Add-ons catalogue and ewe-settings add-on awareness are dev-mock tested only (no real Tauri window yet)",
+    "quiet-lid fix (A2) not yet verified on real laptop hardware"
+  ],
+  "addons": {
+    "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders",
+    "payload": "plugins/<id>/ + plugins/bundle.json (repo, commit, version, default, migrate) written by scripts/vendor-plugins.sh",
+    "install": "ewe-plugin install <id> | Komble --addons | Welcome Add-ons step",
+    "migrate_marker": "~/.local/state/ewe/addons-migrated (JSON list of considered ids; local, never synced)",
+    "state_dir": "~/.local/state/ewe/plugins/<id>/",
+    "preinstalled": "shell core (bar, launcher, Overview, Quick settings basics, notifications, lock, OSD, polkit, Welcome), ewe-settings, Komble, ewe-sync",
+    "ids": [
+      "ewe.clipboard",
+      "ewe.screenshot",
+      "ewe.passwords",
+      "ewe.insomnia",
+      "ewe.sysmon",
+      "ewe.ssh",
+      "ewe.vpn",
+      "ewe.media",
+      "ewe.places",
+      "ewe.phone",
+      "ewe.mail",
+      "ewe.cast",
+      "ewe.dock"
+    ],
+    "bundle_default_true": [],
+    "api_versions_loaded": [
+      2,
+      3
+    ],
+    "keybind_rule": "manifest keybind target must be the plugin id or one of its ipcAliases (apiVersion >= 3); ipcAliases are ewe.* only",
+    "setting_key_regex": "^[a-z][a-z0-9_]{0,31}$",
+    "env": [
+      "EWE_PAYLOAD_PLUGINS",
+      "EWE_PLUGIN_SRC_DIR",
+      "HS_PLUGINS",
+      "HS_PAYLOAD",
+      "HS_PLUGIN_DIRS",
+      "HS_PRIVATE_BUS",
+      "EWE_PHONE_NO_DAEMON"
+    ],
+    "portal_threshold": "xdg-desktop-portal-hyprland >= 1.4.1-2.1 (stock 1.4.1-2 freezes)",
+    "system_install_command": "bash /usr/share/ewe/install.sh --no-packages as the user (exits 2 under sudo)"
+  }
 }

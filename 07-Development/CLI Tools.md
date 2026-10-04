@@ -35,7 +35,7 @@ flowchart TB
 | tool | job | verbs |
 |---|---|---|
 | **`ewe-conf`** | [[The One File]] — the only writer | `get` · `set` · `dump` · `import` · `apply` · `push` · `pull` · `path` · `sync-status` |
-| **`ewe-plugin`** | [[Plugin System]] | `add` · `list` · `info` · `enable` · `disable` · `update` · `remove` · `restore` · `validate` · `seed` · `path` · `create` · `dev` · `place` · `set` · `get` |
+| **`ewe-plugin`** | [[Plugin System]] — plugins and the add-ons | `add` · `list [--json]` · `info` · **`install <id>`** · **`migrate [--fresh]`** (0.25) · `enable` · `disable` · `update` · `remove` · `restore` · `validate` · `seed` · `path` · `create` · `dev` · `place` · `set` · `get` |
 | **`ewe-auth`** | [[Auth Broker]] — one Google identity for every app | `status` · `login [--with-mail]` · `token` · `logout` · `keyring-reset` |
 | **`ewe-drive`** | your Drive as a folder (optional Google extra) | `setup` · `mount` · `unmount` · `status` |
 | **`ewe-cloud`** | the Nextcloud account tool (Login Flow v2) | `login <server>` · `status` · `token` |
@@ -50,6 +50,15 @@ flowchart TB
 | **`ewe-share-picker`** | the portal's screen-share picker, backed by the shell | — |
 
 The website documents each tool: `prj786.github.io/docs/cli/<tool>`.
+
+Not in `ewe/bin` but equally a contract: **`komble --updates | --settings |
+--search[=q] | --addons | --plugins`** (the shell's `Shell.openStore(page)`
+and ewe-settings call these — [[Komble]]).
+
+Add-ons carry their own small tools: `cast-check.sh` / `cast-audio.sh`
+([[Cast Plugin]], under `~/.config/ewe/plugins/ewe.cast/`),
+`kdeconnect-bridge.py` ([[Phone Plugin]]), `sample.sh`
+([[System Monitor Plugin]]), `ewe-pass` ([[Passwords Plugin]]).
 
 The refresh token lives only in the keyring — `ewe-auth` is the single thing
 that touches it.

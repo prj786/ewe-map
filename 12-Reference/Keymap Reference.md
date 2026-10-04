@@ -10,8 +10,9 @@ up: "[[Home]]"
 
 **Mod = Super.** Defined in `~/.config/hypr/hyprland.lua` (source:
 `dotfiles/hypr/SHORTCUTS.md`); reload with `Super+Ctrl+R` (Hyprland also
-auto-reloads on save). Plugin keybinds (Print keys, `Super+P`) come from
-`generated/plugin-keybinds.lua` — **not** from hyprland.lua.
+auto-reloads on save). Plugin keybinds (Print keys, `Super+P`,
+`Super+Shift+C`) come from `generated/plugin-keybinds.lua` — **not** from
+hyprland.lua — and exist only while their add-on is enabled.
 
 ## Launching
 
@@ -24,9 +25,11 @@ auto-reloads on save). Plugin keybinds (Print keys, `Super+P`) come from
 | `Super+C` | calendar popup |
 | `Super+,` | Settings |
 | `Super+N` | toggle Quick Settings |
-| `Super+Shift+C` | Cast to TV (same as the QS tile) |
-| `Super+P` | password fill picker (plugin) |
-| `Print` / `Shift+Print` / `Super+Print` | screen / region / window shot (plugin) |
+| `Super` (tap, release bind) | Overview — the `ewe:overview` Hyprland global shortcut (0.25; bindable in `user.lua`) |
+| `Super+Z` | the Pen (stashed windows, `special:pen`) |
+| `Super+Shift+C` | Cast to TV — the [[Cast Plugin]]'s manifest keybind (`ewe.cast toggle`) |
+| `Super+P` | password fill picker ([[Passwords Plugin]] add-on) |
+| `Print` / `Shift+Print` / `Super+Print` | screen / region / window shot ([[Screenshot Plugin]] add-on) |
 | `Super+Shift+W` | widget arrange mode (plugin host) |
 
 ## Windows
