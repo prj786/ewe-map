@@ -73,9 +73,15 @@ check. See [[Worktrees and Screenshots]].
   [[Roadmap — ewe-cast]]). `sh ~/.config/ewe/plugins/ewe.cast/cast-check.sh`
   verifies the known failure classes.
 - **Quiet lid (0.25, A2)**: the nested harness has no lid — the blink /
-  hibernate-resleep fixes need the user's laptop: close the lid, wait for
-  suspend, open — expect one wake, no blinks, the password field at once;
-  then a hibernate resume that stays awake.
+  hibernate-resleep fixes need the user's laptop:
+  1. Lock (Super+L), close the lid, wait ≥ 10 s, open: ONE fade-in to the
+     password prompt, no re-layout. `journalctl --user -u ewe -b | grep -E
+     'lid:|display: re-assert'` shows "opened — the built-in panel is
+     already on" and no `re-assert:` for eDP-1.
+  2. Close the lid > 2 h (hibernate), open: the machine stays awake — no
+     `lid: going to sleep:` line after the resume.
+  3. Close and reopen within 3 s: suspend starts within ~1 s of closing (no
+     `logind: no sleepReady()` warning) and the reopen does not suspend.
 - **Add-ons (0.25)**: Komble's Add-ons catalogue and ewe-settings' add-on
   panes are dev-mock tested only — the first real Tauri run is pending;
   real-device check of every add-on on the carved shell (with and without
