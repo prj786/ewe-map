@@ -22,21 +22,27 @@ and the tool says so instead of pretending:
 ## The trust model that follows from it
 
 - `ewe-plugin add` **clones, validates, records the source URL** — it never
-  executes anything at install time.
+  executes anything at install time; `ewe-plugin install <id>` (0.25)
+  copies an add-on out of the payload, equally without running it.
 - `update` shows the **diff first**; a manifest that stops validating is
   rolled back.
 - `remove` deletes the clone (a hand-made directory is moved to
   `<id>.bak.<stamp>` — never destroyed).
 - The public API surface (`import qs` → `Theme`, public `Globals` subset,
-  `Log`) is versioned by **`apiVersion`** — it will not change without the
-  number moving, and a mismatch is refused **at install, not at login**.
+  `Log`, and since 0.25 the `Shell` singleton + public components) is
+  versioned by **`apiVersion`** (the host loads 2 and 3 — [[Plugin API 3]])
+  — it will not change without the number moving, and a mismatch is refused
+  **at install, not at login**.
 
 ## Why plugins at all
 
 The desktop is one long-lived Quickshell process; a plugin is a directory
 of QML it loads at startup exactly as it loads its own bar and dock.
 Plugins add bar widgets, panels, overlays, menus and headless services —
-using the same `Theme` roles and the same `Globals` as first-party code.
+and since 0.25 Quick settings tiles and pages, pill glyphs and dock items —
+using the same `Theme` roles and the same `Globals`/`Shell` as first-party
+code. Since 0.25 the first-party extras *are* plugins
+([[Add-ons — opt-in, not preinstalled]]).
 
 **Plugins are not apps.** *Komble installs programs; `ewe-plugin` extends
 the desktop.*

@@ -24,7 +24,7 @@ flowchart TB
 
     subgraph L1["L1 — desktop environment"]
         HYP["Hyprland — Wayland compositor"]
-        QS["Quickshell shell<br/>bar · dock · launcher · control centre ·<br/>notifications · OSD · lock · greeter"]
+        QS["Quickshell shell<br/>bar · launcher · Overview · Quick settings ·<br/>notifications · OSD · lock · greeter<br/>+ opt-in add-ons (dock, cast, mail, …)"]
         PLUGINS["plugins<br/>clipboard · screenshot · passwords"]
         CLI["CLI tools<br/>ewe-conf · ewe-plugin · ewe-auth ·<br/>ewe-drive · ewe-setup · ewe-share-picker"]
     end

@@ -18,15 +18,15 @@ flowchart TB
 
     subgraph QS["Quickshell (one process)"]
         BAR["top bar + indicators"]
-        DOCK["dock"]
-        LAUNCH["app launcher"]
-        CC["control centre / Quick Settings"]
-        NOTIF["notifications"]
+        LAUNCH["app launcher · Overview"]
+        CC["Quick settings (home grid, rail pages)"]
+        NOTIF["notifications · toast"]
         OSD["OSD overlays"]
-        LOCK["lock screen"]
+        LOCK["lock screen · polkit · Welcome"]
         GREET["greeter (separate cage session)"]
         PICK["share picker<br/>(screen share + cast)"]
         SETT["Settings.qml — in-shell settings panel + IPC verbs"]
+        ADDONS["add-ons (plugins, same process):<br/>dock · Places · music · Insomnia · sysmon ·<br/>SSH · VPN · phone · mail · cast · clipboard ·<br/>screenshot · passwords — installed on request"]
     end
 
     subgraph outside["other processes"]
@@ -47,11 +47,22 @@ flowchart TB
 
 ## The shell's pieces
 
-- **Top bar** — indicators for everything (clipboard, screenshot camera,
-  casting card, phone battery via KDE Connect, …). Bar widgets are
-  pluggable: a plugin's `Widget.qml` gets packed like a built-in indicator.
-- **Control centre / Quick Settings** — network, audio, calendar, cast,
-  phone — the place ewe-cast lives (see [[Cast Flow]]).
+**Core (preinstalled):** bar, launcher, Overview, the Quick settings
+basics (home, wifi, bt, audio, cal, notifs), notifications, lock, OSD,
+polkit, Welcome, greeter, SharePicker. **Everything else is an add-on**
+since 0.25 — a plugin in the same process, shipped in the payload, installed
+on request ([[Add-ons — opt-in, not preinstalled]], [[Plugin System]]).
+A fresh install has **no dock** until the user adds one.
+
+- **Top bar** — indicators; bar widgets and the Quick settings pill's
+  glyphs are pluggable (`bar-widget`, `bar-status`); the clipboard
+  scissors, screenshot camera, phone and mail glyphs are add-ons'.
+- **Quick settings** — a home grid of tiles (built-ins first, then
+  add-ons' `quick-tile`s; empty slots collapse) and a rail of pages
+  (`quick-page` keys; an unknown key falls back to `home`). Cast, VPN, SSH,
+  Mobile and Mail pages come from add-ons (see [[Cast Flow]]).
+- **Welcome** — first run; since 0.25 has an **Add-ons step** (nothing
+  pre-checked; *Install selected* / *Browse in Komble*).
 - **Greeter** — runs as its own session: `greetd → cage → Quickshell greeter`.
 - **Share picker** — the portal's screen-share picker is backed by the shell
   (`ewe-share-picker`), with live previews and real display names. The same
@@ -67,16 +78,24 @@ The shell exposes verbs over IPC. Some are **public API in both directions**
 |---|---|---|
 | ewe-settings | `qs ipc call settings reload` | re-read user-theme.json, apply live |
 | ewe-sync | `qs ipc call cloud refresh` | refresh the shell's account card |
-| clipboard plugin | `qs ipc call ewe.clipboard toggle` | toggle clipboard history |
-| cast card | `scan · sinks · start <sink> · stop · status` | drive ewe-castd |
+| clipboard add-on | `qs ipc call ewe.clipboard toggle` | toggle clipboard history |
+| cast add-on | `qs ipc call ewe.cast scan · start <sink> · stop · status · legacy` (alias `cast`) | drive ewe-castd |
+| dock add-on | `qs ipc call launcher toggle` (alias of `ewe.dock launcher`) | the pinned-apps popup |
+| Hyprland `global` | `ewe:overview` (Super, release bind) | toggle the Overview |
 | example plugin | `qs ipc call example.hello toggle` | demo verb |
+
+Add-ons that replaced built-ins keep the old target as an **alias**
+(`cast launcher places player mail`) — Rule 4; the full list is in
+[[IPC Verb Reference]].
 
 ## Why the shell must stay one process
 
 A QML error in the shell takes the whole desktop down with it — which is
 exactly why the big, rarely-open UIs (Settings, Komble, sync) were moved
 *out* into Tauri apps. The shell keeps only what must be layer-shell:
-bar, dock, notifications, OSD, lock. See [[ewe-settings]] for the reasoning.
+bar, notifications, OSD, lock — and the add-ons the user chose (a dock is
+layer-shell too, so it is a plugin *in* the process, not a separate one).
+See [[ewe-settings]] for the reasoning.
 
 ## Related
 

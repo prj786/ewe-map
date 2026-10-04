@@ -31,6 +31,11 @@ flowchart LR
   properties.
 - **Guards** — `check-contrast.sh`, `check-icons.sh`, `check-spec.sh`,
   `check-tokens.sh` keep the system honest; `specimen.html` shows it.
+- **Dock and launcher panel (0.25)** — the `components/Dock` and
+  `LauncherPanel` READMEs say the dock is the [[Dock Plugin]] add-on;
+  launchers = sheep, Overview, Komble, then add-on dock items. The Theme
+  dock roles (`dockCell`, `dockGround`, `dockOutline`, `dockSelectedFill`,
+  `dockOpenFill`) stay in the core token set.
 
 ## Where the design lives
 

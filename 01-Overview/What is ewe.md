@@ -14,9 +14,11 @@ environment** in the `ewe` repo — everything else (ISO, pacman repo, apps,
 website) exists to get that desktop onto machines and keep it there.
 
 The DE is **Hyprland** (a Wayland compositor, Lua-configured) with a
-**Quickshell** QML shell on top: bar, dock, launcher, notifications, control
-centre, lock screen, OSD, a greeter, a silent Plymouth boot — plus three
-bundled plugins (clipboard history, screenshots, password fill).
+**Quickshell** QML shell on top: bar, launcher, notifications, control
+centre, lock screen, OSD, a greeter, a silent Plymouth boot — plus, since
+0.25, **13 opt-in add-ons** shipped in the payload but installed only on
+request (dock, Places, music, Insomnia, system monitor, SSH, VPN, phone,
+mail, Cast, clipboard history, screenshots, password fill — [[Plugin System]]).
 
 ## The promises
 

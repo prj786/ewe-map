@@ -55,6 +55,29 @@ The IPC verbs this app depends on (`reload`, `ping`, `version`) live in
 ewe's `Settings.qml`. They are **public API in both directions**: renaming
 one breaks an installed binary.
 
+## Add-on awareness (0.25, branch `feat/addons`)
+
+Settings edits prefs that add-ons read, so it has to know which are there:
+
+- Backend `addons_state` — a cached `ewe-plugin list --json` (5 s cache;
+  **legacy fallback**: no `available` key = an older ewe = everything
+  counts as installed) and `open_addons` → `komble --addons`.
+- **Layout → Dock** shows a note + "Get add-ons" when `ewe.dock` is absent;
+  **Account → Mail** notes the `ewe.mail` add-on and **stops polling** the
+  `mail` target when it is missing; **Layout → Top bar** lists plugin bar
+  widgets as `plugin:<id>` rows (setPrefs → `write_prefs` → ewe-conf absorbs
+  into user-theme); **System → Add-ons** group: "Browse add-ons".
+- `qs_ipc`: a missing add-on target is **never an error**
+  (`ADDON_TARGETS = ["mail"]`); `google` and `cloud` stay core targets.
+- Screensaver pane says **Insomnia** (D5, commit 265b0cc).
+- `hypr.js` emits a **guarded** `after_sleep_cmd` (no unconditional dpms-on
+  — [[Quiet Lid — touch only a disabled panel]], commit 2e9c698).
+- Dev mocks live inline in `dev-mock.html` (`?addons=fresh|dock|legacy`,
+  `?komble=0`); `.dev-mock/` is local-only (`.git/info/exclude`).
+- Depends on the public contract: `komble --addons`, and `list --json`
+  fields `available` / `removed` / `plugins[].kinds`
+  ([[Contracts and Public API]]).
+
 ## Privileges
 
 **None.** Every file it touches is already owned by the user, so unlike
@@ -72,5 +95,6 @@ desktop rather than a product with its own release line.
 
 > **Build guard:** ewe-settings stays an ordinary window in its own
 > process, writes atomically and merges, needs no privileges, and never
-> renames the `reload`/`ping`/`version` verbs. Rationale:
+> renames the `reload`/`ping`/`version` verbs. A missing add-on IPC target
+> is never an error; `google`/`cloud` stay core. Rationale:
 > [[Process Split — Shell vs Apps]] and [[Contracts and Public API]].

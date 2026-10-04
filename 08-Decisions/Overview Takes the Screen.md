@@ -23,27 +23,40 @@ backdrop. Now the wallpaper owns the full output, edge to edge.
   strips; only their visuals translate, so windows underneath never relayout
   — position and size are identical before, during and after the Overview.
 
-## Timeline
+## Timeline (D8, 2026-10-04 — "snappier")
 
-Sequenced by two flags — `Globals.overviewCover` (bool) and `root.stageShown`
-in `Overview.qml` — with one `Timer` of `Theme.durFast` between them. `t = 0`
-is the frame `Globals.overviewOpen` changes.
+Sequenced by `Globals.overviewCover` and `root.stageShown` in
+`Overview.qml`, with **one** `Timer` of `Theme.durFast` — on the way **out**
+only. `t = 0` is the frame `Globals.overviewOpen` changes.
 
-**Open**
+**Open — one step** (D8, the user asked for "snappier"; replaces the
+two-step open of 2026-09-21)
 
 | t | what |
 |---|---|
-| 0 | `overviewCover = true` — the backdrop fades in at `durFast`; the bar slides up and the dock slides down at `durBase` |
-| `durFast` | `stageShown = true` — the cards, search and pager fade and zoom in at `durSlow` |
+| 0 | `overviewCover = true` **and** `stageShown = true` — the backdrop fades in at `durFast`; the bar slides up and the dock slides down at `durBase`; the cards, search and pager fade and zoom in at `durBase` (`Theme.ease`). The backdrop reads first only because its fade is shorter |
 
 **Close**
 
 | t | what |
 |---|---|
-| 0 | `stageShown = false` — the cards go |
+| 0 | `stageShown = false` — the cards go (`durBase`) |
 | `durFast` | `overviewCover = false` — the backdrop fades out at `durFast`; the bar and dock slide back at `durBase` |
 
-Reduce motion: everything cross-fades at `durFast`; nothing slides.
+The window unmaps at `durFast + durBase + durFast`. Reduce motion:
+cross-fades at `durFast`, nothing slides or zooms.
+
+- **Measured** (nested harness): trigger → half-visible **130 ms** (was
+  nothing visible at 222 ms); settled + focused **≈240 ms** (was 500–650 ms);
+  trigger process cost 17 ms (was 44–160 ms via `qs ipc`).
+- **Trigger:** the **`ewe:overview` global shortcut** (Hyprland `global`,
+  bound to Super as a *release* bind) — a public name users may bind in
+  `user.lua`; the 3-finger swipe stays IPC (`overview toggle`).
+  `ewe-globalshortcuts` ignores `ewe:*` names (test 12/12).
+- **Keyboard:** only the output focused at open time takes it
+  (`Exclusive` while open, `None` otherwise); the other outputs show cards
+  + pager without a search field. Since 0.25 the dock half of the slide is
+  the [[Dock Plugin]]'s, driven by `Shell.overviewOpen`.
 
 > **Build guard:** `Behavior on y` on an item whose `y` depends on
 > `parent.height` inside a lazily-mapped PanelWindow animates the map. Put
@@ -55,6 +68,13 @@ Reduce motion: everything cross-fades at `durFast`; nothing slides.
 > shell disconnected by Hyprland 0.56 (`invalid object N`, 0.24.1-beta) — see
 > [[Troubleshooting Knowledge]].
 
+> **Build guard:** per-screen layer windows must not all request keyboard
+> focus (last-mapped wins); a root `FocusScope` with `focus: true` plus a
+> `Keys.onPressed` fallback is what keeps keys alive without an
+> `activeFocusItem`. Hyprland 0.56 `global` signal matrix: a *release* bind
+> fires `released` only, a *press* bind `pressed` + `released`, a dispatch
+> `pressed` only — toggle on `released`. See [[Troubleshooting Knowledge]].
+
 ## Related
 
-- [[Decision Index]] · [[Design System]] · [[Desktop Shell]]
+- [[Decision Index]] · [[Design System]] · [[Desktop Shell]] · [[Dock Plugin]]

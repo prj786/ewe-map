@@ -20,6 +20,14 @@ but a deviation should be a decision, not an accident.
   explicitly for this).
 - **Plugin ids are `<namespace>.<name>`**, lowercase `[a-z0-9_-]`; `ewe.`
   is reserved (validates only in the payload or with `--first-party`).
+  First-party add-ons live one per repo as `ewe-plugin-<name>`, id
+  `ewe.<name>` ([[One repo per add-on]]); a feature that replaced a built-in
+  keeps the old IPC target as an `ipcAliases` entry, its layer namespace
+  and its quick-page key (Rule 4).
+- **Copy:** the keep-awake feature is called **Insomnia** in every
+  user-facing string (never "keep awake", "caffeine", "inhibit") —
+  `design/system/guidelines/30-writing.md`, [[Insomnia — the name for keep awake]].
+  "Add-ons" is the catalogue's name (Komble sidebar, Welcome, Settings).
 - **RFCs are `RFC-0NN-short-slug.md`** in `ewe/docs/`, each with a *Status*
   line at the top — statuses stay honest when superseded.
 - **Commits**: scoped, descriptive (`fix(kitty): …`, `feat(theme): …`).

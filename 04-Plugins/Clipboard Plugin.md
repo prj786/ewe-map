@@ -11,7 +11,10 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-clipboard` ·
 [github.com/prj786/ewe-plugin-clipboard](https://github.com/prj786/ewe-plugin-clipboard)
 
-First-party, shipped with ewe, removable.
+First-party **add-on since 0.25** (API 2 manifest, v1.1.1 in
+`plugins/bundle.json`): shipped inside the payload, **not installed on a
+fresh machine**, migrated once for upgraders who had it. Before 0.25 it was
+seeded on every install.
 
 A **scissors icon in the top bar**. Click it: your clipboard history (via
 [cliphist](https://github.com/sentriz/cliphist)) and an emoji grid, click to
@@ -38,11 +41,15 @@ flowchart LR
 - **Settings** (Komble → Plugins, or CLI): `emoji` — show the emoji tab
   (`ewe-plugin set ewe.clipboard emoji false`).
 - **Deps:** `cliphist` and `wl-clipboard` (both ewe dependencies).
-- **Remove / re-add:**
+- **Install / remove / re-add:**
   ```sh
-  ewe-plugin remove ewe.clipboard
-  ewe-plugin add https://github.com/prj786/ewe-plugin-clipboard.git --enable
+  ewe-plugin install ewe.clipboard      # or Komble → Add-ons
+  ewe-plugin remove ewe.clipboard       # remembered in [plugins].removed
+  ewe-plugin install ewe.clipboard      # forgets the removal, back from the payload
   ```
+  (The pre-0.25 advice `ewe-plugin add https://github.com/prj786/ewe-plugin-clipboard.git`
+  **failed** for a reserved `ewe.` id; since 0.25 `add` of a first-party
+  URL is an alias for `install`.)
 
 ## Related
 

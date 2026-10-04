@@ -16,7 +16,7 @@ flowchart TB
     DOWN["download the ISO<br/>prj786.github.io/download"] --> WRITE["write to USB<br/>verify the image"]
     WRITE --> BOOT["boot (UEFI)"]
     BOOT --> LIVE["LIVE SESSION<br/>greetd → autologin → full ewe desktop<br/>first start: ewe-setup under plymouth"]
-    LIVE --> TRY["try: desktop · Komble · cast · plugins<br/>tty3 = root rescue (Ctrl+Alt+F3)"]
+    LIVE --> TRY["try: desktop · Komble · add-ons (Welcome step)<br/>tty3 = root rescue (Ctrl+Alt+F3)"]
     TRY --> INSTALL["run ewe-install"]
 
     subgraph INSTALL["ewe-install"]
@@ -37,9 +37,26 @@ On Arch you already have:
 ```sh
 # /etc/pacman.conf ← [ewe] (see ewe-repo)
 sudo pacman -S ewe        # desktop, Komble, ewe-settings + dependencies
-ewe-setup                 # per-user deployment
-sudo /usr/share/ewe/install.sh   # system: greeter, plymouth, hibernate
+ewe-setup                 # per-user deployment (+ ewe-plugin seed / migrate)
+bash /usr/share/ewe/install.sh --no-packages   # system: greeter, plymouth, hibernate — AS YOUR USER
 ```
+
+> **Never `sudo /usr/share/ewe/install.sh`.** The installer refuses (exit 2,
+> `install.sh:38-50`): under sudo `$HOME` is `/root`, the desktop would
+> install into root's home and the system-wide session entry would point
+> at `/root/.config/hypr/start-hyprland.sh` — the greeter then dies
+> silently. It escalates by itself (`sudo_run`) exactly where root is needed.
+
+## What a fresh install gets (0.25)
+
+The shell core, ewe-settings, Komble and ewe-sync — **no add-ons**: no
+dock, no clipboard history, no Cast tile, no mail ([[Add-ons — opt-in, not preinstalled]]).
+The Welcome screen's **Add-ons** step (nothing pre-checked — *Install
+selected* / *Browse in Komble*) and Komble → Add-ons put them in. An
+**upgrade** keeps what the user had: `ewe-plugin migrate` runs from
+`ewe-setup` and from phase 60 when `EWE_PREVIOUS=1` (decided in
+`install.sh` before phase 50); a fresh machine runs `migrate --fresh`
+([[Add-ons — one-time migration for upgraders]]).
 
 ## The hacker path
 
@@ -55,4 +72,4 @@ restores them. Full details: `ewe/docs/MANUAL.md`.
 ## Related
 
 - [[ewe-os ISO]] · [[Packaging and Updates]] · [[Update Flow]] ·
-  [[ewe Desktop]]
+  [[ewe Desktop]] · [[Plugin System]]

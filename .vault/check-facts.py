@@ -61,9 +61,13 @@ def github_release_tag(repo):
 
 for repo, key in (("ewe", "ewe_de"), ("ewe-os", "ewe_os")):
     claimed = facts["versions"].get(key)
+    # A release in progress: the local checkout may sit on a release branch
+    # whose VERSION is already the NEXT version (versions.<key>_next) while
+    # main still carries the released one. Either is honest.
+    accepted = {claimed, facts["versions"].get(f"{key}_next")} - {None}
     if CI_MODE:
         actual = github_release_tag(repo)
-        if actual and claimed and actual != claimed:
+        if actual and claimed and actual not in accepted:
             bad(f"facts versions.{key} = {claimed!r} but prj786/{repo} main/VERSION says {actual!r} "
                 f"— update ewe-facts.json AND 12-Reference/Version Ledger.md together")
         if actual and not claimed:
@@ -72,8 +76,9 @@ for repo, key in (("ewe", "ewe_de"), ("ewe-os", "ewe_os")):
             print(f"! could not fetch {repo} main/VERSION (network) — skipping")
     else:
         actual = repo_version(repo)
-        if actual and claimed and actual != claimed:
-            bad(f"facts versions.{key} = {claimed!r} but {repo}/VERSION says {actual!r} "
+        if actual and claimed and actual not in accepted:
+            bad(f"facts versions.{key} = {claimed!r} (next: {facts['versions'].get(key + '_next')!r}) "
+                f"but {repo}/VERSION says {actual!r} "
                 f"— update ewe-facts.json AND 12-Reference/Version Ledger.md together")
         if actual and not claimed:
             bad(f"facts versions missing '{key}' ({repo}/VERSION says {actual!r})")
