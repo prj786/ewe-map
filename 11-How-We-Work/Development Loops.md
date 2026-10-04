@@ -40,12 +40,29 @@ Hyprland on its own Wayland socket and screenshots it with grim:
   installed" warnings (artifacts of nesting beside a live session).
 - Sandboxing: the driver sandboxes HOME/XDG and generates the tokens itself
   (`HS_SCHEME=ewe-light`, `HS_CONF=<ewe.conf>`), so the live config and
-  ewe-conf's sync hooks are never touched. `HS_PLUGINS=1` seeds the bundled
-  plugins; `HS_NO_APPS=1` hides Komble/ewe-settings so the in-shell
-  fallbacks open.
+  ewe-conf's sync hooks are never touched. `HS_NO_APPS=1` hides
+  Komble/ewe-settings so the in-shell fallbacks open; `HS_HEADLESS=1` uses
+  a headless SHOT output (when grim hangs); `HS_WORK=/tmp/hs-<you>` for
+  parallel runs (never share it).
+- **Add-ons in the harness (0.25):** a bare `up` has **no add-ons** — like
+  a fresh install (no dock!). `HS_PLUGINS=1` installs every add-on of the
+  payload; `HS_PAYLOAD=<dir>` picks that payload (default
+  `$EWE_PAYLOAD_PLUGINS`, else the checkout's `plugins/`);
+  `HS_PLUGIN_DIRS=a:b` adds fixture plugins (`tests/fixtures/plugins/
+  acme.v3demo` exercises every API 3 kind; refuses `ewe.*` ids — copy a
+  first-party add-on into a private payload instead); `HS_PRIVATE_BUS=1`
+  runs the shell on its own session D-Bus (needed with the phone add-on,
+  plus `EWE_PHONE_NO_DAEMON=1`).
 - `ewe-plugin` verbs restart the host's `ewe.service` unless given
-  `--no-restart` — systemctl is not sandboxed; use the driver for plugin
-  UI work.
+  `--no-restart` — systemctl is not sandboxed. **Even then** `install`/
+  `enable` run `hyprctl reload` and `set`/`place` poke `plugins reload`
+  against the current `HYPRLAND_INSTANCE_SIGNATURE` / `WAYLAND_DISPLAY`: the
+  driver runs every tool call with both **unset** — do the same in any
+  wrapper, and use `driver.sh ipc plugins reload` to reload the nested
+  shell ([[Troubleshooting Knowledge]]).
+- Never run `ewe-plugin` / `ewe-conf` / `ewe-theme` verbs against the real
+  HOME from a test; sandbox `HOME` + `XDG_*` and pass `--no-restart` /
+  `--no-hooks`.
 
 After editing shell scripts: `bash -n <file>`.
 
@@ -77,7 +94,25 @@ npm run tauri build   # release binary
 - Komble packaging: `makepkg -si` (the PKGBUILD is the packaging path —
   installs polkit policy + helper).
 - `.dev-mock/` folders exist in ewe-settings / ewe-sync / komble-arch for
-  mock data during frontend work.
+  mock data during frontend work (ewe-settings' add-on mocks are inline in
+  `dev-mock.html`: `?addons=fresh|dock|legacy`, `?komble=0`; its
+  `.dev-mock/` is local-only via `.git/info/exclude`).
+- Headless screenshots of a Tauri UI: Helium `--headless=new
+  --ozone-platform=headless --virtual-time-budget=6000`, or WebKit under a
+  headless `cage` — Brave headless hangs here ([[Troubleshooting Knowledge]]).
+
+## The add-on loop (0.25)
+
+```bash
+# in the add-on repo (one repo per add-on — ewe-plugin-<name>)
+EWE_PAYLOAD_PLUGINS=/tmp/pay HOME=/tmp/sb .../ewe/bin/ewe-plugin validate . --first-party
+./test.sh                                     # when the repo has one
+# in the ewe checkout: copy the add-on into a private payload, run the harness against it
+mkdir -p /tmp/pay && cp -r ../ewe-plugin-<name> /tmp/pay/ewe.<name>
+HS_WORK=/tmp/hs-me HS_HEADLESS=1 HS_PAYLOAD=/tmp/pay HS_PLUGINS=1 .claude/skills/run-ewe/driver.sh up
+.claude/skills/run-ewe/driver.sh open quicksettings && .claude/skills/run-ewe/driver.sh down
+# ship: bump manifest version → scripts/vendor-plugins.sh (updates plugins/bundle.json) → release ewe
+```
 
 ## The ISO loop
 

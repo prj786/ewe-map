@@ -40,8 +40,13 @@ it.
 
 | what | where |
 |---|---|
-| plugin seed/remove/keybinds + widget host | `ewe/tests/ewe-plugin-test.sh` |
-| global shortcuts (portal) | `ewe/tests/ewe-globalshortcuts-test.sh` |
+| plugin seed/install/migrate/remove/keybinds + widget host (61 checks at the 0.25 pre-carve commit) | `ewe/tests/ewe-plugin-test.sh` |
+| global shortcuts (portal; `ewe:*` ignored, 12 checks) | `ewe/tests/ewe-globalshortcuts-test.sh` |
+| X11 scale at login (9 checks) | `ewe/tests/x11-scale-test.sh` |
+| logind bridge (buffered reads, 17 checks) | `ewe/tests/logind-bridge-test.py` |
+| shell suite (17) | `ewe/tests/` |
+| add-ons' own logic | `test.sh` in `ewe-plugin-{sysmon,cast,phone,mail,dock,passwords}` (sample.sh contract 18 checks; cast scripts vs fake tools; bridge framing; mail compat contract; dock manifest + Rule 8 sweep) |
+| every API 3 kind in the harness | `ewe/tests/fixtures/plugins/acme.v3demo` with `HS_PLUGIN_DIRS` |
 | the one file: roundtrip + network sync + conflict guard | `ewe/tests/ewe-conf-roundtrip.sh` · `ewe-conf-network-test.sh` · `ewe-conf-sync-test.sh` (fixtures: `mock-nextcloud.py`) |
 | auth broker | `ewe/tests/ewe-auth-test.sh` |
 | Nextcloud account tool | `ewe/tests/ewe-cloud-test.sh` |
@@ -65,8 +70,16 @@ check. See [[Worktrees and Screenshots]].
 ## Field tests (real hardware, pending/ongoing)
 
 - **Cast**: phase C — real Samsung + real Chromecast (see
-  [[Roadmap — ewe-cast]]). `cast-check.sh` verifies the four known failure
-  classes.
+  [[Roadmap — ewe-cast]]). `sh ~/.config/ewe/plugins/ewe.cast/cast-check.sh`
+  verifies the known failure classes.
+- **Quiet lid (0.25, A2)**: the nested harness has no lid — the blink /
+  hibernate-resleep fixes need the user's laptop: close the lid, wait for
+  suspend, open — expect one wake, no blinks, the password field at once;
+  then a hibernate resume that stays awake.
+- **Add-ons (0.25)**: Komble's Add-ons catalogue and ewe-settings' add-on
+  panes are dev-mock tested only — the first real Tauri run is pending;
+  real-device check of every add-on on the carved shell (with and without
+  the dock) is pending.
 - **Hardware matrix**: tested on a QEMU/KVM VM and Intel Lunar Lake
   hardware; real-TV and multi-GPU reports are the scarce resource.
 - **Feedback** genuinely helps, especially from real hardware — the README

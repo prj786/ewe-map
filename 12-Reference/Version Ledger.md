@@ -8,18 +8,20 @@ up: "[[Home]]"
 
 # Version Ledger
 
-Versions as of **2026-09-21** (from the repos' `VERSION` files). Update
+Versions as of **2026-10-04** (from the repos' `VERSION` files). Update
 this note on every release (see [[Release Checklist]]).
 
 | component | version | notes |
 |---|---|---|
-| ewe (DE) | **0.24.1-beta** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z` |
+| ewe (DE) | **0.24.1-beta** released · **0.25.0-beta in progress** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z`. 0.25 lives on `release/0.25.0-beta` (add-ons, quiet lid, snappy Overview, X11 scale) — **not released, not tagged**; `ewe-facts.json` records it as `versions.ewe_de_next` so `vault-check` accepts either `VERSION` |
 | ewe-os (distro) | **0.12.4-beta** | its own version line, separate from the DE |
 | ewe-repo | rolling `x86_64` | no version — the release *is* the repository |
-| komble-arch | **0.18.1-beta** | icon line-glyph release; still not run against a live pacman |
-| ewe-settings | **0.16.4-beta** | icon line-glyph release; footer shows **ewe's** version, by design |
+| komble-arch | **0.18.1-beta** (+ `feat/addons`, unreleased) | Add-ons catalogue on the branch; still not run against a live pacman |
+| ewe-settings | **0.16.4-beta** (+ `feat/addons`, unreleased) | add-on awareness on the branch; footer shows **ewe's** version, by design |
 | ewe-sync | **0.14.3-beta** | icon line-glyph release; RFC-006; preinstalled from ISO 0.9-alpha on |
-| ewe-cast | phases A+B | built 2026-08-30; C = field-proven gate |
+| ewe-cast | phases A+B · **0.12.3** | built 2026-08-30; C = field-proven gate; 0.12.3 = the portal 1.4.1-2.1 threshold |
+| plugin API | **3** (0.25) | host loads 2 and 3; 1 refused |
+| add-ons | clipboard **1.1.1** · screenshot **1.1.0** · passwords **1.1.0** · insomnia, sysmon, ssh, vpn, media, places, phone, mail, cast, dock **1.0.0** | as recorded in `plugins/bundle.json` (`default: false`, `migrate: true` for all); repos `prj786/ewe-plugin-<name>` |
 
 ## Versioning rules
 
@@ -53,6 +55,15 @@ this note on every release (see [[Release Checklist]]).
 - ewe 0.9.7: `ewe-conf` generates `input.lua` + `user.lua` too.
 - 0.12.7: the "Top bar settings do nothing" bug — prefs not in `THEME_MAP`
   were dropped by `absorb` (now a rule, see [[Rules of the House]]).
+- 0.21.0-beta (2026-09-16): clipboard/screenshot/passwords extracted into
+  bundled plugins.
+- 0.24.1-beta (2026-09-25): shell death = Hyprland toplevel-export race;
+  DNS → systemd-resolved.
+- 0.25.0-beta (in progress, 2026-10-04): **add-ons** — plugin API 3, the
+  `Shell` singleton, `ewe-plugin install/migrate`, ten features carved out
+  of the shell into `ewe.*` add-ons, nothing pre-installed on a fresh
+  machine (D1–D8, [[Decision Index]]); quiet lid; one-step Overview; X11
+  scale from the DRM-connected set; `post_upgrade` refreshes the greeter.
 
 ## Related
 

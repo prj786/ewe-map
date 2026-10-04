@@ -24,6 +24,14 @@ publish is the last step of every wave.**
       `~/.local/share/ewe` — the non-git install path.
 - [ ] PKGBUILD/binary-release notes if the package changed (Komble,
       ewe-settings ships as GitHub releases installed by phase 20).
+- [ ] **Add-ons (0.25+):** every changed `ewe-plugin-<name>` repo has its
+      `manifest.json` version bumped and is pushed; then
+      `scripts/vendor-plugins.sh` re-vendors `plugins/<id>/` and updates
+      `plugins/bundle.json` (repo, commit, version, `default`, `migrate`) in
+      the same ewe commit. Never hand-edit `plugins/<id>/`
+      ([[One repo per add-on]], [[Add-ons — vendored payload and bundle.json]]).
+- [ ] `apiVersion` moved? Only if `Shell`, the public components or the
+      manifest schema changed — then every add-on manifest moves with it.
 
 ## 2. The Tauri apps (komble-arch, ewe-settings, ewe-sync)
 

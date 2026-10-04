@@ -29,9 +29,9 @@ flowchart TB
     ISO -->|installs| DE
     REPO["ewe-repo<br/>[ewe] pacman repo"] -->|"pacman -Syu<br/>rolling updates"| DE
 
-    DE --> SHELL["shell: bar · dock · launcher ·<br/>control centre · lock · OSD"]
-    DE --> PLUGINS["plugins: clipboard · screenshot ·<br/>passwords (+3rd party)"]
-    DE --> CAST["ewe-castd<br/>Miracast / Chromecast"]
+    DE --> SHELL["shell core: bar · launcher · Overview ·<br/>Quick settings · lock · OSD · Welcome"]
+    DE --> PLUGINS["13 add-ons (opt-in, 0.25): dock · Places · music ·<br/>Insomnia · sysmon · SSH · VPN · phone · mail · cast ·<br/>clipboard · screenshot · passwords (+3rd-party plugins)"]
+    PLUGINS --> CAST["ewe-castd<br/>Miracast / Chromecast"]
 
     KOMBLE["Komble"] -->|records installs| ONEFILE["the one file<br/>~/.config/ewe/ewe.conf"]
     SETTINGS["ewe-settings"] -->|edits| ONEFILE
@@ -49,7 +49,7 @@ flowchart TB
 
 **01 — Overview**
 - [[What is ewe]] — the pitch, in detail
-- [[Repository Map]] — the 8 repos + 4 plugin repos and how they relate
+- [[Repository Map]] — the 8 repos + 14 plugin repos and how they relate
 - [[Roadmap and Status]] — versions, RFCs, what's shipping vs planned
 - [[Glossary]] — Quickshell, layer-shell, Komble, the one file, …
 
@@ -67,9 +67,12 @@ flowchart TB
   [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
 
-**04 — Plugins**
-- [[Plugin System]] · [[Clipboard Plugin]] · [[Screenshot Plugin]] ·
-  [[Passwords Plugin]] · [[Example Plugin]]
+**04 — Plugins and add-ons** (API 3; nothing pre-installed since 0.25)
+- [[Plugin System]] · [[Example Plugin]]
+- Add-ons: [[Clipboard Plugin]] · [[Screenshot Plugin]] · [[Passwords Plugin]] ·
+  [[Insomnia Plugin]] · [[System Monitor Plugin]] · [[SSH Plugin]] ·
+  [[VPN Plugin]] · [[Music Plugin]] · [[Places Plugin]] · [[Phone Plugin]] ·
+  [[Mail Plugin]] · [[Cast Plugin]] · [[Dock Plugin]]
 
 **05 — Workflows**
 - [[Install Flow]] · [[Update Flow]] · [[Cast Flow]] ·
@@ -88,7 +91,15 @@ flowchart TB
   [[RFC-004 — ewe-castd, Python not Rust]] ·
   [[Process Split — Shell vs Apps]] · [[Plugins Unsandboxed]] ·
   [[Komble — Arch Forced Decisions]] · [[Unsigned Repo — for now]] ·
+  [[Terminal Shell — zsh in kitty, bash at login]] · [[One Mark — the line-art logo]] ·
+  [[Overview Takes the Screen]] · [[App Icons — one line glyph per app]] ·
   [[Parked and Rejected Ideas]]
+- 0.25 (2026-10-04): [[Add-ons — opt-in, not preinstalled]] ·
+  [[Add-ons — vendored payload and bundle.json]] ·
+  [[Add-ons — one-time migration for upgraders]] · [[Plugin API 3]] ·
+  [[Insomnia — the name for keep awake]] · [[One repo per add-on]] ·
+  [[Add-on deps declared, not split]] · [[Quiet Lid — touch only a disabled panel]] ·
+  [[Gmail Split — core Google, Mail add-on]] · [[X11 Scale — smallest lit scale]]
 
 **09 — Rules** (the contracts)
 - [[Rules of the House]] · [[Contracts and Public API]] · [[Security Posture]]
