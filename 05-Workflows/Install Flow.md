@@ -17,13 +17,14 @@ flowchart TB
     WRITE --> BOOT["boot (UEFI)"]
     BOOT --> LIVE["LIVE SESSION<br/>greetd → autologin → full ewe desktop<br/>first start: ewe-setup under plymouth"]
     LIVE --> TRY["try: desktop · Komble · add-ons (Welcome step)<br/>tty3 = root rescue (Ctrl+Alt+F3)"]
-    TRY --> INSTALL["run ewe-install"]
+    TRY --> INSTALL["run ewe-installer (or ewe-install)"]
 
     subgraph INSTALL["ewe-install"]
         A1["archinstall:<br/>disks · locale · users · bootloader"]
         A2["wrapper layers:<br/>[ewe] repo + ewe package<br/>greetd → cage → Quickshell greeter"]
         A3["per-user deploy (ewe-setup)<br/>for every created account"]
-        A1 --> A2 --> A3
+        A4["the picked add-ons (0.13.0-beta):<br/>ewe-plugin install id --no-restart<br/>as the user, in the chroot, best-effort"]
+        A1 --> A2 --> A3 --> A4
     end
 
     INSTALL --> REBOOT["reboot → graphical greeter → desktop ready"]
@@ -51,8 +52,12 @@ bash /usr/share/ewe/install.sh --no-packages   # system: greeter, plymouth, hibe
 
 The shell core, ewe-settings, Komble and ewe-sync — **no add-ons**: no
 dock, no clipboard history, no Cast tile, no mail ([[Add-ons — opt-in, not preinstalled]]).
-The Welcome screen's **Add-ons** step (nothing pre-checked — *Install
-selected* / *Browse in Komble*) and Komble → Add-ons put them in. An
+The **installer's Add-ons step** (ewe-os 0.13.0-beta — the live payload's
+catalogue, nothing pre-checked, installed for the new account at the end of
+the run, each one best-effort), the Welcome screen's **Add-ons** step
+(nothing pre-checked — *Install selected* / *Browse in Komble*) and Komble →
+Add-ons put them in. The **live stick** is the exception: its live user gets
+`ewe.dock` from `ewe-live-deploy` so *Install ewe* has a dock to sit in. An
 **upgrade** keeps what the user had: `ewe-plugin migrate` runs from
 `ewe-setup` and from phase 60 when `EWE_PREVIOUS=1` (decided in
 `install.sh` before phase 50); a fresh machine runs `migrate --fresh`

@@ -65,6 +65,9 @@ publish is the last step of every wave.**
 - [ ] `sudo ./build.sh` → `out/ewe-<v>-x86_64.iso`; `./run-iso.sh` smoke
       test in QEMU/KVM (UEFI).
 - [ ] Installer path re-tested in a throwaway VM (`ewe-install`).
+- [ ] Add-ons step (0.13.0-beta+): lists the payload's add-ons, nothing
+      pre-checked; pick a few → they, and only they, are installed and
+      enabled on the target; the live session has the dock (`ewe-live-deploy`).
 
 ## 6. The website
 

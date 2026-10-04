@@ -14,7 +14,7 @@ this note on every release (see [[Release Checklist]]).
 | component | version | notes |
 |---|---|---|
 | ewe (DE) | **0.25.0-beta** | canonical in repo-root `VERSION`; mirrored in `Globals.version` (Settings sidebar) — bump both, tag `vX.Y.Z`. 0.25.0-beta released 2026-10-04 (add-ons, quiet lid, snappy Overview, X11 scale); `vault-check` also accepts `versions.<key>_next` for a branch whose `VERSION` is already the next one |
-| ewe-os (distro) | **0.12.4-beta** | its own version line, separate from the DE |
+| ewe-os (distro) | **0.12.4-beta** released · **0.13.0-beta** in progress | its own version line, separate from the DE; 0.13.0-beta = the ISO for ewe 0.25 (installer Add-ons step, `addons` helper verb, `ewe-install --addons`, live user gets the dock) on `feat/addons-installer`, not yet tagged — `ewe_os_next` in `ewe-facts.json` until it merges |
 | ewe-repo | rolling `x86_64` | no version — the release *is* the repository |
 | komble-arch | **0.19.0-beta** | Add-ons catalogue (`--addons`, `plugin_install`); still not run against a live pacman |
 | ewe-settings | **0.17.0-beta** | add-on aware panes, Insomnia, guarded hypridle wake; footer shows **ewe's** version, by design |

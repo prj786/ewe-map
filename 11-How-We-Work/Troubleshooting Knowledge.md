@@ -263,6 +263,27 @@ must point at the new path). The `cast` IPC target is an alias of
 - **A single missing package must never abort the run** — installers
   warn-and-skip and return 0 (this was the root cause of a past "no
   greeter" failure). Don't regress `lib/pkg.sh`.
+- **An add-on must never abort the ISO install** (ewe-os 0.13.0-beta) —
+  the helper's `addons` verb and `ewe-install`'s `install_addons` report
+  `!! add-on <id>: why` / `{"addon":id,"ok":false}` and exit 0; only a
+  malformed id list or an unmounted target is an error.
+- **Add-ons in the target chroot** — run `ewe-plugin install <id>
+  --no-restart` **as the new user** (`arch-chroot … runuser -u $u -- env -u
+  HYPRLAND_INSTANCE_SIGNATURE -u WAYLAND_DISPLAY -u DBUS_SESSION_BUS_ADDRESS`):
+  `--no-restart` keeps the tool away from `systemctl --user`, and the
+  keybind writer only runs `hyprctl reload` when the signature is set.
+  Prefer the copy `ewe-setup` just deployed (`~/.local/share/ewe/bin/
+  ewe-plugin`) over `/usr/bin`'s. `ewe-setup` on a fresh home already ran
+  `migrate --fresh` (marker = all ids considered, nothing installed), so
+  installing picks afterwards migrates nothing — proven in a sandbox
+  (`EWE_INSTALL_LIB=1 . ewe-install` sources only the functions; override
+  `chroot_user`/`chroot_root`, set **`EWE_INSTALL_MNT`** — the script
+  derives `MNT` from it, a plain `MNT=` export is overwritten).
+- **The live ISO has no dock since ewe 0.25 unless `ewe-live-deploy`
+  installs it** — a fresh account has no add-ons; the live user gets
+  `ewe.dock` (only that) so the pinned *Install ewe* has a surface. The
+  installer also autostarts (`apps.startup`) and is first in the launcher
+  (`apps.pinned` is still read by the core Launcher).
 - **Everything through `run()`/`sudo_run()`** — direct `cp`/`ln`/`pacman`/
   `systemctl` in a phase breaks `--dry-run` honesty.
 - **Hyprland config silently ignored** — Hyprland < 0.55 ignores Lua
