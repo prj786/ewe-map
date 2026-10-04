@@ -121,6 +121,20 @@ the fix for each.**
 - **Never put a state-dependent duration (`cond ? a : b`) inside a Behavior's
   animation** — the Behavior fires before the binding re-evaluates and plays
   the other direction's value. Sequence with an explicit flag + Timer.
+- **X11 apps (Steam, Java/ProjectLibre) huge on a 1x external** — X11 has
+  one scale for all screens. `start-hyprland.sh` decides it at login: it used
+  the PRIMARY display of the `lastKey` profile, and `lastKey` only moves when
+  Settings → Displays saves, so a docked login sized X11 for the 1.8x laptop.
+  Since 2026-10-04 it reads the connected set from `/sys/class/drm`, picks
+  that set's profile and takes the SMALLEST lit scale (soft on the laptop,
+  right size everywhere). Check with `env | grep -E 'GDK_SCALE|STEAM_FORCE|EWE_X11'`
+  and `hyprctl getoption xwayland:force_zero_scaling`. Docking after login still
+  needs a re-login. Test: `tests/x11-scale-test.sh`.
+- **Java/Swing apps with jagged text** — outside GNOME the JDK gets no font
+  hints, so Swing draws un-antialiased. Fix per app with
+  `-Dawt.useSystemAAFontSettings=on` (ProjectLibre: `JAVA_OPTS` in
+  `~/.projectlibre/run.conf`). Not exported globally on purpose:
+  `JDK_JAVA_OPTIONS`/`_JAVA_OPTIONS` print a "Picked up" line on every `java` run.
 
 ## Installer
 
