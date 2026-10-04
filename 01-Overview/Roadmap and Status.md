@@ -10,7 +10,9 @@ up: "[[Home]]"
 
 Snapshot as of **2026-10-04**. Released: **ewe (DE) 0.25.0-beta** (2026-10-04, with Komble
 0.19.0-beta and ewe-settings 0.17.0-beta), **ewe-os (distro) 0.12.4-beta**
-(no ISO for 0.25 — the release stops at the ewe-repo publish). The README speaks of a
+(no ISO for 0.25 yet — the release stopped at the ewe-repo publish; **ewe-os
+0.13.0-beta** is in progress on `feat/addons-installer`: the installer's
+Add-ons step, see [[ewe-os ISO]]). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 ## 0.25.0-beta — what is in it (released 2026-10-04)
@@ -24,6 +26,7 @@ Snapshot as of **2026-10-04**. Released: **ewe (DE) 0.25.0-beta** (2026-10-04, w
 | **X11 scale** = smallest lit scale of the DRM-connected set | ewe `fix/x11-scale-notes` | merged |
 | Komble: Add-ons catalogue, `--addons`, `plugin_install` | komble-arch `feat/addons` (0.18.1-beta base) | built, dev-mock tested; untested in Tauri |
 | ewe-settings: `addons_state`/`open_addons`, add-on aware panes, Insomnia, guarded hypridle | ewe-settings `feat/addons` (0.16.4-beta base) | built, dev-mock tested |
+| ewe-os 0.13.0-beta: installer **Add-ons step** (live payload catalogue, nothing pre-checked, Summary row), `addons` helper verb → `ewe-install --addons-only` (per user in the chroot, best-effort), `ewe-install --addons` + prompt, live user gets `ewe.dock` | ewe-os `feat/addons-installer` | built; sandbox-proven add-on loop, headless screenshot of the step; not yet tagged/built — QEMU pass pending |
 
 Decisions: [[Decision Index]] rows 16–26. Released as one wave (ewe#46,
 komble-arch#10, ewe-settings#18, ewe-map#3), then the ewe-repo publish; no
@@ -49,7 +52,7 @@ project's memory:
 flowchart LR
     subgraph shipping["shipping / beta"]
         EWE["ewe DE 0.25.0-beta<br/>add-ons · quiet lid · snappy Overview"]
-        OS["ewe-os 0.12.4-beta"]
+        OS["ewe-os 0.12.4-beta<br/>0.13.0-beta in progress: installer Add-ons step"]
         REPO["ewe-repo — rolling"]
         K["Komble 0.19.0-beta — Add-ons catalogue,<br/>early vs live pacman"]
         S["ewe-settings 0.17.0-beta — shipped"]

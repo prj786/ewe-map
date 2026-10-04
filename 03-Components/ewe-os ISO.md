@@ -9,7 +9,7 @@ up: "[[Home]]"
 # ewe-os — the Distro / ISO
 
 `~/Projects/ewe/ewe-os` · [github.com/prj786/ewe-os](https://github.com/prj786/ewe-os) ·
-**0.12.4-beta** (distro has its own version line; the DE's `ewe` package has another)
+**0.12.4-beta** released · **0.13.0-beta in progress** on `feat/addons-installer` (the ISO for ewe 0.25's add-ons; distro has its own version line; the DE's `ewe` package has another)
 
 The distro layer: the **archiso profile** that builds the live/install ISO.
 The DE, apps and packaging live in their own repos — this one turns them
@@ -32,13 +32,14 @@ uses), and greetd + the live user service are enabled on top.
 ```mermaid
 flowchart TB
     BOOT["boot the ISO"] --> LIVE["live session<br/>greetd → autologin → full ewe desktop"]
-    LIVE --> TRY["try everything before touching a disk:<br/>desktop, Komble, cast, plugins"]
+    LIVE --> TRY["try everything before touching a disk:<br/>desktop, Komble, add-ons (the live user has the dock)"]
     LIVE --> TT3["tty3: root rescue console (Ctrl+Alt+F3)<br/>tty1: the greeter"]
     LIVE --> INSTALL["ewe-install — guided disk install"]
 
     INSTALL --> AI["archinstall<br/>disks · locale · users · bootloader"]
     AI --> LAYER["wrapper layers on top:<br/>[ewe] repo · ewe package · greeter stack<br/>(greetd → cage → Quickshell greeter)<br/>per-user deploy for every created account"]
-    LAYER --> REBOOT["reboot → graphical greeter, desktop ready"]
+    LAYER --> ADDONS["the picked add-ons, per user:<br/>ewe-plugin install id --no-restart (chroot)<br/>best-effort — never fails the install"]
+    ADDONS --> REBOOT["reboot → graphical greeter, desktop ready"]
 
     TRY -.-> INSTALL
 ```
@@ -52,9 +53,32 @@ flowchart TB
 ## The installer app
 
 `installer/` is a **Tauri GUI (`ewe-installer`)** — the guided install's
-face. The backend still rides archinstall for disks/locale/users/bootloader
-(the README's contract), then layers the `[ewe]` repo, the `ewe` package,
-the greeter stack and the per-user deploy.
+face (RFC-003 in `ewe-os/docs/`): Welcome · Network · Time & place · Disk ·
+Your account · **Add-ons** (0.13.0-beta) · Summary · Install. Nothing
+privileged runs in the app: every step is a verb of the pkexec'd
+`installer/helper/ewe-install-helper` (`partition mkfs pacstrap hibernate
+settz setlocale sethostname user layer upgrade addons bootloader reboot`);
+`layer` and `addons` delegate to `ewe-install --layer-only` /
+`--addons-only` — one implementation, two faces.
+
+**The Add-ons step** lists every add-on the live payload carries
+(`/usr/share/ewe/plugins/bundle.json` + manifests, read by the backend's
+`addons` command — no user config needed), grouped by category, with the
+manifest's Theme icon name mapped to the bundled Lucide face. **Nothing is
+pre-checked** ([[Add-ons — opt-in, not preinstalled]]); the Dock row says
+*Recommended if you like a dock*. The picks are installed after
+`ewe-setup` (which on a fresh account runs `migrate --fresh` and installs
+nothing) as the new user in the chroot — `ewe-plugin install <id>
+--no-restart`, Hyprland/Wayland/D-Bus variables dropped — each one
+best-effort: `{"addon":id,"ok":false}` is shown on the Done screen and the
+install still succeeds. An ISO with an older ewe (no `bundle.json`) has no
+such step. TUI: `ewe-install --addons id,id`, a prompt in guided mode.
+
+**The live session** is the one non-opt-in place: a fresh 0.25 account has
+no dock, and the stick pins *Install ewe* in the dock — so
+`ewe-live-deploy` installs `ewe.dock` for the live user only (the installer
+also autostarts and is first in the launcher). Installed systems get
+nothing they did not pick.
 
 ## Docs in-repo
 

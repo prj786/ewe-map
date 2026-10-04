@@ -6,6 +6,7 @@
   "versions": {
     "ewe_de": "0.25.0-beta",
     "ewe_os": "0.12.4-beta",
+    "ewe_os_next": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.19.0-beta",
     "ewe_sync": "0.14.3-beta",
