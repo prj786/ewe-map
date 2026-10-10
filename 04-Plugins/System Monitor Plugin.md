@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-sysmon` ·
 [github.com/prj786/ewe-plugin-sysmon](https://github.com/prj786/ewe-plugin-sysmon)
-· v1.0.0 · API 3 · **add-on since 0.25** (was the CPU + memory meters in
+· v1.1.0 (in ewe 0.25.1; 1.0.0 in 0.25.0) · API 3 · **plugin since 0.25** (was the CPU + memory meters in
 Quick settings).
 
 | kind | file | shows |
@@ -20,9 +20,12 @@ Quick settings).
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.sysmon`.
-- **Setting:** `show_in_bar` (bool, default false) — off because a bar
-  widget polls for the whole session.
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.sysmon`.
+- **The bar readout = the host's Show in bar** (1.1.0): manifest
+  `barWidget.defaultShown: false` — off because a bar widget polls for the
+  whole session. 1.0's own `show_in_bar` setting is gone; a value it stored
+  still counts until Show in bar is set (`ewe-plugin bar ewe.sysmon on`,
+  Komble → Options → In the bar).
 - **Sampling only while held:** `hold()`-based — the tile samples while
   `panelOpen`, the bar readout while shown; nobody holds → no process.
   Every 1.5 s, **3 s on battery** (`Shell.lowPower`).

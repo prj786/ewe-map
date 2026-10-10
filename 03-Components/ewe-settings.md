@@ -55,25 +55,52 @@ The IPC verbs this app depends on (`reload`, `ping`, `version`) live in
 ewe's `Settings.qml`. They are **public API in both directions**: renaming
 one breaks an installed binary.
 
-## Add-on awareness (0.25, branch `feat/addons`)
+## Plugin awareness (0.25, branch `feat/addons`)
 
-Settings edits prefs that add-ons read, so it has to know which are there:
+Since D10 ([[Plugin Settings Live With the Plugin]], ewe-settings
+0.18.0-beta) **no plugin's settings live here** — they are in Komble's
+Options dialog. Settings only points there:
 
 - Backend `addons_state` — a cached `ewe-plugin list --json` (5 s cache;
   **legacy fallback**: no `available` key = an older ewe = everything
-  counts as installed) and `open_addons` → `komble --addons`.
-- **Layout → Dock** shows a note + "Get add-ons" when `ewe.dock` is absent;
-  **Account → Mail** notes the `ewe.mail` add-on and **stops polling** the
-  `mail` target when it is missing; **Layout → Top bar** lists plugin bar
-  widgets as `plugin:<id>` rows (setPrefs → `write_prefs` → ewe-conf absorbs
-  into user-theme); **System → Add-ons** group: "Browse add-ons".
-- `qs_ipc`: a missing add-on target is **never an error**
+  counts as installed) and `open_addons(options?)` → `komble --addons`, or
+  `komble --options=<id>` with an id.
+- **Layout** (was *Layout and dock*): one *Dock* row — "Dock options"
+  (opens the Dock's Options) or "Get plugins" when `ewe.dock` is absent; the
+  *Top bar* group keeps the core items, **Bar icons** (moved here from
+  Appearance — it was in both) and one "Plugins in the bar → Open Plugins"
+  row (the per-plugin `plugin:<id>` rows are gone: Show in bar is each
+  plugin's switch). **User** has no Mail section (Mail's `notify` is its own
+  setting; the account is ewe-sync's) and the dead `mail_login/status/
+  logout` backend is gone. **System → Plugins**: "Open Plugins".
+- Hints follow what is installed: **Shortcuts** hides a SHORTCUTS.md row or
+  heading that names an uninstalled `ewe.*` plugin (Cast, Passwords,
+  Screenshots); **Screensaver** mentions Insomnia and **Networking** the VPN
+  card only when installed.
+- `qs_ipc`: a missing plugin target is **never an error**
   (`ADDON_TARGETS = ["mail"]`); `google` and `cloud` stay core targets.
+  Since 2026-10-10 the reply is **stdout only** (stderr appended to it made
+  a good `status` unparsable) and a failure is an `Err`.
+- **"The shell isn't running"** (2026-10-10): `shell_running` used to be
+  asked once, at open — a shell restart at that moment (login, an update, a
+  plugin install) left the note up for the window's life. Now it is asked
+  on focus and every 10 s while down, needs **two misses** before it shows,
+  `qs_call` has a **3 s timeout** and retries **without `--pid`** when the
+  pid call fails. The User pane keeps the last good `cloud`/`google` status
+  instead of flipping to "isn't running" on one unreadable reply, and shows
+  a sync conflict with *Resolve in ewe-sync*.
+- **Appearance → Glass and transparency**
+  ([[Glass — the slider moves the bar only]]): Glass toggle (returns to the last level, localStorage), Bar
+  opacity 10–100 (holds the released value until the write lands), App
+  blur, Window transparency (now `set_conf`, dimmed while App blur is on);
+  all dimmed with a note while Reduce transparency / Increase contrast
+  force them.
 - Screensaver pane says **Insomnia** (D5, commit 265b0cc).
 - `hypr.js` emits a **guarded** `after_sleep_cmd` (no unconditional dpms-on
   — [[Quiet Lid — touch only a disabled panel]], commit 2e9c698).
 - Dev mocks live inline in `dev-mock.html` (`?addons=fresh|dock|legacy`,
-  `?komble=0`); `.dev-mock/` is local-only (`.git/info/exclude`).
+  `?komble=0`, `?sync=conflict`, `?shell=down`); `.dev-mock/` is local-only
+  (`.git/info/exclude`).
 - Depends on the public contract: `komble --addons`, and `list --json`
   fields `available` / `removed` / `plugins[].kinds`
   ([[Contracts and Public API]]).
@@ -95,6 +122,6 @@ desktop rather than a product with its own release line.
 
 > **Build guard:** ewe-settings stays an ordinary window in its own
 > process, writes atomically and merges, needs no privileges, and never
-> renames the `reload`/`ping`/`version` verbs. A missing add-on IPC target
+> renames the `reload`/`ping`/`version` verbs. A missing plugin IPC target
 > is never an error; `google`/`cloud` stay core. Rationale:
 > [[Process Split — Shell vs Apps]] and [[Contracts and Public API]].

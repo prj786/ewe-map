@@ -11,7 +11,7 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-screenshot` ·
 [github.com/prj786/ewe-plugin-screenshot](https://github.com/prj786/ewe-plugin-screenshot)
 
-First-party **add-on since 0.25** (API 2 manifest, v1.1.0): shipped inside
+First-party **plugin since 0.25** (API 2 manifest, v1.1.0): shipped inside
 the payload, **not installed on a fresh machine**, migrated once for
 upgraders who had it.
 
@@ -35,7 +35,7 @@ flowchart LR
   `pop <path>`, `dismiss`.
 - **Deps:** `grim`, `slurp`, `wl-clipboard` (ewe dependencies).
 
-Install / remove / re-add (Komble → Add-ons, or):
+Install / remove / re-add (Komble → Plugins, or):
 
 ```sh
 ewe-plugin install ewe.screenshot
@@ -43,7 +43,7 @@ ewe-plugin remove ewe.screenshot
 ewe-plugin install ewe.screenshot     # not `add <url>` — that failed for a reserved id before 0.25
 ```
 
-The Print keybinds exist only while the add-on is enabled
+The Print keybinds exist only while the plugin is enabled
 (`generated/plugin-keybinds.lua`).
 
 ## Related

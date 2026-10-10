@@ -11,11 +11,11 @@ up: "[[Home]]"
 Two optional system integrations, both driven from Quick settings, both
 built on existing daemons (no reimplementation).
 
-> **Add-ons since 0.25:** the phone UI is the [[Phone Plugin]] (`ewe.phone`,
+> **Plugins since 0.25:** the phone UI is the [[Phone Plugin]] (`ewe.phone`,
 > repo `prj786/ewe-plugin-phone`) and the VPN tile/page is the [[VPN Plugin]]
 > (`ewe.vpn`, repo `prj786/ewe-plugin-vpn`); the SSH tile/page is the
 > [[SSH Plugin]] (`ewe.ssh`). Neither is installed on a fresh machine
-> (Komble → Add-ons or `ewe-plugin install <id>`). What stays **core**: the
+> (Komble → Plugins or `ewe-plugin install <id>`). What stays **core**: the
 > `network.vpn` / `network.ssh` ewe-conf sections, the NM backends, the
 > libreswan setup and the ewe-settings Network pane; the Auth secret prompt.
 
@@ -31,8 +31,8 @@ through **KDE Connect's daemon** — only the daemon; the UI is all ewe:
   control centre
 
 **Plumbing:** `kdeconnect` ships in the package set (phase 20, declared in
-the add-on's `requires`); `kdeconnectd` is started by the add-on's service
-when missing and D-Bus-activated on demand; the add-on talks to it through
+the plugin's `requires`); `kdeconnectd` is started by the plugin's service
+when missing and D-Bus-activated on demand; the plugin talks to it through
 its own `kdeconnect-bridge.py` (run from `pluginDir`) — Quickshell has no
 generic QML D-Bus client, so the Python bridge owns every D-Bus call and
 speaks NDJSON over stdio to the `Phone` singleton (same pattern as BtAgent

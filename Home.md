@@ -67,9 +67,9 @@ flowchart TB
   [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
 
-**04 — Plugins and add-ons** (API 3; nothing pre-installed since 0.25)
+**04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)
 - [[Plugin System]] · [[Example Plugin]]
-- Add-ons: [[Clipboard Plugin]] · [[Screenshot Plugin]] · [[Passwords Plugin]] ·
+- Plugins: [[Clipboard Plugin]] · [[Screenshot Plugin]] · [[Passwords Plugin]] ·
   [[Insomnia Plugin]] · [[System Monitor Plugin]] · [[SSH Plugin]] ·
   [[VPN Plugin]] · [[Music Plugin]] · [[Places Plugin]] · [[Phone Plugin]] ·
   [[Mail Plugin]] · [[Cast Plugin]] · [[Dock Plugin]]

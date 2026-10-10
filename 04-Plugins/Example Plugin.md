@@ -14,7 +14,7 @@ up: "[[Home]]"
 The reference plugin for ewe — **copy it to start your own** (or run
 `ewe-plugin create`, which generates the same shape). It targets
 `apiVersion` 2 (still loaded by 0.25); the API 3 kinds are exercised by
-`ewe/tests/fixtures/plugins/acme.v3demo` and every add-on repo
+`ewe/tests/fixtures/plugins/acme.v3demo` and every plugin repo
 ([[Plugin System]]). Three entry points, one file each:
 
 | kind | file | shows |

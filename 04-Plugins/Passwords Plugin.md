@@ -11,7 +11,7 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-passwords` ·
 [github.com/prj786/ewe-plugin-passwords](https://github.com/prj786/ewe-plugin-passwords)
 
-First-party **add-on since 0.25** (API 2 manifest, v1.1.0): shipped inside
+First-party **plugin since 0.25** (API 2 manifest, v1.1.0): shipped inside
 the payload, **not installed on a fresh machine**, migrated once for
 upgraders who had it.
 
@@ -44,7 +44,7 @@ flowchart LR
 - `ewe-pass` in the repo is the tool the panel runs;
   `./ewe-pass status` says what it will do and why not.
 
-Install / remove / re-add (Komble → Add-ons, or):
+Install / remove / re-add (Komble → Plugins, or):
 
 ```sh
 ewe-plugin install ewe.passwords
@@ -52,7 +52,7 @@ ewe-plugin remove ewe.passwords
 ewe-plugin install ewe.passwords      # not `add <url>` — that failed for a reserved id before 0.25
 ```
 
-`Super+P` exists only while the add-on is enabled
+`Super+P` exists only while the plugin is enabled
 (`generated/plugin-keybinds.lua`).
 
 ## Related

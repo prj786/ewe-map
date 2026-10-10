@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-cast` ·
 [github.com/prj786/ewe-plugin-cast](https://github.com/prj786/ewe-plugin-cast)
-· v1.0.0 · API 3 · **add-on since 0.25** (was `Cast.qml` — the shell's end
+· v1.0.0 · API 3 · **plugin since 0.25** (was `Cast.qml` — the shell's end
 of [[ewe-cast]]; the daemon, phase 30's system setup and SharePicker stay
 core).
 
@@ -24,7 +24,7 @@ core).
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.cast`.
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.cast`.
 - **IPC:** target `ewe.cast` — `toggle · scan · start <sink-id> · stop ·
   status · legacy`; alias **`cast`** with the same verbs (the pre-0.25
   target; `qs ipc call cast legacy` still works).
@@ -38,7 +38,7 @@ core).
   `EWE_CASTD=/path/to/ewe-castd`.
 - **Portal threshold:** the patched `xdg-desktop-portal-hyprland` must be
   **≥ 1.4.1-2.1** (stock Arch `1.4.1-2` reintroduced the #424 freeze; ewe
-  ships `1.4.1-2.1` — phase 90's check and the add-on's README say so).
+  ships `1.4.1-2.1` — phase 90's check and the plugin's README say so).
 - `./test.sh` runs the scripts against fake `systemctl`/`iw`/`pacman`/`pactl`.
 
 > **Build guard:** keep the `cast` alias and verbs; the tile is not

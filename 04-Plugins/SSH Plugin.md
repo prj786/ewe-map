@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-ssh` ·
 [github.com/prj786/ewe-plugin-ssh](https://github.com/prj786/ewe-plugin-ssh)
-· v1.0.0 · API 3 · **add-on since 0.25** (was the SSH tile + page in Quick
+· v1.0.0 · API 3 · **plugin since 0.25** (was the SSH tile + page in Quick
 settings).
 
 Your `~/.ssh/config` (+ `config.d/*`) hosts in Quick settings: click a host
@@ -27,9 +27,9 @@ saved for that host (paste-once editor; `SSH_HOST`, `SOCKS_PORT` default
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.ssh`.
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.ssh`.
 - **Stays core:** hosts are *added* in Settings → Network → SSH
-  (`ewe-conf` `[network.ssh]` managed block); the add-on only reads them.
+  (`ewe-conf` `[network.ssh]` managed block); the plugin only reads them.
 - **Files kept where they were:** browse scripts in
   `~/.config/quickshell/ssh-browse/<host>.sh` (not `stateDir`, so nothing a
   user saved is lost; not synced, not in `ewe.conf`).

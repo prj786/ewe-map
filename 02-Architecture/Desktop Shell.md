@@ -49,19 +49,19 @@ flowchart TB
 
 **Core (preinstalled):** bar, launcher, Overview, the Quick settings
 basics (home, wifi, bt, audio, cal, notifs), notifications, lock, OSD,
-polkit, Welcome, greeter, SharePicker. **Everything else is an add-on**
+polkit, Welcome, greeter, SharePicker. **Everything else is a plugin**
 since 0.25 — a plugin in the same process, shipped in the payload, installed
 on request ([[Add-ons — opt-in, not preinstalled]], [[Plugin System]]).
 A fresh install has **no dock** until the user adds one.
 
 - **Top bar** — indicators; bar widgets and the Quick settings pill's
   glyphs are pluggable (`bar-widget`, `bar-status`); the clipboard
-  scissors, screenshot camera, phone and mail glyphs are add-ons'.
+  scissors, screenshot camera, phone and mail glyphs are plugins'.
 - **Quick settings** — a home grid of tiles (built-ins first, then
-  add-ons' `quick-tile`s; empty slots collapse) and a rail of pages
+  plugins' `quick-tile`s; empty slots collapse) and a rail of pages
   (`quick-page` keys; an unknown key falls back to `home`). Cast, VPN, SSH,
-  Mobile and Mail pages come from add-ons (see [[Cast Flow]]).
-- **Welcome** — first run; since 0.25 has an **Add-ons step** (nothing
+  Mobile and Mail pages come from plugins (see [[Cast Flow]]).
+- **Welcome** — first run; since 0.25 has an **Plugins step** (nothing
   pre-checked; *Install selected* / *Browse in Komble*).
 - **Greeter** — runs as its own session: `greetd → cage → Quickshell greeter`.
 - **Share picker** — the portal's screen-share picker is backed by the shell
@@ -78,13 +78,13 @@ The shell exposes verbs over IPC. Some are **public API in both directions**
 |---|---|---|
 | ewe-settings | `qs ipc call settings reload` | re-read user-theme.json, apply live |
 | ewe-sync | `qs ipc call cloud refresh` | refresh the shell's account card |
-| clipboard add-on | `qs ipc call ewe.clipboard toggle` | toggle clipboard history |
-| cast add-on | `qs ipc call ewe.cast scan · start <sink> · stop · status · legacy` (alias `cast`) | drive ewe-castd |
-| dock add-on | `qs ipc call launcher toggle` (alias of `ewe.dock launcher`) | the pinned-apps popup |
+| clipboard plugin | `qs ipc call ewe.clipboard toggle` | toggle clipboard history |
+| cast plugin | `qs ipc call ewe.cast scan · start <sink> · stop · status · legacy` (alias `cast`) | drive ewe-castd |
+| dock plugin | `qs ipc call launcher toggle` (alias of `ewe.dock launcher`) | the pinned-apps popup |
 | Hyprland `global` | `ewe:overview` (Super, release bind) | toggle the Overview |
 | example plugin | `qs ipc call example.hello toggle` | demo verb |
 
-Add-ons that replaced built-ins keep the old target as an **alias**
+Plugins that replaced built-ins keep the old target as an **alias**
 (`cast launcher places player mail`) — Rule 4; the full list is in
 [[IPC Verb Reference]].
 
@@ -93,7 +93,7 @@ Add-ons that replaced built-ins keep the old target as an **alias**
 A QML error in the shell takes the whole desktop down with it — which is
 exactly why the big, rarely-open UIs (Settings, Komble, sync) were moved
 *out* into Tauri apps. The shell keeps only what must be layer-shell:
-bar, notifications, OSD, lock — and the add-ons the user chose (a dock is
+bar, notifications, OSD, lock — and the plugins the user chose (a dock is
 layer-shell too, so it is a plugin *in* the process, not a separate one).
 See [[ewe-settings]] for the reasoning.
 

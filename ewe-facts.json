@@ -1,33 +1,33 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-10-04",
+  "generated": "2026-10-10",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.25.0-beta",
+    "ewe_de": "0.25.1-beta",
     "ewe_os": "0.12.4-beta",
     "ewe_os_next": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.19.0-beta",
-    "ewe_sync": "0.14.3-beta",
+    "komble": "0.20.0-beta",
+    "ewe_sync": "0.14.4-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.17.0-beta",
+    "ewe_settings": "0.18.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
       "ewe.screenshot": "1.1.1",
       "ewe.passwords": "1.1.1",
-      "ewe.insomnia": "1.0.0",
-      "ewe.sysmon": "1.0.0",
-      "ewe.ssh": "1.0.0",
-      "ewe.vpn": "1.0.0",
-      "ewe.media": "1.0.1",
-      "ewe.places": "1.0.1",
-      "ewe.phone": "1.0.0",
-      "ewe.mail": "1.0.0",
-      "ewe.cast": "1.0.0",
-      "ewe.dock": "1.0.1"
+      "ewe.insomnia": "1.0.1",
+      "ewe.sysmon": "1.1.0",
+      "ewe.ssh": "1.0.1",
+      "ewe.vpn": "1.0.1",
+      "ewe.media": "1.0.2",
+      "ewe.places": "1.0.2",
+      "ewe.phone": "1.0.1",
+      "ewe.mail": "1.1.0",
+      "ewe.cast": "1.0.1",
+      "ewe.dock": "1.1.0"
     }
   },
   "repos": [
@@ -162,7 +162,7 @@
     },
     {
       "tool": "ewe-plugin",
-      "job": "shell plugins and the add-ons",
+      "job": "shell plugins (first-party and third-party)",
       "verbs": [
         "add",
         "list",
@@ -180,6 +180,7 @@
         "create",
         "dev",
         "place",
+        "bar",
         "set",
         "get"
       ]
@@ -386,6 +387,12 @@
       "ewe/ewe.conf",
       "ewe/ewe.conf.meta.json",
       "ewe/machines/<name>.json"
+    ],
+    "meta_fields": [
+      "machine",
+      "machine_id",
+      "saved_at",
+      "schema"
     ]
   },
   "rfc_status": [
@@ -422,12 +429,15 @@
   ],
   "sync_contract": {
     "engine": "ewe-conf push/pull over WebDAV",
-    "guard": "If-Match on the ETag recorded at the last sync (412 = remote newer)",
+    "guard": "If-Match on the ETag recorded at the last sync (412 = remote newer); a moved ETag over bytes this machine last pushed/pulled or has in flight (sync.json sha256/pending) is adopted, not a conflict (D12)",
     "folder_engines": [
       "nextcloudcmd (two-way)",
       "rclone copy (one-way, never deletes)"
     ],
-    "owner": "ewe-sync only - nothing else has a sync button"
+    "owner": "ewe-sync only - nothing else has a sync button",
+    "status_conflict": "sync-status answers conflict: remote-newer | remote-exists | null, and remote_is_this_machine; error is the transport error only",
+    "machine_id": "ewe.conf.meta.json carries machine_id = sha256('ewe-conf:' + /etc/machine-id)[:16] (never the raw id) beside the hostname",
+    "stamp_missing": "a push whose file landed but whose meta stamp was refused is ok with warning stamp-missing (recorded)"
   },
   "known_limits": [
     "Komble: not yet run against a live pacman",
@@ -440,9 +450,9 @@
     "quiet-lid fix (A2) not yet verified on real laptop hardware"
   ],
   "addons": {
-    "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders",
+    "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
     "payload": "plugins/<id>/ + plugins/bundle.json (repo, commit, version, default, migrate) written by scripts/vendor-plugins.sh",
-    "install": "ewe-plugin install <id> | Komble --addons | Welcome Add-ons step",
+    "install": "ewe-plugin install <id> | Komble --addons (page 'Plugins') | Welcome Plugins step",
     "migrate_marker": "~/.local/state/ewe/addons-migrated (JSON list of considered ids; local, never synced)",
     "state_dir": "~/.local/state/ewe/plugins/<id>/",
     "preinstalled": "shell core (bar, launcher, Overview, Quick settings basics, notifications, lock, OSD, polkit, Welcome), ewe-settings, Komble, ewe-sync",
@@ -478,6 +488,28 @@
       "EWE_PHONE_NO_DAEMON"
     ],
     "portal_threshold": "xdg-desktop-portal-hyprland >= 1.4.1-2.1 (stock 1.4.1-2 freezes)",
-    "system_install_command": "bash /usr/share/ewe/install.sh --no-packages as the user (exits 2 under sudo)"
+    "system_install_command": "bash /usr/share/ewe/install.sh --no-packages as the user (exits 2 under sudo)",
+    "options": "Komble Options dialog (Settings, In the bar, On the desktop); komble --options=<id> (D10)",
+    "show_in_bar": "ewe-plugin bar <id> on|off -> desktop.bar.show.\"plugin:<id>\"; manifest barWidget/barStatus defaultShown, toggle (D10)",
+    "desktop_widget_layers": [
+      "desktop",
+      "top",
+      "overlay"
+    ],
+    "pin_levels": [
+      "top",
+      "overlay"
+    ],
+    "setting_legacy": "first-party settings may declare legacy: '<ewe.conf key>' whose value stands until set (Dock autohide/icon_size <- desktop.dock.*)",
+    "shell_api_additions": {
+      "3.1": [
+        "dockPrefs",
+        "pinnedApps",
+        "setPinned"
+      ],
+      "3.2": [
+        "setSetting"
+      ]
+    }
   }
 }

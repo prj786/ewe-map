@@ -15,14 +15,14 @@ up: "[[Home]]"
 The repo you actually look at: **Hyprland** (Wayland compositor,
 Lua-configured) with a **Quickshell** QML shell — bar, launcher, Overview,
 notifications, Quick settings, lock, OSD, greeter, silent Plymouth boot —
-plus **13 add-ons** vendored in `plugins/` (none installed on a fresh
+plus **13 plugins** vendored in `plugins/` (none installed on a fresh
 machine — [[Add-ons — opt-in, not preinstalled]]), the CLI tools, and the
 `ewe` package that installs the lot.
 
 **Since 0.25 the dock (+ pinned-apps popup), Places, the music player,
 Insomnia (keep awake), the CPU/memory meters, SSH, VPN, the phone (KDE
 Connect), mail (+ the Gmail half of Google.qml) and Cast are NOT shell
-components — they are add-ons** (`ewe.dock ewe.places ewe.media
+components — they are plugins** (`ewe.dock ewe.places ewe.media
 ewe.insomnia ewe.sysmon ewe.ssh ewe.vpn ewe.phone ewe.mail ewe.cast`,
 repos `prj786/ewe-plugin-<name>`), carved out 2026-10-04 on top of plugin
 API 3. Their prefs (`desktop.dock.*`, `apps.pinned`, `apps.places`,
@@ -50,7 +50,7 @@ flowchart TB
   notifications, lock, OSD, polkit, Welcome, greeter. See [[Desktop Shell]].
 - **Shell singletons** — Globals, Theme, **Shell** (the plugin-facing API),
   AudioState, HyprMon, BtAgent. See [[Shell Singletons]].
-- **Add-ons** (in the payload, installed on request — Komble → Add-ons,
+- **Plugins** (in the payload, installed on request — Komble → Plugins,
   Welcome, `ewe-plugin install <id>`) — [[Clipboard Plugin]],
   [[Screenshot Plugin]], [[Passwords Plugin]], [[Insomnia Plugin]],
   [[System Monitor Plugin]], [[SSH Plugin]], [[VPN Plugin]], [[Music Plugin]],
@@ -76,7 +76,7 @@ flowchart TB
 
 `Super+Return` terminal · `Super+D` apps · `Super` (tap, the `ewe:overview`
 global shortcut) Overview · `Super+,` Settings · `Super+P` fill a login and
-`Super+Shift+C` cast exist only while their add-ons are enabled.
+`Super+Shift+C` cast exist only while their plugins are enabled.
 
 ## Related
 

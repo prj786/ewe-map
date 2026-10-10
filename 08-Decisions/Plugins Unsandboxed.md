@@ -23,7 +23,7 @@ and the tool says so instead of pretending:
 
 - `ewe-plugin add` **clones, validates, records the source URL** — it never
   executes anything at install time; `ewe-plugin install <id>` (0.25)
-  copies an add-on out of the payload, equally without running it.
+  copies a plugin out of the payload, equally without running it.
 - `update` shows the **diff first**; a manifest that stops validating is
   rolled back.
 - `remove` deletes the clone (a hand-made directory is moved to

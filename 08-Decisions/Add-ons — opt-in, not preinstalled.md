@@ -33,9 +33,15 @@ ewe-settings Network pane · the `google` IPC verbs incl. `syncSoon`, Google
 Calendar/Drive, `ewe-auth`/`ewe-mail`/`ewe-drive` and the Agenda (see
 [[Gmail Split — core Google, Mail add-on]]) · Cast's system setup (phase 30)
 and `ewe-castd` · SharePicker · media keys · the Screensaver's MPRIS
-hold-off · the `desktop.dock.*`, `apps.pinned` and `apps.places` ewe.conf
-keys (the add-ons read them through `Shell`) · the GOA/EDS bridge
-(`Accounts.qml`, dormant).
+hold-off · the `apps.pinned` and `apps.places` ewe.conf keys (the plugins
+read them through `Shell`) · the GOA/EDS bridge (`Accounts.qml`, dormant).
+
+> **Amended 2026-10-10 by D10** ([[Plugin Settings Live With the Plugin]]):
+> the `desktop.dock.*` keys are no longer core settings — the Dock's
+> auto-hide and icon size are its own (`[plugins.settings]."ewe.dock"`), the
+> old keys only a `legacy` fallback. **And by D9** ([[One Name — Plugins]]):
+> user-facing text calls these *plugins* (first-party plugins); this note
+> keeps its name and wording as the record of D1.
 
 ## Why
 

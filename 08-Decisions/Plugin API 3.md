@@ -6,7 +6,7 @@ title: Plugin API 3
 up: "[[Decision Index]]"
 ---
 
-# Plugin API 3 — a superset, so add-ons can be real shell features (D4)
+# Plugin API 3 — a superset, so plugins can be real shell features (D4)
 
 **Decided 2026-10-04** (ewe 0.25.0-beta). `apiVersion: 3` is a **superset
 of 2**; the host loads **both 2 and 3**, and every API 2 plugin still
@@ -34,7 +34,7 @@ works. Source of truth for the as-built surface: `ewe/docs/PLUGINS.md`
   `launch(desktopId)`, `focusApp([classes])`, `registerAction`/`runAction`,
   `setActive`/`isActive`, `setDockItemShown`/`dockItemShown`,
   `setBottomInset(id, px, reserved)`, `setPinned`, `anchorFor(item,
-  window)`, `toggleOverview()`, `closePopups(exceptId)` (one add-on popup
+  window)`, `toggleOverview()`, `closePopups(exceptId)` (one plugin popup
   open at a time). Signals: `aboutToSleep()` (from the logind bridge),
   `resumed()` (Resume step 6, ≈3 s after wake).
 - **Public components**, promoted out of QuickSettings.qml/Bar.qml into
@@ -54,6 +54,18 @@ works. Source of truth for the as-built surface: `ewe/docs/PLUGINS.md`
 - **Layout** reads `Shell.bottomInset` instead of `Theme.dockClearance` /
   `Globals.dockEnabled` — no dock gap when no dock is installed.
 
+## Additive revisions (apiVersion stays 3; feature-detect them)
+
+- **3.1** (0.25.0): `Shell.dockPrefs`, `Shell.pinnedApps`/`setPinned`.
+- **3.2** (ewe 0.25.1-beta, 2026-10-10 — [[Plugin Settings Live With the Plugin]],
+  [[Desktop Widgets — always movable, pin to a level]]):
+  `Shell.setSetting(pluginId, key, value)` (a plugin writes one of its own
+  declared settings from its own UI; live, persisted through `ewe-plugin
+  set`); manifest `barWidget`/`barStatus` `defaultShown` + `toggle`,
+  `desktopWidget.pinLevel` + `locked`, `layer: "overlay"`; setting
+  `description`, and `legacy` (first-party only). A plugin using one checks
+  for it (`typeof Shell.setSetting === "function"`), as Mail 1.1.0 does.
+
 ## Deviations from the plan (as built)
 
 `Shell.anchorFor(item, window)` takes the window (attached properties such
@@ -62,10 +74,13 @@ as `QsWindow.window` cannot be read from another object — pass it);
 exists; `setActive/isActive/activeCount` were added so a dock item lights
 while its popup is open and an autohide dock stays out.
 
-> **Build guard:** anything in `Shell`, the public components or the
-> manifest schema changes only with `apiVersion` moving; `Globals`' API 2
-> subset stays untouched. *Breaks if violated:* every installed add-on
-> (13 first-party ones ship in the payload) and every third-party plugin.
+> **Build guard:** nothing in `Shell`, the public components or the
+> manifest schema is renamed, removed or changes meaning without
+> `apiVersion` moving; an ADDITION is an optional 3.x member that old
+> plugins never notice and new ones feature-detect (listed above).
+> `Globals`' API 2 subset stays untouched. *Breaks if violated:* every
+> installed plugin (13 first-party ones ship in the payload) and every
+> third-party plugin.
 
 ## Related
 

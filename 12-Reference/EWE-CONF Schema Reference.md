@@ -22,15 +22,15 @@ schema = 1
   accent = "#0a84ff"
   theme_name = "flock"           # flock | blacksheep
   tint_borders = true
-  window_transparency = 1.0
+  window_transparency = false     # bool (unfocused windows at 0.97; no effect while app_blur is on)
   avatar_shape = "circle"
-  bar_opacity = 100              # 0..100 → Theme.barAlpha; 10–99 adds blur + layer rule
-  app_blur = false               # every WINDOW at 85 % + blur (fixed, not a slider)
+  bar_opacity = 100              # 0..100 → Theme.barAlpha (bar, dock, lock card only — D13); 10–99 adds blur + layer rule + a no_blur window rule unless app_blur
+  app_blur = false               # every WINDOW at 85 % + blur (fixed, not a slider; off where EWE_NO_BLUR=1)
   [desktop.theme.schemes]        # user schemes (Base24 + accent), builtins ewe-dark / ewe-light
 
-[desktop.dock]
-  enabled = true
-  autohide = false               # "intelligent hide"
+[desktop.dock]                   # LEGACY since Dock 1.1.0 (D10): read only as the
+  enabled = true                 #   fallback of [plugins.settings]."ewe.dock" (`legacy`
+  autohide = false               #   keys); `migrate` still reads `enabled`; nothing writes
   icon_size = "medium"
 
 [desktop.layout]                 # ← user.lua (ewe-conf set desktop.layout)
@@ -44,8 +44,11 @@ schema = 1
   enabled = ["ewe.clipboard", "ewe.screenshot", "ewe.passwords"]
   removed = ["some.thirdparty"]              # removed-and-stay-removed (seed skips)
   [plugins.sources]              # id = git url (or "local") — THE installed set
-  [plugins.widgets]              # desktop-widget placement: "ns.name" = { x, y, layer, visible, output }
+  [plugins.widgets]              # desktop widgets: "ns.name" = { x, y, output, layer (desktop|top|overlay), visible, pin_level (top|overlay), locked }
   [plugins.settings]             # "ns.name" = { key = value } — always written as whole tables
+                                 #   e.g. "ewe.dock" = {autohide = true, icon_size = "small"}, "ewe.mail" = {notify = false}
+
+[desktop.bar.show]               # bar items; "plugin:<id>" = Show in bar (ewe-plugin bar), absent = manifest defaultShown
 
 [sync]
   provider = "nextcloud"         # nextcloud | google (RFC-005; google only with personal client)
@@ -65,9 +68,10 @@ dump                    whole file as JSON (one read for QML/Rust)
 import                  build ewe.conf FROM the live runtime files (migration/repair)
 apply [--only <domain>] regenerate artifacts + re-theme + poke shell + hyprctl reload
 path                    print the canonical file path
-push [--force]          upload to the account named in [sync] (If-Match guard)
+push [--force]          upload to the account named in [sync] (If-Match guard; a moved ETag over
+                        bytes this machine sent/saw is adopted — D12; refused stamp = warning)
 pull [--out <path>]     download; keeps ewe.conf.<timestamp>.bak; then run apply
-sync-status             remote copy + this machine's sync record
+sync-status             remote copy + this machine's sync record + `conflict` + `remote_is_this_machine`
 ```
 
 ## Gotchas

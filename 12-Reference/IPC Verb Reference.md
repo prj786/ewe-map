@@ -19,11 +19,11 @@ store updates plugins widgets google cloud`
 
 Most expose `toggle` / `show` / `hide`. (`cloud`, `google` and `mail` were
 missing from this sheet before 0.25 — drift, now listed; `mail` moved to an
-add-on.)
+plugin.)
 
-## Add-on targets — present only while the add-on is installed + enabled
+## Plugin targets — present only while the plugin is installed + enabled
 
-| add-on | target | legacy alias (kept, same verbs) | verbs |
+| plugin | target | legacy alias (kept, same verbs) | verbs |
 |---|---|---|---|
 | [[Cast Plugin]] | `ewe.cast` | `cast` | `toggle · scan · start <sink-id> · stop · status · legacy` |
 | [[Dock Plugin]] | `ewe.dock` | `launcher` (`toggle · show · hide`) | `launcher · showLauncher · hideLauncher · isLauncherOpen` |
@@ -36,7 +36,7 @@ add-on.)
 | [[Passwords Plugin]] | `ewe.passwords` | — | `toggle` … (`Super+P`) |
 | third-party | `<ns>.<name>` | — | whatever the plugin registers |
 
-Quick-settings pages served by add-ons: `qs ipc call quicksettings tab
+Quick-settings pages served by plugins: `qs ipc call quicksettings tab
 ssh|vpn|mobile|mail|cast` ([[SSH Plugin]], [[VPN Plugin]], [[Phone Plugin]],
 [[Mail Plugin]], [[Cast Plugin]]). An unknown key falls back to `home`.
 
@@ -55,7 +55,7 @@ toggle`. `ewe-globalshortcuts` ignores `ewe:*` names.
 | `settings ping` / `settings version` | ewe-settings | liveness + version |
 | `cloud refresh` | ewe-sync | refresh the shell's account card |
 | `google status · syncSoon` | ewe-settings, ewe-sync | core Google (OAuth/Calendar/Drive/sync) — stays core after the Gmail split |
-| `mail status` | ewe-settings → Account | served by the `ewe.mail` add-on; **a missing target is not an error** for Settings |
+| `mail status` | ewe-settings → Account | served by the `ewe.mail` plugin; **a missing target is not an error** for Settings |
 | `ewe.cast scan · start <sink> · stop · status` (alias `cast`) | Cast tile/page | drive ewe-castd |
 | `ewe.cast legacy` (alias `cast legacy`) | Cast page | escape hatch to gnome-network-displays until phase C |
 | `widgets` | plugin host / arrange mode | enter/exit widget arrange (`Super+Shift+W`) |

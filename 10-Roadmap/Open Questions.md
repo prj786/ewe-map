@@ -33,20 +33,20 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 - **Bandwidth limits** — documented limit; does anyone actually need them?
 - **Multi-account?** — one Nextcloud account is the model. More than one?
 
-## Add-ons (0.25, from the implementation reports)
+## Plugins (0.25, from the implementation reports)
 
 - **`quickPage.key` reserved set** = `home wifi bt audio cal notifs`; the
   extracted pages use the legacy keys `vpn ssh cast mobile mail`. Should
   the reserved set grow, or stay minimal?
 - **`Shell.openSettings(page)`** forwards `--page <name>` — ewe-settings
   does not consume it yet.
-- **A `Shell` network-changed signal** would remove the VPN add-on's second
+- **A `Shell` network-changed signal** would remove the VPN plugin's second
   `nmcli monitor` (core runs one too). Also: a host-level `shown` convention
   for `quick-tile`s (today: hide the parent slot).
 - **Core `google status` still reports `mailUnread`/`mailState`** (ewe-settings
   reads them) — drop or proxy to `ewe.mail`? Should ewe-sync poke `mail
   refresh` after a Google sign-in?
-- **`autostart.sh` and the phone add-on both start `kdeconnectd`** (both
+- **`autostart.sh` and the phone plugin both start `kdeconnectd`** (both
   guarded) — confirm the duplicate is gone after the carve-out.
 - **Komble `plugin_create` KINDS** still list API 2 kinds.
 - **`uninstall.sh` never removes `/usr/local/bin/ewe-greeter`.**
