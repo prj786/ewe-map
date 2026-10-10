@@ -29,7 +29,7 @@ read the note first — these were settled deliberately, most with RFCs.
 | 13 | One brand mark: the line-art logo everywhere, two weights; app launcher icons stay per-app | built 2026-09-21 | [[One Mark — the line-art logo]] |
 | 14 | The Overview takes the whole screen, wallpaper first; bar slides up, dock slides down; exclusive zones stay reserved | built 2026-09-21 | [[Overview Takes the Screen]] |
 | 15 | App launcher icons: one Lucide line glyph per app on a dark tile | built 2026-09-21 | [[App Icons — one line glyph per app]] |
-| 16 | **D1** Add-ons are opt-in — only the shell core, ewe-settings, Komble and ewe-sync are preinstalled; every extra (incl. clipboard/screenshot/passwords, dock, Cast, mail, phone, …) is an add-on | built 2026-10-04, in 0.25.0-beta (unreleased) | [[Add-ons — opt-in, not preinstalled]] |
+| 16 | **D1** Add-ons are opt-in — only the shell core, ewe-settings, Komble and ewe-sync are preinstalled; every extra (incl. clipboard/screenshot/passwords, dock, Cast, mail, phone, …) is an add-on | built 2026-10-04, released in 0.25.0-beta | [[Add-ons — opt-in, not preinstalled]] |
 | 17 | **D2** Add-ons ship vendored in the payload (`plugins/<id>/` + `bundle.json`), not a remote catalogue, not packages | built 2026-10-04 | [[Add-ons — vendored payload and bundle.json]] |
 | 18 | **D3** Upgraders keep what they had: one-time `ewe-plugin migrate`; marker = JSON list of considered ids at `~/.local/state/ewe/addons-migrated` (local, never synced) | built 2026-10-04 | [[Add-ons — one-time migration for upgraders]] |
 | 19 | **D4** Plugin API 3 — superset of 2 (host loads 2 and 3): four Quick-settings/bar/dock kinds, the `Shell` singleton, public components, `requires`, `ipcAliases` | built 2026-10-04 | [[Plugin API 3]] |
@@ -40,6 +40,11 @@ read the note first — these were settled deliberately, most with RFCs.
 | 24 | Lid-open touches only a disabled panel, with its saved spec; re-asserts are per output and minimal; no unconditional dpms-on except Reset displays | built 2026-10-04 | [[Quiet Lid — touch only a disabled panel]] |
 | 25 | The Gmail split: core Google = OAuth, Calendar, Drive, sync verbs; the Gmail/IMAP visuals and `mail` IPC = the `ewe.mail` add-on | built 2026-10-04 | [[Gmail Split — core Google, Mail add-on]] |
 | 26 | X11 scale at login = the smallest lit scale of the DRM-connected monitor set (not the last-saved profile's primary) | built 2026-10-04 | [[X11 Scale — smallest lit scale]] |
+| 27 | **D9** One user-facing name: **plugins** (was "add-ons" for the first-party ones); contracts (`komble --addons`, JSON keys, marker paths, installer output) unchanged | built 2026-10-10, released in 0.25.1-beta | [[One Name — Plugins]] |
+| 28 | **D10** A plugin's settings live with the plugin: Komble's Options dialog (Settings · In the bar · On the desktop); the Dock's auto-hide/icon size and Mail's notifications moved out of ewe-settings (`legacy` carries old values); Show in bar is one host switch (`ewe-plugin bar`) — amends D1 | built 2026-10-10, released in 0.25.1-beta | [[Plugin Settings Live With the Plugin]] |
+| 29 | **D11** Desktop widgets: always draggable, a pin in a hover toolbar, pin level top (above windows) or overlay (above everything), lock position | built 2026-10-10, released in 0.25.1-beta | [[Desktop Widgets — always movable, pin to a level]] |
+| 30 | **D12** A sync conflict is about content, not an ETag: adopt a moved ETag over bytes this machine sent/saw; record an upload once stored; `sync-status` answers `conflict`; the stamp carries a hashed `machine_id` | built 2026-10-10, released in 0.25.1-beta | [[Sync Conflicts Are About Content]] |
+| 31 | **D13** Glass: the bar opacity slider moves only the bar, the dock and the lock card; the Glass material stays at 80 %; no xray; no app blur unless asked | built 2026-10-10, released in 0.25.1-beta | [[Glass — the slider moves the bar only]] |
 
 > **Numbering note:** RFC-003 does not exist in `ewe/docs/` (the sequence
 > is 001, 002, 005, 006), and RFC-004's text lives only as references in

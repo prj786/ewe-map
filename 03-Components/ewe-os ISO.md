@@ -9,7 +9,7 @@ up: "[[Home]]"
 # ewe-os — the Distro / ISO
 
 `~/Projects/ewe/ewe-os` · [github.com/prj786/ewe-os](https://github.com/prj786/ewe-os) ·
-**0.12.4-beta** released · **0.13.0-beta in progress** on `feat/addons-installer` (the ISO for ewe 0.25's add-ons; distro has its own version line; the DE's `ewe` package has another)
+**0.12.4-beta** released · **0.13.0-beta in progress** on `feat/addons-installer` (the ISO for ewe 0.25's plugins; distro has its own version line; the DE's `ewe` package has another)
 
 The distro layer: the **archiso profile** that builds the live/install ISO.
 The DE, apps and packaging live in their own repos — this one turns them
@@ -54,14 +54,14 @@ flowchart TB
 
 `installer/` is a **Tauri GUI (`ewe-installer`)** — the guided install's
 face (RFC-003 in `ewe-os/docs/`): Welcome · Network · Time & place · Disk ·
-Your account · **Add-ons** (0.13.0-beta) · Summary · Install. Nothing
+Your account · **Plugins** (0.13.0-beta) · Summary · Install. Nothing
 privileged runs in the app: every step is a verb of the pkexec'd
 `installer/helper/ewe-install-helper` (`partition mkfs pacstrap hibernate
 settz setlocale sethostname user layer upgrade addons bootloader reboot`);
 `layer` and `addons` delegate to `ewe-install --layer-only` /
 `--addons-only` — one implementation, two faces.
 
-**The Add-ons step** lists every add-on the live payload carries
+**The Plugins step** lists every plugin the live payload carries
 (`/usr/share/ewe/plugins/bundle.json` + manifests, read by the backend's
 `addons` command — no user config needed), grouped by category, with the
 manifest's Theme icon name mapped to the bundled Lucide face. **Nothing is

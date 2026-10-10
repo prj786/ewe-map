@@ -11,7 +11,7 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-clipboard` ·
 [github.com/prj786/ewe-plugin-clipboard](https://github.com/prj786/ewe-plugin-clipboard)
 
-First-party **add-on since 0.25** (API 2 manifest, v1.1.1 in
+First-party **plugin since 0.25** (API 2 manifest, v1.1.1 in
 `plugins/bundle.json`): shipped inside the payload, **not installed on a
 fresh machine**, migrated once for upgraders who had it. Before 0.25 it was
 seeded on every install.

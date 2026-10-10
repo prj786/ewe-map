@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-insomnia` ·
 [github.com/prj786/ewe-plugin-insomnia](https://github.com/prj786/ewe-plugin-insomnia)
-· v1.0.0 · API 3 · **add-on since 0.25** (was the shell's "keep awake" /
+· v1.0.0 · API 3 · **plugin since 0.25** (was the shell's "keep awake" /
 `Caffeine` — renamed by [[Insomnia — the name for keep awake]]).
 
 Keeps the screen awake and stops sleep until you turn it off: while on,
@@ -25,7 +25,7 @@ auto-suspend (the lid and a manual lock still work).
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.insomnia`.
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.insomnia`.
 - **Setting:** `auto_off` (int, 0–1440 minutes, default 0 = never) —
   `ewe-plugin set ewe.insomnia auto_off 30`; a toast says when it fired.
 - **IPC:** `qs ipc call ewe.insomnia toggle|on|off|status`; `status` →

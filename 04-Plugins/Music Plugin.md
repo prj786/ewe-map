@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-media` ·
 [github.com/prj786/ewe-plugin-media](https://github.com/prj786/ewe-plugin-media)
-· v1.0.0 · API 3 · **add-on since 0.25** (was `MediaPlayer.qml` + the dock's
+· v1.0.2 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **plugin since 0.25** (was `MediaPlayer.qml` + the dock's
 music button).
 
 The now-playing card (artwork, source, title/artist, prev · play/pause ·
@@ -25,10 +25,11 @@ playing one wins, else the first controllable player with a track.
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.media`.
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.media`.
 - **Settings:** `button` (`auto` | `bar` | `dock` | `both`, default `auto` =
   bar only while no dock is present) and `always_show` (keep the bar button
-  with nothing playing). Hides its dock button via
+  with nothing playing). `button` places it, so its manifest says
+  `barWidget.toggle: false` — no Show in bar switch (D10). Hides its dock button via
   `Shell.setDockItemShown`.
 - **IPC:** `qs ipc call ewe.media toggle|show|hide`; alias **`player
   toggle|hide`** (the pre-0.25 target). `toggle` with no player → toast

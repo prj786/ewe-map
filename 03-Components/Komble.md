@@ -37,12 +37,14 @@ flowchart LR
   the account and the restore live in [[ewe-sync]] (RFC-005). A restore done
   there shows up in For you on the next look.
 
-## The Add-ons catalogue (0.25, branch `feat/addons`)
+## The Plugins catalogue (0.25, branch `feat/addons`)
 
-Komble is the **one-click installer for ewe's add-ons** — the sidebar entry
-is "Add-ons" (the Plugins page renamed), and the core shell deep-links to
-it: `Shell.openStore("addons")` → `komble --addons` (alias `--plugins`);
-ewe-settings' "Browse add-ons" does the same.
+Komble is the **one-click installer for ewe's plugins** — the sidebar entry
+is **Plugins** (the page was titled *Add-ons* in 0.25.0 —
+[[One Name — Plugins]]; first group *From ewe*), and the core shell
+deep-links to it: `Shell.openStore("addons")` → `komble --addons` (alias
+`--plugins`); ewe-settings' "Open Plugins" does the same, and its "Dock
+options" runs `komble --options=ewe.dock`.
 
 ```mermaid
 flowchart LR
@@ -51,15 +53,28 @@ flowchart LR
     PKGS -->|yes| HELPER["pacman helper: install-repo<br/>batch install_packages_named<br/>(NO [apps.installed] entry — deps, not apps)"]
     PKGS -->|no| INST["ewe-plugin install <id>"]
     HELPER --> INST
-    INST --> SHELL["shell restarts, add-on live"]
-    CARDS -->|"settings form · enable/disable · remove"| TOOL["ewe-plugin set · enable · disable · remove"]
+    INST --> SHELL["shell restarts, plugin live"]
+    CARDS -->|"Options dialog · enable/disable · remove"| TOOL["ewe-plugin set · bar · place · enable · disable · remove"]
 ```
 
 - Komble **never decides what is missing** — the catalogue (`missing`) does
   ([[Add-on deps declared, not split]]); an older ewe without `available`
   hides the group.
-- Public CLI flags: `--updates --settings --search[=q] --addons --plugins`
-  (`komble --search` is also the desktop's gnome-software stand-in).
+- **Options… opens a Dialog** (`PluginOptions.svelte`, bits-ui, the
+  AppDetail pattern; 2026-10-10, D10): *Settings* (manifest schema — bool
+  Toggle, int, choice as a segmented control (≤3) or Select, colour,
+  string; `description` under the label), *In the bar* (Show in bar →
+  `plugin_bar` → `ewe-plugin bar`), *On the desktop* (Pinned, When pinned
+  top/overlay, Lock position, Shown, Position Reset / Arrange… →
+  `plugin_place` → `ewe-plugin place --pinned/--pin-level/--locked/
+  --visible/--reset`). Changes apply at once; *Done* closes; Esc/✕ close,
+  the scrim does nothing. It used to open inline under the WHOLE card grid
+  — off-screen. Toasts name the setting's label, not its key.
+- Public CLI flags: `--updates --settings --search[=q] --addons --plugins
+  --options[=]<id>` (`komble --search` is also the desktop's gnome-software
+  stand-in; `--options` opens a plugin's Options dialog).
+- dev-mock: `?options=<id>` opens a dialog (`acme.clock`, `ewe.dock`,
+  `ewe.sysmon`).
 - Open: `plugin_create` KINDS in `plugins.rs` still list API 2 kinds — add
   the four API 3 kinds. Untested in a real Tauri window (dev-mock only).
 
@@ -87,5 +102,5 @@ Debian with different command names:
 > **Build guard:** no per-package upgrades, no shell in the privilege
 > path, PKGBUILD on screen before any AUR build, and Komble never syncs
 > the file. The full reasoning: [[Komble — Arch Forced Decisions]].
-> Add-ons: Komble never decides what is missing (the catalogue does) and
-> never records an add-on's package dependencies as apps.
+> Plugins: Komble never decides what is missing (the catalogue does) and
+> never records a plugin's package dependencies as apps.

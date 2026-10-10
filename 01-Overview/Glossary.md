@@ -25,7 +25,9 @@ Terms as the project itself uses them.
 | **ewe-sync** | the account & sync app — Nextcloud account, one-file sync, folder sync, machines. See [[ewe-sync]]. |
 | **ewe-castd** | headless casting daemon: portal screencast → encode → Miracast/Chromecast. See [[ewe-cast]]. |
 | **`qs ipc`** | the shell's IPC bus; apps and plugins call verbs like `qs ipc call settings reload`. |
-| **add-on** | (0.25) a first-party plugin shipped inside the ewe payload (`plugins/<id>/` + `bundle.json`) but **not installed on a fresh machine** — Komble → Add-ons, Welcome or `ewe-plugin install <id>` puts it in. The dock, Cast, mail, phone, VPN, SSH, Places, music, Insomnia, the system monitor, clipboard, screenshot and passwords are add-ons. See [[Plugin System]]. |
+| **first-party plugin** (was **add-on**) | (0.25) a plugin shipped inside the ewe payload (`plugins/<id>/` + `bundle.json`) but **not installed on a fresh machine** — Komble → Plugins, Welcome or `ewe-plugin install <id>` puts it in. The dock, Cast, mail, phone, VPN, SSH, Places, music, Insomnia, the system monitor, clipboard, screenshot and passwords are first-party plugins. "Add-on" was the 0.25.0 UI word; since [[One Name — Plugins]] everything says *plugin*. See [[Plugin System]]. |
+| **Options** | a plugin's settings dialog in Komble → Plugins: Settings · In the bar (Show in bar) · On the desktop (pin, pin level, lock). `komble --options=<id>`. See [[Plugin Settings Live With the Plugin]]. |
+| **pin level** | where a pinned desktop widget sits: `top` (above windows) or `overlay` (above everything, fullscreen too). See [[Desktop Widgets — always movable, pin to a level]]. |
 | **`Shell`** | (0.25) the shell's public QML singleton for plugins — toast, Quick settings, actions, `bottomInset`, `anchorFor` — frozen behind plugin API 3. See [[Plugin API 3]]. |
 | **Insomnia** | the user-facing name for "keep awake" (the idle inhibitor); the `ewe.insomnia` add-on. Namespace stays `quickshell:caffeine`. |
 | **`bundle.json`** | `plugins/bundle.json` in the ewe repo — repo, commit, version, `default`, `migrate` for every vendored add-on; written by `scripts/vendor-plugins.sh`. |

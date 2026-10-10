@@ -41,6 +41,15 @@ flowchart LR
 - **Accent ramp** — accent roles and the `ewellow-*` scale are generated
   from the pick; `on-accent` flips black/white to hold 4.5:1. `ewellow`
   (#eeb407) stays the brand colour for logo/installer/wallpapers.
+- **Glass** ([[Glass — the slider moves the bar only]], 2026-10-10) —
+  `glass-base`/`glass-raised` are the Glass *material* at `opacity-glass`
+  (0.8) whatever the bar slider says (the Overview, desktop widgets, the
+  Tauri apps' `--glass-*`); `surface.bar_alpha` carries `bar_opacity` and
+  only `Theme.barGround`/`dockGround` (+ the lock card) apply it. Reduce
+  transparency / Increase contrast hand back solid roles. ewe-conf's
+  `user.lua`: blur without xray, a `no_blur` window rule unless App blur, App
+  blur's 85 % inside the `EWE_NO_BLUR` guard; truthiness is one rule in both
+  generators.
 
 ## ewe-theme CLI
 

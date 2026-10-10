@@ -57,7 +57,7 @@ Two steps, deliberately split:
 
 | step | tool | what |
 |---|---|---|
-| per-user | `ewe-setup` | deploys the installed payload into the user's session (config, dotfiles); runs `ewe-plugin seed` (bundle `default` ids — none in 0.25 — plus a refresh of installed bundled copies) then `ewe-plugin migrate` (once per add-on, upgraders only — [[Add-ons — one-time migration for upgraders]]) |
+| per-user | `ewe-setup` | deploys the installed payload into the user's session (config, dotfiles); runs `ewe-plugin seed` (bundle `default` ids — none in 0.25 — plus a refresh of installed bundled copies) then `ewe-plugin migrate` (once per plugin, upgraders only — [[Add-ons — one-time migration for upgraders]]) |
 | system | `bash /usr/share/ewe/install.sh --no-packages` — **as your user, never `sudo`** (it exits 2 under sudo: `$HOME` would be `/root` and the session entry would point there) | greeter stack (greetd → cage → Quickshell greeter), fonts, PAM, plymouth, hibernate, phase 30's DNS/cast setup |
 | on `pacman -Syu` | the package's `post_upgrade` (0.25) | a **system-side refresh of the greeter only** — the `ewe-greeter` wrapper (shipped as `system/greeter/ewe-greeter`), `shell.qml` and `theme-tokens.json` — where phase 30 had run before; fonts, greetd `config.toml` and PAM still need `install.sh` |
 
@@ -67,7 +67,7 @@ Two steps, deliberately split:
   repo signing is planned before the standalone-distro release.
 - The ISO pins nothing — it preconfigures `[ewe]` so both the live session
   and installed systems roll forward with plain `pacman -Syu`.
-- The payload carries the **13 add-ons** under `/usr/share/ewe/plugins/`
+- The payload carries the **13 plugins** under `/usr/share/ewe/plugins/`
   with `bundle.json`; none is installed on a fresh machine
   ([[Add-ons — vendored payload and bundle.json]]).
 - Open: `uninstall.sh` never removes `/usr/local/bin/ewe-greeter`.

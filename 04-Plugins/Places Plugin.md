@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-places` ·
 [github.com/prj786/ewe-plugin-places](https://github.com/prj786/ewe-plugin-places)
-· v1.0.0 · API 3 · **add-on since 0.25** (was `Places.qml`).
+· v1.0.2 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **plugin since 0.25** (was `Places.qml`).
 
 A compact file browser in a popup: home, folders and files (no dotfiles),
 a path field with back/home, a **Pinned** strip; click or Up/Down/Enter/
@@ -25,9 +25,10 @@ another app, drop a file/folder **onto** the panel to pin it. Esc closes.
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.places`.
-- **Setting:** `button` (`auto` | `bar` | `dock` | `both`).
-- **Pinned = `apps.places` in `ewe.conf`** (synced, shown by ewe-settings):
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.places`.
+- **Setting:** `button` (`auto` | `bar` | `dock` | `both`) — it places the
+  button, so `barWidget.toggle: false` (no Show in bar switch, D10).
+- **Pinned = `apps.places` in `ewe.conf`** (synced; edited by pinning in the panel):
   the panel reads `$XDG_CONFIG_HOME/quickshell/places.json` (ewe-conf's
   mirror) via `FileView` and writes through `ewe-conf set --no-hooks
   apps.places` (tool resolved the way the shell resolves it) — Rule 1.

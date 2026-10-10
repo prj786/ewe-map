@@ -14,7 +14,7 @@ up: "[[Home]]"
 fallbacks, …); components are registered in `qmldir`. **Since 0.25 `Dock`,
 `PinnedApps`/`LauncherPanel`, `Places`, `MediaPlayer`, `Caffeine`, the
 meters, `Ssh`, `Vpn`, `KdeConnect`, `Mail` and `Cast` are gone from the
-core — they are add-ons** ([[Plugin System]]). Three singletons tie
+core — they are plugins** ([[Plugin System]]). Three singletons tie
 everything together — plus the specialist state owners. This is the state
 map of the shell process (from `ewe/CLAUDE.md`):
 
@@ -45,7 +45,7 @@ Calls: `toast`, `openQuickSettings(tab)`, `openSettings(page)` (forwards
 `--page`), `openStore(page)` (`komble --addons`), `launch`, `focusApp`,
 `registerAction`/`runAction`, `setActive`/`isActive`,
 `setDockItemShown`/`dockItemShown`, `setPinned`, `anchorFor(item, window)`,
-`toggleOverview()`, `closePopups(exceptId)` (one add-on popup at a time).
+`toggleOverview()`, `closePopups(exceptId)` (one plugin popup at a time).
 Signals `aboutToSleep()` (logind bridge) and `resumed()` (Resume step 6).
 
 ## Globals.qml
@@ -105,7 +105,7 @@ Device state comes from `Quickshell.Bluetooth`; pairing/connecting go
 through `BtAgent.pair()/connectDevice()` so failures have a reason.
 `bin/ewe-bt` is the same for the Settings app.
 
-## The phone bridge — moved to the Phone add-on (0.25)
+## The phone bridge — moved to the Phone plugin (0.25)
 
 Quickshell has no generic QML D-Bus client (its D-Bus features are compiled
 C++ types), so a Python bridge (dbus-python + GLib) owns every KDE Connect
@@ -118,7 +118,7 @@ pattern remains in the core as `BtAgent` and the logind bridge. See
 
 ## Shared idioms
 
-- **Drag-out** (the Places add-on, screenshot preview): an invisible proxy
+- **Drag-out** (the Places plugin, screenshot preview): an invisible proxy
   `Item` with `Drag.active` + `Drag.mimeData: ({"text/uri-list":
   "file://"+path+"\r\n"})`, plus a box-only `mask: Region { item: box }` so
   clicks/drags outside the panel pass through to apps behind.

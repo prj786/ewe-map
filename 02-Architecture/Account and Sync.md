@@ -67,13 +67,22 @@ sequenceDiagram
 - **Non-secret account facts** (server, login, display name) →
   `~/.config/ewe/cloud.json`.
 - **The one file** → locally `~/.config/ewe/ewe.conf`; in the account
-  `ewe/ewe.conf`, `ewe/ewe.conf.meta.json` (who saved it, when) and
-  `ewe/machines/<name>.json` (each machine's ewe version + app count).
+  `ewe/ewe.conf`, `ewe/ewe.conf.meta.json` (who saved it — hostname **and**
+  a hashed `machine_id`, so two machines with one hostname are told apart —
+  and when) and `ewe/machines/<name>.json` (each machine's ewe version +
+  app count; still keyed by hostname — give each machine its own name).
 - **Folders** — pairs of a local folder and an account folder, two-way
   (Nextcloud sync engine) or one-way (rclone `copy`: adds and updates,
   never deletes).
 
 ## Triggers & conflicts
+
+- **The one file** ([[Sync Conflicts Are About Content]]): a push is refused
+  only when the account's copy holds bytes this machine never sent or saw.
+  An upload whose reply was lost (a laptop suspending mid-push), or a
+  same-bytes re-upload by the Nextcloud desktop client (it syncs
+  `~/Nextcloud/ewe` too), is adopted silently. `sync-status` answers
+  `conflict`; ewe-sync → This machine shows *Restore… / Push anyway* from it.
 
 - Folder sync triggers: **on change** (inotify; a burst of writes becomes
   one run after 5 quiet seconds), **every N minutes**, or **once at login**.

@@ -9,7 +9,7 @@ up: "[[Home]]"
 # Roadmap — the desktop & the one file
 
 Current: ewe DE **0.24.1-beta** released; **0.25.0-beta in progress**
-(`release/0.25.0-beta` — add-ons, quiet lid, snappy Overview; see
+(`release/0.25.0-beta` — plugins, quiet lid, snappy Overview; see
 [[Roadmap and Status]]). The README speaks of the `0.9.x` beta line;
 **1.0-beta is "Dolly"**.
 
@@ -57,20 +57,20 @@ The v3 token system landed (2026-09-17/18):
 - Keep the two-singleton architecture (`Globals.qml`, `Theme.qml`) — new
   surfaces plug into it.
 
-## Plugins and add-ons
+## Plugins
 
-- 0.25: **plugin API 3** and the **add-ons model** — the shell core is bar,
+- 0.25: **plugin API 3** and the **plugins model** — the shell core is bar,
   launcher, Overview, Quick settings basics, notifications, lock, OSD,
-  polkit, Welcome; everything else is a vendored, opt-in add-on
+  polkit, Welcome; everything else is a vendored, opt-in plugin
   ([[Plugin System]], [[Add-ons — opt-in, not preinstalled]]). Any new shell
-  feature from now on is an add-on unless it must be core.
+  feature from now on is a plugin unless it must be core.
 - Next: release 0.25 (ewe-repo publish; no ISO unless asked), then the open
-  items in [[Open Questions]] → *Add-ons* (reserved QS keys,
+  items in [[Open Questions]] → *Plugins* (reserved QS keys,
   `openSettings(page)` consumer, network-changed signal, `optdepends`
   split, Komble API 3 kinds), real-device verification of all 13, and
   third-party ecosystem growth.
 - Bundled copies refresh on version change; `install <id>` / `seed
-  --restore` undo a removal; `migrate` runs once per add-on per machine.
+  --restore` undo a removal; `migrate` runs once per plugin per machine.
 
 ## Related
 

@@ -46,15 +46,16 @@ truth: `ewe/docs/PLUGINS.md` (branch `release/0.25.0-beta`). Decision:
 | `kinds` | one or more of `service`, `panel`, `overlay`, `menu`, `bar-widget`, `desktop-widget`, `quick-tile`, `quick-page`, `bar-status`, `dock-item` |
 | `entryPoints` | one `.qml` per kind (none for `dock-item`), relative, inside the plugin; **symlinks resolving outside it are rejected** |
 | `quickTile` | optional: `{ "span": 1 \| 2, "order": int }` — half a row or the whole row of the home grid |
-| `quickPage` | required with `quick-page`: `{ "key", "label", "icon", "order" }`. `key` lowercase `[a-z0-9_-]`, unique, not one the shell keeps (**`home wifi bt audio cal notifs`**); it is what `quicksettings tab <key>` and `Shell.openQuickSettings(key)` route to. The extracted add-ons keep their legacy keys `ssh vpn mobile mail cast`; an unknown key falls back to `home` (Rule 4) |
+| `quickPage` | required with `quick-page`: `{ "key", "label", "icon", "order" }`. `key` lowercase `[a-z0-9_-]`, unique, not one the shell keeps (**`home wifi bt audio cal notifs`**); it is what `quicksettings tab <key>` and `Shell.openQuickSettings(key)` route to. The extracted first-party plugins keep their legacy keys `ssh vpn mobile mail cast`; an unknown key falls back to `home` (Rule 4) |
 | `barStatus` | optional: `{ "order": int }` |
 | `dockItem` | required with `dock-item`: `{ "icon", "label", "action", "order" }` — static; the dock runs `action` via `Shell.registerAction`, or `qs ipc call <id> toggle` when none is registered; hide at runtime with `Shell.setDockItemShown(id, false)` |
 | `requires` | optional: `{ "packages": [...], "commands": [...] }` — reported by `list --json` (`missing`) and `install`; **never installed by the shell** ([[Add-on deps declared, not split]]) |
 | `ipcAliases` | optional, **`ewe.` plugins only**: legacy IPC targets this plugin's QML registers (`["player"]`) so old keybinds and scripts keep working |
-| `icon`, `category` | the catalogue card (Komble → Add-ons, Welcome). Icons are Theme glyph **names** (`"icMusic"`), resolved by the host as `Theme[icon]`; Komble maps them through its `THEME_ICONS` snapshot (unknown → puzzle) |
-| `desktopWidget` | optional: `{ "x", "y", "layer": "desktop" }` default place; user placement in ewe.conf wins |
+| `icon`, `category` | the catalogue card (Komble → Plugins, Welcome). Icons are Theme glyph **names** (`"icMusic"`), resolved by the host as `Theme[icon]`; Komble maps them through its `THEME_ICONS` snapshot (unknown → puzzle) |
+| `desktopWidget` | optional: `{ "x", "y", "layer": "desktop" \| "top" \| "overlay", "pinLevel": "top" \| "overlay", "locked": bool }` defaults; user placement in ewe.conf wins. `layer` desktop = under the windows, top = above them, overlay = above everything (fullscreen too); `pinLevel` is where the pin puts it (3.2) |
 | `barWidget.defaultSection` | `left` / `center` / `right` (default `right`) |
-| `settings` | optional typed schema `[{ "key", "type", "default", "label", "choices"?, "min"?, "max"? }]`, `type` ∈ `bool, int, string, choice, color`. **Keys match `^[a-z][a-z0-9_]{0,31}$`** (snake_case; camelCase refused). Reaches entry points as `settings`; a form in Komble |
+| `barWidget` / `barStatus` `defaultShown`, `toggle` | optional bools (3.2): `defaultShown` (default true) = Show in bar before the user picks; `toggle: false` = the plugin's own settings place its button, so the host shows no Show in bar switch and `ewe-plugin bar` refuses (Music, Places) |
+| `settings` | optional typed schema `[{ "key", "type", "default", "label", "description"?, "choices"?, "min"?, "max"?, "legacy"? }]`, `type` ∈ `bool, int, string, choice, color`. **Keys match `^[a-z][a-z0-9_]{0,31}$`** (snake_case; camelCase refused). Reaches entry points as `settings`; rows in Komble's Options dialog (`description` under the label; a choice of ≤3 is a segmented control). `legacy` (3.2, **`ewe.` only**): a dotted ewe.conf key whose value stands until the user sets this one — how a setting moves out of ewe-settings without resetting anyone ([[Plugin Settings Live With the Plugin]]) |
 | `keybinds` | optional: `[{ "combo": "SUPER + SHIFT + C", "ipc": "ewe.cast toggle" }]` → `generated/plugin-keybinds.lua` while enabled; with `apiVersion` 3 the target **must be the plugin's own id or one of its `ipcAliases`** |
 | `order` (in the four slot objects) | plugins sort by it, then by id; the shell's own come first |
 | `description`, `homepage`, `author` | optional, shown by `info` |
@@ -107,9 +108,11 @@ Root `Item` with implicit size (simplest: root on `BarModule`),
 `Theme.barIcon` in `Theme.textSecondary` (primary on hover), `Theme.spaceXs`
 between modules. Read the `bar*` roles (they follow Glass). Widgets append
 to their section in id order after built-ins; the centre section yields on
-a too-narrow output; the Top-bar show/hide map hides a plugin's bar widget
-**and** its pill glyph under key `plugin:<id>` (absent = shown) — since
-0.25 ewe-settings → Layout → Top bar writes those rows.
+a too-narrow output; Show in bar hides a plugin's bar widget **and** its pill glyph under
+`desktop.bar.show."plugin:<id>"` — written by `ewe-plugin bar <id> on|off`
+(Komble → Options → In the bar); absent = the manifest's `defaultShown`
+(`list --json` → `bar: {shown, toggle}`; the host asks
+`PluginHost.barShown(id)`). ewe-settings no longer has per-plugin rows.
 
 ## Related
 

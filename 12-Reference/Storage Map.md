@@ -57,10 +57,10 @@ flowchart TB
   `ewe/ewe.conf.meta.json`, `ewe/machines/<name>.json`; folder pairs
   anywhere in the account.
 - **Plugin code is outside the payload** — upgrades never touch it; the
-  payload's `plugins/<id>/` copies are the **add-ons**, installed on
+  payload's `plugins/<id>/` copies are the **plugins**, installed on
   request (`ewe-plugin install`), once for upgraders (`migrate`), refreshed
   only on version change ([[Add-ons — vendored payload and bundle.json]]).
-- **Add-ons keep the state paths the built-ins used** (`places.json`,
+- **Plugins keep the state paths the built-ins used** (`places.json`,
   `kdeconnect-state.json`, `mail-state.json`, `google-mail.json`,
   `ssh-browse/`) so an upgrade loses nothing; new plugin-private state goes
   in the injected `stateDir` (`~/.local/state/ewe/plugins/<id>/`).

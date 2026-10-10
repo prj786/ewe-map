@@ -50,13 +50,13 @@ bash /usr/share/ewe/install.sh --no-packages   # system: greeter, plymouth, hibe
 
 ## What a fresh install gets (0.25)
 
-The shell core, ewe-settings, Komble and ewe-sync — **no add-ons**: no
+The shell core, ewe-settings, Komble and ewe-sync — **no plugins**: no
 dock, no clipboard history, no Cast tile, no mail ([[Add-ons — opt-in, not preinstalled]]).
-The **installer's Add-ons step** (ewe-os 0.13.0-beta — the live payload's
+The **installer's Plugins step** (ewe-os 0.13.0-beta — the live payload's
 catalogue, nothing pre-checked, installed for the new account at the end of
-the run, each one best-effort), the Welcome screen's **Add-ons** step
+the run, each one best-effort), the Welcome screen's **Plugins** step
 (nothing pre-checked — *Install selected* / *Browse in Komble*) and Komble →
-Add-ons put them in. The **live stick** is the exception: its live user gets
+Plugins put them in. The **live stick** is the exception: its live user gets
 `ewe.dock` from `ewe-live-deploy` so *Install ewe* has a dock to sit in. An
 **upgrade** keeps what the user had: `ewe-plugin migrate` runs from
 `ewe-setup` and from phase 60 when `EWE_PREVIOUS=1` (decided in

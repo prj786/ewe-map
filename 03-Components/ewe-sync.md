@@ -33,6 +33,14 @@ your folders between your machines**. Nothing else in ewe has a sync button.
 Tray: state icon (idle · syncing · conflict · offline · signed out), menu
 with Sync now · Pause auto-sync · Open ewe-sync · Quit.
 
+**The conflict banner** (This machine: *Restore… / Push anyway*) and the
+tray's conflict state key on `sync-status`'s **`conflict`** (an older
+ewe-conf: `!in_sync` with a remote). Until 2026-10-10 they keyed on
+`error`, which `sync-status` never set to a conflict — a refused machine
+had **no way out** in the UI ([[Sync Conflicts Are About Content]]). The
+banner says "this computer" when `remote_is_this_machine`; *Sync now* on a
+conflict jumps to This machine. dev-mock: `?mock=1&conflict=newer|mine|exists`.
+
 ## How it works — a thin UI over the ewe tools
 
 ```mermaid

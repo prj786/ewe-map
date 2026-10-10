@@ -44,14 +44,14 @@ Hyprland on its own Wayland socket and screenshots it with grim:
   Komble/ewe-settings so the in-shell fallbacks open; `HS_HEADLESS=1` uses
   a headless SHOT output (when grim hangs); `HS_WORK=/tmp/hs-<you>` for
   parallel runs (never share it).
-- **Add-ons in the harness (0.25):** a bare `up` has **no add-ons** — like
-  a fresh install (no dock!). `HS_PLUGINS=1` installs every add-on of the
+- **Plugins in the harness (0.25):** a bare `up` has **no plugins** — like
+  a fresh install (no dock!). `HS_PLUGINS=1` installs every plugin of the
   payload; `HS_PAYLOAD=<dir>` picks that payload (default
   `$EWE_PAYLOAD_PLUGINS`, else the checkout's `plugins/`);
   `HS_PLUGIN_DIRS=a:b` adds fixture plugins (`tests/fixtures/plugins/
   acme.v3demo` exercises every API 3 kind; refuses `ewe.*` ids — copy a
-  first-party add-on into a private payload instead); `HS_PRIVATE_BUS=1`
-  runs the shell on its own session D-Bus (needed with the phone add-on,
+  first-party plugin into a private payload instead); `HS_PRIVATE_BUS=1`
+  runs the shell on its own session D-Bus (needed with the phone plugin,
   plus `EWE_PHONE_NO_DAEMON=1`).
 - `ewe-plugin` verbs restart the host's `ewe.service` unless given
   `--no-restart` — systemctl is not sandboxed. **Even then** `install`/
@@ -94,14 +94,14 @@ npm run tauri build   # release binary
 - Komble packaging: `makepkg -si` (the PKGBUILD is the packaging path —
   installs polkit policy + helper).
 - `.dev-mock/` folders exist in ewe-settings / ewe-sync / komble-arch for
-  mock data during frontend work (ewe-settings' add-on mocks are inline in
+  mock data during frontend work (ewe-settings' plugin mocks are inline in
   `dev-mock.html`: `?addons=fresh|dock|legacy`, `?komble=0`; its
   `.dev-mock/` is local-only via `.git/info/exclude`).
 - Headless screenshots of a Tauri UI: Helium `--headless=new
   --ozone-platform=headless --virtual-time-budget=6000`, or WebKit under a
   headless `cage` — Brave headless hangs here ([[Troubleshooting Knowledge]]).
 
-## The add-on loop (0.25)
+## The plugin loop (0.25)
 
 ```bash
 # in the add-on repo (one repo per add-on — ewe-plugin-<name>)

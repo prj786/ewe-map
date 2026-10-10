@@ -11,7 +11,7 @@ up: "[[Home]]"
 The whole flow lives in Quick settings — the **Cast tile and page**, which
 since 0.25 are the [[Cast Plugin]] (`ewe.cast`, installed on request; the
 "Cast card" below). No foreign window, no gnome-network-displays, no DE it
-doesn't belong to. `Super+Shift+C` is the add-on's manifest keybind
+doesn't belong to. `Super+Shift+C` is the plugin's manifest keybind
 (`ewe.cast toggle`); the legacy door is `qs ipc call ewe.cast legacy`
 (alias `cast legacy`).
 

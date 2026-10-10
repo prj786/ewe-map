@@ -55,6 +55,31 @@ must point at the new path). The `cast` IPC target is an alias of
   the usual cause. Boot-race safe probes retry with backoff (the keyring
   may come up after the shell). Keyring playbook: `ewe-auth keyring-reset`.
 
+## Settings sync
+
+- **"Another machine ("<this machine's name>") saved newer settings", and
+  no push ever succeeds** (the home laptop, 2026-09-13 → 10-10) — an upload
+  the server stored but whose reply was lost (lid closed mid-push; the
+  display `lastKey` changes on every dock/undock, so auto-push runs often),
+  or whose meta stamp PUT failed, left `~/.local/state/ewe/sync.json` on the
+  old ETag: every later push = `remote-newer`, forever. Check: `ewe-conf
+  sync-status` (`in_sync: false` while `remote_modified ==
+  recorded_remote_modified`) and compare the record's `id` with
+  `remote.etag`. Fixed in ewe-conf (D12 —
+  [[Sync Conflicts Are About Content]]): bytes this machine sent/saw are adopted, a stored upload is
+  recorded. A machine stuck from BEFORE the fix has no hashes on record:
+  ewe-sync → This machine → **Push anyway** (or Restore) once.
+- **ewe-sync shows no Push anyway / Restore** — pre-fix ewe-sync keyed the
+  banner on `sync-status`'s `error`, which never carries a conflict. Now
+  `conflict`. Same for the tray's conflict state.
+- **Two machines with one hostname** — the stamp said `emoh` for both and
+  `machines/<name>.json` is shared. Since D12 the stamp carries a hashed
+  `machine_id` (`remote_is_this_machine`); still give each machine its own
+  hostname.
+- **The Nextcloud desktop client syncs `~/Nextcloud/ewe` too** — a
+  same-bytes re-upload moves the ETag; adopted since D12 (different bytes
+  stay a conflict). Don't edit `~/Nextcloud/ewe/ewe.conf` by hand.
+
 ## Settings
 
 - **"Top bar settings do nothing" (0.12.7)** — prefs the Settings app
@@ -64,12 +89,27 @@ must point at the new path). The `cast` IPC target is an alias of
 - **A change vanished** — you edited a `generated/` file; it's a build
   artifact. Change the source (`ewe.conf`), then `apply`.
 
-## Add-ons (0.25)
+- **"The shell isn't running" in Settings while it is** — `shell_running`
+  was asked once, at open; a shell restart then (login, update, plugin
+  install) left the note up for the window's life. Since 2026-10-10:
+  re-asked on focus + every 10 s, two misses before it shows, 3 s timeout,
+  a failed `--pid` call retried by config path. The User pane flipped to
+  "isn't running" on ANY unreadable reply too (stderr was appended to
+  `qs_ipc` replies) — now stdout only, last good status kept.
+- **Glass looked "weird"** (2026-10-10,
+  [[Glass — the slider moves the bar only]]): Overview chips / widget cards followed the bar slider (80 % with
+  Glass off, invisible at 25), the dock's shadow showed through its pill,
+  `xray` blurred the wallpaper instead of the window behind, Glass blurred
+  every translucent window, Window transparency's live eval turned windows
+  solid under App blur, and Reduce transparency silently overrode the
+  controls. All fixed; see the decision.
+
+## Plugins (0.25)
 
 - **"My dock / clipboard / Cast tile is gone" on a fresh install** — not a
   bug: nothing in the payload is installed on a fresh machine
-  ([[Add-ons — opt-in, not preinstalled]]). Komble → Add-ons, the Welcome
-  Add-ons step, or `ewe-plugin install <id>`. On an **upgrade** the features
+  ([[Add-ons — opt-in, not preinstalled]]). Komble → Plugins, the Welcome
+  Plugins step, or `ewe-plugin install <id>`. On an **upgrade** the features
   the user had are installed once by `ewe-plugin migrate`
   (`~/.local/state/ewe/addons-migrated`); the dock is skipped only when
   `[desktop.dock] enabled = false`, and anything in `[plugins].removed` stays
@@ -81,22 +121,31 @@ must point at the new path). The `cast` IPC target is an alias of
 - **`seed --restore <id>` silently seeded nothing** (pre-0.25) —
   `PAYLOAD_PLUGINS` didn't resolve; now realpath with fallbacks
   (`/usr/share/ewe/plugins`, `~/.local/share/ewe/plugins`).
-- **An add-on's legacy IPC target / QS key / layer namespace stopped
-  working** — the add-on is not installed or not enabled (`ewe-plugin
+- **A plugin's legacy IPC target / QS key / layer namespace stopped
+  working** — the plugin is not installed or not enabled (`ewe-plugin
   list`); when installed, `cast launcher places player mail` and
   `quicksettings tab ssh|vpn|mobile|mail|cast` behave exactly as before.
-  ewe-settings treats a missing `mail` target as "add-on absent", not an
+  ewe-settings treats a missing `mail` target as "plugin absent", not an
   error.
-- **Komble shows no Add-ons group** — the shell's `ewe-plugin list --json`
+- **Komble shows no Plugins group** — the shell's `ewe-plugin list --json`
   has no `available` key = an ewe older than 0.25.
 - **A tile won't hide** — hide the host slot (`parent.visible`), never
   `Tile.visible`; the home grid collapses empty slots.
 - **A `dock-item` shows nothing** — no dock installed: the item simply has
   no host (by design, not an error). With the dock: check
-  `Shell.dockItemShown(id)` (the Music add-on hides its own button).
+  `Shell.dockItemShown(id)` (the Music plugin hides its own button).
 - **`kdeconnectd` appeared as a new device on the network during a test
   run** — D-Bus **auto-activation starts it on ANY proxy call**. A harness
   needs `EWE_PHONE_NO_DAEMON=1` **and** a private bus (`HS_PRIVATE_BUS=1`).
+
+- **Komble → Options seemed to do nothing** — the first-party plugins'
+  form opened under the WHOLE card grid, off-screen. It is a Dialog now
+  (D10).
+- **A setting a plugin moved out of ewe-settings came back reset** — it
+  must declare `legacy: "<old.ewe.conf.key>"` (first-party only); the
+  old value then stands until the user sets the new one.
+- **`ewe-plugin bar <id> off` refused** — the plugin's manifest says
+  `toggle: false` (Music, Places: their `button` setting places them).
 
 ## Shell / QML
 
@@ -219,6 +268,17 @@ must point at the new path). The `cast` IPC target is an alias of
   `~/.projectlibre/run.conf`). Not exported globally on purpose:
   `JDK_JAVA_OPTIONS`/`_JAVA_OPTIONS` print a "Picked up" line on every `java` run.
 
+- **A layer window's `mask: Region { regions: [] }` is CLICK-THROUGH** —
+  Quickshell sets `WindowTransparentForInput` for an empty region. Arrange
+  mode used it while it wanted every click: the drag, the chips and Esc
+  never arrived (until 2026-10-10). Use the union of the items that take
+  input.
+- **A drag assigns `x`/`y` and breaks their binding** — re-bind
+  (`Qt.binding`) after persisting, or later placement changes never show.
+- **`property var settings` already has a `settingsChanged` signal** —
+  declaring `signal settingsChanged()` beside it is a duplicate-signal
+  error.
+
 ## The nested harness (`run-ewe/driver.sh`) and agent tooling
 
 - **`ewe-plugin … --no-restart` still touched the LIVE Hyprland** — the
@@ -234,7 +294,7 @@ must point at the new path). The `cast` IPC target is an alias of
   <checkout>`; use `driver.sh ipc plugins reload`. With the host display
   set it hits the live shell instead.
 - **`HS_PLUGIN_DIRS` refuses `ewe.*` ids** (reserved) and the driver forces
-  `EWE_PAYLOAD_PLUGINS=$REPO/plugins` — to test a first-party add-on from
+  `EWE_PAYLOAD_PLUGINS=$REPO/plugins` — to test a first-party plugin from
   its repo, copy it into a private payload dir and use
   `HS_PAYLOAD=<dir> HS_PLUGINS=1` (or an `EWE_PLUGIN_TOOL` wrapper).
 - **Two headless outputs must not share a position** — `HS_HEADLESS` puts
@@ -253,6 +313,21 @@ must point at the new path). The `cast` IPC target is an alias of
   ewe-settings' mocks are inline in `dev-mock.html`
   (`?addons=fresh|dock|legacy`, `?komble=0`).
 
+- **`$(curl …)` drops the trailing newline** — a test that re-uploads "the
+  same bytes" that way uploads different bytes. Use `curl -o file` +
+  `--data-binary @file`.
+- **`tests/ewe-conf-roundtrip.sh` fails on `user.lua` after a generator
+  change** — its golden is THIS machine's live `generated/user.lua`, written
+  by the installed (older) ewe-conf. Expected until the new build is
+  deployed; run with `EWE_TEST_GEN=/nonexistent EWE_TEST_QS=/nonexistent`
+  to check everything else.
+- **No pointer injection in the harness** (`/dev/uinput` is root-only, no
+  ydotool) — drive pin/lock/place through `ewe-plugin place` + `driver.sh
+  ipc plugins reload`; move the pointer with `driver.sh hc dispatch
+  'hl.dsp.cursor.move({ x = X, y = Y })'` (SHOT starts at x = 1920).
+- **`pkill -f vite…` killed the calling shell** — the pattern was in its own
+  command line; anchor it (`pkill -f "[v]ite --port N"`).
+
 ## Installer
 
 - **`sudo /usr/share/ewe/install.sh` exits 2** — on purpose
@@ -263,11 +338,11 @@ must point at the new path). The `cast` IPC target is an alias of
 - **A single missing package must never abort the run** — installers
   warn-and-skip and return 0 (this was the root cause of a past "no
   greeter" failure). Don't regress `lib/pkg.sh`.
-- **An add-on must never abort the ISO install** (ewe-os 0.13.0-beta) —
+- **A plugin must never abort the ISO install** (ewe-os 0.13.0-beta) —
   the helper's `addons` verb and `ewe-install`'s `install_addons` report
   `!! add-on <id>: why` / `{"addon":id,"ok":false}` and exit 0; only a
   malformed id list or an unmounted target is an error.
-- **Add-ons in the target chroot** — run `ewe-plugin install <id>
+- **Plugins in the target chroot** — run `ewe-plugin install <id>
   --no-restart` **as the new user** (`arch-chroot … runuser -u $u -- env -u
   HYPRLAND_INSTANCE_SIGNATURE -u WAYLAND_DISPLAY -u DBUS_SESSION_BUS_ADDRESS`):
   `--no-restart` keeps the tool away from `systemctl --user`, and the
@@ -280,7 +355,7 @@ must point at the new path). The `cast` IPC target is an alias of
   `chroot_user`/`chroot_root`, set **`EWE_INSTALL_MNT`** — the script
   derives `MNT` from it, a plain `MNT=` export is overwritten).
 - **The live ISO has no dock since ewe 0.25 unless `ewe-live-deploy`
-  installs it** — a fresh account has no add-ons; the live user gets
+  installs it** — a fresh account has no plugins; the live user gets
   `ewe.dock` (only that) so the pinned *Install ewe* has a surface. The
   installer also autostarts (`apps.startup`) and is first in the launcher
   (`apps.pinned` is still read by the core Launcher).

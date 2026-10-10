@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-vpn` ·
 [github.com/prj786/ewe-plugin-vpn](https://github.com/prj786/ewe-plugin-vpn)
-· v1.0.0 · API 3 · **add-on since 0.25** (was the VPN tile + page in Quick
+· v1.0.0 · API 3 · **plugin since 0.25** (was the VPN tile + page in Quick
 settings).
 
 Your NetworkManager VPN connections (OpenVPN, L2TP/IPsec, WireGuard …): a
@@ -19,7 +19,7 @@ split tile (body connects/disconnects — the only profile, or opens the list
 sign-in form** under a row whose secrets are not stored (username,
 password, PSK; stored with `password-flags=0`, root-only under
 `/etc/NetworkManager`). Failures carry the real reason: when NM only says
-"The VPN service failed to start", the add-on reads the plugin's line from
+"The VPN service failed to start", the plugin reads the plugin's line from
 the NM journal — for IPsec with the IKEv1/libreswan hint.
 
 | kind | file |
@@ -30,7 +30,7 @@ the NM journal — for IPsec with the IKEv1/libreswan hint.
 
 ## Facts
 
-- **Install:** Komble → Add-ons, or `ewe-plugin install ewe.vpn`.
+- **Install:** Komble → Plugins, or `ewe-plugin install ewe.vpn`.
 - **Stays core:** profiles are created in Settings → Network → VPN
   (`ewe-conf` `[network.vpn]`), by import, or `nmcli`; the secret prompt
   for a NM agent request stays the core `Auth.qml`; the NM plugins and
@@ -39,7 +39,7 @@ the NM journal — for IPsec with the IKEv1/libreswan hint.
   debounce, backoff) + a read at start, after `Shell.resumed()` and when
   the tile/page appears.
 - `requires` names only the command `nmcli`: `missing` is per package, so
-  listing `networkmanager-openvpn` would flag the add-on broken for users
+  listing `networkmanager-openvpn` would flag the plugin broken for users
   of one VPN type (the README names them) — [[Add-on deps declared, not split]].
 - No settings, no IPC target: `quicksettings tab vpn`.
 

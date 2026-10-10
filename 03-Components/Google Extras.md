@@ -36,7 +36,7 @@ flowchart LR
 > the `mail` IPC** live in the [[Mail Plugin]] (`ewe.mail`), which obtains
 > tokens from the core broker via `ewe-auth token --json`. Rationale:
 > [[Gmail Split — core Google, Mail add-on]]. The Gmail bullet below
-> describes what the add-on does now.
+> describes what the plugin does now.
 
 ## The operations (how it actually runs)
 

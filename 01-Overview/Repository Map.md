@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Repository Map
 
-The project is **8 product repos + 14 plugin repos** (13 add-ons + the
+The project is **8 product repos + 14 plugin repos** (13 plugins + the
 example; plus this vault, the `design-mockups/` folder and dev worktrees in
 `.wt/`). All under the `prj786` GitHub org; checked out locally at
 `/home/scubba/Projects/ewe/`. The ten `ewe-plugin-*` repos created
@@ -25,19 +25,19 @@ creates the GitHub remotes and pushes.
 | [`ewe-sync`](https://github.com/prj786/ewe-sync) | the account & sync app (RFC-006, ex-"Flock") | Tauri v2 + Svelte 5 |
 | [`ewe-cast`](https://github.com/prj786/ewe-cast) | `ewe-castd` — headless casting daemon (RFC-004) | Python on GLib, GStreamer (C) |
 | [`prj786.github.io`](https://github.com/prj786/prj786.github.io) | the website | SvelteKit 2 + Svelte 5, static |
-| [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | add-on: clipboard history + emoji (1.1.1, API 2) | QML |
-| [`ewe-plugin-screenshot`](https://github.com/prj786/ewe-plugin-screenshot) | add-on: screenshots (1.1.0, API 2) | QML |
-| [`ewe-plugin-passwords`](https://github.com/prj786/ewe-plugin-passwords) | add-on: password fill (1.1.0, API 2) | QML, bash |
-| [`ewe-plugin-insomnia`](https://github.com/prj786/ewe-plugin-insomnia) | add-on: Insomnia / keep awake (1.0.0, API 3) | QML |
-| [`ewe-plugin-sysmon`](https://github.com/prj786/ewe-plugin-sysmon) | add-on: CPU + memory meters (1.0.0) | QML, sh |
-| [`ewe-plugin-ssh`](https://github.com/prj786/ewe-plugin-ssh) | add-on: SSH hosts + tunnels (1.0.0) | QML |
-| [`ewe-plugin-vpn`](https://github.com/prj786/ewe-plugin-vpn) | add-on: NetworkManager VPNs (1.0.0) | QML |
-| [`ewe-plugin-media`](https://github.com/prj786/ewe-plugin-media) | add-on: Music / MPRIS card (1.0.0) | QML |
-| [`ewe-plugin-places`](https://github.com/prj786/ewe-plugin-places) | add-on: Places file browser (1.0.0) | QML |
-| [`ewe-plugin-phone`](https://github.com/prj786/ewe-plugin-phone) | add-on: Phone / KDE Connect (1.0.0) | QML, Python |
-| [`ewe-plugin-mail`](https://github.com/prj786/ewe-plugin-mail) | add-on: Mail — IMAP + Gmail visuals (1.0.0) | QML |
-| [`ewe-plugin-cast`](https://github.com/prj786/ewe-plugin-cast) | add-on: Cast to TV — the shell end of ewe-castd (1.0.0) | QML, sh |
-| [`ewe-plugin-dock`](https://github.com/prj786/ewe-plugin-dock) | add-on: the Dock + pinned-apps popup (1.0.0) | QML |
+| [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | plugin: clipboard history + emoji (1.1.1, API 2) | QML |
+| [`ewe-plugin-screenshot`](https://github.com/prj786/ewe-plugin-screenshot) | plugin: screenshots (1.1.0, API 2) | QML |
+| [`ewe-plugin-passwords`](https://github.com/prj786/ewe-plugin-passwords) | plugin: password fill (1.1.0, API 2) | QML, bash |
+| [`ewe-plugin-insomnia`](https://github.com/prj786/ewe-plugin-insomnia) | plugin: Insomnia / keep awake (1.0.0, API 3) | QML |
+| [`ewe-plugin-sysmon`](https://github.com/prj786/ewe-plugin-sysmon) | plugin: CPU + memory meters (1.0.0) | QML, sh |
+| [`ewe-plugin-ssh`](https://github.com/prj786/ewe-plugin-ssh) | plugin: SSH hosts + tunnels (1.0.0) | QML |
+| [`ewe-plugin-vpn`](https://github.com/prj786/ewe-plugin-vpn) | plugin: NetworkManager VPNs (1.0.0) | QML |
+| [`ewe-plugin-media`](https://github.com/prj786/ewe-plugin-media) | plugin: Music / MPRIS card (1.0.0) | QML |
+| [`ewe-plugin-places`](https://github.com/prj786/ewe-plugin-places) | plugin: Places file browser (1.0.0) | QML |
+| [`ewe-plugin-phone`](https://github.com/prj786/ewe-plugin-phone) | plugin: Phone / KDE Connect (1.0.0) | QML, Python |
+| [`ewe-plugin-mail`](https://github.com/prj786/ewe-plugin-mail) | plugin: Mail — IMAP + Gmail visuals (1.0.0) | QML |
+| [`ewe-plugin-cast`](https://github.com/prj786/ewe-plugin-cast) | plugin: Cast to TV — the shell end of ewe-castd (1.0.0) | QML, sh |
+| [`ewe-plugin-dock`](https://github.com/prj786/ewe-plugin-dock) | plugin: the Dock + pinned-apps popup (1.0.0) | QML |
 | [`ewe-plugin-example`](https://github.com/prj786/ewe-plugin-example) | the reference plugin to copy (API 2) | QML |
 
 ## How they depend on each other
@@ -76,15 +76,15 @@ Notes on the graph:
 
 - The ISO **pins nothing** — it preconfigures the `[ewe]` repo so live and
   installed systems roll forward with plain `pacman -Syu`. See [[Packaging and Updates]].
-- The 13 add-ons ship **inside the ewe payload** but are **not installed on
-  a fresh machine**; `ewe-plugin install <id>` (Komble → Add-ons) puts one
+- The 13 plugins ship **inside the ewe payload** but are **not installed on
+  a fresh machine**; `ewe-plugin install <id>` (Komble → Plugins) puts one
   in, `remove` takes it out, `migrate` keeps upgraders' features. Fix an
-  add-on in its repo, then re-vendor ([[One repo per add-on]]).
+  plugin in its repo, then re-vendor ([[One repo per add-on]]).
 - ewe-cast is a separate daemon repo but ships in the same package flow and
-  is driven entirely from the `ewe.cast` add-on. See [[ewe-cast]] · [[Cast Plugin]].
+  is driven entirely from the `ewe.cast` plugin. See [[ewe-cast]] · [[Cast Plugin]].
 
 ## Per-repo deep dives
 
 [[ewe Desktop]] · [[ewe-os ISO]] · [[ewe-repo]] · [[Komble]] ·
-[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[Website]] · the add-ons
+[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[Website]] · the plugins
 under [[Plugin System]]

@@ -10,11 +10,11 @@ up: "[[Decision Index]]"
 
 **Decided 2026-10-04** (ewe 0.25.0-beta). The feature that holds a Wayland
 idle inhibitor (no auto-lock, no blank, no auto-suspend until you turn it
-off) is named **Insomnia** everywhere user-facing — the add-on
+off) is named **Insomnia** everywhere user-facing — the plugin
 ([[Insomnia Plugin]], `ewe.insomnia`), ewe-settings' Screensaver pane
 (commit 265b0cc), the Welcome tour and the writing guide
 (`design/system/guidelines/30-writing.md:81`: *Insomnia (the keep-awake
-add-on)* — not "keep awake", "caffeine", "inhibit").
+plugin)* — not "keep awake", "caffeine", "inhibit").
 
 - The **layer namespace stays `quickshell:caffeine`** — Hyprland layer
   rules and the Glass blur list match it by name; plumbing is not renamed.

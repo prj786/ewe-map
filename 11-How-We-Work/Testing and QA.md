@@ -45,7 +45,7 @@ it.
 | X11 scale at login (9 checks) | `ewe/tests/x11-scale-test.sh` |
 | logind bridge (buffered reads, 17 checks) | `ewe/tests/logind-bridge-test.py` |
 | shell suite (17) | `ewe/tests/` |
-| add-ons' own logic | `test.sh` in `ewe-plugin-{sysmon,cast,phone,mail,dock,passwords}` (sample.sh contract 18 checks; cast scripts vs fake tools; bridge framing; mail compat contract; dock manifest + Rule 8 sweep) |
+| plugins' own logic | `test.sh` in `ewe-plugin-{sysmon,cast,phone,mail,dock,passwords}` (sample.sh contract 18 checks; cast scripts vs fake tools; bridge framing; mail compat contract; dock manifest + Rule 8 sweep) |
 | every API 3 kind in the harness | `ewe/tests/fixtures/plugins/acme.v3demo` with `HS_PLUGIN_DIRS` |
 | the one file: roundtrip + network sync + conflict guard | `ewe/tests/ewe-conf-roundtrip.sh` · `ewe-conf-network-test.sh` · `ewe-conf-sync-test.sh` (fixtures: `mock-nextcloud.py`) |
 | auth broker | `ewe/tests/ewe-auth-test.sh` |
@@ -82,9 +82,9 @@ check. See [[Worktrees and Screenshots]].
      `lid: going to sleep:` line after the resume.
   3. Close and reopen within 3 s: suspend starts within ~1 s of closing (no
      `logind: no sleepReady()` warning) and the reopen does not suspend.
-- **Add-ons (0.25)**: Komble's Add-ons catalogue and ewe-settings' add-on
+- **Plugins (0.25)**: Komble's Plugins catalogue and ewe-settings' plugin
   panes are dev-mock tested only — the first real Tauri run is pending;
-  real-device check of every add-on on the carved shell (with and without
+  real-device check of every plugin on the carved shell (with and without
   the dock) is pending.
 - **Hardware matrix**: tested on a QEMU/KVM VM and Intel Lunar Lake
   hardware; real-TV and multi-GPU reports are the scarce resource.
