@@ -40,7 +40,7 @@ truth: `ewe/docs/PLUGINS.md` (branch `release/0.25.0-beta`). Decision:
 | field | rule |
 |---|---|
 | `schemaVersion` | `1` |
-| `id` | `<namespace>.<name>`, lowercase `[a-z0-9_-]`, at least one dot. `ewe.` reserved (payload or `--first-party` only). Install dir is named after it. |
+| `id` | `<namespace>.<name>`, lowercase `[a-z0-9_-]`, at least one dot. `ewe.` reserved (payload, `--first-party`, or an installed copy of an id the payload ships — 0.25.2). Install dir is named after it. |
 | `name`, `version` | non-empty strings; `version` is what `list` shows and what a bundled refresh compares |
 | `apiVersion` | **`2` or `3`** — the shell loads both; any other value is refused **at install**, not login (`1` = the Fluent-era surface, refused). The `quick-tile`, `quick-page`, `bar-status`, `dock-item` kinds, `ipcAliases` and the keybind target rule need `3` |
 | `kinds` | one or more of `service`, `panel`, `overlay`, `menu`, `bar-widget`, `desktop-widget`, `quick-tile`, `quick-page`, `bar-status`, `dock-item` |

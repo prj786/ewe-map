@@ -111,12 +111,12 @@ and [[Plugin API 3]].
 | `info <id> [--json]` | one plugin's manifest and state |
 | **`install <id> [--no-restart]`** | a plugin out of the payload: copied in with source `bundled`, removal forgotten, enabled, keybinds regenerated. One JSON object (`ok`, `version`, `missing`, `restarted`); unknown id → `ok: false`, exit 1 |
 | **`migrate [--no-restart] [--fresh]`** | the one-time plugin migration (D3). JSON: `migrated`, `skipped` (with `why`), `fresh` |
-| `enable <id>` / `disable <id>` | flip `[plugins].enabled` in ewe.conf, restart the shell (`--no-restart` defers) |
+| `enable <id>` / `disable <id>` | flip `[plugins].enabled` in ewe.conf, restart the shell (`--no-restart` defers); `enable` writes back `bundled` for any installed first-party copy ewe.conf forgot (0.25.2) |
 | `update [id] [--yes]` | fast-forward git plugins; diff shown first; a manifest that stops validating is rolled back |
 | `remove <id> [--yes]` | delete a git clone or a bundled copy (remembered in `[plugins].removed`); hand-made dirs moved to `<id>.bak.<stamp>`; forgets it in ewe.conf |
 | `restore [--yes] [--no-restart]` | install every plugin ewe.conf knows that is missing here — git URLs cloned, bundled plugins copied from the payload; the plugin half of Komble's "For you" and Welcome (never automatic) |
 | `validate <dir> [--first-party] [--json]` | check manifest + entry points; exit 1 lists every problem (`--first-party` allows a reserved `ewe.` id) |
-| `seed [dir] [--restore <id>] [--no-restart]` | the payload's `default` plugins in (**none in 0.25**), installed bundled copies refreshed (run by `ewe-setup` and phase 60); `--restore <id>` forgets a removal and installs that id |
+| `seed [dir] [--restore <id>] [--no-restart]` | the payload's `default` plugins in (**none in 0.25**), installed bundled copies refreshed (run by `ewe-setup` and phase 60); an installed payload copy with no source is adopted as `bundled` (`adopted`, 0.25.2); `--restore <id>` forgets a removal and installs that id |
 | `path` | the plugins directory |
 | `create <ns.name> [--name T] [--kinds a,b] [--section right] [--dir P]` | a new plugin repo: manifest, one working QML per kind, README, MIT licence, `git init` + first commit |
 | `dev [dir] [--no-restart] [--no-follow]` | link a working copy in, enable, restart the shell, follow its log |
@@ -177,4 +177,8 @@ boots the third crash-following start inside a minute with no plugins.
 > IPC target (`ipcAliases`), layer namespace and quick-page key — Rule 4.
 > Re-adding a removed plugin is `ewe-plugin install <id>` (or Komble →
 > Plugins), **not** `add <url>` of the GitHub repo (that failed before
-> 0.25 and is only an alias for `install` now).
+> 0.25 and is only an alias for `install` now). An INSTALLED `ewe.` plugin is
+> first-party because the payload ships its id (`payload_ships`), not only
+> because `[plugins.sources]` says `bundled` — ewe.conf syncs and a Restore
+> can drop that record (0.25.2); a clone or directory claiming `ewe.` is
+> still refused.
