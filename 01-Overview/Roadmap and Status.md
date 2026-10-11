@@ -8,12 +8,25 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-10**. Released: **ewe (DE) 0.25.1-beta** (2026-10-10, with Komble
+Snapshot as of **2026-10-11**. Released: **ewe (DE) 0.25.2-beta** (2026-10-11, a bug fix on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.12.4-beta**
 (no ISO for 0.25 yet — the release stopped at the ewe-repo publish; **ewe-os
 0.13.0-beta** is in progress on `feat/addons-installer`: the installer's
 Plugins step, see [[ewe-os ISO]]). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.25.2-beta — first-party plugins survive a Restore (released 2026-10-11)
+
+Bug report: after login Komble → Plugins showed all 13 first-party plugins
+broken (*the "ewe." namespace is reserved for ewe's own (bundled) plugins*)
+and none would turn on. A Restore from the account (ewe-sync → This machine,
+`ewe-conf pull`, 2026-10-10 15:38) had replaced `[plugins]` with an older
+copy without the `"ewe.*" = "bundled"` source records, and the reserved-id
+check trusted only that synced table. Now an installed copy of an id the
+payload ships is first-party whatever ewe.conf says (`payload_ships`);
+`enable` writes the records back, `seed` adopts such copies (`adopted`).
+ewe#50 only — no app changes. `ewe-plugin-test.sh` 82/82, every suite green.
+See [[Troubleshooting Knowledge]] (Plugins).
 
 ## 0.25.1-beta — what is in it (released 2026-10-10)
 
@@ -72,7 +85,7 @@ project's memory:
 ```mermaid
 flowchart LR
     subgraph shipping["shipping / beta"]
-        EWE["ewe DE 0.25.1-beta<br/>plugins · sync heals · Glass · pinned widgets"]
+        EWE["ewe DE 0.25.2-beta<br/>plugins · sync heals · Glass · pinned widgets"]
         OS["ewe-os 0.12.4-beta<br/>0.13.0-beta in progress: installer Plugins step"]
         REPO["ewe-repo — rolling"]
         K["Komble 0.20.0-beta — Plugins + Options dialog,<br/>early vs live pacman"]

@@ -118,6 +118,16 @@ must point at the new path). The `cast` IPC target is an alias of
   https://github.com/prj786/ewe-plugin-<x>.git` failed** (reserved `ewe.`
   id) — since 0.25 that URL/id installs the payload copy; the honest
   command is `ewe-plugin install <id>`.
+- **Every first-party plugin INVALID — "the "ewe." namespace is reserved for
+  ewe's own (bundled) plugins" — and no switch turns one on** (0.25.0–0.25.1,
+  2026-10-11). `[plugins.sources]` had lost its `"ewe.<x>" = "bundled"`
+  records: a Restore from the account (`ewe-conf pull` — look for
+  `~/.config/ewe/ewe.conf.<stamp>.bak`, only a pull writes one) or a file
+  synced from another machine. The check trusted only that synced table.
+  Fixed in **0.25.2-beta**: an installed copy of an id the payload ships is
+  first-party (`payload_ships`); `enable` / `seed` write the records back.
+  On an older ewe, `ewe-plugin install <id>` re-records one. A Restore also
+  brings back that copy's `[plugins].enabled`, so plugins come back **off**.
 - **`seed --restore <id>` silently seeded nothing** (pre-0.25) —
   `PAYLOAD_PLUGINS` didn't resolve; now realpath with fallbacks
   (`/usr/share/ewe/plugins`, `~/.local/share/ewe/plugins`).
