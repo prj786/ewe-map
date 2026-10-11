@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-11**. Released: **ewe (DE) 0.25.2-beta** (2026-10-11, a bug fix on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-11**. Released: **ewe (DE) 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.12.4-beta**
 (no ISO for 0.25 yet — the release stopped at the ewe-repo publish; **ewe-os
 0.13.0-beta** is in progress on `feat/addons-installer`: the installer's
@@ -25,7 +25,12 @@ copy without the `"ewe.*" = "bundled"` source records, and the reserved-id
 check trusted only that synced table. Now an installed copy of an id the
 payload ships is first-party whatever ewe.conf says (`payload_ships`);
 `enable` writes the records back, `seed` adopts such copies (`adopted`).
-ewe#50 only — no app changes. `ewe-plugin-test.sh` 82/82, every suite green.
+ewe#50. `ewe-plugin-test.sh` 82/82, every suite green. Same day, Komble
+0.20.1-beta (komble-arch#12): *Add a plugin* first on Plugins, and the
+Options dialog no longer blinks (see Troubleshooting → Theming). The
+reporting machine's ewe.conf was merged back to its pre-Restore state
+(three-way against the Nextcloud version the Restore pulled — the laptop
+had not pushed since 2026-09-13).
 See [[Troubleshooting Knowledge]] (Plugins).
 
 ## 0.25.1-beta — what is in it (released 2026-10-10)
@@ -88,7 +93,7 @@ flowchart LR
         EWE["ewe DE 0.25.2-beta<br/>plugins · sync heals · Glass · pinned widgets"]
         OS["ewe-os 0.12.4-beta<br/>0.13.0-beta in progress: installer Plugins step"]
         REPO["ewe-repo — rolling"]
-        K["Komble 0.20.0-beta — Plugins + Options dialog,<br/>early vs live pacman"]
+        K["Komble 0.20.1-beta — Plugins + Options dialog,<br/>early vs live pacman"]
         S["ewe-settings 0.18.0-beta — shipped"]
         SY["ewe-sync — shipped"]
         CAST["ewe-cast — phases A+B"]

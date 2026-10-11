@@ -419,6 +419,15 @@ must point at the new path). The `cast` IPC target is an alias of
 - **GTK stays light while the shell is dark** — `colorscheme.sh` is
   `set -u` (not `-e`) on purpose; a stray non-zero line must not abort
   before all files are written. Check the log it prints.
+- **A Tauri app's dialog blinks as it opens** (Komble Options, 2026-10-11):
+  WebKitGTK puts an `opacity` animation on a GPU layer and, tearing it
+  down when the animation ends, sometimes presents one frame without the
+  dialog and the scrim. Komble 0.20.1: dialogs open in place, the scrim
+  animates `background-color` — never animate `opacity`/`transform` on a
+  full-window overlay there. To SEE it: the app's `dev-mock.html` in a
+  WebKit2 4.1 window inside `WLR_BACKENDS=headless cage`, `grim` in a loop,
+  per-frame brightness (Chromium never shows it). ewe-settings and
+  ewe-sync carry the same `.ewe-dialog[data-state="open"]` fade.
 
 ## Related
 

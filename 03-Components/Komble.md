@@ -104,3 +104,5 @@ Debian with different command names:
 > the file. The full reasoning: [[Komble — Arch Forced Decisions]].
 > Plugins: Komble never decides what is missing (the catalogue does) and
 > never records a plugin's package dependencies as apps.
+> Dialogs open in place and the scrim fades its colour, never its opacity —
+> an opacity fade blinks in WebKitGTK (0.20.1; [[Troubleshooting Knowledge]]).
