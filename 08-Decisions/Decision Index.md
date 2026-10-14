@@ -14,7 +14,7 @@ read the note first — these were settled deliberately, most with RFCs.
 
 | # | decision | status | note |
 |---|---|---|---|
-| 1 | Hyprland + Quickshell as the foundation; Arch-only; dark-only; traditional GTK apps | shipped | [[Foundation Choices]] |
+| 1 | Hyprland + Quickshell as the foundation; Arch-only; dark by default with light mode too (revised 2026-10-14: was dark-only); traditional GTK apps | shipped | [[Foundation Choices]] |
 | 2 | The machine as one file — `ewe.conf` (RFC-001) | shipping (phases 1–5 landed; phase 6 became RFC-005/006) | [[RFC-001 — The One File]] |
 | 3 | Account = your Nextcloud, Google demoted to optional BYO extra (RFC-005) | accepted, implemented across repos, merging as one wave | [[RFC-005 — Nextcloud Account]] |
 | 4 | ewe-sync, a 4th Tauri app owning account + sync (RFC-006, ex-"Flock") | built, shipped preinstalled | [[RFC-006 — ewe-sync App]] |
@@ -45,6 +45,7 @@ read the note first — these were settled deliberately, most with RFCs.
 | 29 | **D11** Desktop widgets: always draggable, a pin in a hover toolbar, pin level top (above windows) or overlay (above everything), lock position | built 2026-10-10, released in 0.25.1-beta | [[Desktop Widgets — always movable, pin to a level]] |
 | 30 | **D12** A sync conflict is about content, not an ETag: adopt a moved ETag over bytes this machine sent/saw; record an upload once stored; `sync-status` answers `conflict`; the stamp carries a hashed `machine_id` | built 2026-10-10, released in 0.25.1-beta | [[Sync Conflicts Are About Content]] |
 | 31 | **D13** Glass: the bar opacity slider moves only the bar, the dock and the lock card; the Glass material stays at 80 %; no xray; no app blur unless asked | built 2026-10-10, released in 0.25.1-beta | [[Glass — the slider moves the bar only]] |
+| 32 | **RFC-007** ewe-companion: a quiet island in the bar's centre (plugin `ewe.companion`) + a Rust daemon/CLI/hook relay; agent approvals, notification presenter (Plugin API 4 + watchdog), watchers, tiered tools; API keys/local/agent-lane providers; rules C1–C8 | **accepted** 2026-10-14 (all nine proposed answers); P1 done, P2 working | [[RFC-007 — ewe Companion]] |
 | 33 | **ewe browser replaces Helium** as the desktop's browser: a first-party Electron app (castlabs runtime for Widevine) shipped like Komble — own release, ewe-repo publish, a dependency of `ewe`; Helium leaves the lists; seeding/`$BROWSER`/Super+B fallback point at `ewe-browser.desktop`; Nemo keeps folders | built 2026-10-14, released in ewe 0.26.0-beta | [[ewe browser replaces Helium]] |
 
 > **Numbering note:** RFC-003 does not exist in `ewe/docs/` (the sequence

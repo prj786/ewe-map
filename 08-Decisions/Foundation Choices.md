@@ -33,16 +33,33 @@ service phases are skipped.
   `exec Hyprland`, never via `hl.env()` in `hyprland.lua`.
 - User overrides land in `hypr/generated/user.lua` (sourced last).
 
-## Dark only (2026-09-01)
+## Dark by default, light mode too (2026-09-01, revised 2026-10-14)
 
-Two dark schemes — `flock` (neutral greys) and `blacksheep` (absolute black
-for OLED). **There is no light mode, deliberately.** `colorscheme.sh` still
-accepts a mode argument and ignores it, for caller compatibility.
+**2026-10-14, the owner: "we need light mode too."** ewe is dark by
+default (Ewe Dark), and light mode is supported: the built-in **Ewe Light**
+scheme, any imported light scheme, or *From wallpaper (light)*, all in
+Settings → Appearance → Scheme. The light path is the scheme's `variant`
+(`ewe-theme` writes it into `theme-tokens.json`), and every consumer
+follows it: the shell (tokens), the Tauri apps (`lib/theme.js` flips
+`color-scheme`), GTK (adw-gtk3 + prefer-light), Qt and KDE (palettes from
+tokens), the icons (Reversal light), kitty, Zathura, Zed (appearance and
+syntax from the scheme), asyar, mpv, ewe browser (it reads the tokens) and
+Helium while installed (`helium-theme.sh light`).
+The lock screen stays Ewe Dark over the wallpaper by design.
 
-> **Build guard:** do not "add a light mode back". It was removed by
-> decision; a full scheme system exists instead (`ewe-theme`, Ewe Dark /
-> Ewe Light *schemes* are token derivations — the light scheme exists as
-> tokens for the website toggle, not as a desktop mode).
+*History:* on 2026-09-01 light mode was deleted and ewe declared
+dark-only (two dark looks, `flock` greys and `blacksheep` black for OLED,
+which remain). The v3 scheme system then brought Ewe Light back as a
+pickable scheme, and the owner made it official on 2026-10-14.
+`colorscheme.sh` still accepts its old mode argument and ignores it; light
+or dark comes from the scheme.
+
+> **Build guard:** every surface must work in **both** variants. No raw
+> colour anywhere a scheme should reach (Rule 8 in QML; in generated app
+> configs, take the colour from the tokens, as `colorscheme.sh` does).
+> Check light with `HS_SCHEME=ewe-light` in the nested harness and with
+> `tests/ewe-theme-test.sh` (it applies Ewe Light and checks Zed, Zathura,
+> Helium and GTK).
 
 ## Traditional GTK apps (not Qt/KDE, not libadwaita)
 

@@ -14,7 +14,8 @@ up: "[[Home]]"
 
 ## What ewe is
 
-**ewe** *(the sheep)* — an Arch-only, opinionated, dark Wayland desktop: an
+**ewe** *(the sheep)* — an Arch-only, opinionated Wayland desktop, dark by
+default with a light mode: an
 installable **operating system** (`ewe-os` ISO) whose desktop is
 **Hyprland** (Lua-configured compositor) + **Quickshell** (QML shell). The
 project lives in `/home/scubba/Projects/ewe/` as 8 product repos + 4 plugin
@@ -78,7 +79,8 @@ every diagram renders. CI runs the same check on every push.
 
 ## The one-line summary for every future session
 
-> ewe is the dark, one-file, Nextcloud-backed Arch desktop. Don't add a
-> second config writer, don't put secrets in the file, don't rename IPC
-> verbs, don't ship Google, don't light the mode, don't edit generated
-> files. Change the source, apply, sync.
+> ewe is the one-file, Nextcloud-backed Arch desktop, dark by default and
+> light when asked. Don't add a second config writer, don't put secrets in
+> the file, don't rename IPC verbs, don't ship Google, don't paint a raw
+> colour that breaks one of the two modes, don't edit generated files.
+> Change the source, apply, sync.

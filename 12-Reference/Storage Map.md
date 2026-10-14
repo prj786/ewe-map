@@ -28,6 +28,11 @@ flowchart TB
         MIGR["addons-migrated — JSON list of add-on ids<br/>already considered (0.25, local, never synced)"]
         PSTATE["plugins/<id>/ — a plugin's own stateDir (0.25)"]
         CAST["cast.log — cast debug trace (ewe.cast legacy path)"]
+        COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards (SQLite, per machine, never synced; RFC-007)"]
+    end
+    subgraph RUN["$XDG_RUNTIME_DIR"]
+        CSOCK["ewe-companion.sock (0600, SO_PEERCRED) — ewe-companiond"]
+        KSOCK["kitty-<pid>.sock — kitty remote control (socket-only)"]
     end
     subgraph KEYRING["Secret Service keyring"]
         KC["service ewe-cloud — Nextcloud app password"]
@@ -68,6 +73,11 @@ flowchart TB
   ([[Add-ons — one-time migration for upgraders]]).
 - **`.dev-mock/`** folders in the Tauri repos hold mock data for frontend
   work — not shipped.
+- **The companion keeps its own state** in `~/.local/state/ewe/companion/`
+  (`companion.db`, 30-day retention), not in `ewe.conf`: history is per
+  machine. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
+  (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
+  keyring, never the file.
 
 ## Related
 

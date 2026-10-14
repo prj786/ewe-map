@@ -76,6 +76,12 @@
       "license": "GPL-3.0-only"
     },
     {
+      "name": "ewe-companion",
+      "role": "desktop companion: ewe-companiond daemon, ewe-companion CLI + Claude Code hook relay, Claude Code plugin; later a Tauri window (RFC-007, 0.1.0-beta, P2 working)",
+      "stack": "Rust",
+      "license": "MIT"
+    },
+    {
       "name": "prj786.github.io",
       "role": "website",
       "stack": "SvelteKit 2 + Svelte 5, static"
@@ -135,6 +141,10 @@
     {
       "name": "ewe-plugin-example",
       "role": "reference plugin"
+    },
+    {
+      "name": "ewe-plugin-companion",
+      "role": "plugin ewe.companion: the island in the bar's centre + the card drop (RFC-007)"
     }
   ],
   "rules": [
@@ -285,28 +295,53 @@
         "--addons",
         "--plugins"
       ]
+    },
+    {
+      "tool": "ewe-companion",
+      "job": "the companion: CLI + agent hook relay (RFC-007)",
+      "verbs": [
+        "status",
+        "say",
+        "ask",
+        "key",
+        "history",
+        "sessions",
+        "jump",
+        "agents",
+        "hook",
+        "statusline",
+        "debug",
+        "version",
+        "help"
+      ]
     }
   ],
   "ipc": {
     "targets": [
+      "applauncher",
       "bar",
-      "picker",
-      "quicksettings",
+      "cloud",
+      "display",
+      "google",
       "lock",
       "osd",
       "overview",
-      "preview",
-      "settings",
-      "applauncher",
-      "store",
-      "updates",
+      "picker",
       "plugins",
-      "widgets",
-      "google",
-      "cloud"
+      "power",
+      "quicksettings",
+      "saver",
+      "settings",
+      "store",
+      "sync",
+      "toast",
+      "updates",
+      "welcome",
+      "widgets"
     ],
     "plugin_targets": [
-      "example.hello"
+      "example.hello",
+      "ewe.companion"
     ],
     "public_verbs": [
       "reload",
@@ -377,7 +412,8 @@
     "apps.pinned",
     "apps.places",
     "network.vpn",
-    "network.ssh"
+    "network.ssh",
+    "companion"
   ],
   "keyring_services": [
     {
@@ -387,6 +423,10 @@
     {
       "service": "google",
       "holds": "Google refresh token (ewe-auth only)"
+    },
+    {
+      "service": "ewe-companion",
+      "holds": "chat provider API keys (attribute provider <id>), written by the daemon from the notch or `ewe-companion key set`"
     }
   ],
   "cloud_layout": {
@@ -432,6 +472,11 @@
       "rfc": "RFC-006",
       "topic": "ewe-sync account app (ex-Flock)",
       "status": "built; shipped preinstalled"
+    },
+    {
+      "rfc": "RFC-007",
+      "topic": "ewe-companion desktop companion (island plugin + daemon)",
+      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders) and P2.8 (runs proposed shell commands on a click) working; on GitHub, not yet released"
     }
   ],
   "sync_contract": {

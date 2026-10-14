@@ -79,7 +79,7 @@ The shell exposes verbs over IPC. Some are **public API in both directions**
 | ewe-settings | `qs ipc call settings reload` | re-read user-theme.json, apply live |
 | ewe-sync | `qs ipc call cloud refresh` | refresh the shell's account card |
 | clipboard plugin | `qs ipc call ewe.clipboard toggle` | toggle clipboard history |
-| cast plugin | `qs ipc call ewe.cast scan · start <sink> · stop · status · legacy` (alias `cast`) | drive ewe-castd |
+| cast plugin | `qs ipc call ewe.cast scan · start <sink> · stop · legacy` (alias `cast`) | drive ewe-castd |
 | dock plugin | `qs ipc call launcher toggle` (alias of `ewe.dock launcher`) | the pinned-apps popup |
 | Hyprland `global` | `ewe:overview` (Super, release bind) | toggle the Overview |
 | example plugin | `qs ipc call example.hello toggle` | demo verb |

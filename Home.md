@@ -87,7 +87,7 @@ flowchart TB
 **08 — Decisions** (the "why" — don't relitigate)
 - [[Decision Index]] · [[Foundation Choices]] ·
   [[RFC-001 — The One File]] · [[RFC-005 — Nextcloud Account]] ·
-  [[RFC-006 — ewe-sync App]] · [[RFC-002 — Auth Broker]] ·
+  [[RFC-006 — ewe-sync App]] · [[RFC-007 — ewe Companion]] · [[RFC-002 — Auth Broker]] ·
   [[RFC-004 — ewe-castd, Python not Rust]] ·
   [[Process Split — Shell vs Apps]] · [[Plugins Unsandboxed]] ·
   [[Komble — Arch Forced Decisions]] · [[Unsigned Repo — for now]] ·
@@ -107,7 +107,7 @@ flowchart TB
 **10 — Roadmap** (what's next)
 - [[Roadmap — Desktop and One File]] · [[Roadmap — Komble]] ·
   [[Roadmap — ewe-sync]] · [[Roadmap — ewe-cast]] ·
-  [[Roadmap — Distro and Repo]] · [[Open Questions]]
+  [[Roadmap — ewe-companion]] · [[Roadmap — Distro and Repo]] · [[Open Questions]]
 
 **11 — How we work**
 - [[Development Loops]] · [[Testing and QA]] · [[Release Checklist]] ·

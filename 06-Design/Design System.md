@@ -25,8 +25,9 @@ flowchart LR
 
 - **Roles, not values** — a component asks for a role (`--surface-raised`,
   `--control-md`); the token layer decides the value.
-- **Two dark schemes, no light mode** — `flock` (neutral greys),
-  `blacksheep` (absolute black for OLED). Dark by decision.
+- **Ewe Dark by default, Ewe Light too** — two dark looks, `flock`
+  (neutral greys) and `blacksheep` (absolute black for OLED), and the light
+  scheme (since 2026-10-14). Every component must read in both.
 - **Type styles** — classes (`.body`, `.label`) alongside the custom
   properties.
 - **Guards** — `check-contrast.sh`, `check-icons.sh`, `check-spec.sh`,

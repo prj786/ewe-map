@@ -81,12 +81,16 @@ rest of the file**.
 ## Toolkit writing (`colorscheme.sh <mode> [accent]`)
 
 One pass writes every toolkit's config: **GTK is primary** (adw-gtk3 +
-gsettings + `gtk-3.0/4.0/settings.ini`); Qt gets a dark Fusion palette via
-`qt6ct`; `kdeglobals` covers any KDE app added later; Reversal icon theme
+gsettings + `gtk-3.0/4.0/settings.ini`); Qt gets the scheme's Fusion palette
+via `qt6ct`; `kdeglobals` covers any KDE app added later; Reversal icon theme
 hue-matched to the accent; Mocu cursor forced everywhere (`XCURSOR_THEME`,
 GTK, gsettings, qt6ct). `set -u` not `-e` **on purpose** — a stray non-zero
-line must never abort before all files are written. Mode argument accepted
-and ignored: **dark-only by decision**.
+line must never abort before all files are written. The mode argument is
+accepted and ignored: **light or dark comes from the scheme's `variant`**
+in `theme-tokens.json` (light mode since 2026-10-14: adw-gtk3,
+prefer-light, Reversal light, Zed `appearance: light` with the scheme's
+hues; ewe browser reads the tokens itself; Helium's light frame while
+Helium is still installed).
 
 ## Wallpaper backends (per file type, picked automatically)
 

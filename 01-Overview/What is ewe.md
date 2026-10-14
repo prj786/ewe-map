@@ -24,8 +24,9 @@ mail, Cast, clipboard history, screenshots, password fill — [[Plugin System]])
 
 - **The whole desktop, not a starting point** — greeter to lock screen,
   themed end to end, working out of the box.
-- **Dark by decision** — two dark looks (`flock` neutral greys,
-  `blacksheep` absolute black for OLED). There is no light mode, deliberately.
+- **Dark by default, light when you want it** — Ewe Dark out of the box
+  (with `flock` neutral greys or `blacksheep` absolute black for OLED), and
+  Ewe Light or any light scheme in Settings → Appearance (since 2026-10-14).
 - **One theme, one icon language** — the look carries across the shell, GTK
   apps, Qt strays, icons and cursor; the accent applies live, no relogin.
   See [[Design System]].
