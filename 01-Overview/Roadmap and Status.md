@@ -8,12 +8,32 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-11**. Released: **ewe (DE) 0.25.2-beta** (2026-10-11, a bug fix on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-14**. Released: **ewe (DE) 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before it **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.12.4-beta**
 (no ISO for 0.25 yet — the release stopped at the ewe-repo publish; **ewe-os
 0.13.0-beta** is in progress on `feat/addons-installer`: the installer's
 Plugins step, see [[ewe-os ISO]]). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.26.0-beta — ewe browser replaces Helium (released 2026-10-14)
+
+One wave, branch `feat/ewe-browser`: ewe-browser#1 (`v0.1.0-beta`), ewe#51,
+ewe-repo#2, komble-arch#13 (`v0.20.2-beta`), prj786.github.io#5, ewe-map#8;
+then the ewe-repo publish. ewe-browser (root `PKGBUILD`,
+`packaging/`, `release.yml`, `ci.yml`), ewe-repo (`publish` collects it,
+asserts `depend = ewe-browser`, Helium out of `aur-packages.txt`), ewe (the
+`ewe` package depends on it, phase 20 installs it, seeding / `$BROWSER` /
+Super+B fallback / dock pins / warm-up point at it, the Helium theming hook
+runs only while Helium is installed, get.sh takes the newest release instead
+of GitHub's "Latest"), komble-arch (`first_party.rs`), the website (repos
+page, schema text). Decision: [[ewe browser replaces Helium]]. Release order
+kept: ewe-browser `v0.1.0-beta` first, then ewe and Komble, then the ewe-repo
+publish — the fresh-install gate refuses an `ewe` that depends on a package
+the repo does not carry. ewe-browser's first CI run needed a 4 GB Node heap
+for type-aware ESLint and `bsdtar` on the Ubuntu runner. The first publish
+failed its fresh-install gate because prj786/ewe-browser was still private
+(`ewe-browser -> (no release)`); the repo went public, like every first-party
+repo, and the publish was rerun. No ISO this round (ewe-os unchanged).
 
 ## 0.25.2-beta — first-party plugins survive a Restore (released 2026-10-11)
 
@@ -25,7 +45,12 @@ copy without the `"ewe.*" = "bundled"` source records, and the reserved-id
 check trusted only that synced table. Now an installed copy of an id the
 payload ships is first-party whatever ewe.conf says (`payload_ships`);
 `enable` writes the records back, `seed` adopts such copies (`adopted`).
-ewe#50 only — no app changes. `ewe-plugin-test.sh` 82/82, every suite green.
+ewe#50. `ewe-plugin-test.sh` 82/82, every suite green. Same day, Komble
+0.20.1-beta (komble-arch#12): *Add a plugin* first on Plugins, and the
+Options dialog no longer blinks (see Troubleshooting → Theming). The
+reporting machine's ewe.conf was merged back to its pre-Restore state
+(three-way against the Nextcloud version the Restore pulled — the laptop
+had not pushed since 2026-09-13).
 See [[Troubleshooting Knowledge]] (Plugins).
 
 ## 0.25.1-beta — what is in it (released 2026-10-10)
@@ -88,7 +113,7 @@ flowchart LR
         EWE["ewe DE 0.25.2-beta<br/>plugins · sync heals · Glass · pinned widgets"]
         OS["ewe-os 0.12.4-beta<br/>0.13.0-beta in progress: installer Plugins step"]
         REPO["ewe-repo — rolling"]
-        K["Komble 0.20.0-beta — Plugins + Options dialog,<br/>early vs live pacman"]
+        K["Komble 0.20.1-beta — Plugins + Options dialog,<br/>early vs live pacman"]
         S["ewe-settings 0.18.0-beta — shipped"]
         SY["ewe-sync — shipped"]
         CAST["ewe-cast — phases A+B"]

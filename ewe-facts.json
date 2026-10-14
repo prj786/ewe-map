@@ -4,15 +4,16 @@
   "generated": "2026-10-11",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.25.2-beta",
+    "ewe_de": "0.26.0-beta",
     "ewe_os": "0.12.4-beta",
     "ewe_os_next": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.20.0-beta",
+    "komble": "0.20.2-beta",
     "ewe_sync": "0.14.4-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.18.0-beta",
+    "ewe_browser": "0.1.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
@@ -67,6 +68,12 @@
       "name": "ewe-cast",
       "role": "ewe-castd headless casting daemon (RFC-004)",
       "stack": "Python on GLib + GStreamer"
+    },
+    {
+      "name": "ewe-browser",
+      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium)",
+      "stack": "Electron 44 (castlabs ECS) + Solid, TypeScript",
+      "license": "GPL-3.0-only"
     },
     {
       "name": "prj786.github.io",
@@ -455,7 +462,7 @@
     "install": "ewe-plugin install <id> | Komble --addons (page 'Plugins') | Welcome Plugins step",
     "migrate_marker": "~/.local/state/ewe/addons-migrated (JSON list of considered ids; local, never synced)",
     "state_dir": "~/.local/state/ewe/plugins/<id>/",
-    "preinstalled": "shell core (bar, launcher, Overview, Quick settings basics, notifications, lock, OSD, polkit, Welcome), ewe-settings, Komble, ewe-sync",
+    "preinstalled": "shell core (bar, launcher, Overview, Quick settings basics, notifications, lock, OSD, polkit, Welcome), ewe-settings, Komble, ewe-sync, ewe browser",
     "ids": [
       "ewe.clipboard",
       "ewe.screenshot",
