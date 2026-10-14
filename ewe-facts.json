@@ -82,7 +82,7 @@
     },
     {
       "name": "ewe-safe",
-      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, later a Tauri window (RFC-008, phase 0 GO, phase 1 working; on GitHub, not released)",
+      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, later a Tauri window (RFC-008; phase 1 done 2026-10-14; on GitHub, not released)",
       "stack": "Rust (keepass-rs)",
       "license": "MIT"
     },
@@ -319,6 +319,34 @@
         "version",
         "help"
       ]
+    },
+    {
+      "tool": "ewe-safe",
+      "job": "Safe, the password manager's CLI over ewe-safed's socket (RFC-008; prj786/ewe-safe docs/PROTOCOL.md v1)",
+      "verbs": [
+        "status",
+        "summary",
+        "init",
+        "open",
+        "unlock",
+        "lock",
+        "list",
+        "search",
+        "match",
+        "show",
+        "reveal",
+        "copy",
+        "add",
+        "edit",
+        "rm",
+        "restore",
+        "generate",
+        "sync",
+        "place",
+        "passwd",
+        "ping",
+        "version"
+      ]
     }
   ],
   "ipc": {
@@ -439,7 +467,8 @@
     "nextcloud": [
       "ewe/ewe.conf",
       "ewe/ewe.conf.meta.json",
-      "ewe/machines/<name>.json"
+      "ewe/machines/<name>.json",
+      "ewe/safe/passwords.kdbx"
     ],
     "meta_fields": [
       "machine",
@@ -487,7 +516,7 @@
     {
       "rfc": "RFC-008",
       "topic": "Safe (ewe-safe) password manager: KDBX 4 file, places, merge on save, ewe-safed",
-      "status": "accepted 2026-10-14; phase 0 spike GO with five conditions; phase 1 working (safe_core + own merge); on GitHub, not released"
+      "status": "accepted 2026-10-14; phase 0 GO; phase 1 done (core + own merge, store + sync engine, ewe-safed, ewe-safe CLI, [safe] domain, Passwords provider ewe); on GitHub, not released"
     }
   ],
   "sync_contract": {

@@ -35,6 +35,7 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.config/ewe/cloud.json` | `ewe-cloud` | ewe-sync, shell | no |
 | `~/.local/state/ewe/sync.json` | `ewe-conf` | the sync conflict rule — `id`, `remote_modified`, `remote_machine`, `machine_id`, `local_synced_at`, and since D12 `sha256` (bytes last pushed/pulled), `pending` (uploads in flight), `checked`, `adopted` ([[Sync Conflicts Are About Content]]) | no |
 | `~/.local/state/ewe/plugin-boots.json` | `ewe-plugin` | crash guard | no |
+| `~/.local/state/ewe/safe/` (`sync.json`, `cache/`, `backups/`, `machine.json`) | `ewe-safed` | `ewe-safed` | yes — Safe's per-machine state; the contract with callers is the socket/CLI (`ewe-safe/docs/PROTOCOL.md` v1, public API) |
 | `~/.config/ewe/plugins/<id>/` | `ewe-plugin` (`add`, `install`, `migrate`, `seed`) | shell PluginHost | code — never synced, never touched by upgrades |
 | `~/.local/state/ewe/addons-migrated` (0.25) | `ewe-plugin migrate` | `migrate` itself | JSON list of first-party plugin ids already considered — local, **never synced** (name kept — [[One Name — Plugins]]) |
 | `~/.local/state/ewe/plugins/<id>/` (0.25) | the plugin (`stateDir`, created on demand) | the plugin | never synced |
@@ -153,6 +154,7 @@ See [[EWE-CONF Schema Reference]].
 ewe/ewe.conf                 the one file
 ewe/ewe.conf.meta.json       {machine, machine_id, saved_at, schema}   machine_id = sha256("ewe-conf:"+/etc/machine-id)[:16]
 ewe/machines/<name>.json     per-machine ewe version + app count
+ewe/safe/passwords.kdbx      Safe (RFC-008): the encrypted KDBX 4 file, written only by ewe-safed (If-Match)
 ```
 
 ## Related

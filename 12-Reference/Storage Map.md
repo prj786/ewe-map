@@ -29,9 +29,11 @@ flowchart TB
         PSTATE["plugins/<id>/ — a plugin's own stateDir (0.25)"]
         CAST["cast.log — cast debug trace (ewe.cast legacy path)"]
         COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards (SQLite, per machine, never synced; RFC-007)"]
+        SAFE["safe/ — sync.json · cache/passwords.kdbx (encrypted) ·<br/>backups/ (20, encrypted) · machine.json (RFC-008, never synced)"]
     end
     subgraph RUN["$XDG_RUNTIME_DIR"]
         CSOCK["ewe-companion.sock (0600, SO_PEERCRED) — ewe-companiond"]
+        SSOCK["ewe-safe.sock (0600, SO_PEERCRED) — ewe-safed"]
         KSOCK["kitty-<pid>.sock — kitty remote control (socket-only)"]
     end
     subgraph KEYRING["Secret Service keyring"]
@@ -73,6 +75,12 @@ flowchart TB
   ([[Add-ons — one-time migration for upgraders]]).
 - **`.dev-mock/`** folders in the Tauri repos hold mock data for frontend
   work — not shipped.
+- **Safe** ([[ewe-safe]]): the safe itself is one encrypted KDBX file in its
+  place (`ewe/safe/passwords.kdbx` in the account, or
+  `~/.local/share/ewe/safe/passwords.kdbx` for this computer only); its
+  per-machine cache, backups and `sync.json` live in
+  `~/.local/state/ewe/safe/`; its non-secret settings are `[safe]` in
+  `ewe.conf`. The master password is never stored.
 - **The companion keeps its own state** in `~/.local/state/ewe/companion/`
   (`companion.db`, 30-day retention), not in `ewe.conf`: history is per
   machine. Its synced, non-secret prefs are `[companion]` in `ewe.conf`

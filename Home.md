@@ -64,7 +64,7 @@ flowchart TB
 
 **03 — Components** (one note per repo)
 - [[ewe Desktop]] · [[ewe-os ISO]] · [[ewe-repo]] · [[Komble]] ·
-  [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[Website]]
+  [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-safe]] · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
 
 **04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)

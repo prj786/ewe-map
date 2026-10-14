@@ -36,10 +36,17 @@ flowchart LR
     PANEL["Super+P picker"] --> OP["1Password<br/>op CLI, app CLI integration on"]
     PANEL --> BW["Bitwarden<br/>rbw"]
     PANEL --> PASS["pass"]
+    PANEL --> SAFE["ewe Safe<br/>ewe-safe CLI → ewe-safed"]
 ```
 
-- **Settings:** `provider` (auto / 1password / bitwarden / pass),
+- **Settings:** `provider` (auto / ewe / 1password / bitwarden / pass),
   `press_enter`.
+- **Provider `ewe`** ([[ewe-safe]], plugin 1.2.0, ewe-plugin-passwords#2,
+  merged 2026-10-14; vendored into the payload at the next ewe release):
+  first under `auto` once a safe is set up; Safe does the matching; a
+  locked safe shows "Safe is locked — press Enter to unlock" (Enter runs
+  `ewe-pass unlock` → `ewe-safe unlock --ask`), Ctrl+L locks; pins become
+  `app:<class>` tags inside the safe, so they sync.
 - **Deps:** `wtype` (an ewe dependency).
 - `ewe-pass` in the repo is the tool the panel runs;
   `./ewe-pass status` says what it will do and why not.

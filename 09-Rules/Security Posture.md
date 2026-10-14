@@ -41,6 +41,7 @@ environment (GPU/driver, distro, ewe version).
 | VPN credentials | root-only NetworkManager profiles | one file records the *definition*, never secrets |
 | pairing keys (KDE Connect) | kdeconnectd | shell persists only seen-ids + device choice |
 | password-manager credentials | the providers' own stores (op/rbw/pass) | ewe-pass only *reads* |
+| Safe's passwords ([[ewe-safe]]) | one KDBX file, encrypted before it leaves the machine (Argon2id + AES-256), in its place; unlocked only inside `ewe-safed`'s memory, zeroized on lock | the master password is never stored and never typed into the shell; secrets never on argv, never in a log |
 
 Rules 2 & 7 of [[Rules of the House]] are the same invariant from two
 angles: secrets in the keyring, identity in the file.
@@ -55,6 +56,11 @@ angles: secrets in the keyring, identity in the file.
   never passwords on argv.
 - **Plugins** — unsandboxed by necessity; the tool says so; no install
   hooks, no privileges at install. See [[Plugins Unsandboxed]].
+- **Safe (RFC-008)** — zero privileges. `ewe-safed`'s socket is `0600` in
+  `$XDG_RUNTIME_DIR`, both ends check `SO_PEERCRED`; the daemon is not
+  dumpable (no core dumps, no same-uid ptrace) and locks on screen lock,
+  sleep and idle. Honest limit: malware running as you while the safe is
+  unlocked can ask the socket, like every desktop password manager.
 - **The companion (RFC-007)** — zero privileges. `ewe-companiond`'s socket
   is `0600` in `$XDG_RUNTIME_DIR` and both ends check `SO_PEERCRED` (same
   uid or nothing). The Claude Code hook relay **never prints an allow the
