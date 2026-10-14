@@ -291,6 +291,14 @@ must point at the new path). The `cast` IPC target is an alias of
 
 ## The nested harness (`run-ewe/driver.sh`) and agent tooling
 
+- **A window rule "does nothing" in the harness**: the nested compositor
+  runs `hypr-min.lua`, not `hyprland.lua` — no window rules at all. Apply
+  the rule live with `driver.sh hc eval 'hl.window_rule({…})'`, spawn the
+  window through a small launcher script (`spawn` splits quoted
+  arguments), and read `hc -j clients` after ~3 s: kitty maps at its own
+  size first. The nested output is only ~792×474, so a big floater clamps
+  to it (2026-10-14, Safe's unlock prompt).
+
 - **`ewe-plugin … --no-restart` still touched the LIVE Hyprland** — the
   keybind writer runs `hyprctl reload` against
   `$HYPRLAND_INSTANCE_SIGNATURE`, and `set`/`place` poke `qs ipc plugins

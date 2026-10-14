@@ -45,7 +45,8 @@ flowchart TB
 | **`ewe-theme`** | [[Theming Pipeline]] — schemes, tokens, imports | `scheme list/show/apply/import/export/set/from-wallpaper/duplicate/remove` · `set overrides.*` · `build` |
 | **`ewe-bt`** | bluetooth pairing for the Settings app (same as BtAgent) | — |
 | **`ewe-globalshortcuts`** | portal global shortcuts (1Password Quick Access…) | — |
-| **`ewe-pass`** | the tool behind the [[Passwords Plugin]] picker | `status` (says what it will do and why not) |
+| **`ewe-pass`** | the tool behind the [[Passwords Plugin]] picker | `status` (says what it will do and why not) · `unlock` · `lock` (provider `ewe`) |
+| **`ewe-safe`** | [[ewe-safe]] — Safe, the password manager (its own repo; `docs/PROTOCOL.md` v1) | `status` · `summary` · `init` · `open` · `unlock [--ask]` · `lock` · `list` · `search` · `match` · `show` · `reveal [--json]` · `copy` · `add` · `edit` · `rm` · `restore` · `generate` · `sync` · `place` · `passwd` · `ping` · `version` |
 | **`ewe-setup`** | per-user deployment of the installed payload | — |
 | **`ewe-share-picker`** | the portal's screen-share picker, backed by the shell | — |
 

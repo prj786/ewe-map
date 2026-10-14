@@ -9,17 +9,20 @@ up: "[[Home]]"
 # Roadmap — ewe-safe
 
 Current (2026-10-14): **RFC-008 accepted**; **phase 0 done — GO, with five
-conditions** (`ewe-safe/docs/SPIKE-0.md`); **phase 1 working** (`safe_core`:
-item model, verified atomic write, write guard, generator, TOTP, search and
-Safe's own merge — 62 tests, the 14 spike merge cases among them). On GitHub
-since 2026-10-14 (`prj786/ewe-safe`); not released.
+conditions** (`ewe-safe/docs/SPIKE-0.md`); **phase 1 done** (2026-10-14: core +
+own merge, store + sync engine, `ewe-safed` + the `ewe-safe` CLI to
+`docs/PROTOCOL.md` v1, the `[safe]` ewe-conf domain (ewe#55), provider `ewe`
+in the Passwords plugin (ewe-plugin-passwords#2, 1.2.0), the unlock prompt's
+window rule (ewe#56); 112 tests). On GitHub (`prj786/ewe-safe`, PRs #1–#2);
+not released — phase 2 brings the window, packaging and ewe-repo. Component:
+[[ewe-safe]].
 Phases, tasks and gates in full: `ewe-safe/PLAN.md` §15. Decisions:
 [[RFC-008 — ewe Safe]].
 
 | # | what | gate |
 |---|---|---|
 | 0 ✓ | RFC + vault; repo skeleton (Rust workspace: core, store, daemon, cli); **fidelity spike** (a corpus of KDBX files from KeePassXC, KeePassDX, Strongbox, KeeWeb round-tripped through `keepass-rs`, compared by an independent reader); merge spike; Argon2 timing | passed 2026-10-14: 30/30 real files (KDBX 3.1/4.0/4.1 from KeePassXC and KeePass 2.x) round-trip with nothing lost; content keepass-rs doesn't model is caught by a write guard (read-only); keepass-rs merge 10/14, loses data → Safe owns merge; Argon2id 64 MiB/2 lanes ≈ 22 ms per iteration. Not verified: files from KeePassDX/Strongbox/KeePassium; KeePassXC opening our output |
-| 1 ◐ | the engine (conditions C1–C5 from the spike: write guard, own merge, tracked deletes, …): core, places *This computer* + *Nextcloud* (`If-Match`, 412 → merge, offline pending, rollback warning), `ewe-safed`, the CLI, the `safe` ewe-conf domain, provider `ewe` in the Passwords plugin | two sandboxed machines edit offline and both edits survive; `Super+P` fills from the safe; the file opens in KeePassXC; no secret in any log or argv |
+| 1 ✓ | the engine (conditions C1–C5 from the spike: write guard, own merge, tracked deletes, …): core, places *This computer* + *Nextcloud* (`If-Match`, 412 → merge, offline pending, rollback warning), `ewe-safed`, the CLI, the `safe` ewe-conf domain, provider `ewe` in the Passwords plugin | passed 2026-10-14 (nested Hyprland + XDG sandboxes): Super+P → Enter typed username, Tab, password into kitty; locked picker → Enter → unlock prompt → picker back; Ctrl+L locks; two machines on one mock Nextcloud edit offline, both edits survive; no secret in logs/argv; pykeepass opens the file. Not yet: a real Nextcloud, a real logind session, the units under a real user manager, KeePassXC |
 | 2 | the app (Tauri), Emergency Kit, unlock with login/fingerprint (polkit spike first), TOTP, package + ewe-repo + Komble, site docs | a non-terminal user creates, fills, locks, unlocks; a second machine opens the safe |
 | 3 | any WebDAV (guard probe), synced folder (conflict copies merged), SSH, *Move safe…*, the ewe-sync row | a Syncthing conflict ends merged with no files left |
 | 4 | import (1Password, Bitwarden, browsers, KeePass, pass, Proton Pass) and export | a real 1Password export imports with matching counts |
@@ -46,4 +49,4 @@ Phases, tasks and gates in full: `ewe-safe/PLAN.md` §15. Decisions:
 
 ## Related
 
-- [[RFC-008 — ewe Safe]] · [[Roadmap and Status]] · [[Passwords Plugin]]
+- [[RFC-008 — ewe Safe]] · [[ewe-safe]] · [[Roadmap and Status]] · [[Passwords Plugin]]
