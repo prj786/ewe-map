@@ -162,6 +162,7 @@ flowchart LR
 - [[Roadmap — ewe-sync]] — folder-sync hardening, restore polish
 - [[Roadmap — ewe-cast]] — phase C field proof, Chromecast true mirroring
 - [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; nothing committed or released yet
+- [[Roadmap — ewe-safe]] — RFC-008 (Safe, the password manager) accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 working (`safe_core` with Safe's own merge, 62 tests); on GitHub (`prj786/ewe-safe`), not released
 - [[Roadmap — Distro and Repo]] — repo signing, standalone release
 - [[Open Questions]] — deliberately unresolved
 

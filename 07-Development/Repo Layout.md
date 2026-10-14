@@ -20,7 +20,7 @@ flowchart TB
     ROOT --> PACKAGES["packages/<br/>common.list · dev.list · gaming.list ·<br/>aur.list · patched/"]
     ROOT --> PACKAGING["packaging/ — PKGBUILD, package plumbing"]
     ROOT --> DESIGN["design/ — design system v3<br/>tokens.css (generated) · components · guidelines"]
-    ROOT --> DOCS["docs/<br/>RFC-001 … RFC-006 · MANUAL · PLUGINS ·<br/>EWE-CONF · SETTINGS-BACKEND · NEXTCLOUD ·<br/>GOOGLE-CLIENT · TROUBLESHOOTING"]
+    ROOT --> DOCS["docs/<br/>RFC-001 … RFC-008 · MANUAL · PLUGINS ·<br/>EWE-CONF · SETTINGS-BACKEND · NEXTCLOUD ·<br/>GOOGLE-CLIENT · TROUBLESHOOTING"]
     ROOT --> LIB["lib/ · scripts/ · templates/ · systemd/"]
     ROOT --> TESTS["tests/"]
     ROOT --> TOP["install.sh · update.sh · uninstall.sh ·<br/>release.sh · get.sh · VERSION · VERSIONS ·<br/>CLAUDE.md · CONTRIBUTING.md · SECURITY.md"]

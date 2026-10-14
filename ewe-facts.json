@@ -81,6 +81,12 @@
       "license": "MIT"
     },
     {
+      "name": "ewe-safe",
+      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, later a Tauri window (RFC-008, phase 0 GO, phase 1 working; on GitHub, not released)",
+      "stack": "Rust (keepass-rs)",
+      "license": "MIT"
+    },
+    {
       "name": "prj786.github.io",
       "role": "website",
       "stack": "SvelteKit 2 + Svelte 5, static"
@@ -476,6 +482,11 @@
       "rfc": "RFC-007",
       "topic": "ewe-companion desktop companion (island plugin + daemon)",
       "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders) and P2.8 (runs proposed shell commands on a click) working; on GitHub, not yet released"
+    },
+    {
+      "rfc": "RFC-008",
+      "topic": "Safe (ewe-safe) password manager: KDBX 4 file, places, merge on save, ewe-safed",
+      "status": "accepted 2026-10-14; phase 0 spike GO with five conditions; phase 1 working (safe_core + own merge); on GitHub, not released"
     }
   ],
   "sync_contract": {
