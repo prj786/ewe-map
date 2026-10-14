@@ -483,6 +483,35 @@ must point at the new path). The `cast` IPC target is an alias of
   `target/debug/ewe-companion`; `EWE_COMPANION_HOOK_LOG=<file>` records the
   real payloads.
 
+## Safe (RFC-008, phase 0 spike 2026-10-14)
+
+Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
+
+- **Every password decrypts to garbage after a save**: quick-xml's
+  `overlapped-lists` feature was on. It "fixes" files whose entry fields are
+  not one contiguous block, but it breaks the order of protected values in
+  the inner stream. ewe-safe's CI fails if anything in the dependency tree
+  enables it. Such a file is opened read-only instead.
+- **A deleted entry comes back after a sync**: it was removed with
+  keepass-rs's plain `EntryMut::remove`, which records no `DeletedObjects`.
+  Delete through the tracked path (`EntryTrack::remove`) or the recycle bin.
+- **An edit from the other machine vanished in a merge**: keepass-rs's
+  `_merge` (0.15.x) drops the older side instead of moving it to history,
+  and skips attachments added to an existing entry. Safe owns its merge
+  (`safe_core::merge`); don't switch back to `_merge`.
+- **An attachment vanished from another item (or from history)**: stock
+  keepass-rs 0.15.2 keeps no attachment back-references after a file is
+  opened, so removing an attachment or an entry deleted a file another
+  item still used. ewe-safe builds against the patched copy in
+  `vendor/keepass/` (`PATCHED.md`) — never drop the patch before upstream
+  fixes it.
+- **A safe opens read-only with a reason**: the write guard found an element
+  or attribute keepass-rs would drop on save (another app's extension). The
+  guard is right; teach keepass-rs the element or keep it read-only.
+- **The one-time code is wrong or the secret is refused**: keepass-rs's TOTP
+  gives 8 digits and rejects unpadded base32; Safe computes codes itself
+  (`safe_core::otp`).
+
 ## Theming
 
 - **A colour ignores the accent** — a raw literal in QML; only tokens
@@ -506,4 +535,4 @@ must point at the new path). The `cast` IPC target is an alias of
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
   [[Roadmap — ewe-cast]] · [[Plugin System]] · [[Quiet Lid — touch only a disabled panel]] ·
-  [[Overview Takes the Screen]]
+  [[Overview Takes the Screen]] · [[Roadmap — ewe-safe]]

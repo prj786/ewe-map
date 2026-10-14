@@ -23,6 +23,8 @@ Terms as the project itself uses them.
 | **Komble** | the software manager (repos + AUR + AppImages). See [[Komble]]. |
 | **ewe-settings** | the Settings app — a separate process that edits config files and pokes the shell. See [[ewe-settings]]. |
 | **ewe-sync** | the account & sync app — Nextcloud account, one-file sync, folder sync, machines. See [[ewe-sync]]. |
+| **Safe** | ewe's own password manager (`ewe-safe`, RFC-008): one KDBX 4 file, one master password, logins and notes; `ewe-safed` holds it unlocked. Not "the vault" — that word means this `project-map/`. See [[RFC-008 — ewe Safe]]. |
+| **place** | where Safe's one file lives: this computer, your Nextcloud, any WebDAV, a synced folder, an SSH server, Dropbox, Google Drive. See [[Roadmap — ewe-safe]]. |
 | **ewe-castd** | headless casting daemon: portal screencast → encode → Miracast/Chromecast. See [[ewe-cast]]. |
 | **`qs ipc`** | the shell's IPC bus; apps and plugins call verbs like `qs ipc call settings reload`. |
 | **first-party plugin** (was **add-on**) | (0.25) a plugin shipped inside the ewe payload (`plugins/<id>/` + `bundle.json`) but **not installed on a fresh machine** — Komble → Plugins, Welcome or `ewe-plugin install <id>` puts it in. The dock, Cast, mail, phone, VPN, SSH, Places, music, Insomnia, the system monitor, clipboard, screenshot and passwords are first-party plugins. "Add-on" was the 0.25.0 UI word; since [[One Name — Plugins]] everything says *plugin*. See [[Plugin System]]. |

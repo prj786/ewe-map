@@ -29,7 +29,7 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 | P5 | watchers (storage, updates, sync, mail, calendar) + `ewe-companion mcp` | a Claude session asks you through the island |
 | P6 | ACP agent lane (codex, opencode, gemini; claude/antigravity opt-in) + the Tauri window | chat on a ChatGPT plan, no token read by ewe |
 | P7 | ship: PKGBUILD, ewe-repo, Komble, bundle.json `default:false`, website, vault | fresh ISO → Komble → approve a Claude prompt |
-| P8 | the password manager's metadata contract (when it exists) | the canary in the vault appears nowhere |
+| P8 | the password manager's metadata contract — Safe, [[RFC-008 — ewe Safe]] (S8: `summary` + events, never a title or value) | the canary in the vault appears nowhere |
 
 ## Gotchas known before the first line
 
