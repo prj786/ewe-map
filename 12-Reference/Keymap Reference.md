@@ -22,15 +22,17 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+D` | launcher — fuzzy app/file search |
 | `Super+E` | file manager (nemo) |
 | `Super+B` | browser — the default from Settings → Default Apps, else ewe browser |
-| `Super+C` | calendar popup |
+| `Super+C` | calendar: GNOME Calendar when installed, else this month as a notification (`scripts/calendar.sh`) |
 | `Super+,` | Settings |
 | `Super+N` | toggle Quick Settings |
 | `Super` (tap, release bind) | Overview — the `ewe:overview` Hyprland global shortcut (0.25; bindable in `user.lua`) |
 | `Super+Z` | the Pen (stashed windows, `special:pen`) |
 | `Super+Shift+C` | Cast to TV — the [[Cast Plugin]]'s manifest keybind (`ewe.cast toggle`) |
 | `Super+P` | password fill picker ([[Passwords Plugin]] plugin) |
+| `Super+A` | the companion's drop: cards + agent sessions (`ewe.companion toggle`, its manifest keybind; [[RFC-007 — ewe Companion]]) |
 | `Print` / `Shift+Print` / `Super+Print` | screen / region / window shot ([[Screenshot Plugin]] plugin) |
 | `Super+Shift+W` | widget arrange mode (plugin host) |
+| `Super+Shift+R` | display recovery: every output on, the saved profile reapplied (`display reset`; works on a black screen) |
 
 ## Windows
 
@@ -42,7 +44,6 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+[` / `]` | prev / next tab in group |
 | `Super+Alt+1…9` | jump to tab 1–9 |
 | `Super+Ctrl+H/J/K/L` | resize focused window |
-| `Super+Shift+N` | reset split ratio |
 | `Super+Q` / `Super+F` | close / fullscreen |
 | `Super+Shift+F` | maximise (keep bar/gaps) |
 | `Super+V` / `Super+Shift+V` | toggle floating / pseudo-tile |

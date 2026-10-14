@@ -410,6 +410,79 @@ must point at the new path). The `cast` IPC target is an alias of
   re-run `install.sh` (or `--check-only` to look) to swap the backend.
   See [[Phone and VPN]].
 
+## The companion (RFC-007, 2026-10-14)
+
+- **No permission card ever appears.** Check the session's permission mode:
+  in `bypassPermissions` (the owner's `defaultMode` on the dev machine)
+  Claude fires no `PermissionRequest` at all. Questions, finished peeks and
+  sessions still work. `claude --permission-mode default` or Shift+Tab.
+- **A card shows, but Claude asks in the terminal anyway.** The island did
+  not ack within 800 ms (`journalctl --user -u ewe-companion`: `no ack from
+  the island`). Usually the overlay failed to compile: `driver.sh log` or
+  the shell journal shows `ewe.companion/overlay: … Type … unavailable`.
+- **The island is missing from the bar.** Its `screen` setting names an
+  output that is not there: it falls back to the first screen since
+  2026-10-14. In the nested harness with `HS_HEADLESS=1` the output is
+  `SHOT`.
+- **`bind …: path must be shorter than SUN_LEN`.** A Unix socket path is at
+  most 108 bytes; put test sockets in `$XDG_RUNTIME_DIR`
+  (`EWE_COMPANION_SOCK=$XDG_RUNTIME_DIR/ewe-companion-smoke.sock`).
+- **Jump to terminal focuses nothing.** Hyprland 0.56 only takes
+  `hl.dsp.focus({ window = "address:…" })` (the old `focuswindow pid:` is
+  rejected). The daemon uses the signature the island sends in `env`. For
+  the exact kitty tab, `$KITTY_LISTEN_ON` must be set in the agent's shell
+  (ewe's `kitty.conf` from 2026-10-14).
+- **The notch looks like clear glass.** With Glass on (`bar_opacity` < 100)
+  ewe blurs only `^quickshell:(bar|dock)$`; the plugin adds
+  `ewe-companion-blur` for `quickshell:companion` through `hyprctl eval` at
+  load and after each `configreloaded`. With `EWE_NO_BLUR=1` it adds none.
+- **The chat answers "pick a provider".** The question was not about ewe
+  (ewe questions are answered from the built-in knowledge pack with no
+  provider). Komble → Plugins → Companion → Options → *Who answers
+  questions*. Key providers then ask for the key in the notch (it goes to
+  the keyring as `service ewe-companion provider <id>`); `claude-code` needs
+  `claude` logged in once in a terminal.
+- **The notch is gone.** Since P2.6 it shows only while something runs (an
+  agent working or waiting, a card, a line, a question, game mode) or when
+  opened: Super+A.
+- **The notch blinks or stretches when it opens.** The window grew while it
+  showed something (Hyprland stretches the old buffer). `Drop.qml` sizes
+  the window first and comes out after; check nothing resizes it while
+  `out` is true.
+- **Something grows or jumps on hover.** A slot that holds text only on
+  hover (the quick-action hint) must have an explicit width: a Qt Column
+  skips zero-width children, so the empty slot collapses and the hover
+  pushes everything down.
+- **The home panel opens and shuts at once.** The focus grab started with
+  the Exclusive keyboard and Hyprland cleared it; it must start a beat later
+  (`grabTimer`).
+- **"There is no app called … here."** The island looks the name up in the
+  shell's desktop-entry index: a `.desktop` name, id, program, or whole
+  words of the name. An app with no `.desktop` file (a bare binary) is not
+  found; "the browser" and "file manager" follow `xdg-mime` (Settings →
+  Default apps).
+- **"Open a folder" opens a terminal.** Before 2026-10-14 it used
+  `xdg-open`, which follows `inode/directory` and fell to kitty where
+  nothing was set. It now launches the default file manager (`xdg-mime
+  query default inode/directory`), else Nemo.
+- **"I won't run …" in the chat.** `shell::assess` refused it: a machine
+  killer, a partial upgrade, or a hand write to ewe.conf / `generated/`.
+  The reason is in the line; the safe way (`sudo pacman -Syu`, `ewe-conf
+  set`) is named there.
+- **"That command is no longer waiting."** A proposal's token works once
+  and for 15 minutes; ask again.
+- **A command runs in the chat but finds no display or the wrong
+  compositor.** The runner uses the daemon's environment (systemd's user
+  environment) plus the island's `HYPRLAND_INSTANCE_SIGNATURE`; check
+  `systemctl --user show-environment`.
+- **An answer names the wrong page or label.** The knowledge pack lags ewe:
+  fix `ewe-companion/knowledge/*.md` (`EWE_COMPANION_KNOWLEDGE=<dir>` loads
+  an edited pack without a rebuild).
+- **Test hooks in a scratch project, never in `~/.claude`:** hooks in the
+  project's `.claude/settings.local.json` pointing at
+  `target/debug/ewe-companion`; `EWE_COMPANION_HOOK_LOG=<file>` records the
+  real payloads.
+
 ## Theming
 
 - **A colour ignores the accent** — a raw literal in QML; only tokens

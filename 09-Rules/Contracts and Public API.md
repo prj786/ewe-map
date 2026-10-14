@@ -47,8 +47,10 @@ dedicated files win over stale lines in older `user.lua`.
 
 ## IPC: `qs ipc call <target> <verb>`
 
-**Core targets** (0.25): `bar picker quicksettings lock osd overview preview
-settings applauncher store updates plugins widgets google cloud`.
+**Core targets** (0.25): `applauncher bar cloud display google lock osd
+overview picker plugins power quicksettings saver settings store sync toast
+updates welcome widgets` (verbs in [[IPC Verb Reference]]; there is no
+core `preview`).
 **Plugin targets** — present only while the plugin is installed and
 enabled — with the legacy target each keeps as an **alias** (Rule 4):
 `ewe.cast` (`cast`), `ewe.dock` (`launcher`), `ewe.places` (`places`),

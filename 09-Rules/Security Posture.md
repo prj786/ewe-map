@@ -55,6 +55,27 @@ angles: secrets in the keyring, identity in the file.
   never passwords on argv.
 - **Plugins** — unsandboxed by necessity; the tool says so; no install
   hooks, no privileges at install. See [[Plugins Unsandboxed]].
+- **The companion (RFC-007)** — zero privileges. `ewe-companiond`'s socket
+  is `0600` in `$XDG_RUNTIME_DIR` and both ends check `SO_PEERCRED` (same
+  uid or nothing). The Claude Code hook relay **never prints an allow the
+  daemon did not send, and the daemon sends one only for a click**; every
+  failure is "no opinion" (Claude asks in its terminal). No IPC verb answers
+  a card. "Always" only echoes Claude's own `permission_suggestions`.
+- **The companion's shell commands (2026-10-14)** run only on a click. A
+  model's `run_shell`, a knowledge topic's `run:` line or the user's own
+  `$ command` becomes a *proposal* shown exactly as it will run, with Run and
+  In terminal; `commands::run` refuses `run_shell` outright, and the Run
+  click is the island's `confirm.run` (or `debug.confirm` on a debug daemon).
+  `companion_core::shell::assess` refuses machine killers (`rm -rf` on home or
+  the system, `mkfs`, `dd` onto a disk, fork bombs) and house-rule breaks (a
+  partial `pacman -Sy`, writing ewe.conf or `generated/` by hand), warns on
+  risky ones, and sends sudo and interactive programs to a terminal so the
+  user types their own password. A guard rail, not a sandbox: same uid, the
+  user's own shell.
+- **kitty remote control** (`dotfiles/kitty`, for the companion's jump to
+  a tab) is `socket-only` on a **file** socket in `$XDG_RUNTIME_DIR`, never
+  an abstract `@` socket (which any local user could reach). Same uid, same
+  trust.
 
 ## Installer safety model (from MANUAL.md)
 

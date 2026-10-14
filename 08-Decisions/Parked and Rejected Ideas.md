@@ -14,7 +14,7 @@ must read the reason first; it has usually not changed.
 
 | idea | verdict | reason |
 |---|---|---|
-| Light mode | **parked** | dark-only by decision (2026-09-01). A full *scheme* system exists instead — Ewe Light exists as tokens (website toggle), not as a desktop mode. |
+| Light mode | **accepted 2026-10-14** (was parked) | parked 2026-09-01 as dark-only; the scheme system brought Ewe Light back as a pickable desktop scheme, and the owner made light mode official on 2026-10-14 ("we need light mode too"). See [[Foundation Choices]] → *Dark by default, light mode too*. |
 | Google-first account & sync | **rejected → superseded** | RFC-002's Google half was replaced by RFC-005 (Nextcloud). Google survives only as BYO-client optional extra. |
 | Wi-Fi-PSK sync (syncing Wi-Fi passwords in the bundle) | **dropped** | deliberately, per rule 4: secrets never enter the file/bundle. |
 | In-app Nextcloud registration | **rejected** | needs admin credentials / provider signup forms; linking out is the honest maximum. |

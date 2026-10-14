@@ -58,7 +58,7 @@ checking here, it's probably guessing.**
 |---|---|---|
 | Why is Settings a separate process? | Tauri can't do layer-shell; crash isolation for a rarely-open UI | [[ewe-settings]] · [[Process Split — Shell vs Apps]] |
 | Why is ewe-castd Python? | Documented RFC-004 deviation; revisit only if profiling demands | [[RFC-004 — ewe-castd, Python not Rust]] |
-| Why is there no light mode? | Dark-only by decision; light exists as a scheme for the website | [[Foundation Choices]] · [[Parked and Rejected Ideas]] |
+| Is there a light mode? | Yes, since 2026-10-14: Settings → Appearance → Scheme → Ewe Light (or an imported light scheme, or From wallpaper (light)). Dark is the default; the lock screen stays dark | [[Foundation Choices]] |
 | Why Nextcloud and not Google? | No gatekeeper, right audience, owner out of the loop (RFC-005) | [[RFC-005 — Nextcloud Account]] |
 | Why don't plugins get sandboxed? | Impossible in one QML engine; honesty instead | [[Plugins Unsandboxed]] |
 | Why no per-package upgrades in Komble? | Arch partial upgrades are unsupported | [[Komble — Arch Forced Decisions]] |
