@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Roadmap — distro & repo
 
-Current: ewe-os **0.12.4-beta**; ewe-repo rolling unsigned.
+Current: ewe-os **0.13.0-beta** (2026-10-04); ewe-repo rolling unsigned.
 
 ## The one gate before standalone
 

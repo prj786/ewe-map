@@ -8,12 +8,22 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-14**. Released: **ewe (DE) 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before it **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
-0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.12.4-beta**
-(no ISO for 0.25 yet — the release stopped at the ewe-repo publish; **ewe-os
-0.13.0-beta** is in progress on `feat/addons-installer`: the installer's
-Plugins step, see [[ewe-os ISO]]). The README speaks of a
+Snapshot as of **2026-10-14**. Released: **ewe (DE) 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before it **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
+(2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
+[[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.26.1-beta — light mode is official, companion groundwork (released 2026-10-14)
+
+No new feature work in the bump itself: it releases what ewe#52 merged
+after 0.26.0-beta — every generated config (GTK, Qt, kitty, Helium) follows
+the active scheme's variant, so ewe is dark by default with a light mode
+([[Foundation Choices]]); the `[companion]` ewe-conf domain that applies
+nothing (RFC-007); kitty remote control on a file socket. Bump PR ewe#53,
+then the ewe-repo publish. Only `ewe` had unreleased commits: every Tauri app
+and all 13 bundled plugins already matched their releases, and ewe-browser's
+next work was still uncommitted on a branch. No ISO (ewe-os unchanged).
 
 ## 0.26.0-beta — ewe browser replaces Helium (released 2026-10-14)
 
