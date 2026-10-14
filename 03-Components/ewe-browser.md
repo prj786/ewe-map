@@ -62,4 +62,8 @@ phase 20 installs it on the tarball path; Komble lists it in `first_party.rs`.
 > `node_modules/electron/dist`; never let electron-builder download upstream
 > Electron, which has no Widevine); the PKGBUILD lives at the repo root (the
 > get.sh source fallback runs makepkg in the clone root); and the desktop id
-> the app writes for folders must never be `ewe-browser.desktop`.
+> the app writes for folders must never be `ewe-browser.desktop`. The repo
+> must stay **public**: ewe-repo's `publish` reads releases with its own
+> `GITHUB_TOKEN`, and Komble and get.sh fetch them anonymously — while it was
+> private the first publish logged `ewe-browser -> (no release)` and the
+> fresh-install gate refused it (2026-10-14).
