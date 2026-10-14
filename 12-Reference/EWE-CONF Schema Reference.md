@@ -57,6 +57,19 @@ schema = 1
   folder = "ewe"
   enabled = true
   [sync.folders]                 # ewe-sync folder pairs: local, remote, mode (two-way|upload|download), trigger, interval
+
+[safe]                           # Safe (RFC-008) — read by ewe-safed; `ewe-conf set safe.*` applies nothing
+  place = "nextcloud"            # local | nextcloud | webdav | folder | sftp | dropbox | gdrive (enum)
+  location = "ewe/safe/passwords.kdbx"
+  webdav_url = ""                # place = webdav only; the password is in the keyring (service ewe-safe)
+  webdav_user = ""
+  lock_after_minutes = 30
+  lock_on_screen_lock = true
+  lock_on_sleep = true
+  clipboard_clear_seconds = 30
+  generator_length = 20
+  generator_words = 5
+                                 # never here: the safe, any password, the per-machine unlock-with-login key
 ```
 
 ## Tool verbs

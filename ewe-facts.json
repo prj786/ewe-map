@@ -418,7 +418,8 @@
     "apps.places",
     "network.vpn",
     "network.ssh",
-    "companion"
+    "companion",
+    "safe"
   ],
   "keyring_services": [
     {
