@@ -15,6 +15,20 @@ Snapshot as of **2026-10-11**. Released: **ewe (DE) 0.25.2-beta** and **Komble 0
 Plugins step, see [[ewe-os ISO]]). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
+## In progress — ewe browser joins the desktop (`feat/ewe-browser`, 2026-10-14)
+
+One wave, not merged or released yet: ewe-browser (root `PKGBUILD`,
+`packaging/`, `release.yml`, `ci.yml`), ewe-repo (`publish` collects it,
+asserts `depend = ewe-browser`, Helium out of `aur-packages.txt`), ewe (the
+`ewe` package depends on it, phase 20 installs it, seeding / `$BROWSER` /
+Super+B fallback / dock pins / warm-up point at it, the Helium theming hook
+runs only while Helium is installed, get.sh takes the newest release instead
+of GitHub's "Latest"), komble-arch (`first_party.rs`), the website (repos
+page, schema text). Decision: [[ewe browser replaces Helium]]. Release order:
+ewe-browser `v0.1.0-beta` first, then the ewe release, then the ewe-repo
+publish — the fresh-install gate refuses an `ewe` that depends on a package
+the repo does not carry.
+
 ## 0.25.2-beta — first-party plugins survive a Restore (released 2026-10-11)
 
 Bug report: after login Komble → Plugins showed all 13 first-party plugins

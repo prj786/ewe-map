@@ -21,7 +21,7 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+Return` | terminal (kitty) |
 | `Super+D` | launcher — fuzzy app/file search |
 | `Super+E` | file manager (nemo) |
-| `Super+B` | browser (Settings → Default Apps) |
+| `Super+B` | browser — the default from Settings → Default Apps, else ewe browser |
 | `Super+C` | calendar popup |
 | `Super+,` | Settings |
 | `Super+N` | toggle Quick Settings |

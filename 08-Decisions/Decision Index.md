@@ -45,6 +45,7 @@ read the note first — these were settled deliberately, most with RFCs.
 | 29 | **D11** Desktop widgets: always draggable, a pin in a hover toolbar, pin level top (above windows) or overlay (above everything), lock position | built 2026-10-10, released in 0.25.1-beta | [[Desktop Widgets — always movable, pin to a level]] |
 | 30 | **D12** A sync conflict is about content, not an ETag: adopt a moved ETag over bytes this machine sent/saw; record an upload once stored; `sync-status` answers `conflict`; the stamp carries a hashed `machine_id` | built 2026-10-10, released in 0.25.1-beta | [[Sync Conflicts Are About Content]] |
 | 31 | **D13** Glass: the bar opacity slider moves only the bar, the dock and the lock card; the Glass material stays at 80 %; no xray; no app blur unless asked | built 2026-10-10, released in 0.25.1-beta | [[Glass — the slider moves the bar only]] |
+| 33 | **ewe browser replaces Helium** as the desktop's browser: a first-party Electron app (castlabs runtime for Widevine) shipped like Komble — own release, ewe-repo publish, a dependency of `ewe`; Helium leaves the lists; seeding/`$BROWSER`/Super+B fallback point at `ewe-browser.desktop`; Nemo keeps folders | built 2026-10-14 on `feat/ewe-browser`, not released | [[ewe browser replaces Helium]] |
 
 > **Numbering note:** RFC-003 does not exist in `ewe/docs/` (the sequence
 > is 001, 002, 005, 006), and RFC-004's text lives only as references in

@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Repository Map
 
-The project is **8 product repos + 14 plugin repos** (13 plugins + the
+The project is **9 product repos + 14 plugin repos** (13 plugins + the
 example; plus this vault, the `design-mockups/` folder and dev worktrees in
 `.wt/`). All under the `prj786` GitHub org; checked out locally at
 `/home/scubba/Projects/ewe/`. The ten `ewe-plugin-*` repos created
@@ -24,6 +24,7 @@ creates the GitHub remotes and pushes.
 | [`ewe-settings`](https://github.com/prj786/ewe-settings) | the Settings app | Tauri v2 + Svelte 5 |
 | [`ewe-sync`](https://github.com/prj786/ewe-sync) | the account & sync app (RFC-006, ex-"Flock") | Tauri v2 + Svelte 5 |
 | [`ewe-cast`](https://github.com/prj786/ewe-cast) | `ewe-castd` — headless casting daemon (RFC-004) | Python on GLib, GStreamer (C) |
+| [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]]) | Electron 44 (castlabs) + Solid, TypeScript |
 | [`prj786.github.io`](https://github.com/prj786/prj786.github.io) | the website | SvelteKit 2 + Svelte 5, static |
 | [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | plugin: clipboard history + emoji (1.1.1, API 2) | QML |
 | [`ewe-plugin-screenshot`](https://github.com/prj786/ewe-plugin-screenshot) | plugin: screenshots (1.1.0, API 2) | QML |
