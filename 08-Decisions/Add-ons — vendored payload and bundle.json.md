@@ -19,7 +19,8 @@ from a remote catalogue and not as pacman packages.
   `bundle.json`, not from a hard-coded array.
 - `default: true` ids are seeded on every machine (**none in 0.25**);
   `migrate: true` ids are what `ewe-plugin migrate` installs for upgraders
-  (all 13 add-ons today); every id in the payload is offered by
+  (the 13 that were built in before 0.25; `ewe.safe`, new in 0.27, is
+  `migrate: false` — nobody had it built in); every id in the payload is offered by
   `ewe-plugin list --json` under `available`.
 - The payload scanner must accept extra roots later (`addons.d/`) — do not
   hard-wire the single directory.

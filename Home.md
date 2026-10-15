@@ -30,7 +30,7 @@ flowchart TB
     REPO["ewe-repo<br/>[ewe] pacman repo"] -->|"pacman -Syu<br/>rolling updates"| DE
 
     DE --> SHELL["shell core: bar · launcher · Overview ·<br/>Quick settings · lock · OSD · Welcome"]
-    DE --> PLUGINS["13 add-ons (opt-in, 0.25): dock · Places · music ·<br/>Insomnia · sysmon · SSH · VPN · phone · mail · cast ·<br/>clipboard · screenshot · passwords (+3rd-party plugins)"]
+    DE --> PLUGINS["14 plugins (opt-in): dock · Places · music ·<br/>Insomnia · sysmon · SSH · VPN · phone · mail · cast ·<br/>clipboard · screenshot · passwords · Safe (+3rd-party plugins)"]
     PLUGINS --> CAST["ewe-castd<br/>Miracast / Chromecast"]
 
     KOMBLE["Komble"] -->|records installs| ONEFILE["the one file<br/>~/.config/ewe/ewe.conf"]
@@ -72,7 +72,7 @@ flowchart TB
 - Plugins: [[Clipboard Plugin]] · [[Screenshot Plugin]] · [[Passwords Plugin]] ·
   [[Insomnia Plugin]] · [[System Monitor Plugin]] · [[SSH Plugin]] ·
   [[VPN Plugin]] · [[Music Plugin]] · [[Places Plugin]] · [[Phone Plugin]] ·
-  [[Mail Plugin]] · [[Cast Plugin]] · [[Dock Plugin]]
+  [[Mail Plugin]] · [[Cast Plugin]] · [[Dock Plugin]] · [[Safe Plugin]]
 
 **05 — Workflows**
 - [[Install Flow]] · [[Update Flow]] · [[Cast Flow]] ·

@@ -291,6 +291,21 @@ must point at the new path). The `cast` IPC target is an alias of
 
 ## The nested harness (`run-ewe/driver.sh`) and agent tooling
 
+- **A PR merged on a red CI run** (Safe 0.1.0-beta, 2026-10-15): `gh pr
+  checks --watch … | tail && gh pr merge …` — the pipe's exit status is
+  `tail`'s, so the merge ran after a failed check. Poll until nothing is
+  `pending`, then merge only if every check says `pass`.
+- **A release build fails: "install file … does not exist"**: `makepkg`
+  reads `install=` from beside the PKGBUILD, not from `packaging/`. Test a
+  release by running its workflow's steps locally (`git archive` the source,
+  `makepkg -d --skipchecksums`) from a clean folder — a build in a folder
+  where someone copied the file proves nothing.
+- **"Disk quota exceeded" mid-build**: the session scratchpad lives in the
+  16 GB `/tmp` tmpfs; release builds of a Rust + Tauri tree take ~2.5 GB each.
+  Delete old build folders first. A Unix socket path over 108 bytes (deep
+  scratchpad sandboxes) fails with SUN_LEN: give `XDG_RUNTIME_DIR` a short
+  symlink.
+
 - **A window rule "does nothing" in the harness**: the nested compositor
   runs `hypr-min.lua`, not `hyprland.lua` — no window rules at all. Apply
   the rule live with `driver.sh hc eval 'hl.window_rule({…})'`, spawn the

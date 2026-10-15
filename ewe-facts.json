@@ -1,10 +1,10 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-10-14",
+  "generated": "2026-10-15",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.26.1-beta",
+    "ewe_de": "0.27.0-beta",
     "ewe_os": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
@@ -17,7 +17,7 @@
     "addons": {
       "ewe.clipboard": "1.1.2",
       "ewe.screenshot": "1.1.1",
-      "ewe.passwords": "1.1.1",
+      "ewe.passwords": "1.2.0",
       "ewe.insomnia": "1.0.1",
       "ewe.sysmon": "1.1.0",
       "ewe.ssh": "1.0.1",
@@ -27,8 +27,10 @@
       "ewe.phone": "1.0.1",
       "ewe.mail": "1.1.0",
       "ewe.cast": "1.0.1",
-      "ewe.dock": "1.1.0"
-    }
+      "ewe.dock": "1.1.0",
+      "ewe.safe": "1.0.0"
+    },
+    "ewe_safe": "0.1.0-beta"
   },
   "repos": [
     {
@@ -82,8 +84,8 @@
     },
     {
       "name": "ewe-safe",
-      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, later a Tauri window (RFC-008; phase 1 done 2026-10-14; on GitHub, not released)",
-      "stack": "Rust (keepass-rs)",
+      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, the ewe-safe-app window (RFC-008; 0.1.0-beta released 2026-10-15, opt-in from [ewe])",
+      "stack": "Rust (keepass-rs), Tauri v2 + Svelte 5",
       "license": "MIT"
     },
     {
@@ -142,6 +144,12 @@
     {
       "name": "ewe-plugin-dock",
       "role": "add-on: the Dock + pinned-apps popup"
+    },
+    {
+      "name": "ewe-plugin-safe",
+      "role": "plugin ewe.safe: Safe's bar lock, Quick Access (Super+Shift+P), Quick settings tile (1.0.0, API 3; vendored in ewe 0.27)",
+      "stack": "QML",
+      "license": "MIT"
     },
     {
       "name": "ewe-plugin-example",
@@ -374,7 +382,8 @@
     ],
     "plugin_targets": [
       "example.hello",
-      "ewe.companion"
+      "ewe.companion",
+      "ewe.safe"
     ],
     "public_verbs": [
       "reload",
@@ -516,7 +525,7 @@
     {
       "rfc": "RFC-008",
       "topic": "Safe (ewe-safe) password manager: KDBX 4 file, places, merge on save, ewe-safed",
-      "status": "accepted 2026-10-14; phase 0 GO; phase 1 done (core + own merge, store + sync engine, ewe-safed, ewe-safe CLI, [safe] domain, Passwords provider ewe); on GitHub, not released"
+      "status": "accepted 2026-10-14; Safe 0.1.0-beta released 2026-10-15 (engine, daemon, CLI, window, import from 1Password, the ewe.safe plugin, Super+P provider); browser integration staged for owner review"
     }
   ],
   "sync_contract": {
