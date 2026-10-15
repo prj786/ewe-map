@@ -8,33 +8,45 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-15**. Built, not merged: Safe + ewe browser + the companion together (below). Released: **ewe (DE) 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before it **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-15**. Released: **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
-## Built 2026-10-15, not merged: Safe, ewe browser and the companion together
+## 0.28.0-beta + Safe 0.2.0-beta + ewe browser 0.2.0-beta — a real safe (released 2026-10-15)
 
 The owner's ask the same day: "Safe is a real safe" (like 1Password today),
 a browser with real sync and history, and a companion that can use both.
 Contract: `ewe-safe/docs/TRIO.md`; decisions: [[Decision Index]] rows 35–37.
-**Everything below is built and tested in sandboxes; nothing is merged or
-released.** No merge and no release without the owner's OK.
+The owner said "merge all PRs and make new releases"; everything was merged
+and released on 2026-10-15 and published to `[ewe]` the same day. No ISO.
 
 | piece | where | state |
 |---|---|---|
-| Safe: `read`, `run`, `inject`, `git-credential`, `safe://` references | ewe-safe **#10** `feat/cli-power` | PR open; CI green; not verified: a real `git push` |
-| Safe: passkeys (KeePassXC's format, ES256 + EdDSA, Safe's AAGUID) | ewe-safe **#11** `feat/passkeys` (also carries `docs/TRIO.md`) | PR open; CI green; byte-checked against KeePassXC's test vectors, `keepassxc-cli` 2.7.12 reads them; not verified: a real site |
-| Safe window: saving an edited login works again | ewe-safe **#12** `fix/item-edit` | PR open; CI green; a 0.1.1-beta hotfix candidate — **in the released 0.1.0-beta window, saving an edited login fails** (`ReferenceError`) |
-| Safe: SSH keys (KeeAgent format) + an ssh-agent, `ssh_confirm` | ewe-safe **#13** `feat/ssh` + ewe **#59** (`[safe] ssh_agent`, `ssh_confirm`) | PRs open; CI green (#13); not verified: the real user units, the approval window on screen, `ssh adopt` on the owner's safe |
-| all four Safe PRs together | ewe-safe `integrate/trio` (local) | being built (they touch the same dispatch files) |
-| ewe-conf: quoted key parts keep their dots | ewe **#58** | PR open |
-| Passwords 1.3.0: **Use Safe** when the chosen manager is gone; `ewe-pass` exits 0 | ewe-plugin-passwords **#3** | PR open; `test.sh` 52/52; vendored at the next ewe release |
-| ewe browser: the command line (`docs/CLI.md`) + the hidden rail | ewe-browser **#3** `rail-and-cli` | PR open (the owner's WIP, taken over) |
-| ewe browser: Safe built in (inline suggestions, passkeys) | `.wt/ewe-browser-safe` (`feat/safe`) | **staged, not committed**, waiting for the owner's review; 202 unit + 46/46 e2e, also against the real Safe daemon from #11 in a sandbox |
-| ewe browser: `app://history`, SQLite, synced deletes, other computers' tabs | `.wt/ewe-browser-history` (`feat/history`) | **staged, not committed**, waiting for the owner's review |
-| the companion P2.9: Safe, ewe browser, the finder | ewe-companion **#1** + ewe-plugin-companion **#1** (0.3.0) | PRs open; `tests/canary.sh` 8, `tests/chat.sh` 53; against fakes only |
+| Safe: `read`, `run`, `inject`, `git-credential`, `safe://` references | ewe-safe **#10** | released in Safe 0.2.0-beta; not verified: a real `git push` |
+| Safe: passkeys (KeePassXC's format, ES256 + EdDSA, Safe's AAGUID) | ewe-safe **#11** (also carries `docs/TRIO.md`) | released in Safe 0.2.0-beta; byte-checked against KeePassXC's test vectors, `keepassxc-cli` 2.7.12 reads them; not verified: a real site |
+| Safe window: saving an edited login works again | ewe-safe **#12** | released in Safe 0.2.0-beta (0.1.0-beta could not save an edited login) |
+| Safe: SSH keys (KeeAgent format) + an ssh-agent, `ssh_confirm` | ewe-safe **#13** + ewe **#59** (`[safe] ssh_agent`, `ssh_confirm`) | released in Safe 0.2.0-beta + ewe 0.28.0-beta; not verified: the approval window on screen, `ssh adopt` on the owner's safe |
+| all four Safe PRs together | ewe-safe **#14** (`integrate/trio`), bump **#15** | `v0.2.0-beta` on `75d2502` → `ewe-safe-0.2.0beta-1`; `cargo test` 214 passed |
+| ewe-conf: quoted key parts keep their dots | ewe **#58** | released in ewe 0.28.0-beta |
+| Passwords 1.3.0: **Use Safe** when the chosen manager is gone; `ewe-pass` exits 0 | ewe-plugin-passwords **#3** | vendored in ewe 0.28.0-beta (bump ewe#60, `v0.28.0-beta` on `52bf89a`); `test.sh` 52/52 |
+| ewe browser: the command line (`docs/CLI.md`) + the hidden rail | ewe-browser **#3** | released in ewe browser 0.2.0-beta |
+| ewe browser: Safe built in (inline suggestions, passkeys) | ewe-browser **#4** | released in ewe browser 0.2.0-beta; the owner approved it 2026-10-15; e2e 40 passed, the 7 tests against a real Safe skipped there |
+| ewe browser: `app://history`, SQLite, synced deletes, other computers' tabs | ewe-browser **#5**, bump **#6** | released in ewe browser 0.2.0-beta (`v0.2.0-beta` on `1e94143` → `ewe-browser-0.2.0beta-1`); e2e 44 passed |
+| the companion P2.9: Safe, ewe browser, the finder | ewe-companion **#1** + ewe-plugin-companion **#1** (0.3.0) | **merged, not released** — the companion is not in `[ewe]` yet (its first release is P7); `tests/canary.sh` 8, `tests/chat.sh` 53; against fakes only |
+
+**On the owner's machine after the publish:**
+
+```sh
+sudo pacman -Syu        # ewe 0.28.0-beta, ewe-browser 0.2.0-beta, ewe-safe 0.2.0-beta
+systemctl --user daemon-reload && systemctl --user restart ewe-safe.socket
+                        # the socket unit gained the SSH agent's socket; this locks the safe
+```
+
+Then log out and in once: the session takes the new payload (Passwords
+1.3.0 among it) at login, as after every ewe release
+([[Packaging and Updates]]).
 
 Live machine (2026-10-15): the owner's `Super+P` error "make sure 1Password
 CLI is installed" was the old `provider = "1password"`; it was switched with
@@ -50,8 +62,9 @@ it), ewe#57 (0.27.0-beta vendors `ewe.safe` 1.0.0 — [[Safe Plugin]], Quick
 Access on `Super+Shift+P` — and `ewe.passwords` 1.2.0, whose provider `ewe`
 fills from Safe), then the ewe-repo publish. Earlier on ewe main: the `[safe]`
 ewe-conf domain (#55), the unlock prompt's window rule (#56). Not in this
-wave: the ewe browser integration (staged in `.wt/ewe-browser-safe`, waiting
-for the owner's review per ewe-browser's own rule) and Komble's listing.
+wave: the ewe browser integration (then staged, waiting for the owner's
+review; released later that day in ewe browser 0.2.0-beta) and Komble's
+listing.
 
 Two release snags, both fixed before anything shipped: the bump PR merged on
 a red CI run (a racy idle-lock test — `gh pr checks --watch | tail` hid the
@@ -166,10 +179,12 @@ project's memory:
 ```mermaid
 flowchart LR
     subgraph shipping["shipping / beta"]
-        EWE["ewe DE 0.25.2-beta<br/>plugins · sync heals · Glass · pinned widgets"]
-        OS["ewe-os 0.12.4-beta<br/>0.13.0-beta in progress: installer Plugins step"]
+        EWE["ewe DE 0.28.0-beta<br/>plugins · Safe on the desktop · light mode"]
+        OS["ewe-os 0.13.0-beta<br/>the ISO for ewe 0.25"]
         REPO["ewe-repo — rolling"]
-        K["Komble 0.20.1-beta — Plugins + Options dialog,<br/>early vs live pacman"]
+        K["Komble 0.20.2-beta — Plugins + Options dialog,<br/>early vs live pacman"]
+        SAFE["Safe 0.2.0-beta<br/>passkeys · SSH agent · CLI"]
+        BR["ewe browser 0.2.0-beta<br/>Safe built in · history + sync · CLI"]
         S["ewe-settings 0.18.0-beta — shipped"]
         SY["ewe-sync — shipped"]
         CAST["ewe-cast — phases A+B"]
@@ -207,8 +222,8 @@ flowchart LR
 - [[Roadmap — Komble]] — the first live-pacman run is the gate
 - [[Roadmap — ewe-sync]] — folder-sync hardening, restore polish
 - [[Roadmap — ewe-cast]] — phase C field proof, Chromecast true mirroring
-- [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; P2.9 (Safe, ewe browser, the finder) built 2026-10-15, PR open; not released yet
-- [[Roadmap — ewe-safe]] — passkeys, SSH agent, an `op`-like CLI built 2026-10-15 (PRs ewe-safe #10–#13, not merged); **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); on GitHub (`prj786/ewe-safe`), not released — phase 2 = the window + package
+- [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; P2.9 (Safe, ewe browser, the finder) merged 2026-10-15; not released yet (P7)
+- [[Roadmap — ewe-safe]] — **Safe 0.2.0-beta released 2026-10-15** (passkeys, SSH agent, an `op`-like CLI; with ewe 0.28.0-beta and ewe browser 0.2.0-beta); **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); left in phase 2: unlock with login/fingerprint, the Komble listing, site docs
 - [[Roadmap — Distro and Repo]] — repo signing, standalone release
 - [[Open Questions]] — deliberately unresolved
 

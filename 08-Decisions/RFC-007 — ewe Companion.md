@@ -10,7 +10,7 @@ up: "[[Home]]"
 
 *Status: **accepted** 2026-10-14 (owner idea 2026-10-13; every proposed
 answer taken). P1 done, P2 working, P2.5–P2.8 done, P2.9 (Safe, ewe browser,
-the finder) built 2026-10-15 with PRs open (see [[Roadmap — ewe-companion]]). Full text: `ewe/docs/RFC-007-companion.md`;
+the finder) merged 2026-10-15, not released (see [[Roadmap — ewe-companion]]). Full text: `ewe/docs/RFC-007-companion.md`;
 build plan: `ewe-companion/docs/PLAN.md`.*
 
 ## The idea

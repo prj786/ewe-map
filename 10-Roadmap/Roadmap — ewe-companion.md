@@ -10,8 +10,10 @@ up: "[[Home]]"
 
 Current (2026-10-15): **RFC-007 accepted** (all nine proposals); **P1 done,
 P2 working end to end, P2.5 to P2.8 done** against a real Claude Code 2.1.296 session;
-**P2.9 built** (Safe, ewe browser, the finder — PRs ewe-companion#1 and
-ewe-plugin-companion#1, not merged, not released). Both repos
+**P2.9 merged** 2026-10-15 (Safe, ewe browser, the finder — ewe-companion#1
+and ewe-plugin-companion#1, island 0.3.0), **not released**: the companion
+is not in `[ewe]` yet; its first release is P7. What it calls is released:
+Safe 0.2.0-beta and ewe browser 0.2.0-beta (with its command line). Both repos
 are on GitHub since 2026-10-14 (`prj786/ewe-companion`,
 `prj786/ewe-plugin-companion`; not yet released or in ewe-repo). The task lists per
 phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
@@ -26,7 +28,7 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 | P2.6 ✓ | the owner's six fixes: the notch hides when nothing runs, keeps one size (nothing follows the pointer), opens without the stretch blink, has smooth curve-rendered fillets, a short placeholder; and the **knowledge pack** (`ewe-companion/knowledge/*.md`, built into the binary): a primer every question carries, 70 topics found by word match, a live snapshot of this machine, offline answers with an "Open …" button, `open` with Settings/Komble/Quick settings pages | owner's third try, 2026-10-14; `tests/chat.sh` 10/10, knowledge tests in core |
 | P2.7 ✓ | apps and folders: `launch_app {app, path?}` / `open_folder {path}`; "open nemo", "open kitty in documents", "open documents in nemo", "open zed in ewe-companion"; folders found by the daemon (XDG names, paths, a folder's name under home), apps by the shell's desktop index; a miss falls through to the knowledge pack and the model | `tests/chat.sh` 12/12; launches checked in the nested harness |
 | P2.8 ✓ | the companion runs what it suggests: `run_shell` proposals (a model's, a knowledge topic's `run:`, the user's `$ command`) shown exactly with Run / In terminal, run only on that click; `shell::assess` refuses machine killers and house-rule breaks, warns on risky ones, sends sudo to a terminal | `tests/chat.sh` 21/21; Run and In terminal checked in the nested harness |
-| P2.9 ◐ | Safe, ewe browser and the finder (owner 2026-10-15; contract `ewe-safe/docs/TRIO.md` §C1, [[RFC-008 — ewe Safe]] S8′): "copy my GitHub password" (Safe copies; values never cross), lock/unlock/count, "log me in to GitHub" (opens the site; the fill stays a click); search/open/play/history/tabs/"what is this page about?" through ewe browser's CLI (`do browser` in the island; page text untrusted); "find my resume" (the finder: `$HOME` by name, 1.5 s); `rows` on the island; names stay local (`Outcome::private`); proposed commands that print a password manager's values are refused; island 0.3.0 | built; `tests/canary.sh` 8, `tests/chat.sh` 53, relay 26, island harness dark + light — all against fakes (`EWE_COMPANION_SAFE`, `EWE_COMPANION_BROWSER`). PRs open, not merged. Not verified: the real Safe and the real browser CLI |
+| P2.9 ◐ | Safe, ewe browser and the finder (owner 2026-10-15; contract `ewe-safe/docs/TRIO.md` §C1, [[RFC-008 — ewe Safe]] S8′): "copy my GitHub password" (Safe copies; values never cross), lock/unlock/count, "log me in to GitHub" (opens the site; the fill stays a click); search/open/play/history/tabs/"what is this page about?" through ewe browser's CLI (`do browser` in the island; page text untrusted); "find my resume" (the finder: `$HOME` by name, 1.5 s); `rows` on the island; names stay local (`Outcome::private`); proposed commands that print a password manager's values are refused; island 0.3.0 | built; `tests/canary.sh` 8, `tests/chat.sh` 53, relay 26, island harness dark + light — all against fakes (`EWE_COMPANION_SAFE`, `EWE_COMPANION_BROWSER`). Merged 2026-10-15, not released. Not verified: the real Safe and the real browser CLI (both released 2026-10-15) |
 | P3 | notifications: ewe Plugin API 4 + `notifications` IPC + the watchdog; presenter; history; digest; the browser download notification | a broken presenter still gives a stock banner within 1.5 s |
 | P4 | the brain: chat; Anthropic / OpenAI / OpenAI-compatible (Gemini, OpenRouter, Ollama, LM Studio); keyring; tool tiers with confirm + undo; redaction | accent change with undo; offline on Ollama; the canary passes |
 | P5 | watchers (storage, updates, sync, mail, calendar) + `ewe-companion mcp` | a Claude session asks you through the island |
@@ -88,7 +90,7 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
   (`do browser`); reads stay in the daemon.
 - **ewe browser 0.1.0-beta has no command line** — its `ewe-browser` is the
   Electron binary, so a verb opens as a page. `browser::cli()` asks only a
-  `#!` script.
+  `#!` script (0.2.0-beta's `/usr/bin/ewe-browser` is one).
 - **Tests never reach the real Safe or browser:** `tests/fakes/` through
   `EWE_COMPANION_SAFE` / `EWE_COMPANION_BROWSER`.
 - More in [[Troubleshooting Knowledge]] → *The companion*.

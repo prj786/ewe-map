@@ -20,7 +20,8 @@ done the same day; **0.1.0-beta released 2026-10-15** with ewe
 
 *Amended 2026-10-15 (owner): passkeys and the SSH agent leave the parked
 list, and S8 lets the companion act — see "Amendment 2026-10-15" below.
-Built, PRs open, not merged, not released.*
+Released the same day as Safe 0.2.0-beta, ewe 0.28.0-beta and ewe browser
+0.2.0-beta; the companion's part is merged, not released.*
 
 ## The idea
 
@@ -51,11 +52,12 @@ KeePassium) open the same file — no lock-in.
 The owner asked for "a real safe", like 1Password today: suggestions in
 the browser's login fields, passkeys, SSH keys for `ssh` and `git`, a CLI
 that needs no 1Password, and a companion that can use Safe and the
-browser. The contract between the repos is `ewe-safe/docs/TRIO.md` (on
-ewe-safe's `feat/passkeys`). **Status: built, PRs open, not merged, not
-released** — ewe-safe #10 (CLI), #11 (passkeys), #12 (edit fix), #13
-(SSH); ewe #58, #59; ewe-plugin-passwords #3; ewe-browser #3 plus two
-staged branches; ewe-companion #1; ewe-plugin-companion #1. See
+browser. The contract between the repos is `ewe-safe/docs/TRIO.md`.
+**Status: released 2026-10-15** — ewe-safe #10 (CLI), #11 (passkeys), #12
+(edit fix), #13 (SSH) through #14 → **Safe 0.2.0-beta**; ewe #58, #59 and
+ewe-plugin-passwords #3 → **ewe 0.28.0-beta**; ewe-browser #3, #4, #5 →
+**ewe browser 0.2.0-beta**; published to `[ewe]` the same day.
+ewe-companion #1 and ewe-plugin-companion #1 are merged, not released. See
 [[Roadmap — ewe-safe]].
 
 | # | decision | why |

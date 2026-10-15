@@ -10,9 +10,9 @@ up: "[[Decision Index]]"
 
 **Decided 2026-10-15** while building the owner's ask "a browser with real
 syncing and history management" (`ewe-safe/docs/TRIO.md` §B2). Built on
-ewe-browser's `feat/history` (`.wt/ewe-browser-history`), **staged, not
-committed, waiting for the owner's review** (ewe-browser's own rule). Full
-text: that branch's `docs/PLAN.md`, "History and real sync".
+ewe-browser's `feat/history`; the owner approved it, merged as
+ewe-browser#5 and **released in ewe browser 0.2.0-beta** (2026-10-15). Full
+text: ewe-browser's `docs/PLAN.md`, "History and real sync".
 
 ## The decisions
 

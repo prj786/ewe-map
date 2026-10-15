@@ -42,8 +42,8 @@ environment (GPU/driver, distro, ewe version).
 | pairing keys (KDE Connect) | kdeconnectd | shell persists only seen-ids + device choice |
 | password-manager credentials | the providers' own stores (op/rbw/pass) | ewe-pass only *reads* |
 | Safe's passwords ([[ewe-safe]]) | one KDBX file, encrypted before it leaves the machine (Argon2id + AES-256), in its place; unlocked only inside `ewe-safed`'s memory, zeroized on lock | the master password is never stored and never typed into the shell; secrets never on argv, never in a log |
-| Safe's passkeys (PR ewe-safe#11) | inside the KDBX file, KeePassXC's `KPEX_PASSKEY_*` fields (credential id, private key, user handle protected) | never in a reply: the summary carries only `rp_id` and the site's user name; nothing a passkey verb gets or answers is logged |
-| SSH keys in Safe (PR ewe-safe#13) | inside the KDBX file as KeeAgent attachments; only public keys + titles in `ssh-public.json` (`0600`, local) | the agent signs inside `ewe-safed`; the key leaves only on an explicit `reveal`/`read` of `private_key`; `~/.ssh/config` is never edited |
+| Safe's passkeys (Safe 0.2.0-beta) | inside the KDBX file, KeePassXC's `KPEX_PASSKEY_*` fields (credential id, private key, user handle protected) | never in a reply: the summary carries only `rp_id` and the site's user name; nothing a passkey verb gets or answers is logged |
+| SSH keys in Safe (Safe 0.2.0-beta) | inside the KDBX file as KeeAgent attachments; only public keys + titles in `ssh-public.json` (`0600`, local) | the agent signs inside `ewe-safed`; the key leaves only on an explicit `reveal`/`read` of `private_key`; `~/.ssh/config` is never edited |
 
 Rules 2 & 7 of [[Rules of the House]] are the same invariant from two
 angles: secrets in the keyring, identity in the file.
@@ -63,14 +63,14 @@ angles: secrets in the keyring, identity in the file.
   dumpable (no core dumps, no same-uid ptrace) and locks on screen lock,
   sleep and idle. Honest limit: malware running as you while the safe is
   unlocked can ask the socket, like every desktop password manager.
-- **Safe's SSH agent (PR ewe-safe#13, not merged)** — its own socket
+- **Safe's SSH agent (Safe 0.2.0-beta)** — its own socket
   `ewe-safe-ssh.sock` (`0600`, `SO_PEERCRED`), off until `ewe-safe ssh
   enable`; refuses adding/removing keys, SHA-1 `ssh-rsa`, DSA and `sk-` keys;
   32 connections at most. **`ssh_confirm` is noise reduction, not a
   boundary:** it names the program by its full path and marks one outside
   `/usr` and `/opt`, but any program running as you can use the agent while
   Safe is unlocked. The master password is the boundary.
-- **Passkeys and the browser (PR ewe-safe#11, staged ewe-browser `feat/safe`)**
+- **Passkeys and the browser (Safe 0.2.0-beta, ewe browser 0.2.0-beta)**
   — **the browser decides the origin**: its main process takes it from the
   frame and checks the RP ID; Safe checks only shapes and never trusts a
   page. Nothing fills on page load; a passkey is used only after a click in
@@ -83,7 +83,7 @@ angles: secrets in the keyring, identity in the file.
   daemon did not send, and the daemon sends one only for a click**; every
   failure is "no opinion" (Claude asks in its terminal). No IPC verb answers
   a card. "Always" only echoes Claude's own `permission_suggestions`.
-- **The companion and Safe (P2.9, PR ewe-companion#1, not merged)** —
+- **The companion and Safe (P2.9, ewe-companion#1, merged, not released)** —
   values never cross: the companion asks Safe to *copy* (Safe runs `wl-copy`
   and clears it) and never calls `show` or `reveal`. Names stay local:
   titles and usernames show on the island only, never in a model's context

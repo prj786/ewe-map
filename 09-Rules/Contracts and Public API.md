@@ -36,9 +36,9 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.local/state/ewe/sync.json` | `ewe-conf` | the sync conflict rule — `id`, `remote_modified`, `remote_machine`, `machine_id`, `local_synced_at`, and since D12 `sha256` (bytes last pushed/pulled), `pending` (uploads in flight), `checked`, `adopted` ([[Sync Conflicts Are About Content]]) | no |
 | `~/.local/state/ewe/plugin-boots.json` | `ewe-plugin` | crash guard | no |
 | `~/.local/state/ewe/safe/` (`sync.json`, `cache/`, `backups/`, `machine.json`) | `ewe-safed` | `ewe-safed` | yes — Safe's per-machine state; the contract with callers is the socket/CLI (`ewe-safe/docs/PROTOCOL.md` v1, public API) |
-| `~/.local/state/ewe/safe/ssh-public.json` (PR ewe-safe#13) | `ewe-safed`, only while the SSH agent is on | the agent, to list keys while locked | yes — public keys and titles only, `0600`, never synced |
-| `~/.config/environment.d/90-ewe-safe-ssh.conf` (PR ewe-safe#13) | `ewe-safe ssh enable` / `disable` | systemd: `SSH_AUTH_SOCK` for new sessions | yes — written only after `[safe] ssh_agent = true` is recorded; `~/.ssh/config` is never edited |
-| `~/.config/ewe-browser/` (`history.db`, `sync/status.json`, `sync/machine-id`, `sync/tabs-remote.json`; staged `feat/history`) | ewe browser | ewe browser; `sync/status.json` is for ewe-sync to read | yes — the browser's profile |
+| `~/.local/state/ewe/safe/ssh-public.json` (Safe 0.2.0-beta) | `ewe-safed`, only while the SSH agent is on | the agent, to list keys while locked | yes — public keys and titles only, `0600`, never synced |
+| `~/.config/environment.d/90-ewe-safe-ssh.conf` (Safe 0.2.0-beta) | `ewe-safe ssh enable` / `disable` | systemd: `SSH_AUTH_SOCK` for new sessions | yes — written only after `[safe] ssh_agent = true` is recorded; `~/.ssh/config` is never edited |
+| `~/.config/ewe-browser/` (`history.db`, `sync/status.json`, `sync/machine-id`, `sync/tabs-remote.json`; since ewe browser 0.2.0-beta) | ewe browser | ewe browser; `sync/status.json` is for ewe-sync to read | yes — the browser's profile |
 | `~/.config/ewe/plugins/<id>/` | `ewe-plugin` (`add`, `install`, `migrate`, `seed`) | shell PluginHost | code — never synced, never touched by upgrades |
 | `~/.local/state/ewe/addons-migrated` (0.25) | `ewe-plugin migrate` | `migrate` itself | JSON list of first-party plugin ids already considered — local, **never synced** (name kept — [[One Name — Plugins]]) |
 | `~/.local/state/ewe/plugins/<id>/` (0.25) | the plugin (`stateDir`, created on demand) | the plugin | never synced |
@@ -147,7 +147,7 @@ push that stored the file but whose meta stamp was refused answers `ok`
 with `"warning": "stamp-missing"`. ewe-sync, the shell and ewe-settings read
 `conflict`.
 
-### Safe's protocol additions (2026-10-15 — PRs open, not merged)
+### Safe's protocol additions (Safe 0.2.0-beta, released 2026-10-15)
 
 `ewe-safe/docs/PROTOCOL.md` stays **v1**: everything below is added, nothing
 renamed (rule 4). Contract between the repos: `ewe-safe/docs/TRIO.md`;
@@ -185,7 +185,7 @@ decision: [[RFC-008 — ewe Safe]] → Amendment 2026-10-15.
   `enable` writes `90-ewe-safe-ssh.conf` in `environment.d` and prints one
   `IdentityAgent` line for `~/.ssh/config`.
 
-### ewe browser's command line (`ewe-browser/docs/CLI.md` — PR ewe-browser#3, not merged)
+### ewe browser's command line (`ewe-browser/docs/CLI.md` — ewe browser 0.2.0-beta, released 2026-10-15)
 
 `ewe-browser <verb>` prints **one JSON object and exits 0**; errors are
 `{"ok": false, "error": "<kebab-code>", "message", "hint"}`. 31 tools, each
@@ -202,7 +202,7 @@ a verb runs the CLI in Electron's Node mode, anything else starts the
 browser. **Verbs and fields may only be added** — the companion calls them.
 **0.1.0-beta has no CLI** (a verb opens as a page).
 
-### The companion's protocol additions (P2.9 — PR ewe-companion#1, not merged)
+### The companion's protocol additions (P2.9 — ewe-companion#1, merged 2026-10-15, not released)
 
 `ewe-companion/docs/PROTOCOL.md`: `chat.reply` gains **`rows`** (what a
 command found: `{title, detail, icon: folder|file|web|key, actions}`; an
@@ -230,8 +230,8 @@ ewe/ewe.conf                 the one file
 ewe/ewe.conf.meta.json       {machine, machine_id, saved_at, schema}   machine_id = sha256("ewe-conf:"+/etc/machine-id)[:16]
 ewe/machines/<name>.json     per-machine ewe version + app count
 ewe/safe/passwords.kdbx      Safe (RFC-008): the encrypted KDBX 4 file, written only by ewe-safed (If-Match)
-ewe/browser/                 ewe browser: bookmarks.json, history.json (+ clear records, staged), settings.json
-ewe/browser/tabs-<id>.json   ewe browser (staged feat/history): this machine's open tabs; <id> = 16 hex, salted sha256 of machine-id + profile
+ewe/browser/                 ewe browser: bookmarks.json, history.json (+ clear records since 0.2.0-beta), settings.json
+ewe/browser/tabs-<id>.json   ewe browser (since 0.2.0-beta): this machine's open tabs; <id> = 16 hex, salted sha256 of machine-id + profile
 ```
 
 ## Related

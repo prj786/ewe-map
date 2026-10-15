@@ -9,10 +9,9 @@ up: "[[Decision Index]]"
 # Safe in the Browser — guards, not a page click
 
 **Decided 2026-10-15** while building `ewe-safe/docs/TRIO.md` §B1 on
-ewe-browser's `feat/safe` (`.wt/ewe-browser-safe`, 52 files) — **staged,
-not committed, waiting for the owner's review** of its diff (ewe-browser's
-own rule). It amends nothing in [[RFC-008 — ewe Safe]]; it is how the
-browser keeps S10 ("the browser decides the origin").
+ewe-browser's `feat/safe` — the owner approved it, merged as ewe-browser#4
+and **released in ewe browser 0.2.0-beta** (2026-10-15). It amends
+nothing in [[RFC-008 — ewe Safe]]; it is how the browser keeps S10 ("the browser decides the origin").
 
 ## The decisions
 
