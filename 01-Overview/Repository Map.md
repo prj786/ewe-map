@@ -8,8 +8,8 @@ up: "[[Home]]"
 
 # Repository Map
 
-The project is **9 product repos + 14 plugin repos** (13 plugins + the
-example; plus this vault, the `design-mockups/` folder and dev worktrees in
+The project is **11 product repos + 16 plugin repos** (14 plugins in the
+payload, `ewe.companion`, and the example; plus this vault, the `design-mockups/` folder and dev worktrees in
 `.wt/`). All under the `prj786` GitHub org; checked out locally at
 `/home/scubba/Projects/ewe/`. The ten `ewe-plugin-*` repos created
 2026-10-04 exist locally (`main`, one or two commits each); the lead
@@ -27,6 +27,7 @@ creates the GitHub remotes and pushes.
 | [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]]) | Electron 44 (castlabs) + Solid, TypeScript |
 | [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007, 0.1.0-beta, P2 working) | Rust (tokio, rusqlite) |
 | [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.2.0, API 3) | QML |
+| [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window ([[ewe-safe]], RFC-008, 0.1.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
 | [`prj786.github.io`](https://github.com/prj786/prj786.github.io) | the website | SvelteKit 2 + Svelte 5, static |
 | [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | plugin: clipboard history + emoji (1.1.1, API 2) | QML |
 | [`ewe-plugin-screenshot`](https://github.com/prj786/ewe-plugin-screenshot) | plugin: screenshots (1.1.0, API 2) | QML |
@@ -41,16 +42,17 @@ creates the GitHub remotes and pushes.
 | [`ewe-plugin-mail`](https://github.com/prj786/ewe-plugin-mail) | plugin: Mail — IMAP + Gmail visuals (1.0.0) | QML |
 | [`ewe-plugin-cast`](https://github.com/prj786/ewe-plugin-cast) | plugin: Cast to TV — the shell end of ewe-castd (1.0.0) | QML, sh |
 | [`ewe-plugin-dock`](https://github.com/prj786/ewe-plugin-dock) | plugin: the Dock + pinned-apps popup (1.0.0) | QML |
+| [`ewe-plugin-safe`](https://github.com/prj786/ewe-plugin-safe) | plugin: Safe — bar lock, Quick Access, tile (1.0.0, API 3) | QML |
 | [`ewe-plugin-example`](https://github.com/prj786/ewe-plugin-example) | the reference plugin to copy (API 2) | QML |
 
 ## How they depend on each other
 
 ```mermaid
 graph LR
-    subgraph plugins["13 add-on repos (vendored into ewe/plugins/ by vendor-plugins.sh)"]
+    subgraph plugins["14 plugin repos (vendored into ewe/plugins/ by vendor-plugins.sh)"]
         P1["clipboard · screenshot · passwords"]
         P2["insomnia · sysmon · ssh · vpn"]
-        P3["media · places · phone · mail · cast · dock"]
+        P3["media · places · phone · mail · cast · dock · safe"]
     end
     P4["ewe-plugin-example"]
 
@@ -79,7 +81,7 @@ Notes on the graph:
 
 - The ISO **pins nothing** — it preconfigures the `[ewe]` repo so live and
   installed systems roll forward with plain `pacman -Syu`. See [[Packaging and Updates]].
-- The 13 plugins ship **inside the ewe payload** but are **not installed on
+- The 14 plugins ship **inside the ewe payload** but are **not installed on
   a fresh machine**; `ewe-plugin install <id>` (Komble → Plugins) puts one
   in, `remove` takes it out, `migrate` keeps upgraders' features. Fix an
   plugin in its repo, then re-vendor ([[One repo per add-on]]).

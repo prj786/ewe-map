@@ -79,7 +79,7 @@ while its popup is open and an autohide dock stays out.
 > `apiVersion` moving; an ADDITION is an optional 3.x member that old
 > plugins never notice and new ones feature-detect (listed above).
 > `Globals`' API 2 subset stays untouched. *Breaks if violated:* every
-> installed plugin (13 first-party ones ship in the payload) and every
+> installed plugin (14 first-party ones ship in the payload) and every
 > third-party plugin.
 
 ## Related

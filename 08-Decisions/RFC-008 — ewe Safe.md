@@ -12,8 +12,9 @@ up: "[[Home]]"
 1password, but way simpler", the file in Nextcloud or local, self-hosted
 first; every default in the plan's open questions taken). Phase 0 (the
 go/no-go spike) done 2026-10-14: **GO, with five conditions**; phase 1
-done the same day (the engine, the daemon and the CLI; Super+P fills
-from the safe) — see [[Roadmap — ewe-safe]] and [[ewe-safe]]. Full text:
+done the same day; **0.1.0-beta released 2026-10-15** with ewe
+0.27.0-beta (the window, import from 1Password, [[Safe Plugin]]) — see
+[[Roadmap — ewe-safe]] and [[ewe-safe]]. Full text:
 `ewe/docs/RFC-008-safe.md`; build plan: `ewe-safe/PLAN.md`; repo
 `prj786/ewe-safe`.*
 

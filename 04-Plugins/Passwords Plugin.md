@@ -42,7 +42,7 @@ flowchart LR
 - **Settings:** `provider` (auto / ewe / 1password / bitwarden / pass),
   `press_enter`.
 - **Provider `ewe`** ([[ewe-safe]], plugin 1.2.0, ewe-plugin-passwords#2,
-  merged 2026-10-14; vendored into the payload at the next ewe release):
+  vendored in ewe 0.27.0-beta):
   first under `auto` once a safe is set up; Safe does the matching; a
   locked safe shows "Safe is locked — press Enter to unlock" (Enter runs
   `ewe-pass unlock` → `ewe-safe unlock --ask`), Ctrl+L locks; pins become

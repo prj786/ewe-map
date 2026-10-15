@@ -42,6 +42,7 @@ a **first-party plugin**: one that
 | `ewe.clipboard` | [[Clipboard Plugin]] | bar-widget, panel, service | — |
 | `ewe.screenshot` | [[Screenshot Plugin]] | bar-widget, panel | — |
 | `ewe.passwords` | [[Passwords Plugin]] | panel | — |
+| `ewe.safe` | [[Safe Plugin]] (0.27) | bar-status, panel (Quick Access), quick-tile | — |
 | `ewe.insomnia` | [[Insomnia Plugin]] | service, quick-tile, bar-status | namespace `quickshell:caffeine` |
 | `ewe.sysmon` | [[System Monitor Plugin]] | quick-tile (span 2), bar-widget | — |
 | `ewe.ssh` | [[SSH Plugin]] | quick-tile, quick-page `ssh`, bar-status | `quicksettings tab ssh` |

@@ -41,7 +41,7 @@ flowchart TB
         KG["Google refresh token — ewe-auth only"]
     end
     subgraph SYSTEM["system"]
-        PAY["/usr/share/ewe — the payload (package)<br/>plugins/<id>/ + bundle.json = the 13 add-ons (0.25)"]
+        PAY["/usr/share/ewe — the payload (package)<br/>plugins/<id>/ + bundle.json = the 14 plugins (0.25; Safe since 0.27)"]
         GREET["/usr/local/bin/ewe-greeter — refreshed by post_upgrade (0.25)"]
         FONTS["/usr/share/fonts/ewe/ — Geist (greeter reads no dotfiles)"]
         OAUTH["/usr/share/ewe/system/oauth-client.json — shipped Google client"]

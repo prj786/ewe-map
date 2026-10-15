@@ -15,7 +15,7 @@ up: "[[Home]]"
 The repo you actually look at: **Hyprland** (Wayland compositor,
 Lua-configured) with a **Quickshell** QML shell — bar, launcher, Overview,
 notifications, Quick settings, lock, OSD, greeter, silent Plymouth boot —
-plus **13 plugins** vendored in `plugins/` (none installed on a fresh
+plus **14 plugins** vendored in `plugins/` (none installed on a fresh
 machine — [[Add-ons — opt-in, not preinstalled]]), the CLI tools, and the
 `ewe` package that installs the lot.
 

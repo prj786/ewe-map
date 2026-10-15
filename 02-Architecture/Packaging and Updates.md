@@ -67,7 +67,7 @@ Two steps, deliberately split:
   repo signing is planned before the standalone-distro release.
 - The ISO pins nothing — it preconfigures `[ewe]` so both the live session
   and installed systems roll forward with plain `pacman -Syu`.
-- The payload carries the **13 plugins** under `/usr/share/ewe/plugins/`
+- The payload carries the **14 plugins** under `/usr/share/ewe/plugins/`
   with `bundle.json`; none is installed on a fresh machine
   ([[Add-ons — vendored payload and bundle.json]]).
 - Open: `uninstall.sh` never removes `/usr/local/bin/ewe-greeter`.

@@ -8,11 +8,31 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-14**. Released: **ewe (DE) 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before it **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-15**. Released: **ewe (DE) 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before it **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.27.0-beta + Safe 0.1.0-beta — Safe, ewe's own password manager (released 2026-10-15)
+
+The owner's 1Password move ([[RFC-008 — ewe Safe]], [[Roadmap — ewe-safe]]).
+One wave: ewe-safe#7–#9 (`v0.1.0-beta`: `ewe-safed`, `ewe-safe`, the
+`ewe-safe-app` window, import from 1Password — `.1pux`, CSV, live through
+`op`), ewe-repo#3 (the publish collects `ewe-safe`; opt-in, nothing depends on
+it), ewe#57 (0.27.0-beta vendors `ewe.safe` 1.0.0 — [[Safe Plugin]], Quick
+Access on `Super+Shift+P` — and `ewe.passwords` 1.2.0, whose provider `ewe`
+fills from Safe), then the ewe-repo publish. Earlier on ewe main: the `[safe]`
+ewe-conf domain (#55), the unlock prompt's window rule (#56). Not in this
+wave: the ewe browser integration (staged in `.wt/ewe-browser-safe`, waiting
+for the owner's review per ewe-browser's own rule) and Komble's listing.
+
+Two release snags, both fixed before anything shipped: the bump PR merged on
+a red CI run (a racy idle-lock test — `gh pr checks --watch | tail` hid the
+failure; ewe-safe#8 made the test wait for the log line), and the first
+`v0.1.0-beta` build failed because `makepkg` reads `install=` from beside the
+PKGBUILD (ewe-safe#9 moved `ewe-safe.install`; the unreleased tag was moved
+to the fix).
 
 ## 0.26.1-beta — light mode is official, companion groundwork (released 2026-10-14)
 
@@ -162,7 +182,7 @@ flowchart LR
 - [[Roadmap — ewe-sync]] — folder-sync hardening, restore polish
 - [[Roadmap — ewe-cast]] — phase C field proof, Chromecast true mirroring
 - [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; nothing committed or released yet
-- [[Roadmap — ewe-safe]] — RFC-008 (Safe, the password manager) accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); on GitHub (`prj786/ewe-safe`), not released — phase 2 = the window + package
+- [[Roadmap — ewe-safe]] — **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); on GitHub (`prj786/ewe-safe`), not released — phase 2 = the window + package
 - [[Roadmap — Distro and Repo]] — repo signing, standalone release
 - [[Open Questions]] — deliberately unresolved
 

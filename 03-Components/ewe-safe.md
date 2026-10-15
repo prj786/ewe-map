@@ -10,8 +10,8 @@ up: "[[Home]]"
 
 `~/Projects/ewe/ewe-safe` · [github.com/prj786/ewe-safe](https://github.com/prj786/ewe-safe) ·
 Rust workspace (keepass-rs, vendored with one fix) · [[RFC-008 — ewe Safe]] ·
-not released yet (phase 1 done 2026-10-14; the window, packaging and
-ewe-repo come in phase 2 — [[Roadmap — ewe-safe]]).
+**0.1.0-beta released 2026-10-15**, opt-in from `[ewe]` (`pacman -S ewe-safe`;
+the desktop plugin: [[Safe Plugin]]) — [[Roadmap — ewe-safe]].
 
 One KDBX 4 file in a **place** you pick, held unlocked by a small daemon,
 filled into any app with `Super+P` through the [[Passwords Plugin]]
@@ -42,12 +42,17 @@ The contract is `ewe-safe/docs/PROTOCOL.md` (verbs, shapes, error codes,
 socket, events); the format and merge rules are `docs/FORMAT.md`; the
 places and sync engine are `docs/PLACES.md`.
 
-## What phase 1 cannot do yet
+The window is `ewe-safe-app` (Tauri v2 + Svelte 5, single instance;
+`--unlock` = the compact unlock window, class `ewe-safe-unlock`, floated by
+`hyprland.lua`; `--show <id>`, `--new`, `--import`). `ewe-safe unlock --ask`
+opens it (the kitty prompt only when the window isn't installed). Import
+from 1Password: `.1pux`, CSV, or live through `op` (`docs/IMPORT.md`).
 
-No window (the Safe app is phase 2); `unlock --ask` opens a small kitty
-prompt (class `ewe-safe-unlock`, floats via `hyprland.lua`); no unlock with
-login/fingerprint; places other than this computer and Nextcloud answer
-"not in this version"; no import/export; no package — build from the repo.
+## What 0.1.0-beta cannot do yet
+
+No unlock with login/fingerprint (polkit); places other than this computer
+and Nextcloud say "Coming soon"; no export; the ewe browser integration
+waits for the owner's review; not in Komble's lists yet.
 
 ## Related
 
