@@ -100,6 +100,8 @@ flowchart TB
   [[Insomnia — the name for keep awake]] · [[One repo per add-on]] ·
   [[Add-on deps declared, not split]] · [[Quiet Lid — touch only a disabled panel]] ·
   [[Gmail Split — core Google, Mail add-on]] · [[X11 Scale — smallest lit scale]]
+- 2026-10-15: [[Browser History — SQLite, synced clear records]] ·
+  [[Safe in the Browser — guards, not a page click]] (and the RFC-008 amendment)
 
 **09 — Rules** (the contracts)
 - [[Rules of the House]] · [[Contracts and Public API]] · [[Security Posture]]

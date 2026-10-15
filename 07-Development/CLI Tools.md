@@ -45,12 +45,18 @@ flowchart TB
 | **`ewe-theme`** | [[Theming Pipeline]] — schemes, tokens, imports | `scheme list/show/apply/import/export/set/from-wallpaper/duplicate/remove` · `set overrides.*` · `build` |
 | **`ewe-bt`** | bluetooth pairing for the Settings app (same as BtAgent) | — |
 | **`ewe-globalshortcuts`** | portal global shortcuts (1Password Quick Access…) | — |
-| **`ewe-pass`** | the tool behind the [[Passwords Plugin]] picker | `status` (says what it will do and why not) · `unlock` · `lock` (provider `ewe`) |
-| **`ewe-safe`** | [[ewe-safe]] — Safe, the password manager (its own repo; `docs/PROTOCOL.md` v1) | `status` · `summary` · `init` · `open` · `unlock [--ask]` · `lock` · `list` · `search` · `match` · `show` · `reveal [--json]` · `copy` · `add` · `edit` · `rm` · `restore` · `generate` · `sync` · `place` · `passwd` · `ping` · `version` |
+| **`ewe-pass`** | the tool behind the [[Passwords Plugin]] picker | `status` (says what it will do and why not) · `unlock` · `lock` (provider `ewe`) · `use-safe` (1.3.0, PR ewe-plugin-passwords#3: sets `provider = ewe` through `ewe-plugin set`; always exits 0) |
+| **`ewe-safe`** | [[ewe-safe]] — Safe, the password manager (its own repo; `docs/PROTOCOL.md` v1) | `status` · `summary` · `init` · `open` · `unlock [--ask]` · `lock` · `list` · `search` · `match` · `show` · `reveal [--json]` · `copy` · `add` · `edit` · `rm` · `restore` · `generate` · `sync` · `place` · `passwd` · `ping` · `version`. **Built 2026-10-15, PRs open, not merged:** `read` · `run` · `inject` · `git-credential` (#10; rule-5 exceptions, they copy `op` and git) · `passkey list` (#11) · `ssh list\|add\|new\|adopt\|enable\|disable\|status` (#13) |
 | **`ewe-setup`** | per-user deployment of the installed payload | — |
 | **`ewe-share-picker`** | the portal's screen-share picker, backed by the shell | — |
 
 The website documents each tool: `prj786.github.io/docs/cli/<tool>`.
+
+**`ewe-browser <verb>`** (PR ewe-browser#3, not merged; `docs/CLI.md`) — not
+in `ewe/bin` either: one JSON object, exit 0, 31 tools (`tabs`, `history`,
+`open`, `search`, `play`, `page --text`, `tab …`, `commands`, …), replies
+with outside text marked `untrusted`. 0.1.0-beta has none — a verb opens as
+a page. The companion calls it ([[Contracts and Public API]]).
 
 Not in `ewe/bin` but equally a contract: **`komble --updates | --settings |
 --search[=q] | --addons | --plugins`** (the shell's `Shell.openStore(page)`

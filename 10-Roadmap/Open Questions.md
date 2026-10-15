@@ -19,6 +19,26 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 - **EDS (evolution-data-server) as a primary calendar source?** — currently
   an optional secondary fallback behind Google/CalDAV.
 
+## Safe, ewe browser and the companion (2026-10-15)
+
+- **ewe browser's Sync and rule 6.** The browser still has its own sync
+  switch and *Sync now*: ewe-sync can't start a browser sync yet (its Sync
+  now pushes `ewe.conf` and runs folder pairs only). Proposal
+  (`feat/history`'s PLAN.md): a **Browser** row in ewe-sync that reads
+  `~/.config/ewe-browser/sync/status.json`, plus an `ewe-browser sync` verb
+  (answers the status JSON); then the browser's *Sync now* goes and its
+  Sync section says "Managed in ewe Sync". Wanted?
+- **"find" now means files in the companion** (P2.9): "find my resume"
+  searches `$HOME` by name; "search", "google" and "look up" mean the web.
+  Is that the split the owner expects?
+- **The main `ewe-safe.sock` server has one thread per connection and no
+  cap** (the SSH agent's socket has 32). The window and watchers hold
+  connections for hours, so a cap needs care. It needs its own change.
+- **Safe's merge is per entry, newest wins.** A password changed on two
+  machines before they sync: the older one goes to the item's history
+  (nothing is lost, but the user may not notice). Passkeys merge on their
+  own since ewe-safe#11. A field-level merge for every field?
+
 ## Komble
 
 - **AUR search across the whole AUR** — currently known-packages only.

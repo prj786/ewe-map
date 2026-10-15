@@ -82,6 +82,9 @@ checking here, it's probably guessing.**
 | Lid-open blinks before the password / machine re-sleeps after hibernate? | Fixed 0.25 (A2): guarded `after_sleep_cmd`, per-output re-assert, `probeLid()` | [[Quiet Lid — touch only a disabled panel]] · [[Troubleshooting Knowledge]] |
 | Steam / Java huge on the external monitor? | X11 has one scale; since 0.25 it is the smallest lit scale of the connected set (re-login after docking) | [[X11 Scale — smallest lit scale]] |
 | `ewe-plugin` from a test touched my live Hyprland? | Unset `HYPRLAND_INSTANCE_SIGNATURE` and `WAYLAND_DISPLAY` before calling it (`--no-restart` is not enough) | [[Troubleshooting Knowledge]] |
+| **Super+P says "make sure 1Password CLI is installed"?** | The Passwords plugin's `provider` is still `1password`. `ewe-plugin set ewe.passwords provider ewe` (or `auto`). Passwords 1.3.0 (PR) offers **Use Safe** in that error row | [[Passwords Plugin]] · [[Troubleshooting Knowledge]] |
+| How do I change a plugin setting from a terminal? | `ewe-plugin set <id> <key> <value>` — not `ewe-conf set plugins.settings."<id>".<key>` (wrote a stray table before ewe#58) | [[EWE-CONF Schema Reference]] |
+| Can Safe do passkeys, SSH keys, `op read`? | Built 2026-10-15 — passkeys (KeePassXC format, through ewe browser), an SSH agent, `ewe-safe read/run/inject/git-credential` — PRs open, not merged, not released | [[ewe-safe]] · [[RFC-008 — ewe Safe]] |
 | Settings change did nothing? | Not in `THEME_MAP`, or edited a generated file | [[Troubleshooting Knowledge]] |
 | QML surface didn't open? | ~15 KB shot = bar only; read `driver.sh log` | [[Development Loops]] |
 | VPN fails to start? | IKEv1 vs strongSwan — libreswan backend | [[Troubleshooting Knowledge]] · [[Phone and VPN]] |

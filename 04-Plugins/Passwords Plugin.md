@@ -47,6 +47,16 @@ flowchart LR
   locked safe shows "Safe is locked — press Enter to unlock" (Enter runs
   `ewe-pass unlock` → `ewe-safe unlock --ask`), Ctrl+L locks; pins become
   `app:<class>` tags inside the safe, so they sync.
+- **Next: 1.3.0** (ewe-plugin-passwords#3, PR open, not merged; vendored at
+  the next ewe release): when the chosen manager is **gone** (its CLI isn't
+  installed, 1Password's app integration can't be reached, not signed in)
+  and Safe is set up, the error row offers **Use Safe** (Enter works too):
+  `ewe-pass use-safe` → `ewe-plugin set ewe.passwords provider ewe`. Slow
+  answers and timeouts offer nothing. `ewe-pass` always exits 0 now (rule 5).
+- **"Make sure 1Password CLI is installed"** on `Super+P` = the `provider`
+  setting is still `1password` (the owner's machine, 2026-10-15, now `ewe`).
+  Change it with `ewe-plugin set ewe.passwords provider ewe`, never
+  `ewe-conf set` with the dotted id.
 - **Deps:** `wtype` (an ewe dependency).
 - `ewe-pass` in the repo is the tool the panel runs;
   `./ewe-pass status` says what it will do and why not.
@@ -65,3 +75,8 @@ ewe-plugin install ewe.passwords      # not `add <url>` — that failed for a re
 ## Related
 
 - [[Plugin System]] · [[Clipboard Plugin]] · [[CLI Tools]]
+
+> **Build guard:** `test.sh` runs on a PATH of fakes only — a fake `op`,
+> `wtype`, `hyprctl`, `ewe-conf`, `ewe-safe` — so the machine's real
+> 1Password or Safe can never answer a test. Keep it that way when adding a
+> provider.

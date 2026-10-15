@@ -30,7 +30,14 @@
       "ewe.dock": "1.1.0",
       "ewe.safe": "1.0.0"
     },
-    "ewe_safe": "0.1.0-beta"
+    "ewe_safe": "0.1.0-beta",
+    "pending": {
+      "note": "built 2026-10-15, PRs open, not merged, not released — the released versions above are unchanged",
+      "ewe.passwords": "1.3.0 (ewe-plugin-passwords#3)",
+      "ewe.companion": "0.3.0 (ewe-plugin-companion#1)",
+      "ewe_safe": "no bump yet (ewe-safe#10-#13; #12 is a 0.1.1-beta hotfix candidate)",
+      "ewe_browser": "no bump yet (ewe-browser#3 CLI; feat/safe and feat/history staged, not committed)"
+    }
   },
   "repos": [
     {
@@ -286,7 +293,11 @@
       "job": "password fill picker backend",
       "verbs": [
         "status"
-      ]
+      ],
+      "verbs_pending": [
+        "use-safe"
+      ],
+      "pending": "ewe-plugin-passwords#3 (1.3.0): use-safe; ewe-pass always exits 0 — built 2026-10-15, PR open, not merged, not released"
     },
     {
       "tool": "ewe-setup",
@@ -310,6 +321,39 @@
       ]
     },
     {
+      "tool": "ewe-browser",
+      "job": "ewe browser's command line (not in ewe/bin; docs/CLI.md): one JSON object, exit 0; replies with outside text marked untrusted; acting verbs answer undo",
+      "verbs": [],
+      "verbs_pending": [
+        "help",
+        "commands",
+        "version",
+        "status",
+        "tabs",
+        "history",
+        "bookmarks",
+        "downloads",
+        "recent",
+        "find",
+        "music",
+        "places",
+        "ls",
+        "locate",
+        "page",
+        "open",
+        "search",
+        "play",
+        "reveal",
+        "home",
+        "focus",
+        "tab",
+        "bookmark",
+        "call"
+      ],
+      "socket": "$XDG_RUNTIME_DIR/ewe-browser-<12 hex of sha256(profile dir)>.sock (0600, JSON lines)",
+      "pending": "ewe-browser#3 (rail-and-cli: the owner's 2026-10-14 work, reviewed and opened as a PR 2026-10-15) — PR open, not merged, not released; 0.1.0-beta has no CLI (a verb opens as a page)"
+    },
+    {
       "tool": "ewe-companion",
       "job": "the companion: CLI + agent hook relay (RFC-007)",
       "verbs": [
@@ -326,7 +370,11 @@
         "debug",
         "version",
         "help"
-      ]
+      ],
+      "verbs_pending": [
+        "find"
+      ],
+      "pending": "ewe-companion#1 (P2.9) — built 2026-10-15, PR open, not merged, not released"
     },
     {
       "tool": "ewe-safe",
@@ -354,7 +402,28 @@
         "passwd",
         "ping",
         "version"
-      ]
+      ],
+      "verbs_pending": [
+        "read",
+        "run",
+        "inject",
+        "git-credential",
+        "passkey",
+        "ssh"
+      ],
+      "socket_only_verbs_pending": [
+        "resolve",
+        "passkey-list",
+        "passkey-create",
+        "passkey-get"
+      ],
+      "rule5_exceptions_pending": {
+        "read": "bare value; exit 1 and nothing when none (--json = rule-5 answer)",
+        "run": "exits with the command's code; 125 = ewe-safe's own failure",
+        "inject": "prints the template; with -o answers JSON",
+        "git-credential": "git's key=value lines, exit 0"
+      },
+      "pending": "ewe-safe#10 (CLI), #11 (passkeys), #13 (ssh) — built 2026-10-15, PR open, not merged, not released"
     }
   ],
   "ipc": {
@@ -477,7 +546,11 @@
       "ewe/ewe.conf",
       "ewe/ewe.conf.meta.json",
       "ewe/machines/<name>.json",
-      "ewe/safe/passwords.kdbx"
+      "ewe/safe/passwords.kdbx",
+      "ewe/browser/bookmarks.json",
+      "ewe/browser/history.json",
+      "ewe/browser/settings.json",
+      "ewe/browser/tabs-<id>.json (staged feat/history)"
     ],
     "meta_fields": [
       "machine",
@@ -520,12 +593,12 @@
     {
       "rfc": "RFC-007",
       "topic": "ewe-companion desktop companion (island plugin + daemon)",
-      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders) and P2.8 (runs proposed shell commands on a click) working; on GitHub, not yet released"
+      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders) and P2.8 (runs proposed shell commands on a click) working; P2.9 (Safe, ewe browser, the finder) built 2026-10-15, PR open; on GitHub, not yet released"
     },
     {
       "rfc": "RFC-008",
       "topic": "Safe (ewe-safe) password manager: KDBX 4 file, places, merge on save, ewe-safed",
-      "status": "accepted 2026-10-14; Safe 0.1.0-beta released 2026-10-15 (engine, daemon, CLI, window, import from 1Password, the ewe.safe plugin, Super+P provider); browser integration staged for owner review"
+      "status": "accepted 2026-10-14; Safe 0.1.0-beta released 2026-10-15 (engine, daemon, CLI, window, import from 1Password, the ewe.safe plugin, Super+P provider); amended 2026-10-15 (passkeys + SSH agent leave the parked list, S8 lets the companion act; docs/TRIO.md): built, PRs open, not merged, not released; browser integration staged for owner review"
     }
   ],
   "sync_contract": {
@@ -548,7 +621,10 @@
     "Google Gmail: restricted scope - <=100 test users without a CASA audit",
     "0.25.0-beta unreleased: Welcome Add-ons step, Shell.toggleOverview/primaryScreenName/dockItems/closePopups, VERSION bump and 90-postcheck 1.4.1-2.1 were still being integrated on 2026-10-04",
     "Komble Add-ons catalogue and ewe-settings add-on awareness are dev-mock tested only (no real Tauri window yet)",
-    "quiet-lid fix (A2) not yet verified on real laptop hardware"
+    "quiet-lid fix (A2) not yet verified on real laptop hardware",
+    "ewe-conf before ewe#58 splits quoted dotted keys: use ewe-plugin set <id> <key> <value> for plugin settings",
+    "ewe-browser 0.1.0-beta has no command line: a verb opens as a page",
+    "Safe's merge is entry-level newest-wins: a concurrent password edit goes to the item's history (passkeys merge on their own since ewe-safe#11)"
   ],
   "addons": {
     "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
@@ -612,5 +688,74 @@
         "setSetting"
       ]
     }
+  },
+  "safe_contract_pending": {
+    "status": "ewe-safe#10-#13 + ewe#58/#59 — built 2026-10-15, PR open, not merged, not released; contract ewe-safe/docs/TRIO.md; PROTOCOL.md stays v1 (additive)",
+    "reference_syntax": "safe://<folder>/<title>/<field> | safe://<title>/<field> (any folder) | safe:///<title>/<field> (top) | safe://<item-id>/<field>; '/' in a title = %2F; {{ safe://... }} inside text in run/inject",
+    "reference_fields": [
+      "password",
+      "username",
+      "otp",
+      "notes",
+      "url",
+      "public_key",
+      "private_key",
+      "<custom field name>"
+    ],
+    "summary_fields_added": {
+      "passkey": "{rp_id, username} or null",
+      "ssh": "{public_key, fingerprint, key_type, agent} or null",
+      "kind": "adds ssh-key"
+    },
+    "error_codes_added": [
+      "ambiguous",
+      "excluded",
+      "unsupported"
+    ],
+    "passkey_format": "KeePassXC 2.7.7+: KPEX_PASSKEY_CREDENTIAL_ID (protected), KPEX_PASSKEY_PRIVATE_KEY_PEM (protected), KPEX_PASSKEY_RELYING_PARTY, KPEX_PASSKEY_USERNAME, KPEX_PASSKEY_USER_HANDLE (protected), KPEX_PASSKEY_FLAG_BE/_BS, tag Passkey",
+    "passkey_aaguid": "452b824e-42d3-4324-bc6c-581888ca2851",
+    "passkey_algorithms": [
+      "ES256 (-7)",
+      "EdDSA (-8)"
+    ],
+    "ssh_key_format": "KeeAgent: OpenSSH private key attachment + KeeAgent.settings; passphrase in the password; public_key + fingerprint plain fields; custom data ewe.kind = ssh-key",
+    "ssh_agent_socket": "$XDG_RUNTIME_DIR/ewe-safe-ssh.sock (0600, SO_PEERCRED; second ListenStream of ewe-safe.socket)",
+    "ssh_public_cache": "~/.local/state/ewe/safe/ssh-public.json (public keys + titles, 0600, only while the agent is on, never synced)",
+    "ssh_env_file": "~/.config/environment.d/90-ewe-safe-ssh.conf (SSH_AUTH_SOCK for new sessions; ~/.ssh/config never edited)",
+    "ewe_conf_keys_added": {
+      "safe.ssh_agent": "bool, false until ewe-safe ssh enable",
+      "safe.ssh_confirm": "first-use (default) | every-time | never — noise reduction, not a security boundary"
+    },
+    "origin_rule": "the browser decides the origin and RP ID; Safe checks only shapes"
+  },
+  "companion_protocol_pending": {
+    "status": "ewe-companion#1 (P2.9) + ewe-plugin-companion#1 (0.3.0) — built 2026-10-15, PR open, not merged, not released",
+    "chat_reply_added": [
+      "rows"
+    ],
+    "do_actions_added": [
+      "browser {bin, args}",
+      "safe_unlock {bin}"
+    ],
+    "env_added": [
+      "wayland"
+    ],
+    "catalog_added": [
+      "find_files",
+      "open_file",
+      "browser_history",
+      "browser_tabs",
+      "browser_tab",
+      "safe_copy",
+      "safe_login",
+      "safe_lock",
+      "safe_unlock",
+      "safe_status"
+    ],
+    "env_vars": [
+      "EWE_COMPANION_SAFE",
+      "EWE_COMPANION_BROWSER"
+    ],
+    "rules": "values never cross (Safe copies itself; never show/reveal); names stay local (island only, never a model, log or companion.db); tests/canary.sh in CI; commands that print a password manager's values are refused"
   }
 }
