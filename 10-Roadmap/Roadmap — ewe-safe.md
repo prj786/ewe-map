@@ -15,7 +15,7 @@ SSH agent leave the parked list). In it: ewe-safe **#10** (`read`, `run`,
 `inject`, `git-credential`, `safe://`), **#11** (passkeys, KeePassXC's
 format), **#12** (the window's edit-save fix — 0.1.0-beta could not save an
 edited login), **#13** (SSH keys + agent), all landed through **#14**
-(`integrate/trio`), bump **#15** (`v0.2.0-beta` on `75d2502`, package
+(`integrate/trio`), bump **#15** (`v0.2.0-beta` on `b101d2d` (after #16, a test-race fix; the tag moved once, before any package was made), package
 `ewe-safe-0.2.0beta-1`). Released with it: ewe **0.28.0-beta** (#58/#59,
 Passwords **1.3.0**: Use Safe) and ewe browser **0.2.0-beta** (Safe built
 in, ewe-browser#4). Published to `[ewe]` on 2026-10-15. The companion's side

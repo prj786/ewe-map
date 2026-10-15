@@ -601,6 +601,13 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   not lost: Safe's merge is per entry, newest wins, and the older version is
   in the item's history. Passkey fields merge on their own (#11, FORMAT.md
   rule 3a). See [[Open Questions]].
+- **The release build's `check()` fails "nothing to save" but CI was
+  green**: a test read the safe file's time right after an edit answered.
+  An edit is in the cache when it answers; a local place's file gets it
+  moments later, so on a slow builder the test caught that late write. Wait
+  for `status.sync.pending` to clear (and the time to settle) before
+  measuring a file (ewe-safe #16). The `v0.2.0-beta` tag moved once for it,
+  before any package was made.
 
 ## ewe browser (2026-10-15, e2e and Safe)
 
