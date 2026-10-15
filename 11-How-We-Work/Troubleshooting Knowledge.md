@@ -156,6 +156,20 @@ must point at the new path). The `cast` IPC target is an alias of
   old value then stands until the user sets the new one.
 - **`ewe-plugin bar <id> off` refused** — the plugin's manifest says
   `toggle: false` (Music, Places: their `button` setting places them).
+- **`Super+P` says "make sure 1Password CLI is installed"** (the owner's
+  machine, 2026-10-15) — the Passwords plugin's `provider` is still
+  `1password`. `ewe-plugin set ewe.passwords provider ewe` (or `auto`).
+  Passwords 1.3.0 (ewe-plugin-passwords#3, not merged) offers **Use Safe**
+  in that error row.
+- **`ewe-conf set 'plugins.settings."ewe.passwords".provider' ewe` wrote a
+  stray `[plugins.settings."\"ewe"]` table** and left the setting alone —
+  ewe-conf split a quoted key on every dot (fixed in ewe#58, not merged;
+  it now refuses a broken key with `bad-key`). Change a plugin setting with
+  `ewe-plugin set <id> <key> <value>`; it also checks the schema.
+- **The Passwords plugin's `test.sh` answered from the real 1Password** —
+  never: it runs on a PATH of fakes only (`op`, `wtype`, `hyprctl`,
+  `ewe-conf`, `ewe-safe`). A new provider test must keep a fake on that PATH
+  and check the real binary is *not* found.
 
 ## Shell / QML
 
@@ -359,7 +373,12 @@ must point at the new path). The `cast` IPC target is an alias of
   ipc plugins reload`; move the pointer with `driver.sh hc dispatch
   'hl.dsp.cursor.move({ x = X, y = Y })'` (SHOT starts at x = 1920).
 - **`pkill -f vite…` killed the calling shell** — the pattern was in its own
-  command line; anchor it (`pkill -f "[v]ite --port N"`).
+  command line; anchor it (`pkill -f "[v]ite --port N"`). The same for
+  `pgrep -f`: it matches your own shell. Better: find the PID and check
+  `readlink /proc/PID/exe` (the companion's `tests/island.sh down` does).
+- **Headless Electron (castlabs) crashes with `--ozone-platform=headless`.**
+  For a Playwright check of a page (the Safe window's dev mock, 2026-10-15),
+  open a hidden window instead (`show: false`).
 
 ## Installer
 
@@ -501,6 +520,26 @@ must point at the new path). The `cast` IPC target is an alias of
 - **An answer names the wrong page or label.** The knowledge pack lags ewe:
   fix `ewe-companion/knowledge/*.md` (`EWE_COMPANION_KNOWLEDGE=<dir>` loads
   an edited pack without a rebuild).
+- **The chat history is model context** (P2.9). A reply's text goes into
+  the next question, so anything that shows Safe's titles or usernames must
+  set `Outcome::private` ("done", a count). `tests/canary.sh` fails
+  otherwise — run it after any change near Safe, the conversation, logs or
+  the store.
+- **The browser the companion started closed when the daemon stopped.** An
+  app a command line starts joins the caller's cgroup, so from
+  `ewe-companiond`'s unit it dies with the unit. Acts (`search`, `open`,
+  `play`, tab switches) go through the island (`do browser`); reads stay in
+  the daemon.
+- **"commands" opened as a web search in ewe browser.** ewe browser
+  0.1.0-beta has no command line: `ewe-browser <verb>` opens the verb as a
+  page. The companion asks `ewe-browser commands` only when the binary is a
+  `#!` script (ewe-browser#3's wrapper); otherwise it opens a URL as before.
+- **"I won't run …" for `ewe-safe read`, `op read`, `pass show` …** —
+  refused on purpose: a run's output goes back into the conversation, so a
+  command that prints a password manager's values never runs from the chat.
+- **Tests must not reach the real Safe or browser:** point
+  `EWE_COMPANION_SAFE` / `EWE_COMPANION_BROWSER` at `tests/fakes/`
+  (`tests/island.sh` does).
 - **Test hooks in a scratch project, never in `~/.claude`:** hooks in the
   project's `.claude/settings.local.json` pointing at
   `target/debug/ewe-companion`; `EWE_COMPANION_HOOK_LOG=<file>` records the
@@ -534,6 +573,52 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
 - **The one-time code is wrong or the secret is refused**: keepass-rs's TOTP
   gives 8 digits and rejects unpadded base32; Safe computes codes itself
   (`safe_core::otp`).
+
+### Safe — 2026-10-15 (passkeys, SSH agent, CLI; PRs open, not merged)
+
+- **Saving an edited login in the Safe window does nothing** (0.1.0-beta,
+  released): `ItemEdit.svelte` shadowed `was` inside its own initializer, so
+  every save threw `ReferenceError`. Fixed in ewe-safe#12 (not merged; a
+  0.1.1-beta hotfix candidate).
+- **`ssh` ignores Safe's agent although `SSH_AUTH_SOCK` points at it** — an
+  `IdentityAgent` line in `~/.ssh/config` (1Password's
+  `~/.1password/agent.sock` on the owner's machine) wins over
+  `SSH_AUTH_SOCK`. `ewe-safe ssh status` lists them (`ssh_config_agents`);
+  replace that line with the one `ewe-safe ssh enable` prints. Safe never
+  edits `~/.ssh/config`.
+- **After upgrading Safe the agent's socket is missing** — the socket unit
+  gained a second `ListenStream`: `systemctl --user daemon-reload &&
+  systemctl --user restart ewe-safe.socket` (this locks the safe). The
+  package's `post_upgrade` prints it.
+- **A passkey from Safe doesn't show in KeePassXC/KeePassDX, or theirs
+  doesn't sign in Safe** — check the five `KPEX_PASSKEY_*` fields and their
+  protected flags: the **credential id is protected** (KeePassXC and
+  KeePassDX write it so; TRIO.md's first table said no). KeePassDX needs all
+  five fields.
+- **A merge test passes alone and fails in a run** — KDBX times have
+  one-second steps; two edits in one second tie. Tests that need "newer"
+  wait a second.
+- **A password edited on two machines before they synced "went back"** —
+  not lost: Safe's merge is per entry, newest wins, and the older version is
+  in the item's history. Passkey fields merge on their own (#11, FORMAT.md
+  rule 3a). See [[Open Questions]].
+
+## ewe browser (2026-10-15, e2e and Safe)
+
+- **Chromium aborts: "Socket path too long"** in an e2e run — its
+  singleton socket lives under `TMPDIR`; a long temp path breaks it. Use a
+  short one (`TMPDIR=/tmp/x`).
+- **Two e2e runs in sibling worktrees switch each other's window rule off**
+  — give each run its own Hyprland rule: `EWE_TEST_RULE=<lua name>`.
+- **The nested compositor's output shrank mid-run** when the host
+  rearranged its windows — give the e2e nest a fixed-size output.
+- **A stateful Playwright suite went strange after one failure** —
+  Playwright re-runs `beforeAll` after a failure; such suites need serial
+  mode.
+- **The smoke bookmarks test fails offline** — it needs the network.
+- **"Use a security key instead" hangs** — Electron's own WebAuthn has no
+  window and ignores its timeout; `feat/safe` adds its own timeout. Not yet
+  tried with a real key.
 
 ## Theming
 

@@ -8,11 +8,37 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-15**. Released: **ewe (DE) 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before it **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-15**. Built, not merged: Safe + ewe browser + the companion together (below). Released: **ewe (DE) 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before it **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## Built 2026-10-15, not merged: Safe, ewe browser and the companion together
+
+The owner's ask the same day: "Safe is a real safe" (like 1Password today),
+a browser with real sync and history, and a companion that can use both.
+Contract: `ewe-safe/docs/TRIO.md`; decisions: [[Decision Index]] rows 35–37.
+**Everything below is built and tested in sandboxes; nothing is merged or
+released.** No merge and no release without the owner's OK.
+
+| piece | where | state |
+|---|---|---|
+| Safe: `read`, `run`, `inject`, `git-credential`, `safe://` references | ewe-safe **#10** `feat/cli-power` | PR open; CI green; not verified: a real `git push` |
+| Safe: passkeys (KeePassXC's format, ES256 + EdDSA, Safe's AAGUID) | ewe-safe **#11** `feat/passkeys` (also carries `docs/TRIO.md`) | PR open; CI green; byte-checked against KeePassXC's test vectors, `keepassxc-cli` 2.7.12 reads them; not verified: a real site |
+| Safe window: saving an edited login works again | ewe-safe **#12** `fix/item-edit` | PR open; CI green; a 0.1.1-beta hotfix candidate — **in the released 0.1.0-beta window, saving an edited login fails** (`ReferenceError`) |
+| Safe: SSH keys (KeeAgent format) + an ssh-agent, `ssh_confirm` | ewe-safe **#13** `feat/ssh` + ewe **#59** (`[safe] ssh_agent`, `ssh_confirm`) | PRs open; CI green (#13); not verified: the real user units, the approval window on screen, `ssh adopt` on the owner's safe |
+| all four Safe PRs together | ewe-safe `integrate/trio` (local) | being built (they touch the same dispatch files) |
+| ewe-conf: quoted key parts keep their dots | ewe **#58** | PR open |
+| Passwords 1.3.0: **Use Safe** when the chosen manager is gone; `ewe-pass` exits 0 | ewe-plugin-passwords **#3** | PR open; `test.sh` 52/52; vendored at the next ewe release |
+| ewe browser: the command line (`docs/CLI.md`) + the hidden rail | ewe-browser **#3** `rail-and-cli` | PR open (the owner's WIP, taken over) |
+| ewe browser: Safe built in (inline suggestions, passkeys) | `.wt/ewe-browser-safe` (`feat/safe`) | **staged, not committed**, waiting for the owner's review; 202 unit + 46/46 e2e, also against the real Safe daemon from #11 in a sandbox |
+| ewe browser: `app://history`, SQLite, synced deletes, other computers' tabs | `.wt/ewe-browser-history` (`feat/history`) | **staged, not committed**, waiting for the owner's review |
+| the companion P2.9: Safe, ewe browser, the finder | ewe-companion **#1** + ewe-plugin-companion **#1** (0.3.0) | PRs open; `tests/canary.sh` 8, `tests/chat.sh` 53; against fakes only |
+
+Live machine (2026-10-15): the owner's `Super+P` error "make sure 1Password
+CLI is installed" was the old `provider = "1password"`; it was switched with
+`ewe-plugin set ewe.passwords provider ewe`.
 
 ## 0.27.0-beta + Safe 0.1.0-beta — Safe, ewe's own password manager (released 2026-10-15)
 
@@ -181,8 +207,8 @@ flowchart LR
 - [[Roadmap — Komble]] — the first live-pacman run is the gate
 - [[Roadmap — ewe-sync]] — folder-sync hardening, restore polish
 - [[Roadmap — ewe-cast]] — phase C field proof, Chromecast true mirroring
-- [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; nothing committed or released yet
-- [[Roadmap — ewe-safe]] — **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); on GitHub (`prj786/ewe-safe`), not released — phase 2 = the window + package
+- [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; P2.9 (Safe, ewe browser, the finder) built 2026-10-15, PR open; not released yet
+- [[Roadmap — ewe-safe]] — passkeys, SSH agent, an `op`-like CLI built 2026-10-15 (PRs ewe-safe #10–#13, not merged); **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); on GitHub (`prj786/ewe-safe`), not released — phase 2 = the window + package
 - [[Roadmap — Distro and Repo]] — repo signing, standalone release
 - [[Open Questions]] — deliberately unresolved
 

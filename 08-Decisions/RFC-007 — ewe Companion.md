@@ -9,7 +9,8 @@ up: "[[Home]]"
 # RFC-007 — ewe-companion, the desktop companion
 
 *Status: **accepted** 2026-10-14 (owner idea 2026-10-13; every proposed
-answer taken). P1 done, P2 working (see [[Roadmap — ewe-companion]]). Full text: `ewe/docs/RFC-007-companion.md`;
+answer taken). P1 done, P2 working, P2.5–P2.8 done, P2.9 (Safe, ewe browser,
+the finder) built 2026-10-15 with PRs open (see [[Roadmap — ewe-companion]]). Full text: `ewe/docs/RFC-007-companion.md`;
 build plan: `ewe-companion/docs/PLAN.md`.*
 
 ## The idea
@@ -70,7 +71,9 @@ pipeline (ewe-conf writes, ewe-sync syncs, Komble installs).
 1. **C1** It never decides for you: no allow without a click.
 2. **C2** It fails back to the old way: daemon or shell down, or locked →
    the terminal asks and stock banners show.
-3. **C3** Secrets never reach a model; a canary test guards it.
+3. **C3** Secrets never reach a model; a canary test guards it. (With Safe,
+   2026-10-15: values never cross, names stay local — [[RFC-008 — ewe Safe]]
+   S8′; `tests/canary.sh` in P2.9.)
 4. **C4** Untrusted text (notifications, pages, agent output) cannot trigger
    tools.
 5. **C5** It works with no AI configured.

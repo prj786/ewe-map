@@ -29,6 +29,8 @@ flowchart LR
     STORE -->|"ewe-cloud token --json"| NC["your Nextcloud<br/>ewe/safe/passwords.kdbx"]
     D -->|"LockedHint, PrepareForSleep"| LOGIND["logind"]
     D -->|"ewe-conf get/set safe.*"| CONF["ewe.conf [safe]"]
+    SSH["ssh / git (PR)"] -->|"ssh-agent protocol, ewe-safe-ssh.sock"| D
+    BR["ewe browser (staged)"] -->|"passkey-*, match"| D
 ```
 
 | crate | what |
@@ -48,11 +50,28 @@ The window is `ewe-safe-app` (Tauri v2 + Svelte 5, single instance;
 opens it (the kitty prompt only when the window isn't installed). Import
 from 1Password: `.1pux`, CSV, or live through `op` (`docs/IMPORT.md`).
 
+## Built 2026-10-15 — PRs open, not merged, not released
+
+The owner's "a real safe" ([[RFC-008 — ewe Safe]] → Amendment 2026-10-15;
+contract `docs/TRIO.md`):
+
+| what | PR | in short |
+|---|---|---|
+| a CLI like `op` | ewe-safe#10 | `read "safe://Personal/GitHub/password"`, `run --env-file .env -- cmd`, `inject -i tpl -o out` (0600), `git-credential` (strict host match; asks before saving; never deletes). Socket verb `resolve`; error `ambiguous` |
+| passkeys | ewe-safe#11 | KeePassXC's `KPEX_PASSKEY_*` fields + tag `Passkey`; ES256, EdDSA; socket verbs `passkey-list/create/get` for ewe browser; `ewe-safe passkey list`, `edit --remove-passkey`; summary `passkey`; errors `excluded`, `unsupported`; the window shows a passkey row |
+| the window's edit fix | ewe-safe#12 | 0.1.0-beta threw `ReferenceError` on every save of an edited login; after Add it selected the request id instead of `item_id` |
+| SSH keys + agent | ewe-safe#13, ewe#59 | kind `ssh-key` (KeeAgent format); `ewe-safe ssh add/new/list/adopt/enable/disable/status`; the agent on `ewe-safe-ssh.sock`, lists keys while locked from `ssh-public.json`, asks per program (`ssh_confirm`); 1Password's SSH Keys now import as keys, `ssh adopt` converts the notes an earlier import made |
+
+`ewe-safe ssh enable` writes `~/.config/environment.d/90-ewe-safe-ssh.conf`;
+an `IdentityAgent` line in `~/.ssh/config` (1Password's, on the owner's
+machine) still wins over `SSH_AUTH_SOCK` — put the line `enable` prints there.
+
 ## What 0.1.0-beta cannot do yet
 
 No unlock with login/fingerprint (polkit); places other than this computer
 and Nextcloud say "Coming soon"; no export; the ewe browser integration
-waits for the owner's review; not in Komble's lists yet.
+waits for the owner's review; not in Komble's lists yet; saving an edited
+login in the window fails (fixed in #12, not released).
 
 ## Related
 
@@ -61,4 +80,8 @@ waits for the owner's review; not in Komble's lists yet.
 
 > **Build guard:** PROTOCOL.md is public API (rule 4) — add fields, never
 > rename; the master password never enters the shell; tests run only in XDG
-> sandboxes against the mock WebDAV server, never the live account.
+> sandboxes against the mock WebDAV server, never the live account, the live
+> safe, `~/.ssh` or a live browser profile. Passkeys and SSH keys keep
+> KeePassXC's formats (checked against its source; the passkey fixture is
+> KeePassXC-made, an SSH one is still to add); Safe never trusts an origin a
+> page sent; `ssh_confirm` is not a security boundary.

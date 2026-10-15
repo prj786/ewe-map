@@ -59,6 +59,15 @@ hyprland.lua — and exist only while their plugin is enabled.
 
 Drag to move · drag edge/resize (see SHORTCUTS.md for the full set).
 
+## Inside ewe browser (the app's own keys, not Hyprland)
+
+| keys | action |
+|---|---|
+| `Ctrl+Shift+L` | fill a password through `ewe-pass` (the [[Passwords Plugin]]'s tool) |
+| `Ctrl+H` | the History sidebar |
+| `Ctrl+Shift+H` | the history page, `app://history` (staged `feat/history`, not committed) |
+| `↑` `↓` `Enter` `Esc` | in a login field with Safe's suggestion list open: move, fill, close — the focus stays in the field (staged `feat/safe`, not committed) |
+
 ## Related
 
 - [[ewe Desktop]] · [[Contracts and Public API]] · [[Plugin Manifest Reference]]
