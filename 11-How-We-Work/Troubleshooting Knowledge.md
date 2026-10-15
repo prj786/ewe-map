@@ -606,8 +606,15 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   An edit is in the cache when it answers; a local place's file gets it
   moments later, so on a slow builder the test caught that late write. Wait
   for `status.sync.pending` to clear (and the time to settle) before
-  measuring a file (ewe-safe #16). The `v0.2.0-beta` tag moved once for it,
-  before any package was made.
+  measuring a file (ewe-safe #16). The `v0.2.0-beta` tag moved for it
+  (and for the next one), before any package was made.
+- **The release build's `check()` fails "ssh-keygen: No such file or
+  directory"**: the SSH agent's tests drive OpenSSH's own `ssh-add` and
+  `ssh-keygen`, and the release container (archlinux:base-devel) has no
+  openssh. The PKGBUILD lists `checkdepends=('openssh' 'git')` and
+  release.yml installs openssh (ewe-safe #17). The host and CI have it, so
+  only the release build failed: run a release's steps in an
+  `archlinux:base-devel` container (podman) before tagging, not on the host.
 
 ## ewe browser (2026-10-15, e2e and Safe)
 

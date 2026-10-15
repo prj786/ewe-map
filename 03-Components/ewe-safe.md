@@ -55,7 +55,7 @@ from 1Password: `.1pux`, CSV, or live through `op` (`docs/IMPORT.md`).
 
 The owner's "a real safe" ([[RFC-008 — ewe Safe]] → Amendment 2026-10-15;
 contract `docs/TRIO.md`). The four PRs landed together through ewe-safe#14
-(`integrate/trio`); bump #15, tag `v0.2.0-beta` on `b101d2d` (after #16, a test-race fix; the tag moved once, before any package was made), package
+(`integrate/trio`); bump #15, tag `v0.2.0-beta` on `a3fcc5e` (after #16, a test-race fix, and #17, openssh for the package check; the tag moved twice, before any package was made), package
 `ewe-safe-0.2.0beta-1`; published to `[ewe]` on 2026-10-15. After the
 upgrade: `systemctl --user daemon-reload && systemctl --user restart
 ewe-safe.socket` (the socket unit gained the agent's socket; this locks the
