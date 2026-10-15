@@ -11,7 +11,8 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-passwords` ·
 [github.com/prj786/ewe-plugin-passwords](https://github.com/prj786/ewe-plugin-passwords)
 
-First-party **plugin since 0.25** (API 2 manifest, v1.1.0): shipped inside
+First-party **plugin since 0.25** (API 2 manifest; **1.3.0** since ewe
+0.28.0-beta): shipped inside
 the payload, **not installed on a fresh machine**, migrated once for
 upgraders who had it.
 
@@ -47,14 +48,15 @@ flowchart LR
   locked safe shows "Safe is locked — press Enter to unlock" (Enter runs
   `ewe-pass unlock` → `ewe-safe unlock --ask`), Ctrl+L locks; pins become
   `app:<class>` tags inside the safe, so they sync.
-- **Next: 1.3.0** (ewe-plugin-passwords#3, PR open, not merged; vendored at
-  the next ewe release): when the chosen manager is **gone** (its CLI isn't
+- **1.3.0** (ewe-plugin-passwords#3, vendored in ewe 0.28.0-beta, released
+  2026-10-15): when the chosen manager is **gone** (its CLI isn't
   installed, 1Password's app integration can't be reached, not signed in)
   and Safe is set up, the error row offers **Use Safe** (Enter works too):
   `ewe-pass use-safe` → `ewe-plugin set ewe.passwords provider ewe`. Slow
   answers and timeouts offer nothing. `ewe-pass` always exits 0 now (rule 5).
 - **"Make sure 1Password CLI is installed"** on `Super+P` = the `provider`
   setting is still `1password` (the owner's machine, 2026-10-15, now `ewe`).
+  Since 1.3.0 the error row offers **Use Safe** when a safe is set up.
   Change it with `ewe-plugin set ewe.passwords provider ewe`, never
   `ewe-conf set` with the dotted id.
 - **Deps:** `wtype` (an ewe dependency).

@@ -29,17 +29,17 @@ flowchart TB
         PSTATE["plugins/<id>/ — a plugin's own stateDir (0.25)"]
         CAST["cast.log — cast debug trace (ewe.cast legacy path)"]
         COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards (SQLite, per machine, never synced; RFC-007)"]
-        SAFE["safe/ — sync.json · cache/passwords.kdbx (encrypted) ·<br/>backups/ (20, encrypted) · machine.json ·<br/>ssh-public.json (PR: public keys only, 0600)<br/>(RFC-008, never synced)"]
+        SAFE["safe/ — sync.json · cache/passwords.kdbx (encrypted) ·<br/>backups/ (20, encrypted) · machine.json ·<br/>ssh-public.json (0.2.0-beta: public keys only, 0600)<br/>(RFC-008, never synced)"]
     end
     subgraph RUN["$XDG_RUNTIME_DIR"]
         CSOCK["ewe-companion.sock (0600, SO_PEERCRED) — ewe-companiond"]
         SSOCK["ewe-safe.sock (0600, SO_PEERCRED) — ewe-safed"]
-        SSHSOCK["ewe-safe-ssh.sock (0600, SO_PEERCRED) — Safe's SSH agent (PR)"]
-        BSOCK["ewe-browser-HASH.sock (0600) — ewe browser's CLI (PR)"]
+        SSHSOCK["ewe-safe-ssh.sock (0600, SO_PEERCRED) — Safe's SSH agent (Safe 0.2.0-beta)"]
+        BSOCK["ewe-browser-HASH.sock (0600) — ewe browser's CLI (0.2.0-beta)"]
         KSOCK["kitty-<pid>.sock — kitty remote control (socket-only)"]
     end
     subgraph BROWSER["~/.config/ewe-browser (ewe browser's profile)"]
-        BHIST["history.db — SQLite (staged; was history.json, kept as .bak)"]
+        BHIST["history.db — SQLite (0.2.0-beta; was history.json, kept as .bak)"]
         BSYNC["sync/ — status.json (for ewe-sync) · machine-id ·<br/>tabs-remote.json · *.base.json"]
     end
     subgraph KEYRING["Secret Service keyring"]
@@ -87,7 +87,7 @@ flowchart TB
   per-machine cache, backups and `sync.json` live in
   `~/.local/state/ewe/safe/`; its non-secret settings are `[safe]` in
   `ewe.conf`. The master password is never stored.
-- **Safe's SSH agent** (built 2026-10-15, PR ewe-safe#13, not merged):
+- **Safe's SSH agent** (Safe 0.2.0-beta, released 2026-10-15):
   `ssh-public.json` in `~/.local/state/ewe/safe/` lets the agent list keys
   while the safe is locked (public keys and titles only, written only while
   the agent is on); `ewe-safe ssh enable` writes
@@ -95,8 +95,8 @@ flowchart TB
   edits `~/.ssh/config`. The private keys stay inside the KDBX file.
 - **ewe browser** keeps its profile in `~/.config/ewe-browser/` (not
   `ewe.conf`). Synced through the account: `ewe/browser/bookmarks.json`,
-  `history.json` (with clear records on `feat/history`), `settings.json`,
-  and `tabs-<id>.json` per machine (staged). See
+  `history.json` (with clear records since 0.2.0-beta), `settings.json`,
+  and `tabs-<id>.json` per machine (since 0.2.0-beta). See
   [[Browser History — SQLite, synced clear records]].
 - **The companion keeps its own state** in `~/.local/state/ewe/companion/`
   (`companion.db`, 30-day retention), not in `ewe.conf`: history is per

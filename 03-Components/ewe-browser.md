@@ -9,7 +9,8 @@ up: "[[Home]]"
 # ewe-browser — the browser, files and music app
 
 `~/Projects/ewe/ewe-browser` · [github.com/prj786/ewe-browser](https://github.com/prj786/ewe-browser) ·
-Electron 44 (castlabs ECS build, Chromium 152) + Solid · GPL-3.0-only · 0.1.0-beta
+Electron 44 (castlabs ECS build, Chromium 152) + Solid · GPL-3.0-only ·
+**0.2.0-beta** released 2026-10-15 (0.1.0-beta on 2026-10-14)
 
 **The desktop's browser** since it replaced Helium
 ([[ewe browser replaces Helium]]): a Chromium-engine browser with a left tab
@@ -29,16 +30,20 @@ motion follow ewe live with no theming hook.
 | `ewe-pass` | password fill (Ctrl+Shift+L); secrets go from the manager to wtype, never through the browser |
 | `ewe-conf set apps.startup` | "Start with ewe" adds `ewe-browser --background` |
 | GTK `recently-used.xbel` | the home screen's Recent cards (docs, videos, music, sites) |
-| the companion | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); with P2.9 (PR) it calls the command line: search, open, play, history, tabs, `page --text` (untrusted) |
-| Safe (staged `feat/safe`) | `ewe-safe.sock`: `match` for the suggestion list, `passkey-*` for WebAuthn; `ewe-safe unlock --ask`, `ewe-safe-app` |
+| the companion | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); with P2.9 (merged, the companion is not released yet) it calls the command line: search, open, play, history, tabs, `page --text` (untrusted) |
+| Safe | `ewe-safe.sock`: `match` for the suggestion list, `passkey-*` for WebAuthn; `ewe-safe unlock --ask`, `ewe-safe-app` |
 
-## Next — built, not merged (2026-10-15)
+## New in 0.2.0-beta (released 2026-10-15)
 
-| what | where | state |
+Tag `v0.2.0-beta` on `1e94143` (bump ewe-browser#6), package
+`ewe-browser-0.2.0beta-1`, published to `[ewe]` on 2026-10-15. The owner
+approved committing and shipping the Safe and history work that day.
+
+| what | PR | tests |
 |---|---|---|
-| **The command line** `ewe-browser <verb>` (`docs/CLI.md`): 31 tools, JSON, exit 0, `undo`, `untrusted`; a `0600` socket per profile; `/usr/bin/ewe-browser` becomes a sh wrapper. Also the rail: *collapsed* now hides it; the left window edge brings it back | PR ewe-browser#3 `rail-and-cli` (the owner's WIP, taken over) | PR open; 206 unit + 27/27 e2e |
-| **Safe built in** ([[Safe in the Browser — guards, not a page click]]): a suggestion list under login/email/password/code fields drawn by the browser (setting `safe.suggest`, on), passkeys through a main-world `navigator.credentials` override and a browser-drawn sheet (setting `safe.passkeys`, on), conditional mediation, save/update prompts | `.wt/ewe-browser-safe` (`feat/safe`, 52 files) | **staged, not committed**, waiting for the owner's review; 202 unit + 46/46 e2e with a local relying party that checks every signature; also passes against the real Safe daemon (#11) in a sandbox |
-| **History and real sync** ([[Browser History — SQLite, synced clear records]]): `app://history` (by day, search, site filter, delete, *Clear browsing data*, *Keep history for*), Ctrl+Shift+H, `history.db` through `node:sqlite`, synced deletes, tabs from other computers, `sync/status.json` for ewe-sync | `.wt/ewe-browser-history` (`feat/history`) | **staged, not committed**, waiting for the owner's review |
+| **The command line** `ewe-browser <verb>` (`docs/CLI.md`): 31 tools, JSON, exit 0, `undo`, `untrusted`; a `0600` socket per profile; `/usr/bin/ewe-browser` becomes a sh wrapper. Also the rail: *collapsed* now hides it; the left window edge brings it back | ewe-browser#3 (the owner's WIP, taken over) | 206 unit + 27/27 e2e |
+| **Safe built in** ([[Safe in the Browser — guards, not a page click]]): a suggestion list under login/email/password/code fields drawn by the browser (setting `safe.suggest`, on), passkeys through a main-world `navigator.credentials` override and a browser-drawn sheet (setting `safe.passkeys`, on), conditional mediation, save/update prompts | ewe-browser#4 | e2e 40 passed with a local relying party that checks every signature; the 7 tests against a real Safe daemon passed in a sandbox before the merge, skipped in the PR run |
+| **History and real sync** ([[Browser History — SQLite, synced clear records]]): `app://history` (by day, search, site filter, delete, *Clear browsing data*, *Keep history for*), Ctrl+Shift+H, `history.db` through `node:sqlite`, synced deletes, tabs from other computers, `sync/status.json` for ewe-sync | ewe-browser#5 | 104 shared + 258 browser unit, e2e 44 passed |
 
 Inside the browser (not ewe API): Safe adds IPC channels `ewe:safe-page`,
 `ewe:safe-passkey` (invoke, page layer, http(s) frames) and `ewe:safe-fill`,
@@ -85,7 +90,7 @@ phase 20 installs it on the tarball path; Komble lists it in `first_party.rs`.
 > `GITHUB_TOKEN`, and Komble and get.sh fetch them anonymously — while it was
 > private the first publish logged `ewe-browser -> (no release)` and the
 > fresh-install gate refused it (2026-10-14).
-> `docs/CLI.md` is public API once merged: verbs and fields are only added.
+> `docs/CLI.md` is public API (since 0.2.0-beta): verbs and fields are only added.
 > The main process decides a page's origin for Safe; nothing fills on page
 > load. Keep e2e runs off the live session (nested Hyprland) and give
 > parallel runs their own `EWE_TEST_RULE` and a short `TMPDIR`.

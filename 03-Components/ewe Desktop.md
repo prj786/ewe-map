@@ -9,8 +9,7 @@ up: "[[Home]]"
 # ewe — the Desktop Environment
 
 `~/Projects/ewe/ewe` · [github.com/prj786/ewe](https://github.com/prj786/ewe) ·
-**0.24.1-beta** released · **0.25.0-beta in progress** on
-`release/0.25.0-beta` (not released) · GPL-2.0-only
+**0.28.0-beta** released 2026-10-15 ([[Version Ledger]]) · GPL-2.0-only
 
 The repo you actually look at: **Hyprland** (Wayland compositor,
 Lua-configured) with a **Quickshell** QML shell — bar, launcher, Overview,

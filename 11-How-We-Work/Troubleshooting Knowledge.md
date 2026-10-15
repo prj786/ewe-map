@@ -159,12 +159,12 @@ must point at the new path). The `cast` IPC target is an alias of
 - **`Super+P` says "make sure 1Password CLI is installed"** (the owner's
   machine, 2026-10-15) — the Passwords plugin's `provider` is still
   `1password`. `ewe-plugin set ewe.passwords provider ewe` (or `auto`).
-  Passwords 1.3.0 (ewe-plugin-passwords#3, not merged) offers **Use Safe**
-  in that error row.
+  Since ewe 0.28.0-beta, Passwords 1.3.0 offers **Use Safe** in that error
+  row.
 - **`ewe-conf set 'plugins.settings."ewe.passwords".provider' ewe` wrote a
   stray `[plugins.settings."\"ewe"]` table** and left the setting alone —
-  ewe-conf split a quoted key on every dot (fixed in ewe#58, not merged;
-  it now refuses a broken key with `bad-key`). Change a plugin setting with
+  ewe-conf split a quoted key on every dot (fixed in ewe 0.28.0-beta,
+  ewe#58; it now refuses a broken key with `bad-key`). Change a plugin setting with
   `ewe-plugin set <id> <key> <value>`; it also checks the schema.
 - **The Passwords plugin's `test.sh` answered from the real 1Password** —
   never: it runs on a PATH of fakes only (`op`, `wtype`, `hyprctl`,
@@ -574,12 +574,11 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   gives 8 digits and rejects unpadded base32; Safe computes codes itself
   (`safe_core::otp`).
 
-### Safe — 2026-10-15 (passkeys, SSH agent, CLI; PRs open, not merged)
+### Safe — 2026-10-15 (passkeys, SSH agent, CLI; Safe 0.2.0-beta)
 
 - **Saving an edited login in the Safe window does nothing** (0.1.0-beta,
   released): `ItemEdit.svelte` shadowed `was` inside its own initializer, so
-  every save threw `ReferenceError`. Fixed in ewe-safe#12 (not merged; a
-  0.1.1-beta hotfix candidate).
+  every save threw `ReferenceError`. Fixed in Safe 0.2.0-beta (ewe-safe#12).
 - **`ssh` ignores Safe's agent although `SSH_AUTH_SOCK` points at it** — an
   `IdentityAgent` line in `~/.ssh/config` (1Password's
   `~/.1password/agent.sock` on the owner's machine) wins over
@@ -602,6 +601,20 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   not lost: Safe's merge is per entry, newest wins, and the older version is
   in the item's history. Passkey fields merge on their own (#11, FORMAT.md
   rule 3a). See [[Open Questions]].
+- **The release build's `check()` fails "nothing to save" but CI was
+  green**: a test read the safe file's time right after an edit answered.
+  An edit is in the cache when it answers; a local place's file gets it
+  moments later, so on a slow builder the test caught that late write. Wait
+  for `status.sync.pending` to clear (and the time to settle) before
+  measuring a file (ewe-safe #16). The `v0.2.0-beta` tag moved for it
+  (and for the next one), before any package was made.
+- **The release build's `check()` fails "ssh-keygen: No such file or
+  directory"**: the SSH agent's tests drive OpenSSH's own `ssh-add` and
+  `ssh-keygen`, and the release container (archlinux:base-devel) has no
+  openssh. The PKGBUILD lists `checkdepends=('openssh' 'git')` and
+  release.yml installs openssh (ewe-safe #17). The host and CI have it, so
+  only the release build failed: run a release's steps in an
+  `archlinux:base-devel` container (podman) before tagging, not on the host.
 
 ## ewe browser (2026-10-15, e2e and Safe)
 
@@ -617,8 +630,8 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   mode.
 - **The smoke bookmarks test fails offline** — it needs the network.
 - **"Use a security key instead" hangs** — Electron's own WebAuthn has no
-  window and ignores its timeout; `feat/safe` adds its own timeout. Not yet
-  tried with a real key.
+  window and ignores its timeout; 0.2.0-beta (ewe-browser#4) adds its own
+  timeout. Not yet tried with a real key.
 
 ## Theming
 

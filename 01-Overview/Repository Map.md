@@ -24,14 +24,14 @@ creates the GitHub remotes and pushes.
 | [`ewe-settings`](https://github.com/prj786/ewe-settings) | the Settings app | Tauri v2 + Svelte 5 |
 | [`ewe-sync`](https://github.com/prj786/ewe-sync) | the account & sync app (RFC-006, ex-"Flock") | Tauri v2 + Svelte 5 |
 | [`ewe-cast`](https://github.com/prj786/ewe-cast) | `ewe-castd` — headless casting daemon (RFC-004) | Python on GLib, GStreamer (C) |
-| [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]]) | Electron 44 (castlabs) + Solid, TypeScript |
-| [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007, 0.1.0-beta, P2 working) | Rust (tokio, rusqlite) |
-| [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.2.0, API 3) | QML |
-| [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window ([[ewe-safe]], RFC-008, 0.1.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
+| [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]], 0.2.0-beta) | Electron 44 (castlabs) + Solid, TypeScript |
+| [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007, 0.1.0-beta, P2.9 merged; not released) | Rust (tokio, rusqlite) |
+| [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.3.0, API 3; not released) | QML |
+| [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window, passkeys, an SSH agent ([[ewe-safe]], RFC-008, 0.2.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
 | [`prj786.github.io`](https://github.com/prj786/prj786.github.io) | the website | SvelteKit 2 + Svelte 5, static |
 | [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | plugin: clipboard history + emoji (1.1.1, API 2) | QML |
 | [`ewe-plugin-screenshot`](https://github.com/prj786/ewe-plugin-screenshot) | plugin: screenshots (1.1.0, API 2) | QML |
-| [`ewe-plugin-passwords`](https://github.com/prj786/ewe-plugin-passwords) | plugin: password fill (1.1.0, API 2) | QML, bash |
+| [`ewe-plugin-passwords`](https://github.com/prj786/ewe-plugin-passwords) | plugin: password fill (1.3.0, API 2) | QML, bash |
 | [`ewe-plugin-insomnia`](https://github.com/prj786/ewe-plugin-insomnia) | plugin: Insomnia / keep awake (1.0.0, API 3) | QML |
 | [`ewe-plugin-sysmon`](https://github.com/prj786/ewe-plugin-sysmon) | plugin: CPU + memory meters (1.0.0) | QML, sh |
 | [`ewe-plugin-ssh`](https://github.com/prj786/ewe-plugin-ssh) | plugin: SSH hosts + tunnels (1.0.0) | QML |

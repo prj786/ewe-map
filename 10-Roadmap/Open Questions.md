@@ -24,7 +24,7 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 - **ewe browser's Sync and rule 6.** The browser still has its own sync
   switch and *Sync now*: ewe-sync can't start a browser sync yet (its Sync
   now pushes `ewe.conf` and runs folder pairs only). Proposal
-  (`feat/history`'s PLAN.md): a **Browser** row in ewe-sync that reads
+  (ewe-browser's `docs/PLAN.md`): a **Browser** row in ewe-sync that reads
   `~/.config/ewe-browser/sync/status.json`, plus an `ewe-browser sync` verb
   (answers the status JSON); then the browser's *Sync now* goes and its
   Sync section says "Managed in ewe Sync". Wanted?

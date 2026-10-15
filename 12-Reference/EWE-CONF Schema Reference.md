@@ -69,7 +69,7 @@ schema = 1
   clipboard_clear_seconds = 30
   generator_length = 20
   generator_words = 5
-  ssh_agent = false              # Safe's SSH agent on (`ewe-safe ssh enable`) — ewe#59, PR open
+  ssh_agent = false              # Safe's SSH agent on (`ewe-safe ssh enable`) — ewe#59, since 0.28.0-beta
   ssh_confirm = "first-use"      # first-use | every-time | never — noise reduction, not a boundary (ewe#59)
                                  # never here: the safe, any password, the per-machine unlock-with-login key
 ```
@@ -97,7 +97,7 @@ sync-status             remote copy + this machine's sync record + `conflict` + 
   diffs.
 - **Settings prefs MUST be in `THEME_MAP`** or `absorb` drops them (the
   0.12.7 bug).
-- **A plugin id has dots.** Before ewe#58 (PR open, 2026-10-15), `ewe-conf set
+- **A plugin id has dots.** Before ewe 0.28.0-beta (ewe#58), `ewe-conf set
   'plugins.settings."ewe.passwords".provider' ewe` split the quoted id and
   wrote a stray `[plugins.settings."\"ewe"]` table. Use `ewe-plugin set <id>
   <key> <value>` (it also checks the plugin's schema). After #58, quoted parts

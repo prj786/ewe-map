@@ -4,7 +4,7 @@
   "generated": "2026-10-15",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.27.0-beta",
+    "ewe_de": "0.28.0-beta",
     "ewe_os": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
@@ -12,12 +12,12 @@
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.18.0-beta",
-    "ewe_browser": "0.1.0-beta",
+    "ewe_browser": "0.2.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
       "ewe.screenshot": "1.1.1",
-      "ewe.passwords": "1.2.0",
+      "ewe.passwords": "1.3.0",
       "ewe.insomnia": "1.0.1",
       "ewe.sysmon": "1.1.0",
       "ewe.ssh": "1.0.1",
@@ -30,13 +30,11 @@
       "ewe.dock": "1.1.0",
       "ewe.safe": "1.0.0"
     },
-    "ewe_safe": "0.1.0-beta",
-    "pending": {
-      "note": "built 2026-10-15, PRs open, not merged, not released — the released versions above are unchanged",
-      "ewe.passwords": "1.3.0 (ewe-plugin-passwords#3)",
-      "ewe.companion": "0.3.0 (ewe-plugin-companion#1)",
-      "ewe_safe": "no bump yet (ewe-safe#10-#13; #12 is a 0.1.1-beta hotfix candidate)",
-      "ewe_browser": "no bump yet (ewe-browser#3 CLI; feat/safe and feat/history staged, not committed)"
+    "ewe_safe": "0.2.0-beta",
+    "unreleased": {
+      "note": "merged on main 2026-10-15, not released, not in [ewe] (its first release is RFC-007 P7)",
+      "ewe_companion": "0.1.0-beta (P2.9 merged: ewe-companion#1)",
+      "ewe.companion": "0.3.0 (ewe-plugin-companion#1)"
     }
   },
   "repos": [
@@ -85,13 +83,13 @@
     },
     {
       "name": "ewe-companion",
-      "role": "desktop companion: ewe-companiond daemon, ewe-companion CLI + Claude Code hook relay, Claude Code plugin; later a Tauri window (RFC-007, 0.1.0-beta, P2 working)",
+      "role": "desktop companion: ewe-companiond daemon, ewe-companion CLI + Claude Code hook relay, Claude Code plugin; later a Tauri window (RFC-007, 0.1.0-beta, P2.9 merged, not released)",
       "stack": "Rust",
       "license": "MIT"
     },
     {
       "name": "ewe-safe",
-      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, the ewe-safe-app window (RFC-008; 0.1.0-beta released 2026-10-15, opt-in from [ewe])",
+      "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, the ewe-safe-app window, passkeys, SSH keys + an ssh-agent (RFC-008; 0.1.0-beta released 2026-10-15, 0.2.0-beta the same day; opt-in from [ewe])",
       "stack": "Rust (keepass-rs), Tauri v2 + Svelte 5",
       "license": "MIT"
     },
@@ -110,7 +108,7 @@
     },
     {
       "name": "ewe-plugin-passwords",
-      "role": "add-on: password fill"
+      "role": "add-on: password fill (1.3.0, vendored in ewe 0.28.0-beta)"
     },
     {
       "name": "ewe-plugin-insomnia",
@@ -164,7 +162,7 @@
     },
     {
       "name": "ewe-plugin-companion",
-      "role": "plugin ewe.companion: the island in the bar's centre + the card drop (RFC-007)"
+      "role": "plugin ewe.companion: the island in the bar's centre + the card drop (RFC-007; 0.3.0 on main, not released)"
     }
   ],
   "rules": [
@@ -292,12 +290,10 @@
       "tool": "ewe-pass",
       "job": "password fill picker backend",
       "verbs": [
-        "status"
-      ],
-      "verbs_pending": [
+        "status",
         "use-safe"
       ],
-      "pending": "ewe-plugin-passwords#3 (1.3.0): use-safe; ewe-pass always exits 0 — built 2026-10-15, PR open, not merged, not released"
+      "note": "use-safe since ewe.passwords 1.3.0 (ewe 0.28.0-beta); ewe-pass always exits 0"
     },
     {
       "tool": "ewe-setup",
@@ -323,8 +319,7 @@
     {
       "tool": "ewe-browser",
       "job": "ewe browser's command line (not in ewe/bin; docs/CLI.md): one JSON object, exit 0; replies with outside text marked untrusted; acting verbs answer undo",
-      "verbs": [],
-      "verbs_pending": [
+      "verbs": [
         "help",
         "commands",
         "version",
@@ -351,7 +346,7 @@
         "call"
       ],
       "socket": "$XDG_RUNTIME_DIR/ewe-browser-<12 hex of sha256(profile dir)>.sock (0600, JSON lines)",
-      "pending": "ewe-browser#3 (rail-and-cli: the owner's 2026-10-14 work, reviewed and opened as a PR 2026-10-15) — PR open, not merged, not released; 0.1.0-beta has no CLI (a verb opens as a page)"
+      "since": "ewe browser 0.2.0-beta (ewe-browser#3, released 2026-10-15); 0.1.0-beta has no CLI (a verb opens as a page)"
     },
     {
       "tool": "ewe-companion",
@@ -369,12 +364,10 @@
         "statusline",
         "debug",
         "version",
-        "help"
-      ],
-      "verbs_pending": [
+        "help",
         "find"
       ],
-      "pending": "ewe-companion#1 (P2.9) — built 2026-10-15, PR open, not merged, not released"
+      "note": "find since P2.9 (ewe-companion#1, merged 2026-10-15); the companion is not released yet"
     },
     {
       "tool": "ewe-safe",
@@ -401,9 +394,7 @@
         "place",
         "passwd",
         "ping",
-        "version"
-      ],
-      "verbs_pending": [
+        "version",
         "read",
         "run",
         "inject",
@@ -411,19 +402,20 @@
         "passkey",
         "ssh"
       ],
-      "socket_only_verbs_pending": [
+      "socket_only_verbs": [
         "resolve",
         "passkey-list",
         "passkey-create",
-        "passkey-get"
+        "passkey-get",
+        "ssh-<sub> (behind ewe-safe ssh ...)"
       ],
-      "rule5_exceptions_pending": {
+      "rule5_exceptions": {
         "read": "bare value; exit 1 and nothing when none (--json = rule-5 answer)",
         "run": "exits with the command's code; 125 = ewe-safe's own failure",
         "inject": "prints the template; with -o answers JSON",
         "git-credential": "git's key=value lines, exit 0"
       },
-      "pending": "ewe-safe#10 (CLI), #11 (passkeys), #13 (ssh) — built 2026-10-15, PR open, not merged, not released"
+      "since": "read/run/inject/git-credential, passkey, ssh: Safe 0.2.0-beta (ewe-safe#10, #11, #13 via #14; released 2026-10-15)"
     }
   ],
   "ipc": {
@@ -548,9 +540,9 @@
       "ewe/machines/<name>.json",
       "ewe/safe/passwords.kdbx",
       "ewe/browser/bookmarks.json",
-      "ewe/browser/history.json",
+      "ewe/browser/history.json (with clear records)",
       "ewe/browser/settings.json",
-      "ewe/browser/tabs-<id>.json (staged feat/history)"
+      "ewe/browser/tabs-<id>.json"
     ],
     "meta_fields": [
       "machine",
@@ -593,12 +585,12 @@
     {
       "rfc": "RFC-007",
       "topic": "ewe-companion desktop companion (island plugin + daemon)",
-      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders) and P2.8 (runs proposed shell commands on a click) working; P2.9 (Safe, ewe browser, the finder) built 2026-10-15, PR open; on GitHub, not yet released"
+      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders), P2.8 (runs proposed shell commands on a click) and P2.9 (Safe, ewe browser, the finder; merged 2026-10-15) working; on GitHub, not yet released (first release = P7)"
     },
     {
       "rfc": "RFC-008",
       "topic": "Safe (ewe-safe) password manager: KDBX 4 file, places, merge on save, ewe-safed",
-      "status": "accepted 2026-10-14; Safe 0.1.0-beta released 2026-10-15 (engine, daemon, CLI, window, import from 1Password, the ewe.safe plugin, Super+P provider); amended 2026-10-15 (passkeys + SSH agent leave the parked list, S8 lets the companion act; docs/TRIO.md): built, PRs open, not merged, not released; browser integration staged for owner review"
+      "status": "accepted 2026-10-14; Safe 0.1.0-beta released 2026-10-15 (engine, daemon, CLI, window, import from 1Password, the ewe.safe plugin, Super+P provider); amended 2026-10-15 (passkeys + SSH agent leave the parked list, S8 lets the companion act; docs/TRIO.md): released as Safe 0.2.0-beta + ewe 0.28.0-beta + ewe browser 0.2.0-beta on 2026-10-15 (Safe built into the browser); the companion's side merged, not released"
     }
   ],
   "sync_contract": {
@@ -622,9 +614,9 @@
     "0.25.0-beta unreleased: Welcome Add-ons step, Shell.toggleOverview/primaryScreenName/dockItems/closePopups, VERSION bump and 90-postcheck 1.4.1-2.1 were still being integrated on 2026-10-04",
     "Komble Add-ons catalogue and ewe-settings add-on awareness are dev-mock tested only (no real Tauri window yet)",
     "quiet-lid fix (A2) not yet verified on real laptop hardware",
-    "ewe-conf before ewe#58 splits quoted dotted keys: use ewe-plugin set <id> <key> <value> for plugin settings",
-    "ewe-browser 0.1.0-beta has no command line: a verb opens as a page",
-    "Safe's merge is entry-level newest-wins: a concurrent password edit goes to the item's history (passkeys merge on their own since ewe-safe#11)"
+    "ewe-conf before ewe 0.28.0-beta (ewe#58) splits quoted dotted keys: use ewe-plugin set <id> <key> <value> for plugin settings",
+    "Safe's merge is entry-level newest-wins: a concurrent password edit goes to the item's history (passkeys merge on their own since ewe-safe#11)",
+    "Safe 0.2.0-beta not verified for real: a passkey on a real site, git push through Safe's agent, the approval window on screen"
   ],
   "addons": {
     "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
@@ -689,8 +681,8 @@
       ]
     }
   },
-  "safe_contract_pending": {
-    "status": "ewe-safe#10-#13 + ewe#58/#59 — built 2026-10-15, PR open, not merged, not released; contract ewe-safe/docs/TRIO.md; PROTOCOL.md stays v1 (additive)",
+  "safe_contract": {
+    "status": "released 2026-10-15: Safe 0.2.0-beta (ewe-safe#10-#13 via #14, #15) + ewe 0.28.0-beta (ewe#58, #59); contract ewe-safe/docs/TRIO.md; PROTOCOL.md stays v1 (additive)",
     "reference_syntax": "safe://<folder>/<title>/<field> | safe://<title>/<field> (any folder) | safe:///<title>/<field> (top) | safe://<item-id>/<field>; '/' in a title = %2F; {{ safe://... }} inside text in run/inject",
     "reference_fields": [
       "password",
@@ -728,8 +720,8 @@
     },
     "origin_rule": "the browser decides the origin and RP ID; Safe checks only shapes"
   },
-  "companion_protocol_pending": {
-    "status": "ewe-companion#1 (P2.9) + ewe-plugin-companion#1 (0.3.0) — built 2026-10-15, PR open, not merged, not released",
+  "companion_protocol": {
+    "status": "merged 2026-10-15: ewe-companion#1 (P2.9) + ewe-plugin-companion#1 (0.3.0); not released, not in [ewe] (first release = RFC-007 P7)",
     "chat_reply_added": [
       "rows"
     ],

@@ -65,8 +65,8 @@ Drag to move · drag edge/resize (see SHORTCUTS.md for the full set).
 |---|---|
 | `Ctrl+Shift+L` | fill a password through `ewe-pass` (the [[Passwords Plugin]]'s tool) |
 | `Ctrl+H` | the History sidebar |
-| `Ctrl+Shift+H` | the history page, `app://history` (staged `feat/history`, not committed) |
-| `↑` `↓` `Enter` `Esc` | in a login field with Safe's suggestion list open: move, fill, close — the focus stays in the field (staged `feat/safe`, not committed) |
+| `Ctrl+Shift+H` | the history page, `app://history` (since 0.2.0-beta) |
+| `↑` `↓` `Enter` `Esc` | in a login field with Safe's suggestion list open: move, fill, close — the focus stays in the field (since 0.2.0-beta) |
 
 ## Related
 
