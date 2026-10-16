@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-10-15",
+  "generated": "2026-10-16",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
     "ewe_de": "0.28.0-beta",
@@ -12,7 +12,7 @@
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.18.0-beta",
-    "ewe_browser": "0.2.0-beta",
+    "ewe_browser": "0.2.2-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
