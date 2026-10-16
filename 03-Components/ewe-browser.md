@@ -10,7 +10,7 @@ up: "[[Home]]"
 
 `~/Projects/ewe/ewe-browser` · [github.com/prj786/ewe-browser](https://github.com/prj786/ewe-browser) ·
 Electron 44 (castlabs ECS build, Chromium 152) + Solid · GPL-3.0-only ·
-**0.2.0-beta** released 2026-10-15 (0.1.0-beta on 2026-10-14)
+**0.2.2-beta** released 2026-10-16 (0.2.1-beta the same day, 0.2.0-beta on 2026-10-15, 0.1.0-beta on 2026-10-14)
 
 **The desktop's browser** since it replaced Helium
 ([[ewe browser replaces Helium]]): a Chromium-engine browser with a left tab
@@ -32,6 +32,23 @@ motion follow ewe live with no theming hook.
 | GTK `recently-used.xbel` | the home screen's Recent cards (docs, videos, music, sites) |
 | the companion | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); with P2.9 (merged, the companion is not released yet) it calls the command line: search, open, play, history, tabs, `page --text` (untrusted) |
 | Safe | `ewe-safe.sock`: `match` for the suggestion list, `passkey-*` for WebAuthn; `ewe-safe unlock --ask`, `ewe-safe-app` |
+
+## Fixed in 0.2.1-beta and 0.2.2-beta (released 2026-10-16)
+
+Two bugs the owner reported, both in the browser's identity with the web,
+no new features. Tags `v0.2.1-beta` on `a43fcb3` (fix ewe-browser#7, bump
+#8) and `v0.2.2-beta` on `0711ece` (fix #9, bump #10); packages
+`ewe-browser-0.2.1beta-1` and `ewe-browser-0.2.2beta-1`, published to
+`[ewe]` on 2026-10-16.
+
+- **0.2.1** — Gmail said *This browser version is no longer supported*:
+  pages saw Chromium 152 while Chrome stable was 155 (see *Identity* below).
+- **0.2.2** — some clicks on websites did nothing: a page's
+  `app-region: drag` area swallowed input (see the build guard and
+  [[Troubleshooting Knowledge]]).
+
+Not verified on the owner's machine yet: Gmail without the banner, and the
+Azure portal panel from the report clicking again.
 
 ## New in 0.2.0-beta (released 2026-10-15)
 
@@ -76,6 +93,23 @@ phase 20 installs it on the tarball path; Komble lists it in `first_party.rs`.
 - The Widevine CDM downloads into the profile on first launch; nothing
   proprietary ships in the package.
 
+## Identity — the Chrome version pages see
+
+Since Chrome 153 (2026-09-08) Google ships a new major **every two weeks**;
+Electron's newest stable (44.x) still carries Chromium 152 and cannot keep
+up at that cadence. Gmail supports only the two newest Chrome majors, so a
+page told "152" showed *This browser version is no longer supported*
+(2026-10-15, Chrome stable was 155). ewe browser therefore reports the
+major Chrome stable is on today, counted from the official schedule
+(`identity.ts`: 155 on 2026-10-06, +1 every 14 days, never below the
+engine), in three places that must agree: the reduced user agent
+(`Chrome/<major>.0.0.0`), the `Sec-CH-UA*` headers (rewritten on every
+https request; Electron sends them on subresource requests, not on
+navigations) and `navigator.userAgentData` (`preload/chrome-version.ts`,
+main world at document start, every http(s) frame). A user agent that says
+one version while the client hints say another looks like a spoofed
+browser to Google's sign-in checks.
+
 ## Related
 
 - [[Repository Map]] · [[Komble]] · [[ewe-repo]] · [[Packaging and Updates]] ·
@@ -91,6 +125,12 @@ phase 20 installs it on the tarball path; Komble lists it in `first_party.rs`.
 > private the first publish logged `ewe-browser -> (no release)` and the
 > fresh-install gate refused it (2026-10-14).
 > `docs/CLI.md` is public API (since 0.2.0-beta): verbs and fields are only added.
+> The reported Chrome major must follow Chrome's schedule: if Google changes
+> the cadence, move `STABLE_MAJOR` / `STABLE_SINCE` / `STABLE_CADENCE_MS` in
+> `identity.ts`, and keep the user agent, `Sec-CH-UA*` and `userAgentData` on
+> one number. Web pages must never contribute drag regions
+> (`ignoreDragRegions` in the page preload): a site's `app-region: drag`
+> makes a dead patch in a frameless window.
 > The main process decides a page's origin for Safe; nothing fills on page
 > load. Keep e2e runs off the live session (nested Hyprland) and give
 > parallel runs their own `EWE_TEST_RULE` and a short `TMPDIR`.

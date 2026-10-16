@@ -629,6 +629,26 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   Playwright re-runs `beforeAll` after a failure; such suites need serial
   mode.
 - **The smoke bookmarks test fails offline** — it needs the network.
+- **Gmail: "This browser version is no longer supported"** (2026-10-15) —
+  pages saw the engine's Chromium major (152) while Chrome stable was 155,
+  and Gmail supports the two newest. Chrome ships every two weeks since 153,
+  so Electron always trails; the browser reports the schedule's current
+  major instead (`identity.ts`, `preload/chrome-version.ts`). Check in a
+  page: `navigator.userAgent` and `navigator.userAgentData.brands` must name
+  the same major as chromiumdash's current stable; if not, the schedule
+  constants in `identity.ts` drifted.
+- **"Some clicks on a website do nothing"** (2026-10-16) — one patch of a
+  page is dead: no hover, no click, for good, while the rest works. The
+  page marked it `app-region: drag`; Electron reports a tab's drag regions
+  to the frameless window, which swallows the input there (Chrome ignores
+  the property on ordinary sites). ewe browser 0.2.2-beta forces `no-drag`
+  as a user-origin `!important` sheet from the page preload. To check one:
+  `getComputedStyle(el).getPropertyValue('-webkit-app-region')` in the page
+  must say `no-drag`. Proving a click fix needs a real pointer (nested
+  Hyprland + `ewe-companion/tests/vptr.py`): `sendInputEvent` skips the
+  window's hit test. (The companion island's tall transparent window was
+  ruled out the same day: its input mask is the notch alone, checked with
+  clicks through it in every state.)
 - **"Use a security key instead" hangs** — Electron's own WebAuthn has no
   window and ignores its timeout; 0.2.0-beta (ewe-browser#4) adds its own
   timeout. Not yet tried with a real key.
