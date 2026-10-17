@@ -10,11 +10,11 @@ up: "[[Home]]"
 
 `~/Projects/ewe/ewe-browser` · [github.com/prj786/ewe-browser](https://github.com/prj786/ewe-browser) ·
 Electron 44 (castlabs ECS build, Chromium 152) + Solid · GPL-3.0-only ·
-**0.2.2-beta** released 2026-10-16 (0.2.1-beta the same day, 0.2.0-beta on 2026-10-15, 0.1.0-beta on 2026-10-14)
+**0.3.0-beta** released 2026-10-17 (0.2.2-beta and 0.2.1-beta on 2026-10-16, 0.2.0-beta on 2026-10-15, 0.1.0-beta on 2026-10-14)
 
 **The desktop's browser** since it replaced Helium
 ([[ewe browser replaces Helium]]): a Chromium-engine browser with a left tab
-rail, workspaces, a command palette, bookmarks, downloads and history, plus
+rail, a thin bottom bar for workspaces and tools, a command palette, bookmarks, downloads and history, plus
 `app://` pages for a home screen, a file manager, viewers (images, video,
 audio, text, code, Markdown, PDF) and a music player. It reads
 `~/.config/quickshell/theme-tokens.json` itself, so colours, radius, fonts and
@@ -32,6 +32,29 @@ motion follow ewe live with no theming hook.
 | GTK `recently-used.xbel` | the home screen's Recent cards (docs, videos, music, sites) |
 | the companion | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); with P2.9 (merged, the companion is not released yet) it calls the command line: search, open, play, history, tabs, `page --text` (untrusted) |
 | Safe | `ewe-safe.sock`: `match` for the suggestion list, `passkey-*` for WebAuthn; `ewe-safe unlock --ask`, `ewe-safe-app` |
+
+## New in 0.3.0-beta (released 2026-10-17)
+
+The owner's ask: workspaces and the tool buttons did not fit in the rail's
+small foot. Tag `v0.3.0-beta` on `a18366c` (feature ewe-browser#11, bump
+#12), package `ewe-browser-0.3.0beta-1`, published to `[ewe]` on
+2026-10-17. Decision: [[Browser Bottom Bar — workspaces and tools]].
+
+- A 32px bar across the whole window under the page card, kept when the
+  rail is hidden, gone in fullscreen: workspace chips with names on the
+  left (click, double-click to rename, right-click for colour and the
+  rest, drop a dragged rail tab on one), `+` opens "Workspace N" on Home;
+  Bookmarks / Downloads / History, Music, Files, Settings on the right.
+- The rail keeps tabs: pinned tiles under the address field, extension
+  buttons at the foot. The sidebar and the rail peek end above the bar.
+- Verified with e2e (45 passed) and screenshots; not yet on the owner's
+  machine.
+
+> **Build guard:** keep the sidebar and the peek `BOTTOM_BAR_HEIGHT`
+> above the bottom outside fullscreen, and render the chips with
+> `<Index>` (with `<For>` a state broadcast rebuilt them mid-rename).
+> *Breaks if violated:* the sidebar covers the bar's buttons; a rename
+> commits half a name.
 
 ## Fixed in 0.2.1-beta and 0.2.2-beta (released 2026-10-16)
 

@@ -12,7 +12,7 @@
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.18.0-beta",
-    "ewe_browser": "0.2.2-beta",
+    "ewe_browser": "0.3.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
