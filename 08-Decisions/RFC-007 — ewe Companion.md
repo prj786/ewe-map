@@ -85,7 +85,9 @@ pipeline (ewe-conf writes, ewe-sync syncs, Komble installs).
 ## Owner decisions (2026-10-14, all proposals accepted)
 
 1. Face: eyes only, within the motion tokens.
-2. Name: "Companion".
+2. Name: "Companion"; **"Shaun"** since 2026-10-17 (owner). The user-facing
+   name only: every id stays `companion` (rule 4). See decision 39 in the
+   [[Decision Index]].
 3. Notifications: takeover through Plugin API 4 + the watchdog (P3);
    `replace_banners` off by default.
 4. Lanes: API keys, local and ChatGPT on; Claude Code and Antigravity

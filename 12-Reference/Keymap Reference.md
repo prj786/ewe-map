@@ -30,7 +30,7 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+Shift+C` | Cast to TV — the [[Cast Plugin]]'s manifest keybind (`ewe.cast toggle`) |
 | `Super+P` | password fill picker ([[Passwords Plugin]] plugin) |
 | `Super+Shift+P` | Safe's Quick Access ([[Safe Plugin]] plugin, 0.27) |
-| `Super+A` | the companion's drop: cards + agent sessions (`ewe.companion toggle`, its manifest keybind; [[RFC-007 — ewe Companion]]) |
+| `Super+A` | Shaun, the companion's drop: cards + agent sessions (`ewe.companion toggle`, its manifest keybind; [[RFC-007 — ewe Companion]]) |
 | `Print` / `Shift+Print` / `Super+Print` | screen / region / window shot ([[Screenshot Plugin]] plugin) |
 | `Super+Shift+W` | widget arrange mode (plugin host) |
 | `Super+Shift+R` | display recovery: every output on, the saved profile reapplied (`display reset`; works on a black screen) |

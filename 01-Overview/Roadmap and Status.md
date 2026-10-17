@@ -8,11 +8,30 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-17**. Released: **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-17**. Released: **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.29.0-beta + ewe-companion 0.1.0-beta — Shaun (released 2026-10-17)
+
+The owner's ask: the companion's notch never matched the top bar ("it feels
+different, in dark mode and even more on light … because of notch"), and
+"rename this companion as shaun". Then: "just commit and make new release".
+
+| change | where | state |
+|---|---|---|
+| The notch is the bar's material: the blur rule is `xray` (the notch blurs the wallpaper, as the bar does, not the window under it), the fill clipped at the bar's edge | ewe-plugin-companion **#2** (0.4.0) | released in ewe 0.29.0-beta (ewe#61); measured equal to the bar in the island harness at 1.8, dark/light Glass, solid, the 36 px bar |
+| The name is **Shaun**: the notch's word, Komble's plugin name, the persona, the knowledge pack; ids stay `companion` | ewe-plugin-companion **#2**, ewe-companion **#2**, ewe#61 (SHORTCUTS, RFC-007) | released; decision 39 |
+| The first release: `.github/workflows/release.yml` (makepkg in `packaging/`), `v0.1.0-beta` | ewe-companion **#2** | package `ewe-companion-0.1.0beta-1` in [ewe] (ewe-repo **#4**) |
+| `vendor-plugins.sh` leaves a plugin repo's `AGENTS.md`/`CLAUDE.md` behind | ewe#61 | released |
+| `tests/island.sh restart` replaces the daemon after a rebuild | ewe-companion **#2** | merged |
+
+Install: `sudo pacman -Syu ewe-companion`, then Komble → Plugins → From ewe →
+Shaun. Not verified: the QEMU e2e (P7's gate) and a real-device check of
+the packaged daemon on the owner's laptop, which ran a dev install (binaries
+in `~/.local/bin`, its own user unit, the plugin as a symlink).
 
 ## 0.28.0-beta + Safe 0.2.0-beta + ewe browser 0.2.0-beta — a real safe (released 2026-10-15)
 

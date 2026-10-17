@@ -454,6 +454,26 @@ must point at the new path). The `cast` IPC target is an alias of
 
 ## The companion (RFC-007, 2026-10-14)
 
+- **The notch looks darker or greyer than the bar** (Glass on). Its blur
+  rule lacks `xray`: the notch shows the window under it through the
+  translucent ground, the bar shows the wallpaper. `ewe.companion` ≥ the
+  2026-10-17 fix adds `xray = true` (`Service.applyBlur`). Measure, do not
+  eyeball: a light window under the notch, then compare the bar's pixel with
+  the notch's in a shot. The nested harness has no `user.lua`, so give the
+  bar its blur by hand first (`driver.sh hc eval 'hl.layer_rule({ name =
+  "ewe-bar-blur", match = { namespace = "^quickshell:(bar|dock)$" }, blur =
+  true, ignore_alpha = 0.05 })'`). Re-registering a named layer rule without
+  a field keeps the old value: restart the nested Hyprland to compare.
+- **A 1-px line across the top of the notch** (darker in light mode,
+  lighter in dark): a half-covered row of the notch's fill over the bar gets
+  the whole xray blur under it. The fill is clipped at the bar's edge (a
+  scissor, whole pixels); keep that clip.
+- **`tests/island.sh restart` keeps the old daemon** after a rebuild
+  (before 2026-10-17): the old process's exe link ends in " (deleted)", so
+  the binary check missed it. Fixed in `daemon_pid`; on an old checkout,
+  find the PID (`pgrep -x ewe-companiond`, check `readlink /proc/PID/exe`
+  and its `EWE_COMPANION_SOCK`) and stop it.
+
 - **No permission card ever appears.** Check the session's permission mode:
   in `bypassPermissions` (the owner's `defaultMode` on the dev machine)
   Claude fires no `PermissionRequest` at all. Questions, finished peeks and

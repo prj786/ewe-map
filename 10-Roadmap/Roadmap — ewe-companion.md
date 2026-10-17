@@ -8,14 +8,18 @@ up: "[[Home]]"
 
 # Roadmap — ewe-companion
 
-Current (2026-10-15): **RFC-007 accepted** (all nine proposals); **P1 done,
-P2 working end to end, P2.5 to P2.8 done** against a real Claude Code 2.1.296 session;
-**P2.9 merged** 2026-10-15 (Safe, ewe browser, the finder — ewe-companion#1
-and ewe-plugin-companion#1, island 0.3.0), **not released**: the companion
-is not in `[ewe]` yet; its first release is P7. What it calls is released:
-Safe 0.2.0-beta and ewe browser 0.2.0-beta (with its command line). Both repos
-are on GitHub since 2026-10-14 (`prj786/ewe-companion`,
-`prj786/ewe-plugin-companion`; not yet released or in ewe-repo). The task lists per
+Current (2026-10-17): **RFC-007 accepted** (all nine proposals); **P1 done,
+P2 working end to end, P2.5 to P2.9 done** (P2.9, Safe, ewe browser and the
+finder, merged 2026-10-15: ewe-companion#1, ewe-plugin-companion#1).
+**First release 2026-10-17** (the owner: "just commit and make new
+release"): `ewe-companion` **0.1.0-beta** (`v0.1.0-beta` on `0bf5267`,
+ewe-companion#2; the package in `[ewe]` through ewe-repo#4, opt-in) and the
+island **0.4.0** (ewe-plugin-companion#2) vendored in **ewe 0.29.0-beta**
+(ewe#61). The same round named it **Shaun** (decision 39; ids stay
+`companion`) and made the notch the bar's material at last: its blur rule
+is `xray` and its fill is clipped at the bar's edge. P7 is open where it
+was not done: Komble's `DISCOVER` entry, the website pages, the QEMU e2e
+gate. The task lists per
 phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 §25.
 
@@ -33,7 +37,7 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 | P4 | the brain: chat; Anthropic / OpenAI / OpenAI-compatible (Gemini, OpenRouter, Ollama, LM Studio); keyring; tool tiers with confirm + undo; redaction | accent change with undo; offline on Ollama; the canary passes |
 | P5 | watchers (storage, updates, sync, mail, calendar) + `ewe-companion mcp` | a Claude session asks you through the island |
 | P6 | ACP agent lane (codex, opencode, gemini; claude/antigravity opt-in) + the Tauri window | chat on a ChatGPT plan, no token read by ewe |
-| P7 | ship: PKGBUILD, ewe-repo, Komble, bundle.json `default:false`, website, vault | fresh ISO → Komble → approve a Claude prompt |
+| P7 ◐ | ship: ~~PKGBUILD + release workflow~~, ~~ewe-repo~~, Komble `DISCOVER`, ~~bundle.json `default:false`~~, website, ~~vault~~ — first release 2026-10-17 | fresh ISO → Komble → approve a Claude prompt (not run) |
 | P8 | the password manager's metadata contract — Safe, [[RFC-008 — ewe Safe]] (S8: `summary` + events, never a title or value) | the canary in the vault appears nowhere |
 
 ## Gotchas known before the first line
@@ -80,6 +84,12 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 - **Glass needs blur behind the notch.** ewe blurs only `quickshell:(bar|dock)`;
   the plugin adds a runtime layer rule for `quickshell:companion` (and again
   after every config reload). Without it the notch looked like clear glass.
+- **That blur must be xray.** The bar sits on the wallpaper (its exclusive
+  zone keeps windows out); the notch hangs over windows. A plain blur showed
+  the window under the notch through the translucent ground, so the notch
+  never matched the bar (owner, 2026-10-17: worse in light mode). With
+  `xray = true` both blur the wallpaper. And the fill is clipped at the
+  bar's edge: under xray any half-covered row over the bar is a seam.
 - **API keys never go in plugin settings** (they sync with `ewe.conf`):
   the notch takes the key and the daemon stores it in the keyring.
 - **The conversation is model context.** Anything that shows Safe's names
