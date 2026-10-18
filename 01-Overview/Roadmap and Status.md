@@ -8,11 +8,29 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-18**. Released: **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-18**. Released: **ewe (DE) 0.31.0-beta** with **Safe 0.3.0-beta** and **ewe browser 0.5.0-beta** (2026-10-18, the owner's ask: unlock Safe with the login password, no more keyring prompt at every start, cards and addresses, every sign-up asks to save — below); before it **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.31.0-beta + Safe 0.3.0-beta + ewe browser 0.5.0-beta — Safe and the system (released 2026-10-18)
+
+The owner's ask (2026-10-18, heading out: "choose any recommended option"):
+unlock Safe with the sudo (login) password; get rid of the keyring prompt at
+every start; cards and addresses without ruining users' safety, encrypted in
+Nextcloud; full Safe control; and "when I register somewhere it should ask
+to save a new login". Contract: `ewe-safe/docs/SYSTEM.md`; decision:
+[[Decision Index]] row 43, [[RFC-008 — ewe Safe]] → Amendment 2026-10-18.
+
+| what | where | state |
+|---|---|---|
+| The prompt at every start: a second keyring (`Default_keyring`) was the `default`, plus a gnome-keyring crash at boot. `ewe-safe keyring repair` copies everything into `login` and points `default` at it | ewe-safe#18 (`crates/secrets`), ewe#64 (TROUBLESHOOTING) | released; tried against a real gnome-keyring in a sandbox shaped like the owner's; **not yet run on the owner's machine** |
+| Unlock Safe with the login password (`ewe-safe login enable`, Settings → Security); Safe opens at login through gnome-keyring's `login`; five tries, then the master password | ewe-safe#18 (`crates/login`, `login.rs`, `carrier.rs`), ewe#64 (`[safe] unlock_at_login`) | released; sandbox: enable → restart → opens by itself, locked `login` → no prompt |
+| `confirm` (login or master password, 5 minutes) before a card fill | ewe-safe#18, ewe#64 (`[safe] confirm_cards`) | released |
+| Cards and addresses in the same encrypted KDBX; 1Password's cards and identities import as them; `convert --from-1password` | ewe-safe#18 (`card.rs`, `cards.rs`), ewe-plugin-safe#1 (Quick Access skips them, 1.0.1 in ewe 0.31) | released; KeePassXC showing the fields not checked |
+| Every sign-up asks to save (also locked: Unlock and save); cards and addresses fill in pages (cards on https only) | ewe-browser#14 | released in ewe browser 0.5.0-beta; e2e 22/22 against the real Safe 0.3.0; real sites untried |
+| **Parked:** Safe's own PAM module (owner review first) and Safe as the Secret Service (`keyring adopt` refuses without the module) | `.wt/parked-pam/`, `crates/secrets` | built, not shipped |
 
 ## 0.30.0-beta + ewe browser 0.4.0-beta + ewe-companion 0.2.0-beta — wave 2 (released 2026-10-18)
 

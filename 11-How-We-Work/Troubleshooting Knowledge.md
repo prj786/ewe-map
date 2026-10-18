@@ -658,6 +658,38 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   only the release build failed: run a release's steps in an
   `archlinux:base-devel` container (podman) before tagging, not on the host.
 
+### Safe — 2026-10-18 (login unlock, keyring repair, cards; Safe 0.3.0-beta)
+
+- **"Enter the keyring password" at every start** — `~/.local/share/keyrings/default`
+  names a second keyring (`Default_keyring`, made by the 2026-09-03 bug).
+  PAM unlocks only `login`, apps use the `default` → locked → a prompt. On
+  the owner's machine the same boot showed gnome-keyring dying on
+  `gkd-secret-unlock.c:244 perform_next_unlock: assertion failed` (two apps
+  asked at once) and the D-Bus-started replacement had no password. Fix:
+  `ewe-safe keyring repair` (Safe 0.3.0+; copies everything into `login`,
+  points `default` at it, deletes nothing). Check:
+  `ewe-safe keyring status` → `needs_repair: false`.
+- **A right login password is refused** by a `unix_chkpwd` check —
+  pam_unix's helper reads a **NUL-ended** password; without the NUL it sees
+  none. Use `safe_client::chkpwd`. A fake helper in tests won't catch this:
+  make it read up to the NUL too.
+- **Safe doesn't open at login although login unlock is on** — the carrier
+  item is missing from `login` (it was locked when login unlock was turned
+  on), or `login` didn't open at the greeter. Unlocking once with the login
+  password stores it again; `secret-tool search application ewe-safe`.
+- **A user D-Bus service file is ignored** — dbus-broker never re-reads
+  service files on its own: call `org.freedesktop.DBus.ReloadConfig`.
+  dbus-run-session sandboxes use dbus-daemon, so they don't show this.
+- **An agent stopped while writing a PAM module** — a safety filter cut it
+  off twice: code that takes the login password at the greeter and passes it
+  on looks like a credential stealer out of context. The module is parked
+  for the owner's review (`.wt/parked-pam/`); don't hand it to an agent
+  again without the owner.
+- **Screenshots of the Safe window's dev mock** — Brave headless dumps core
+  here; puppeteer's `chrome-headless-shell` works
+  (`~/.cache/puppeteer/chrome-headless-shell/…`, `--screenshot`,
+  `--virtual-time-budget=4000`, `http://localhost:<vite>/?mock=1&…`).
+
 ## ewe browser (2026-10-15, e2e and Safe)
 
 - **Chromium aborts: "Socket path too long"** in an e2e run — its

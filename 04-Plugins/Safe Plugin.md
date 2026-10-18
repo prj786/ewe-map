@@ -11,7 +11,9 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-safe` ·
 [github.com/prj786/ewe-plugin-safe](https://github.com/prj786/ewe-plugin-safe)
 
-First-party plugin (API 3, 1.0.0), vendored in the payload since **ewe
+First-party plugin (API 3, 1.0.1 since ewe 0.31.0-beta: Quick Access lists
+logins and notes only — cards, addresses and SSH keys stay in the Safe
+window), vendored in the payload since **ewe
 0.27.0-beta**, opt-in like every plugin (`default: false`, `migrate:
 false`), `requires` the `ewe-safe` package ([[ewe-safe]], RFC-008). It is
 Safe's presence on the desktop; the fill picker stays the

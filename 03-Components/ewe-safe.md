@@ -10,7 +10,7 @@ up: "[[Home]]"
 
 `~/Projects/ewe/ewe-safe` · [github.com/prj786/ewe-safe](https://github.com/prj786/ewe-safe) ·
 Rust workspace (keepass-rs, vendored with one fix) · [[RFC-008 — ewe Safe]] ·
-**0.2.0-beta released 2026-10-15** (0.1.0-beta the same morning), opt-in
+**0.3.0-beta released 2026-10-18** (0.2.0-beta and 0.1.0-beta on 2026-10-15), opt-in
 from `[ewe]` (`pacman -S ewe-safe`; the desktop plugin: [[Safe Plugin]]) —
 [[Roadmap — ewe-safe]].
 
@@ -40,6 +40,8 @@ flowchart LR
 | `store` (`safe_store`) | places (`local`, `nextcloud`/WebDAV) with their conflict guard; the `Syncer`: cache, 20 backups, `sync.json`, stale → fetch, merge, verify, retry, pending offline, rollback warning |
 | `daemon` (`ewe-safed`) | socket-activated user service; holds the key only while unlocked; locks on screen lock, sleep, idle, `lock`; syncs on change, unlock, nudge, every 5 min |
 | `cli` (`ewe-safe`) | the JSON verbs of `docs/PROTOCOL.md` v1 |
+| `login` (`safe_login`, 0.3.0) | this computer's session key W under Argon2id(login password) (`login.key`), blobs under W (`master.wrap`, `keyring.safe`); XChaCha20-Poly1305 |
+| `secrets` (`safe_secrets`, 0.3.0) | a Secret Service client (`keyring repair`, `status`, `list`, `import`, the carrier that keeps W in gnome-keyring's `login`) and Safe's own Secret Service server (built, parked: `adopt` refuses until the login module ships) |
 
 The contract is `ewe-safe/docs/PROTOCOL.md` (verbs, shapes, error codes,
 socket, events); the format and merge rules are `docs/FORMAT.md`; the
@@ -72,12 +74,30 @@ safe).
 an `IdentityAgent` line in `~/.ssh/config` (1Password's, on the owner's
 machine) still wins over `SSH_AUTH_SOCK` — put the line `enable` prints there.
 
-## What 0.2.0-beta cannot do yet
+## New in 0.3.0-beta (released 2026-10-18)
 
-No unlock with login/fingerprint (polkit); places other than this computer
-and Nextcloud say "Coming soon"; no export; not in Komble's lists yet. Not
-yet tried for real: a passkey on a real site, `git push` through the agent,
-the agent's approval window on screen.
+The owner's "unlock with my sudo password, no keyring prompt, cards and
+addresses" ([[RFC-008 — ewe Safe]] → Amendment 2026-10-18; contract
+`docs/SYSTEM.md`). ewe-safe#18 (`integrate/system`: `feat/system-base`,
+`feat/login`, `feat/cards`, `feat/keyring`), tag `v0.3.0-beta`, package
+`ewe-safe-0.3.0beta-1`; with ewe 0.31.0-beta (ewe#64) and ewe browser
+0.5.0-beta.
+
+| what | in short |
+|---|---|
+| login unlock | `ewe-safe login enable|disable|status`, `unlock --login`; Settings → Security; five tries then the master password; Safe opens at login (W carried in gnome-keyring's `login`, `[safe] unlock_at_login`) |
+| `confirm` | the login or master password, good for 5 minutes; the Confirm window (`ewe-safe-app --confirm --reason …`) |
+| the keyring | `ewe-safe keyring status|repair|list|import --dry-run`; Settings → Keyring with "Fix the keyring password prompt"; `adopt`/`release` need the parked login module |
+| cards and addresses | kinds `card`/`address`; `add`/`edit` objects and flags (`--card-stdin`), `reveal --field number|security_code|pin`, socket `fields` behind the confirm (`confirm-needed`, `[safe] confirm_cards`), `convert --from-1password`; 1Password's Credit Card and Identity import as cards and addresses; the window's Cards and Addresses |
+
+## What 0.3.0-beta cannot do yet
+
+No greeter handoff of its own (the PAM module is parked) and so no Safe as
+the keyring; no fingerprint unlock; places other than this computer and
+Nextcloud say "Coming soon"; no export; not in Komble's lists yet. Not yet
+tried for real: the repair on the owner's machine (gnome-keyring's own
+window), a card fill on a real shop, a passkey on a real site, `git push`
+through the agent.
 
 ## Related
 
