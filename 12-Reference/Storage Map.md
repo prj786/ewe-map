@@ -28,7 +28,7 @@ flowchart TB
         MIGR["addons-migrated — JSON list of add-on ids<br/>already considered (0.25, local, never synced)"]
         PSTATE["plugins/<id>/ — a plugin's own stateDir (0.25)"]
         CAST["cast.log — cast debug trace (ewe.cast legacy path)"]
-        COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards (SQLite, per machine, never synced; RFC-007)"]
+        COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards, timers (002, 0.2.0-beta) (SQLite, per machine, never synced; RFC-007)"]
         SAFE["safe/ — sync.json · cache/passwords.kdbx (encrypted) ·<br/>backups/ (20, encrypted) · machine.json ·<br/>ssh-public.json (0.2.0-beta: public keys only, 0600)<br/>(RFC-008, never synced)"]
     end
     subgraph RUN["$XDG_RUNTIME_DIR"]
@@ -41,6 +41,7 @@ flowchart TB
     subgraph BROWSER["~/.config/ewe-browser (ewe browser's profile)"]
         BHIST["history.db — SQLite (0.2.0-beta; was history.json, kept as .bak)"]
         BSYNC["sync/ — status.json (for ewe-sync) · machine-id ·<br/>tabs-remote.json · *.base.json"]
+        BPRIV["permissions.json — site decisions · site-search.json —<br/>learned OpenSearch templates (0.4.0-beta, never synced)"]
     end
     subgraph KEYRING["Secret Service keyring"]
         KC["service ewe-cloud — Nextcloud app password"]
@@ -97,10 +98,15 @@ flowchart TB
   `ewe.conf`). Synced through the account: `ewe/browser/bookmarks.json`,
   `history.json` (with clear records since 0.2.0-beta), `settings.json`,
   and `tabs-<id>.json` per machine (since 0.2.0-beta). See
-  [[Browser History — SQLite, synced clear records]].
+  [[Browser History — SQLite, synced clear records]]. Since 0.4.0-beta the
+  profile also holds `permissions.json` (Allow / Block per top-level site,
+  1000 origins — [[Site Permissions — ask per site]]) and
+  `site-search.json` (OpenSearch templates learned on visited pages, 500
+  hosts); neither syncs, nor do the Privacy and security settings.
 - **The companion keeps its own state** in `~/.local/state/ewe/companion/`
   (`companion.db`, 30-day retention), not in `ewe.conf`: history is per
-  machine. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
+  machine. Since 0.2.0-beta it also keeps timers and reminders there
+  (migration `002_timers`, 50 waiting at most), so they survive a restart. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
   (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
   keyring, never the file.
 

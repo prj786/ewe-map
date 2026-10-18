@@ -1,10 +1,10 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-10-17",
+  "generated": "2026-10-18",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.29.0-beta",
+    "ewe_de": "0.30.0-beta",
     "ewe_os": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
@@ -12,7 +12,7 @@
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.18.0-beta",
-    "ewe_browser": "0.3.0-beta",
+    "ewe_browser": "0.4.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
@@ -29,10 +29,10 @@
       "ewe.cast": "1.0.1",
       "ewe.dock": "1.1.0",
       "ewe.safe": "1.0.0",
-      "ewe.companion": "0.4.0"
+      "ewe.companion": "0.5.0"
     },
     "ewe_safe": "0.2.0-beta",
-    "ewe_companion": "0.1.0-beta"
+    "ewe_companion": "0.2.1-beta"
   },
   "repos": [
     {
@@ -74,13 +74,13 @@
     },
     {
       "name": "ewe-browser",
-      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium)",
+      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search",
       "stack": "Electron 44 (castlabs ECS) + Solid, TypeScript",
       "license": "GPL-3.0-only"
     },
     {
       "name": "ewe-companion",
-      "role": "desktop companion, shown as Shaun: ewe-companiond daemon, ewe-companion CLI + Claude Code hook relay, Claude Code plugin; later a Tauri window (RFC-007; 0.1.0-beta released 2026-10-17, package in [ewe], opt-in)",
+      "role": "desktop companion, shown as Shaun: ewe-companiond daemon, ewe-companion CLI + Claude Code hook relay, Claude Code plugin; later a Tauri window (RFC-007; 0.2.1-beta released 2026-10-18 after 0.2.0-beta the same day, first release 0.1.0-beta 2026-10-17; package in [ewe], opt-in)",
       "stack": "Rust",
       "license": "MIT"
     },
@@ -159,7 +159,7 @@
     },
     {
       "name": "ewe-plugin-companion",
-      "role": "plugin ewe.companion, shown as Shaun (decision 39): the island in the bar's centre + the card drop (RFC-007; 0.4.0, vendored in ewe 0.29.0-beta, opt-in)"
+      "role": "plugin ewe.companion, shown as Shaun (decision 39): the island in the bar's centre + the card drop (RFC-007; 0.5.0, vendored in ewe 0.30.0-beta, opt-in)"
     }
   ],
   "rules": [
@@ -340,10 +340,37 @@
         "focus",
         "tab",
         "bookmark",
-        "call"
+        "call",
+        "site",
+        "workspaces",
+        "workspace",
+        "back",
+        "forward",
+        "download"
       ],
       "socket": "$XDG_RUNTIME_DIR/ewe-browser-<12 hex of sha256(profile dir)>.sock (0600, JSON lines)",
-      "since": "ewe browser 0.2.0-beta (ewe-browser#3, released 2026-10-15); 0.1.0-beta has no CLI (a verb opens as a page)"
+      "since": "ewe browser 0.2.0-beta (ewe-browser#3, released 2026-10-15); 0.1.0-beta has no CLI (a verb opens as a page)",
+      "wave2": {
+        "since": "ewe browser 0.4.0-beta (ewe-browser#13, released 2026-10-18); 31 -> 43 tools",
+        "verbs": [
+          "site <name|host>",
+          "workspaces",
+          "workspace activate|next|prev|create|rename|remove",
+          "back",
+          "forward",
+          "download open|show <id>",
+          "search <query> --site <name|host>",
+          "open ... --workspace <id|name|number>"
+        ],
+        "error_codes_added": [
+          "unknown-site",
+          "no-history",
+          "last-workspace",
+          "not-finished"
+        ],
+        "callers": "ewe's hyprland.lua runs workspace next|prev on a 4-finger swipe while the browser is focused (decision 41, ewe 0.30.0-beta); Shaun (ewe-companion 0.2.0-beta) uses the rest",
+        "note": "search is marked untrusted since 0.4.0-beta (with --site its reply carries a site name learned from history or a website); workspace remove and tab close are tier 2"
+      }
     },
     {
       "tool": "ewe-companion",
@@ -364,7 +391,7 @@
         "help",
         "find"
       ],
-      "note": "find since P2.9 (ewe-companion#1, merged 2026-10-15); the companion is not released yet"
+      "note": "find since P2.9 (ewe-companion#1); released since 0.1.0-beta (2026-10-17); debug undo <token> (debug daemon only) since 0.2.0-beta"
     },
     {
       "tool": "ewe-safe",
@@ -582,7 +609,7 @@
     {
       "rfc": "RFC-007",
       "topic": "ewe-companion desktop companion (island plugin + daemon)",
-      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders), P2.8 (runs proposed shell commands on a click) and P2.9 (Safe, ewe browser, the finder; merged 2026-10-15) working; first released 2026-10-17 (ewe-companion 0.1.0-beta in [ewe], plugin 0.4.0 in ewe 0.29.0-beta; P7 open: Komble DISCOVER, website, QEMU e2e); the user-facing name is Shaun (decision 39)"
+      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders), P2.8 (runs proposed shell commands on a click), P2.9 (Safe, ewe browser, the finder) and P2.10 (wave 2: site search, more browser, desktop switches, timers, sums, proposals, the CLI knowledge) working; first released 2026-10-17 (ewe-companion 0.1.0-beta, plugin 0.4.0 in ewe 0.29.0-beta), 0.2.0-beta on 2026-10-18 (plugin 0.5.0 in ewe 0.30.0-beta) and 0.2.1-beta the same day (the pack's two-finger swipe direction); P7 open: Komble DISCOVER, website, QEMU e2e; the user-facing name is Shaun (decision 39)"
     },
     {
       "rfc": "RFC-008",
@@ -613,7 +640,10 @@
     "quiet-lid fix (A2) not yet verified on real laptop hardware",
     "ewe-conf before ewe 0.28.0-beta (ewe#58) splits quoted dotted keys: use ewe-plugin set <id> <key> <value> for plugin settings",
     "Safe's merge is entry-level newest-wins: a concurrent password edit goes to the item's history (passkeys merge on their own since ewe-safe#11)",
-    "Safe 0.2.0-beta not verified for real: a passkey on a real site, git push through Safe's agent, the approval window on screen"
+    "Safe 0.2.0-beta not verified for real: a passkey on a real site, git push through Safe's agent, the approval window on screen",
+    "ewe browser 0.4.0-beta: the two-finger swipe is tested with synthetic wheel events only (no real touchpad); printing untested by hand; location has no provider in Electron on Linux; third-party cookie blocking changes apply after a restart; password-manager extensions are refused by a 36-id list, not by capability",
+    "ewe 0.30.0-beta: the 4-finger gesture's left/right not tried on a real touchpad (Hyprland's Lua hl.gesture does not validate direction strings)",
+    "ewe-companion 0.2.0-beta: tested against fakes only — the real ewe browser 0.4 CLI, ewe-bt with a paired device, the Insomnia plugin and a real timer banner are the owner's try after pacman -Syu; airplane mode remembers what it turned off in memory only"
   ],
   "addons": {
     "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
@@ -715,10 +745,11 @@
       "safe.ssh_agent": "bool, false until ewe-safe ssh enable",
       "safe.ssh_confirm": "first-use (default) | every-time | never — noise reduction, not a security boundary"
     },
-    "origin_rule": "the browser decides the origin and RP ID; Safe checks only shapes"
+    "origin_rule": "the browser decides the origin and RP ID; Safe checks only shapes",
+    "browser_fill": "Safe only since ewe browser 0.4.0-beta (decision 40): no ewe-pass route in the browser; Ctrl+Shift+L, the key and the page menu open Safe's list; password-manager extensions refused before they load (36 Web Store ids, best effort). The desktop's Super+P keeps ewe-pass"
   },
   "companion_protocol": {
-    "status": "merged 2026-10-15: ewe-companion#1 (P2.9) + ewe-plugin-companion#1 (0.3.0); not released, not in [ewe] (first release = RFC-007 P7)",
+    "status": "P2.9 (ewe-companion#1 + ewe-plugin-companion#1) released in ewe-companion 0.1.0-beta (2026-10-17); wave 2 (ewe-companion#3 + ewe-plugin-companion#3, 0.5.0) released in ewe-companion 0.2.0-beta + ewe 0.30.0-beta (2026-10-18); docs/PROTOCOL.md, additive only",
     "chat_reply_added": [
       "rows"
     ],
@@ -745,6 +776,53 @@
       "EWE_COMPANION_SAFE",
       "EWE_COMPANION_BROWSER"
     ],
-    "rules": "values never cross (Safe copies itself; never show/reveal); names stay local (island only, never a model, log or companion.db); tests/canary.sh in CI; commands that print a password manager's values are refused"
+    "rules": "values never cross (Safe copies itself; never show/reveal); names stay local (island only, never a model, log or companion.db); tests/canary.sh in CI; commands that print a password manager's values are refused; since 0.2.0-beta the browser's tab, bookmark, download and workspace names and Bluetooth device names stay local too (tests/canary.sh 9)",
+    "proposals_only": [
+      "run_shell",
+      "theme_mode",
+      "power",
+      "empty_trash"
+    ],
+    "row_icons_added": [
+      "download",
+      "workspace",
+      "timer",
+      "bluetooth"
+    ],
+    "debug_verbs_added": [
+      "debug.undo"
+    ],
+    "store_migrations": [
+      "001_init",
+      "002_timers"
+    ],
+    "catalog_wave2": {
+      "args_added": [
+        "web_search site?",
+        "open_url workspace?"
+      ],
+      "commands_added": [
+        "browser_bookmark",
+        "browser_bookmarks",
+        "browser_nav",
+        "browser_tab_do",
+        "browser_workspace",
+        "browser_downloads",
+        "browser_download",
+        "browser_page",
+        "wifi",
+        "bluetooth",
+        "bluetooth_device",
+        "airplane_mode",
+        "keep_awake",
+        "calc",
+        "timer",
+        "timers",
+        "timer_cancel",
+        "theme_mode",
+        "power",
+        "empty_trash"
+      ]
+    }
   }
 }

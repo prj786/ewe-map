@@ -24,9 +24,9 @@ creates the GitHub remotes and pushes.
 | [`ewe-settings`](https://github.com/prj786/ewe-settings) | the Settings app | Tauri v2 + Svelte 5 |
 | [`ewe-sync`](https://github.com/prj786/ewe-sync) | the account & sync app (RFC-006, ex-"Flock") | Tauri v2 + Svelte 5 |
 | [`ewe-cast`](https://github.com/prj786/ewe-cast) | `ewe-castd` — headless casting daemon (RFC-004) | Python on GLib, GStreamer (C) |
-| [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]], 0.2.0-beta) | Electron 44 (castlabs) + Solid, TypeScript |
-| [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007, 0.1.0-beta, P2.9 merged; not released) | Rust (tokio, rusqlite) |
-| [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.3.0, API 3; not released) | QML |
+| [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]], 0.4.0-beta) | Electron 44 (castlabs) + Solid, TypeScript |
+| [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007; shown as Shaun; 0.2.1-beta, released, package in [ewe]) | Rust (tokio, rusqlite) |
+| [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.5.0, API 3; vendored in ewe 0.30.0-beta) | QML |
 | [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window, passkeys, an SSH agent ([[ewe-safe]], RFC-008, 0.2.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
 | [`prj786.github.io`](https://github.com/prj786/prj786.github.io) | the website | SvelteKit 2 + Svelte 5, static |
 | [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | plugin: clipboard history + emoji (1.1.1, API 2) | QML |

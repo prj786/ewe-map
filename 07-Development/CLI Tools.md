@@ -53,10 +53,14 @@ flowchart TB
 The website documents each tool: `prj786.github.io/docs/cli/<tool>`.
 
 **`ewe-browser <verb>`** (since ewe browser 0.2.0-beta; `docs/CLI.md`) — not
-in `ewe/bin` either: one JSON object, exit 0, 31 tools (`tabs`, `history`,
-`open`, `search`, `play`, `page --text`, `tab …`, `commands`, …), replies
-with outside text marked `untrusted`. 0.1.0-beta has none — a verb opens as
-a page. The companion calls it ([[Contracts and Public API]]).
+in `ewe/bin` either: one JSON object, exit 0, 43 tools since 0.4.0-beta
+(`tabs`, `history`, `open`, `search`, `play`, `page --text`, `tab …`,
+`commands`, …; 0.4.0-beta added `site`, `search --site`, `workspaces`,
+`workspace activate|next|prev|create|rename|remove`, `back`, `forward`,
+`download open|show`, `open --workspace`), replies with outside text marked
+`untrusted`. 0.1.0-beta has none — a verb opens as a page. Shaun calls it,
+and ewe's 4-finger swipe runs `workspace next|prev`
+([[Contracts and Public API]]).
 
 Not in `ewe/bin` but equally a contract: **`komble --updates | --settings |
 --search[=q] | --addons | --plugins`** (the shell's `Shell.openStore(page)`

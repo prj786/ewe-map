@@ -25,6 +25,11 @@ nothing in [[RFC-008 — ewe Safe]]; it is how the browser keeps S10 ("the brows
 | **Frames from another site are refused** (`NotAllowedError`) in this version | the contract's first version (TRIO.md §B1); allowing them is later work |
 | Site matching: exact host, then the registrable domain (public-suffix list incl. private suffixes); https never to http; ports equal | a login is offered only to its own site |
 
+Since ewe browser 0.4.0-beta Safe is the browser's **only** filler: the
+`ewe-pass` route is gone and password-manager extensions are refused
+([[Browser Passwords — Safe only]], decision 40). `Ctrl+Shift+L` and the
+page's right-click menu open this same list.
+
 ## Not verified yet
 
 Real sites (github.com, google.com); *Use a security key instead* with a

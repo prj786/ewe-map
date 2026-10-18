@@ -102,6 +102,9 @@ flowchart TB
   [[Gmail Split — core Google, Mail add-on]] · [[X11 Scale — smallest lit scale]]
 - 2026-10-15: [[Browser History — SQLite, synced clear records]] ·
   [[Safe in the Browser — guards, not a page click]] (and the RFC-008 amendment)
+- 2026-10-17/18: [[Browser Bottom Bar — workspaces and tools]] ·
+  [[Browser Passwords — Safe only]] · [[Four Fingers — ewe browser's workspaces]] ·
+  [[Site Permissions — ask per site]]
 
 **09 — Rules** (the contracts)
 - [[Rules of the House]] · [[Contracts and Public API]] · [[Security Posture]]

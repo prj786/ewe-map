@@ -9,7 +9,7 @@ up: "[[Home]]"
 # ewe — the Desktop Environment
 
 `~/Projects/ewe/ewe` · [github.com/prj786/ewe](https://github.com/prj786/ewe) ·
-**0.28.0-beta** released 2026-10-15 ([[Version Ledger]]) · GPL-2.0-only
+**0.30.0-beta** released 2026-10-18 ([[Version Ledger]]) · GPL-2.0-only
 
 The repo you actually look at: **Hyprland** (Wayland compositor,
 Lua-configured) with a **Quickshell** QML shell — bar, launcher, Overview,
@@ -76,6 +76,17 @@ flowchart TB
 `Super+Return` terminal · `Super+D` apps · `Super` (tap, the `ewe:overview`
 global shortcut) Overview · `Super+,` Settings · `Super+P` fill a login and
 `Super+Shift+C` cast exist only while their plugins are enabled.
+Touchpad: three fingers are the desktop's (workspaces, Overview, a new
+desktop); since 0.30.0-beta **four fingers left/right switch ewe browser's
+own workspaces while it is focused** ([[Four Fingers — ewe browser's workspaces]]).
+Full list: [[Keymap Reference]].
+
+> **Build guard:** Hyprland's Lua `hl.gesture` does not validate
+> `direction` (any string loads without a `configerrors` line); use only
+> the documented words and try a new gesture on a real touchpad. The
+> 4-finger action calls `ewe-browser workspace next|prev` only when the
+> active window's class is `ewe-browser`. *Breaks if violated:* a gesture
+> silently does nothing, or four fingers act on other windows.
 
 ## Related
 
