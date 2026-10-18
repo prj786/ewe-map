@@ -21,7 +21,7 @@ done the same day; **0.1.0-beta released 2026-10-15** with ewe
 *Amended 2026-10-15 (owner): passkeys and the SSH agent leave the parked
 list, and S8 lets the companion act — see "Amendment 2026-10-15" below.
 Released the same day as Safe 0.2.0-beta, ewe 0.28.0-beta and ewe browser
-0.2.0-beta; the companion's part is merged, not released.*
+0.2.0-beta; the companion's part was released in ewe-companion 0.1.0-beta (2026-10-17).*
 
 ## The idea
 
@@ -57,7 +57,7 @@ browser. The contract between the repos is `ewe-safe/docs/TRIO.md`.
 (edit fix), #13 (SSH) through #14 → **Safe 0.2.0-beta**; ewe #58, #59 and
 ewe-plugin-passwords #3 → **ewe 0.28.0-beta**; ewe-browser #3, #4, #5 →
 **ewe browser 0.2.0-beta**; published to `[ewe]` the same day.
-ewe-companion #1 and ewe-plugin-companion #1 are merged, not released. See
+ewe-companion #1 and ewe-plugin-companion #1 were released in ewe-companion 0.1.0-beta (2026-10-17). See
 [[Roadmap — ewe-safe]].
 
 | # | decision | why |

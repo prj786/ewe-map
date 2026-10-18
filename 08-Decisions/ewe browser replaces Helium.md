@@ -35,7 +35,8 @@ package. Helium (`helium-browser-bin`) left `packages/aur.list` and
 
 - One browser that is part of the desktop: it follows the theme tokens
   live, opens folders, PDFs and music in place, fills passwords through
-  `ewe-pass`, syncs through the user's Nextcloud — what Helium needed a
+  `ewe-pass` (Safe only since ewe browser 0.4.0-beta —
+  [[Browser Passwords — Safe only]]), syncs through the user's Nextcloud — what Helium needed a
   theming script and a profile rewrite to approximate.
 - **Electron, not Tauri.** [[Process Split — Shell vs Apps]] assumed every big
   UI is a Tauri app; a browser cannot be. WebKitGTK has neither Chrome

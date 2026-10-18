@@ -199,6 +199,15 @@ must point at the new path). The `cast` IPC target is an alias of
   signal matrix: a *release* bind → `released` only; a *press* bind →
   `pressed` + `released`; a `dispatch` → `pressed` only. Toggle on
   `released`. `ewe:overview` is a release bind on Super.
+- **A touchpad gesture does nothing, and Hyprland says nothing** (ewe
+  0.30.0-beta, the 4-finger swipe) — Hyprland's Lua `hl.gesture` accepts
+  **any** `direction` string when the config loads: no validation, no
+  `configerrors`, so a typo (`"lft"`) is a gesture that never fires. Use
+  only the documented words (`left`, `right`, `up`, `down`, `horizontal`,
+  `vertical` …), and check on a real touchpad: the nested harness has
+  none. A gesture whose action depends on the focused window
+  (`hl.get_active_window().class == "ewe-browser"`) also does nothing
+  elsewhere, by design ([[Four Fingers — ewe browser's workspaces]]).
 - **A `Loader` whose `visible` binds to `item.visible`** — effective-
   visibility cycle (the item is invisible because the Loader is, because
   the item is …). Drive visibility from state, not from the child.
@@ -454,6 +463,26 @@ must point at the new path). The `cast` IPC target is an alias of
 
 ## The companion (RFC-007, 2026-10-14)
 
+- **The notch looks darker or greyer than the bar** (Glass on). Its blur
+  rule lacks `xray`: the notch shows the window under it through the
+  translucent ground, the bar shows the wallpaper. `ewe.companion` ≥ the
+  2026-10-17 fix adds `xray = true` (`Service.applyBlur`). Measure, do not
+  eyeball: a light window under the notch, then compare the bar's pixel with
+  the notch's in a shot. The nested harness has no `user.lua`, so give the
+  bar its blur by hand first (`driver.sh hc eval 'hl.layer_rule({ name =
+  "ewe-bar-blur", match = { namespace = "^quickshell:(bar|dock)$" }, blur =
+  true, ignore_alpha = 0.05 })'`). Re-registering a named layer rule without
+  a field keeps the old value: restart the nested Hyprland to compare.
+- **A 1-px line across the top of the notch** (darker in light mode,
+  lighter in dark): a half-covered row of the notch's fill over the bar gets
+  the whole xray blur under it. The fill is clipped at the bar's edge (a
+  scissor, whole pixels); keep that clip.
+- **`tests/island.sh restart` keeps the old daemon** after a rebuild
+  (before 2026-10-17): the old process's exe link ends in " (deleted)", so
+  the binary check missed it. Fixed in `daemon_pid`; on an old checkout,
+  find the PID (`pgrep -x ewe-companiond`, check `readlink /proc/PID/exe`
+  and its `EWE_COMPANION_SOCK`) and stop it.
+
 - **No permission card ever appears.** Check the session's permission mode:
   in `bypassPermissions` (the owner's `defaultMode` on the dev machine)
   Claude fires no `PermissionRequest` at all. Questions, finished peeks and
@@ -539,7 +568,20 @@ must point at the new path). The `cast` IPC target is an alias of
   command that prints a password manager's values never runs from the chat.
 - **Tests must not reach the real Safe or browser:** point
   `EWE_COMPANION_SAFE` / `EWE_COMPANION_BROWSER` at `tests/fakes/`
-  (`tests/island.sh` does).
+  (`tests/island.sh` does). Since 0.2.0-beta the same holds for `nmcli`,
+  `ewe-bt`, `qs`, `notify-send`, `ewe-theme` and `gio`: the test scripts
+  put `tests/fakes` first on the daemon's `PATH` and refuse to run
+  otherwise.
+- **The daemon hung the first time a timer fired** (0.2.0-beta, before the
+  release) — a rusqlite store guard lives to the end of its statement:
+  `hub.store().list().into_iter().filter(|t| hub.store().remove(..))`
+  locked the store's mutex twice on one thread. Bind the list with `let`
+  first, then remove. Any `hub.store()` twice in one expression is the
+  same bug.
+- **"search men's shoes on zara" opened a plain web search** — the browser
+  is older than 0.4.0-beta (no `site` in `commands`' schema) or answered
+  `unknown-site`; the reply says so. "search gifts for mum" is meant to be
+  a plain search ("search Y for X" needs a known site or a domain).
 - **Test hooks in a scratch project, never in `~/.claude`:** hooks in the
   project's `.claude/settings.local.json` pointing at
   `target/debug/ewe-companion`; `EWE_COMPANION_HOOK_LOG=<file>` records the
@@ -652,6 +694,50 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
 - **"Use a security key instead" hangs** — Electron's own WebAuthn has no
   window and ignores its timeout; 0.2.0-beta (ewe-browser#4) adds its own
   timeout. Not yet tried with a real key.
+
+## ewe browser 0.4.0-beta (2026-10-18, wave 2)
+
+- **A site never asks for the camera / notifications** — Electron reports
+  **"denied"** for every permission it was not told to grant, so
+  `navigator.permissions.query` and `Notification.permission` said denied
+  and sites skipped their own "allow" step. The page preload patches
+  `Permissions.prototype.query` and `Notification.permission` in the main
+  world to `prompt` / `default` for the undecided kinds of that origin (the
+  `ask` list of `ewe:privacy-frame`); a document keeps the values it
+  started with until it reloads. Check in a page:
+  `(await navigator.permissions.query({name: 'camera'})).state` must be
+  `prompt` on a site with no decision ([[Site Permissions — ask per site]]).
+- **A browser shortcut ate a web app's key** (review, 2026-10-18: Ctrl+U
+  in Gmail opened the page source instead of underlining) —
+  `before-input-event` runs **before** the page. The keys a web app may use
+  (`PAGE_FIRST_SHORTCUTS`, `PAGE_FIRST_CHORDS`) are left to http(s) pages;
+  the preload's capture `keydown` reports them after dispatch and main acts
+  only when the page did not `preventDefault` (within 1 s). `app://` pages
+  and the shell layers stay browser first. Tests send keys with
+  `webContents.sendInputEvent` (Playwright's CDP keyboard bypasses
+  `before-input-event`).
+- **OpenSearch discovery is an SSRF vector** — a page names its own
+  descriptor url, and the browser fetches it. Fetch only https on the
+  default port, without credentials, on the page's registrable domain
+  (private suffixes on, so one github.io tenant never speaks for another),
+  never a local name or private address, `redirect: 'error'`, 64 KiB, 8 s;
+  keep a template only if it is https on the page's own host or its
+  `www.` (`acceptDescriptor`, `acceptTemplate`).
+- **"Block third-party cookies" changed nothing** — Electron 44 has no
+  cookie-settings API; the Chromium feature
+  `ForceThirdPartyCookieBlockingEnabled` is appended to
+  `--enable-features` at startup only (`bootstrap()`, from `settings.json`
+  read synchronously). The change applies after a restart, and Settings
+  says so. To check: a cross-site iframe's `Set-Cookie` (`SameSite=None;
+  Secure`) must not be stored.
+- **Location allowed, but no position** — Electron on Linux has no location
+  provider (it needs a Google API key); expected, and the prompt says so.
+- **Four fingers do nothing in ewe browser** — the browser is older than
+  0.4.0-beta (`ewe-browser workspace next` answers `unknown-verb`), or ewe
+  is older than 0.30.0-beta; see also the gesture entry under *Shell / QML*.
+- **A password-manager extension "is off"** (toast "… is off: Safe fills
+  passwords") — refused on purpose ([[Browser Passwords — Safe only]]);
+  its files stay in `<userData>/Extensions`, not listed in Settings.
 
 ## Theming
 

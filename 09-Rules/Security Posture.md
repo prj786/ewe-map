@@ -77,23 +77,47 @@ angles: secrets in the keyring, identity in the file.
   the browser's own sheet or list, which ignore clicks until they have stood
   still 500 ms and the mouse moved. Frames from another site are refused
   ([[Safe in the Browser — guards, not a page click]]).
+- **ewe browser fills with Safe only (0.4.0-beta)** — no second route
+  (`ewe-pass` left the browser) and password-manager extensions are
+  refused before they load, so none of their scripts run on any page. The
+  list is best effort (36 Web Store ids), not a capability check: a manager
+  under another id, or sideloaded without its store key, is not caught
+  ([[Browser Passwords — Safe only]]).
+- **ewe browser's privacy and permissions (0.4.0-beta)** — site
+  permissions ask per top-level site; the prompt ignores Allow / Block for
+  500 ms after it appears or changes and until the pointer moved over it
+  (clickjacking), and never takes focus; requests from popups and panels
+  are denied; USB, HID, serial, external protocols and screen sharing stay
+  denied ([[Site Permissions — ask per site]]). HTTPS-Only is **off by
+  default** (an upgrade that fails shows an interstitial; *Continue* holds
+  for this run only); third-party cookies are blocked by Chromium itself;
+  `Sec-GPC: 1` on every request. OpenSearch descriptors are fetched only
+  over https from the page's own registrable domain, never a local or
+  private address, without redirects (no SSRF into your network).
 - **The companion (RFC-007)** — zero privileges. `ewe-companiond`'s socket
   is `0600` in `$XDG_RUNTIME_DIR` and both ends check `SO_PEERCRED` (same
   uid or nothing). The Claude Code hook relay **never prints an allow the
   daemon did not send, and the daemon sends one only for a click**; every
   failure is "no opinion" (Claude asks in its terminal). No IPC verb answers
   a card. "Always" only echoes Claude's own `permission_suggestions`.
-- **The companion and Safe (P2.9, ewe-companion#1, merged, not released)** —
+- **The companion and Safe (P2.9, released in ewe-companion 0.1.0-beta)** —
   values never cross: the companion asks Safe to *copy* (Safe runs `wl-copy`
   and clears it) and never calls `show` or `reveal`. Names stay local:
   titles and usernames show on the island only, never in a model's context
   or `companion.db` (`tests/canary.sh` in CI). A proposed command that would
   print a password manager's values is refused. Page text from ewe browser
   goes to a model marked untrusted; an action in that reply is a button.
+  Since 0.2.0-beta the browser's tab, bookmark, download and workspace
+  names and Bluetooth device names stay on the island too
+  (`tests/canary.sh` 9); a download opens the file the browser's own list
+  names for its id, never a path passed in; undo urls must be
+  http(s)://.
 - **The companion's shell commands (2026-10-14)** run only on a click. A
   model's `run_shell`, a knowledge topic's `run:` line or the user's own
   `$ command` becomes a *proposal* shown exactly as it will run, with Run and
-  In terminal; `commands::run` refuses `run_shell` outright, and the Run
+  In terminal (since 0.2.0-beta also `theme_mode`, `power` — suspend,
+  restart, shut down, log out — and `empty_trash`: `commands::PROPOSALS`,
+  never run by the matcher); `commands::run` refuses `run_shell` outright, and the Run
   click is the island's `confirm.run` (or `debug.confirm` on a debug daemon).
   `companion_core::shell::assess` refuses machine killers (`rm -rf` on home or
   the system, `mkfs`, `dd` onto a disk, fork bombs) and house-rule breaks (a

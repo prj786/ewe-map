@@ -38,7 +38,7 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.local/state/ewe/safe/` (`sync.json`, `cache/`, `backups/`, `machine.json`) | `ewe-safed` | `ewe-safed` | yes — Safe's per-machine state; the contract with callers is the socket/CLI (`ewe-safe/docs/PROTOCOL.md` v1, public API) |
 | `~/.local/state/ewe/safe/ssh-public.json` (Safe 0.2.0-beta) | `ewe-safed`, only while the SSH agent is on | the agent, to list keys while locked | yes — public keys and titles only, `0600`, never synced |
 | `~/.config/environment.d/90-ewe-safe-ssh.conf` (Safe 0.2.0-beta) | `ewe-safe ssh enable` / `disable` | systemd: `SSH_AUTH_SOCK` for new sessions | yes — written only after `[safe] ssh_agent = true` is recorded; `~/.ssh/config` is never edited |
-| `~/.config/ewe-browser/` (`history.db`, `sync/status.json`, `sync/machine-id`, `sync/tabs-remote.json`; since ewe browser 0.2.0-beta) | ewe browser | ewe browser; `sync/status.json` is for ewe-sync to read | yes — the browser's profile |
+| `~/.config/ewe-browser/` (`history.db`, `sync/status.json`, `sync/machine-id`, `sync/tabs-remote.json`; since ewe browser 0.2.0-beta) · `permissions.json` (site decisions) and `site-search.json` (learned OpenSearch templates; since 0.4.0-beta) | ewe browser | ewe browser; `sync/status.json` is for ewe-sync to read | yes — the browser's profile; `Settings.privacy` is not synced (DNS is per machine) |
 | `~/.config/ewe/plugins/<id>/` | `ewe-plugin` (`add`, `install`, `migrate`, `seed`) | shell PluginHost | code — never synced, never touched by upgrades |
 | `~/.local/state/ewe/addons-migrated` (0.25) | `ewe-plugin migrate` | `migrate` itself | JSON list of first-party plugin ids already considered — local, **never synced** (name kept — [[One Name — Plugins]]) |
 | `~/.local/state/ewe/plugins/<id>/` (0.25) | the plugin (`stateDir`, created on demand) | the plugin | never synced |
@@ -185,7 +185,7 @@ decision: [[RFC-008 — ewe Safe]] → Amendment 2026-10-15.
   `enable` writes `90-ewe-safe-ssh.conf` in `environment.d` and prints one
   `IdentityAgent` line for `~/.ssh/config`.
 
-### ewe browser's command line (`ewe-browser/docs/CLI.md` — ewe browser 0.2.0-beta, released 2026-10-15)
+### ewe browser's command line (`ewe-browser/docs/CLI.md` — since ewe browser 0.2.0-beta, wave 2 in 0.4.0-beta)
 
 `ewe-browser <verb>` prints **one JSON object and exits 0**; errors are
 `{"ok": false, "error": "<kebab-code>", "message", "hint"}`. 31 tools, each
@@ -202,7 +202,24 @@ a verb runs the CLI in Electron's Node mode, anything else starts the
 browser. **Verbs and fields may only be added** — the companion calls them.
 **0.1.0-beta has no CLI** (a verb opens as a page).
 
-### The companion's protocol additions (P2.9 — ewe-companion#1, merged 2026-10-15, not released)
+**Added in 0.4.0-beta** (ewe-browser#13, 2026-10-18; 31 → 43 tools):
+`site <name|host>` (tier 0: `name`, `host`, `template`, `via` =
+`history | opensearch | table | filter`), `search <query> --site <name|host>`,
+`workspaces` (0), `workspace activate <ws>`, `workspace next|prev`,
+`workspace create [name] [--color c]`, `workspace rename <ws> <new name>`
+(1; `<ws>` = id, name, 1-based number or a 4+ character id prefix),
+`workspace remove <ws>` (2, closes its tabs), `back`, `forward` (1),
+`download open|show <id>` (1), `open … --workspace <id|name|number>`.
+Error codes added: `unknown-site`, `no-history`, `last-workspace`,
+`not-finished`. `search` is marked `untrusted` since then (a `--site` reply
+carries a name learned from history or a website). Offline, `site` and
+`workspaces` answer from the profile on disk; `search --site` refuses an
+unknown site before starting the browser. **Two callers outside the
+browser:** ewe's `hyprland.lua` runs `ewe-browser workspace next|prev` on a
+4-finger swipe ([[Four Fingers — ewe browser's workspaces]], ewe
+0.30.0-beta; ~45 ms), and Shaun runs the rest (0.2.0-beta).
+
+### The companion's protocol additions (P2.9 — ewe-companion#1, released in 0.1.0-beta)
 
 `ewe-companion/docs/PROTOCOL.md`: `chat.reply` gains **`rows`** (what a
 command found: `{title, detail, icon: folder|file|web|key, actions}`; an
@@ -218,6 +235,24 @@ safe_unlock safe_status`; CLI verb `ewe-companion find`. Environment
 the fakes). A proposed command that would print a password manager's
 values (`ewe-safe read/reveal`, `op read`, `ewe-pass`, `bw`, `pass`, …) is
 refused. Plugin `ewe.companion` 0.3.0 (ewe-plugin-companion#1).
+
+**Wave 2** (ewe-companion#3 → 0.2.0-beta, ewe-plugin-companion#3 → 0.5.0,
+2026-10-18; added, nothing renamed): row `icon` gains `download`,
+`workspace`, `timer`, `bluetooth` (an island that does not know one draws a
+chevron). `web_search` gains `site?` (ewe browser's `search --site`;
+`unknown-site` or an older browser → a plain search of "query on site") and
+`open_url` gains `workspace?`. New catalog commands: `browser_bookmark`,
+`browser_bookmarks`, `browser_nav`, `browser_tab_do`, `browser_workspace`,
+`browser_downloads`, `browser_download`, `browser_page`; `wifi`
+(`nmcli radio wifi`), `bluetooth` and `bluetooth_device` (`ewe-bt`),
+`airplane_mode`, `keep_awake` (`qs ipc call ewe.insomnia`); `calc`;
+`timer`, `timers`, `timer_cancel` (`companion.db` migration `002_timers`,
+`notify-send` as Shaun); and **`theme_mode`, `power`, `empty_trash`, which
+— like `run_shell` — never run from a call** (`commands::PROPOSALS`: the
+reply carries `confirm`, only the Run click runs them). Socket verb
+`debug.undo {token}` (debug daemon only; `ewe-companion debug undo`). Names
+of tabs, bookmarks, downloads, workspaces and Bluetooth devices stay on the
+island (`tests/canary.sh` 9).
 
 ## The ewe.conf schema
 

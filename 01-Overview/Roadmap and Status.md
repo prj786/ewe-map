@@ -8,11 +8,57 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-17**. Released: **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-18**. Released: **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
+
+## 0.30.0-beta + ewe browser 0.4.0-beta + ewe-companion 0.2.0-beta — wave 2 (released 2026-10-18)
+
+The owner's ask (2026-10-18): finger gestures, more shortcuts, right-click
+menus on websites and only Safe filling passwords in the browser; DNS and
+security settings; and more Shaun — more browser, more knowledge about ewe,
+more commands ("search men's shoes on zara" straight to Zara's results).
+Delivered as "PRs + release" in one wave; no ISO (release scope unchanged).
+Decisions 40–42 ([[Decision Index]]).
+
+| change | where | state |
+|---|---|---|
+| Two-finger swipe back/forward, side buttons, find in page (Ctrl+F), ~20 new rebindable shortcuts (web pages first on keys they use), right-click menus on pages | ewe-browser **#13** (`feat/input-menus`) | released in ewe browser 0.4.0-beta (`v0.4.0-beta` on `1d36473` → `ewe-browser-0.4.0beta-1`); swipe tested with synthetic wheel events only |
+| **Safe only**: the `ewe-pass` route leaves the browser; password-manager extensions refused before they load (36 store ids) | ewe-browser **#13** | released; decision 40 — [[Browser Passwords — Safe only]] |
+| Settings → Privacy and security: Secure DNS (off/automatic/Cloudflare/Quad9/Mullvad/AdGuard/NextDNS/custom), HTTPS-Only (off by default, interstitial), third-party cookies blocked (Chromium's `ForceThirdPartyCookieBlockingEnabled`, after a restart), GPC on | ewe-browser **#13** (`feat/privacy-site-search`) | released; the five DoH providers resolved live in e2e |
+| Site permissions ask per site (prompt card, `permissions.json`, site info from the lock) instead of silent denial | ewe-browser **#13** | released; decision 42 — [[Site Permissions — ask per site]]; location has no provider on Linux |
+| Site search: `@zara men's shoes`, `search --site`, `site` (history → OpenSearch → a 66-site table → `site:` filter) | ewe-browser **#13** | released |
+| CLI 31 → 43 tools: `site`, `workspaces`, `workspace activate\|next\|prev\|create\|rename\|remove`, `back`, `forward`, `download open\|show`, `open --workspace` | ewe-browser **#13** | released (public API, [[Contracts and Public API]]); unit 146 + 326, e2e 58 passed (7 need the real Safe) |
+| Shaun: a site's own search, bookmarks, back/forward, tabs, workspaces, downloads; Wi-Fi, Bluetooth + paired devices, airplane mode, keep awake, "install X" → Komble's search; a calculator; timers and reminders (`companion.db` migration 002); proposals only for dark/light, power, empty trash; knowledge pack 91 → 122 topics with `cli.md` | ewe-companion **#3** | `v0.2.0-beta` on `30eb37f` → `ewe-companion-0.2.0beta-1`; core 81 + daemon 31 unit, `tests/chat.sh` 112, `tests/canary.sh` 9 — against fakes |
+| The island's row icons (download, workspace, timer, Bluetooth) | ewe-plugin-companion **#3** (0.5.0) | vendored in ewe 0.30.0-beta |
+| 4-finger swipe left/right = ewe browser's workspaces while it is focused; SHORTCUTS.md rows | ewe **#62** | released in ewe 0.30.0-beta (`v0.30.0-beta` on `1f6721e`); decision 41 — [[Four Fingers — ewe browser's workspaces]] |
+
+Published to `[ewe]` on 2026-10-18. Install: `sudo pacman -Syu` (ewe,
+ewe-browser, ewe-companion). Not verified: the swipe and the 4-finger gesture on a real
+touchpad, printing by hand, Shaun against the real browser 0.4 CLI, a
+paired Bluetooth device, the Insomnia plugin and a real timer banner — the
+owner's try after the upgrade.
+
+## 0.29.0-beta + ewe-companion 0.1.0-beta — Shaun (released 2026-10-17)
+
+The owner's ask: the companion's notch never matched the top bar ("it feels
+different, in dark mode and even more on light … because of notch"), and
+"rename this companion as shaun". Then: "just commit and make new release".
+
+| change | where | state |
+|---|---|---|
+| The notch is the bar's material: the blur rule is `xray` (the notch blurs the wallpaper, as the bar does, not the window under it), the fill clipped at the bar's edge | ewe-plugin-companion **#2** (0.4.0) | released in ewe 0.29.0-beta (ewe#61); measured equal to the bar in the island harness at 1.8, dark/light Glass, solid, the 36 px bar |
+| The name is **Shaun**: the notch's word, Komble's plugin name, the persona, the knowledge pack; ids stay `companion` | ewe-plugin-companion **#2**, ewe-companion **#2**, ewe#61 (SHORTCUTS, RFC-007) | released; decision 39 |
+| The first release: `.github/workflows/release.yml` (makepkg in `packaging/`), `v0.1.0-beta` | ewe-companion **#2** | package `ewe-companion-0.1.0beta-1` in [ewe] (ewe-repo **#4**) |
+| `vendor-plugins.sh` leaves a plugin repo's `AGENTS.md`/`CLAUDE.md` behind | ewe#61 | released |
+| `tests/island.sh restart` replaces the daemon after a rebuild | ewe-companion **#2** | merged |
+
+Install: `sudo pacman -Syu ewe-companion`, then Komble → Plugins → From ewe →
+Shaun. Not verified: the QEMU e2e (P7's gate) and a real-device check of
+the packaged daemon on the owner's laptop, which ran a dev install (binaries
+in `~/.local/bin`, its own user unit, the plugin as a symlink).
 
 ## 0.28.0-beta + Safe 0.2.0-beta + ewe browser 0.2.0-beta — a real safe (released 2026-10-15)
 
@@ -179,12 +225,13 @@ project's memory:
 ```mermaid
 flowchart LR
     subgraph shipping["shipping / beta"]
-        EWE["ewe DE 0.28.0-beta<br/>plugins · Safe on the desktop · light mode"]
+        EWE["ewe DE 0.30.0-beta<br/>plugins · Safe on the desktop · light mode ·<br/>4 fingers = the browser's workspaces"]
         OS["ewe-os 0.13.0-beta<br/>the ISO for ewe 0.25"]
         REPO["ewe-repo — rolling"]
         K["Komble 0.20.2-beta — Plugins + Options dialog,<br/>early vs live pacman"]
         SAFE["Safe 0.2.0-beta<br/>passkeys · SSH agent · CLI"]
-        BR["ewe browser 0.2.0-beta<br/>Safe built in · history + sync · CLI"]
+        BR["ewe browser 0.4.0-beta<br/>Safe only · privacy and security ·<br/>site search · history + sync · CLI"]
+        SHAUN["Shaun (ewe-companion 0.2.0-beta)<br/>agent cards · chat · desktop switches · timers"]
         S["ewe-settings 0.18.0-beta — shipped"]
         SY["ewe-sync — shipped"]
         CAST["ewe-cast — phases A+B"]
@@ -222,7 +269,8 @@ flowchart LR
 - [[Roadmap — Komble]] — the first live-pacman run is the gate
 - [[Roadmap — ewe-sync]] — folder-sync hardening, restore polish
 - [[Roadmap — ewe-cast]] — phase C field proof, Chromecast true mirroring
-- [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5 (notch + chat) and P2.6 (notch fixes + the ewe knowledge pack) P2.7 (open apps and folders) and P2.8 (runs what it suggests, on a click) done; P2.9 (Safe, ewe browser, the finder) merged 2026-10-15; not released yet (P7)
+- [[Roadmap — ewe-companion]] — RFC-007 accepted 2026-10-14; P1 done, P2 (Claude Code cards) working end to end, P2.5–P2.10 done; **released**: 0.1.0-beta (2026-10-17, Shaun) and 0.2.0-beta (2026-10-18, wave 2); next P3 (notifications); P7 open (Komble `DISCOVER`, website, QEMU e2e)
+- [[ewe-browser]] — **0.4.0-beta released 2026-10-18** (wave 2); open: screen sharing, external protocol links, USB/HID/serial choosers, Storage Access prompts, extension menu items, a real-touchpad check of the swipe
 - [[Roadmap — ewe-safe]] — **Safe 0.2.0-beta released 2026-10-15** (passkeys, SSH agent, an `op`-like CLI; with ewe 0.28.0-beta and ewe browser 0.2.0-beta); **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); left in phase 2: unlock with login/fingerprint, the Komble listing, site docs
 - [[Roadmap — Distro and Repo]] — repo signing, standalone release
 - [[Open Questions]] — deliberately unresolved
