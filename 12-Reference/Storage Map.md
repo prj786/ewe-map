@@ -94,6 +94,14 @@ flowchart TB
   the agent is on); `ewe-safe ssh enable` writes
   `~/.config/environment.d/90-ewe-safe-ssh.conf` (`SSH_AUTH_SOCK`) and never
   edits `~/.ssh/config`. The private keys stay inside the KDBX file.
+- **Safe's login unlock and keyring** (Safe 0.3.0-beta, 2026-10-18), all
+  in `~/.local/state/ewe/safe/`, `0600`, never synced: `login.key` (W under
+  Argon2id of the login password), `master.wrap` (the master password under
+  W, only while login unlock is on), `keyring.safe` + `keyring.index` and
+  the marker `keyring.on` (only after the parked `keyring adopt`). The
+  carrier is one item in gnome-keyring's `login` keyring ("Safe — unlock key
+  for this computer", `application=ewe-safe`). Cards and addresses live in
+  the KDBX file like every item.
 - **ewe browser** keeps its profile in `~/.config/ewe-browser/` (not
   `ewe.conf`). Synced through the account: `ewe/browser/bookmarks.json`,
   `history.json` (with clear records since 0.2.0-beta), `settings.json`,

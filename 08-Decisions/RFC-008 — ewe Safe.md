@@ -23,6 +23,11 @@ list, and S8 lets the companion act — see "Amendment 2026-10-15" below.
 Released the same day as Safe 0.2.0-beta, ewe 0.28.0-beta and ewe browser
 0.2.0-beta; the companion's part was released in ewe-companion 0.1.0-beta (2026-10-17).*
 
+*Amended again 2026-10-18 (owner, heading out: "choose any recommended
+option"): unlock with the login password, the keyring prompt at every start
+fixed, cards and addresses — see "Amendment 2026-10-18" below. Released the
+same day as Safe 0.3.0-beta, ewe 0.31.0-beta and ewe browser 0.5.0-beta.*
+
 ## The idea
 
 One safe, one master password, two kinds of item (**Login**, **Note**), a
@@ -73,6 +78,27 @@ Unchanged: **fill is a click** (nothing fills on page load; a passkey is
 used only after a click in the browser's own UI), and public API is
 additive (rule 4).
 
+## Amendment 2026-10-18 — login unlock, the keyring, cards and addresses
+
+The owner's words: "unlock Safe with my sudo password", "get rid of this
+keyring thing — it asks for the keyring password every time I turn the
+laptop on", "addresses and cards, without ruining users' safety — encrypt
+them in Nextcloud", "full Safe control, good integration with the system",
+and "when I register somewhere it should ask to save a new login". Contract:
+`ewe-safe/docs/SYSTEM.md`. **Status: released 2026-10-18** — ewe-safe #18
+→ **Safe 0.3.0-beta**; ewe #64 → **ewe 0.31.0-beta** (ewe.safe 1.0.1
+vendored); ewe-browser → **ewe browser 0.5.0-beta**; published to `[ewe]`.
+
+| # | decision | why |
+|---|---|---|
+| S14 | **Login unlock is a wrapped key, not polkit.** The master password is sealed on this computer under a random key W (`master.wrap`), and W under Argon2id(the login password) (`login.key`; XChaCha20-Poly1305; `~/.local/state/ewe/safe/`, never synced). Typing the login password opens Safe; five wrong tries → the master password once. Off by default; Settings → Security or `ewe-safe login enable` (checked with `unix_chkpwd`) | works from a user service (the polkit subject problem disappears), needs no policy file, and it is real crypto. Honest limit, said in the UI: Safe **on this computer** is then as strong as the login password; the copy in Nextcloud still needs the master password |
+| S15 | **Safe opens at login by carrying W in gnome-keyring's `login` keyring**, which `pam_gnome_keyring` already unlocks at the greeter (`[safe] unlock_at_login`, default on). Fetching never prompts: a locked `login` just means "type the password later" | no new code in the login path. **Our own PAM module (`pam_ewe_safe.so`) is parked** for the owner's review: a crash there can lock a user out of their desktop, and an agent writing it was stopped twice by a safety filter (`.wt/parked-pam/`) |
+| S16 | **The prompt at every start** was a second keyring (`Default_keyring`, from the 2026-09-03 bug) being the `default`, plus a gnome-keyring crash at boot. **`ewe-safe keyring repair`** copies its items into `login` and points `default` at it; it deletes nothing | fixes the owner's machine with one command; the old keyring stays as a backup |
+| S17 | **Safe as the Secret Service** (`crates/secrets`: plain + dh sessions, prompts, a sealed per-machine `keyring.safe`) is built and tested but **parked**: `keyring adopt` refuses until the login module ships | without a greeter handoff, Safe-as-keyring would ask at every start — the very thing the owner wants gone |
+| S18 | **Cards and addresses are items in the same KDBX** (`ewe.kind = card / address`; Number, Security code, PIN protected; plain field names every KeePass app shows). Summaries carry brand, last 4 and expiry only | the file is encrypted on this computer before it leaves — Nextcloud only ever sees a locked file. The UI says so in one line |
+| S19 | **Filling a card asks for the login (or master) password again**, once per 5 minutes (`confirm`, `[safe] confirm_cards`, default on); never into `http://` pages; the PIN is never filled | like Chrome's card autofill; "don't ruin users' safety" |
+| S20 | **ewe browser offers "Save to Safe?" on every sign-up**, even when Safe is locked ("Unlock and save"); a sign-up saves a new login unless the same host *and* username exist | the old prompt was dropped silently when Safe was locked |
+
 ## How it reads the house rules
 
 - **Rule 6 (nothing else has a sync button):** Safe has no sync button. It
@@ -98,4 +124,6 @@ additive (rule 4).
 > into the shell; never test against the live account's `ewe/` folder or the
 > live keyring — nor the live safe, `~/.ssh` or browser profile. Never trust
 > an origin a page sent (S10), and never call `ssh_confirm` a security
-> boundary (S12).
+> boundary (S12). Never ship a PAM module the owner hasn't reviewed (S15);
+> `unix_chkpwd` reads a NUL-ended password — without the NUL a right
+> password is refused.

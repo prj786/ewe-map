@@ -147,6 +147,36 @@ push that stored the file but whose meta stamp was refused answers `ok`
 with `"warning": "stamp-missing"`. ewe-sync, the shell and ewe-settings read
 `conflict`.
 
+### Safe's protocol additions (Safe 0.3.0-beta, released 2026-10-18)
+
+Still **v1**, everything added (rule 4). Contract: `ewe-safe/docs/SYSTEM.md`;
+decision: [[RFC-008 — ewe Safe]] → Amendment 2026-10-18.
+
+- **Verbs.** `login-status` / `login-enable {login_password, password?}` /
+  `login-disable` (CLI `ewe-safe login status|enable|disable`); `unlock`
+  takes `login_password` instead of `password` (CLI `unlock --login`);
+  `confirm {password | login_password}` → `confirmed_for` (CLI `confirm
+  [--ask] [--login] [--reason TEXT]`); `fields {item_id}` (socket only, for
+  ewe browser: a card's or an address's fields); `convert --from-1password
+  [--dry-run]`; `keyring-status|repair|list|import` (CLI `ewe-safe keyring
+  …`; `adopt|release|unlock|rm` need the parked login module).
+- **Kinds:** `card` and `address` join `login`, `note`, `ssh-key`; the
+  summary gains `card` (`{brand, last4, expiry, holder}`, never the number)
+  and `address` (`{name, line1, city, country}`); `add`/`edit` take `card` /
+  `address` objects (CLI `--card-stdin`, `--holder`, `--expiry`, the address
+  flags); `reveal --field number|security_code|pin`. `status` gains `login`
+  (`{enabled, session_open}`) and `keyring`; `unlock_methods` lists `login`
+  when it is on. The import report gains `cards` and `addresses`.
+- **Error codes:** `not-enabled`, `too-many-tries`, `confirm-needed` (a
+  card's `fields` without a password typed in the last 5 minutes),
+  `no-login-keyring`, `keyring-locked`, `needs-login-module`, `pam-missing`,
+  `not-adopted`; `cancelled` also answers `confirm --ask`.
+- **ewe.conf:** `[safe] unlock_at_login`, `confirm_cards` (bools, default
+  true; ewe 0.31.0-beta).
+- **Files** (never synced, `0600`): `login.key`, `master.wrap`, and — only
+  after the parked adopt — `keyring.safe`, `keyring.index`, `keyring.on`;
+  one carrier item in gnome-keyring's `login` ([[Storage Map]]).
+
 ### Safe's protocol additions (Safe 0.2.0-beta, released 2026-10-15)
 
 `ewe-safe/docs/PROTOCOL.md` stays **v1**: everything below is added, nothing

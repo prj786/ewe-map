@@ -4,7 +4,7 @@
   "generated": "2026-10-18",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.30.0-beta",
+    "ewe_de": "0.31.0-beta",
     "ewe_os": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
@@ -12,7 +12,7 @@
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.18.0-beta",
-    "ewe_browser": "0.4.0-beta",
+    "ewe_browser": "0.5.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
@@ -28,10 +28,10 @@
       "ewe.mail": "1.1.0",
       "ewe.cast": "1.0.1",
       "ewe.dock": "1.1.0",
-      "ewe.safe": "1.0.0",
+      "ewe.safe": "1.0.1",
       "ewe.companion": "0.5.0"
     },
-    "ewe_safe": "0.2.0-beta",
+    "ewe_safe": "0.3.0-beta",
     "ewe_companion": "0.2.1-beta"
   },
   "repos": [
@@ -709,7 +709,7 @@
     }
   },
   "safe_contract": {
-    "status": "released 2026-10-15: Safe 0.2.0-beta (ewe-safe#10-#13 via #14, #15) + ewe 0.28.0-beta (ewe#58, #59); contract ewe-safe/docs/TRIO.md; PROTOCOL.md stays v1 (additive)",
+    "status": "released 2026-10-18: Safe 0.3.0-beta (ewe-safe#18, contract docs/SYSTEM.md: login unlock, keyring repair, cards and addresses) + ewe 0.31.0-beta (ewe#64); before: 2026-10-15 Safe 0.2.0-beta (ewe-safe#10-#13 via #14, #15) + ewe 0.28.0-beta (ewe#58, #59), contract docs/TRIO.md; PROTOCOL.md stays v1 (additive)",
     "reference_syntax": "safe://<folder>/<title>/<field> | safe://<title>/<field> (any folder) | safe:///<title>/<field> (top) | safe://<item-id>/<field>; '/' in a title = %2F; {{ safe://... }} inside text in run/inject",
     "reference_fields": [
       "password",
@@ -724,12 +724,22 @@
     "summary_fields_added": {
       "passkey": "{rp_id, username} or null",
       "ssh": "{public_key, fingerprint, key_type, agent} or null",
-      "kind": "adds ssh-key"
+      "kind": "adds ssh-key (0.2.0), card and address (0.3.0)",
+      "card": "{brand, last4, expiry, holder} or null — never the number, the code or the PIN",
+      "address": "{name, line1, city, country} or null"
     },
     "error_codes_added": [
       "ambiguous",
       "excluded",
-      "unsupported"
+      "unsupported",
+      "not-enabled",
+      "too-many-tries",
+      "confirm-needed",
+      "no-login-keyring",
+      "keyring-locked",
+      "needs-login-module",
+      "pam-missing",
+      "not-adopted"
     ],
     "passkey_format": "KeePassXC 2.7.7+: KPEX_PASSKEY_CREDENTIAL_ID (protected), KPEX_PASSKEY_PRIVATE_KEY_PEM (protected), KPEX_PASSKEY_RELYING_PARTY, KPEX_PASSKEY_USERNAME, KPEX_PASSKEY_USER_HANDLE (protected), KPEX_PASSKEY_FLAG_BE/_BS, tag Passkey",
     "passkey_aaguid": "452b824e-42d3-4324-bc6c-581888ca2851",
@@ -743,10 +753,31 @@
     "ssh_env_file": "~/.config/environment.d/90-ewe-safe-ssh.conf (SSH_AUTH_SOCK for new sessions; ~/.ssh/config never edited)",
     "ewe_conf_keys_added": {
       "safe.ssh_agent": "bool, false until ewe-safe ssh enable",
-      "safe.ssh_confirm": "first-use (default) | every-time | never — noise reduction, not a security boundary"
+      "safe.ssh_confirm": "first-use (default) | every-time | never — noise reduction, not a security boundary",
+      "safe.unlock_at_login": "bool, default true — Safe opens at login when login unlock is on (ewe 0.31.0-beta)",
+      "safe.confirm_cards": "bool, default true — a card fill needs a password typed in the last 5 minutes (ewe 0.31.0-beta)"
     },
     "origin_rule": "the browser decides the origin and RP ID; Safe checks only shapes",
-    "browser_fill": "Safe only since ewe browser 0.4.0-beta (decision 40): no ewe-pass route in the browser; Ctrl+Shift+L, the key and the page menu open Safe's list; password-manager extensions refused before they load (36 Web Store ids, best effort). The desktop's Super+P keeps ewe-pass"
+    "browser_fill": "Safe only since ewe browser 0.4.0-beta (decision 40): no ewe-pass route in the browser; Ctrl+Shift+L, the key and the page menu open Safe's list; password-manager extensions refused before they load (36 Web Store ids, best effort). The desktop's Super+P keeps ewe-pass",
+    "login_unlock": "Safe 0.3.0-beta: master password sealed under W (master.wrap), W under Argon2id(login password; 64 MiB, t=3, p=2) (login.key), XChaCha20-Poly1305, ~/.local/state/ewe/safe/, never synced; checked with unix_chkpwd (NUL-ended stdin) by the CLI/window; 5 tries then the master password; W carried in gnome-keyring's login keyring so Safe opens at login (never prompts). Our own PAM module pam_ewe_safe.so is parked for the owner's review",
+    "keyring": "Safe 0.3.0-beta: ewe-safe keyring status|repair|list|import --dry-run against the running keyring; repair copies other collections into login and points default at login, deleting nothing. Safe's own Secret Service server is built but adopt refuses until the login module ships",
+    "card_fields": "KDBX: custom data ewe.kind = card; Cardholder, Number (protected), Expiry (MM/YYYY), Security code (protected), PIN (protected), Brand; address: Full name, Organization, Address line 1/2, City, Region, Postal code, Country, Phone, Email",
+    "verbs_added_0_3": [
+      "login-status",
+      "login-enable",
+      "login-disable",
+      "confirm",
+      "fields",
+      "convert",
+      "keyring-status",
+      "keyring-repair",
+      "keyring-list",
+      "keyring-import",
+      "keyring-adopt",
+      "keyring-release",
+      "keyring-unlock",
+      "keyring-rm"
+    ]
   },
   "companion_protocol": {
     "status": "P2.9 (ewe-companion#1 + ewe-plugin-companion#1) released in ewe-companion 0.1.0-beta (2026-10-17); wave 2 (ewe-companion#3 + ewe-plugin-companion#3, 0.5.0) released in ewe-companion 0.2.0-beta + ewe 0.30.0-beta (2026-10-18); docs/PROTOCOL.md, additive only",

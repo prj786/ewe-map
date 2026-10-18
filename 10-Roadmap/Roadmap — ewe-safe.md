@@ -47,6 +47,7 @@ Phases, tasks and gates in full: `ewe-safe/PLAN.md` §15. Decisions:
 | 1 ✓ | the engine (conditions C1–C5 from the spike: write guard, own merge, tracked deletes, …): core, places *This computer* + *Nextcloud* (`If-Match`, 412 → merge, offline pending, rollback warning), `ewe-safed`, the CLI, the `safe` ewe-conf domain, provider `ewe` in the Passwords plugin | passed 2026-10-14 (nested Hyprland + XDG sandboxes): Super+P → Enter typed username, Tab, password into kitty; locked picker → Enter → unlock prompt → picker back; Ctrl+L locks; two machines on one mock Nextcloud edit offline, both edits survive; no secret in logs/argv; pykeepass opens the file. Not yet: a real Nextcloud, a real logind session, the units under a real user manager, KeePassXC |
 | 2 ◐ | (released in 0.1.0-beta: the window, Import, the package, the desktop plugin; the ewe browser integration in ewe browser 0.2.0-beta; left: unlock with login/fingerprint (polkit, needs the owner), Komble listing, site docs) the app (Tauri), Emergency Kit, unlock with login/fingerprint (polkit spike first), TOTP, package + ewe-repo + Komble, site docs | a non-terminal user creates, fills, locks, unlocks; a second machine opens the safe |
 | 2++ ◐ | Safe, the browser and the companion (owner 2026-10-15, `docs/TRIO.md`): passkeys (S1, #11), SSH keys + an ssh-agent (S2, #13, ewe#59), a CLI like `op` and `Super+P` without 1Password (S3, #10, ewe-plugin-passwords#3), Safe in ewe browser (B1, ewe-browser#4), the companion's actions (C1, ewe-companion#1) | **released 2026-10-15**: Safe 0.2.0-beta, ewe 0.28.0-beta, ewe browser 0.2.0-beta; the companion's part released in ewe-companion 0.1.0-beta (2026-10-17). Since ewe browser 0.4.0-beta Safe is the browser's only filler ([[Browser Passwords — Safe only]]). Gate: the owner's real test — a passkey on a real site (GitHub), `git push` through Safe's agent, `Super+P` with no 1Password |
+| 2+++ ◐ | Safe and the system (owner 2026-10-18, `docs/SYSTEM.md`): unlock with the login password (S14) + open at login through the `login` keyring (S15), `keyring repair` for the prompt at every start (S16), cards and addresses (S18) with a password confirm before a card fill (S19), ewe browser's sign-up save + card/address fill (S20); ewe-safe#18, ewe#64, ewe.safe 1.0.1 | **released 2026-10-18**: Safe 0.3.0-beta, ewe 0.31.0-beta, ewe browser 0.5.0-beta. **Parked:** our own PAM module (the owner reviews it first, `.wt/parked-pam/`) and Safe as the Secret Service (`keyring adopt` refuses until then). Gate: the owner's `ewe-safe keyring repair` ends the prompt at the next boot; `ewe-safe login enable` → Safe opens at login; a card filled on a real shop |
 | 3 | any WebDAV (guard probe), synced folder (conflict copies merged), SSH, *Move safe…*, the ewe-sync row | a Syncthing conflict ends merged with no files left |
 | 4 | import (1Password, Bitwarden, browsers, KeePass, pass, Proton Pass) and export | a real 1Password export imports with matching counts |
 | 5 | Dropbox and Google Drive through `ewe-auth` | the race test passes against both |
@@ -66,9 +67,21 @@ Phases, tasks and gates in full: `ewe-safe/PLAN.md` §15. Decisions:
   Tauri needs webkit2gtk even to type-check, and the root CI must not.
 - **Every save writes KDBX 4.1**; whether the phone apps read 4.1 is not yet
   checked on a real phone.
-- **polkit and user services:** a process in `user@.service` belongs to no
-  logind session; the unlock check must use the *calling* process as the
-  subject — spike it with `Auth.qml` before building the UI on it.
+- **Login unlock is not polkit** (S14, 2026-10-18): the login password opens
+  a sealed key (`login.key` → `master.wrap`), so polkit's subject problem
+  for user services no longer matters. The login password is checked with
+  `/usr/bin/unix_chkpwd <user> nullok` from the CLI or the window (the
+  daemon's `NoNewPrivileges` blocks the setuid helper) — and the password
+  must end with a **NUL byte** on its stdin, or a right password is refused
+  (`safe_client::chkpwd`).
+- **Safe opens at login without a PAM module of its own** (S15): W rides in
+  gnome-keyring's `login` keyring. The carrier never prompts — a locked
+  `login` means Safe waits for the password. `pam_ewe_safe.so` is parked:
+  never ship it without the owner's review (a crash in a PAM module can
+  lock a user out of the desktop).
+- **dbus-broker doesn't watch service files**: after writing or removing a
+  user D-Bus service file, call `org.freedesktop.DBus.ReloadConfig`; a user
+  file wins over `/usr/share` ("Ignoring duplicate name" in its journal).
 - **Never test against the live account** — XDG sandboxes, the mock WebDAV
   server and `EWE_SAFE_FAKE_KEYRING`, as the `ewe-cloud` tests do.
 - **Passkeys and SSH keys use other apps' formats** (KeePassXC's
