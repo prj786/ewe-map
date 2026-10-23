@@ -29,7 +29,7 @@ default is separate. Decision: [[Decision Index]] row 45,
 | Bar chip per screen, Overview strip numbers, `Shell.workspacesShared` / `Shell.workspaceNumber` | ewe#72 | released |
 | Dock workspace boxes follow the mode | ewe-plugin-dock `c88fdc4` (1.3.0), vendored in ewe#72 | released |
 | Settings → Displays → Workspaces (Separate \| Shared, with ≥ 2 displays) | ewe-settings#21, `v0.20.0-beta` on `14b72a8` | released |
-| Website: shortcuts + schema `[desktop.workspaces]` | prj786.github.io | deployed with the publish |
+| Website: shortcuts + schema `[desktop.workspaces]` | prj786.github.io `c60bb1d` | deployed |
 | Two real monitors (hot-plug, shared sync, the swipe) | owner | open |
 
 ## 0.34.0/0.34.1-beta + Dock 1.2.0/1.2.1 — the Overview spreads your windows (released 2026-10-23)
