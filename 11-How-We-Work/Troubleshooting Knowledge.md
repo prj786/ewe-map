@@ -786,10 +786,20 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   Check `$XDG_CONFIG_HOME/ewe-browser/downloads.json` exists. A download
   stuck "running" after a browser crash clears on the browser's next start
   (it rewrites `progressing` as `interrupted`).
-- **Minimized thumbnails are app icons, not pictures** — the toplevel has
-  no Wayland handle yet (`modelData.wayland`). Hyprland 0.56 does render a
-  window on a hidden special workspace for a toplevel capture (verified in
-  the nested harness).
+- **Minimized tiles are app icons, not pictures** — the toplevel has no
+  Wayland handle yet (`modelData.wayland`), or no frame came within
+  `durDim` (the tile gives up and keeps the icon). Hyprland 0.56 does
+  render a window on a hidden special workspace for a toplevel capture
+  (verified in the nested harness).
+- **A minimized tile changed shape** — Hyprland tiles `special:minimized`
+  like any workspace, so a minimized window is resized as others join it;
+  the tile keeps the aspect captured with its picture (`thumbs[addr].aspect`),
+  never the window's current size.
+- **Restarting only the nested shell** — never find its pid with
+  `pgrep -n -x qs`: that can be the LIVE shell, and `driver.sh down` kills
+  the state file's `QS_PID`. Pick the qs whose environ has the nest's
+  `WAYLAND_DISPLAY` (and `HOME=/tmp/hs-driver/home`). The first click
+  after `vptr` starts is dropped; click again.
 - **Testing pointer moves in the run-ewe nest** — the promo's `vptr`
   (`promo/capture2/vptr`) maps commands onto a 1920×1080 frame whatever the
   output is: scale X by 1920/width and Y by 1080/height, and pass the

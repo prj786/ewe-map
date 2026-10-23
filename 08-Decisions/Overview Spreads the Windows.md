@@ -65,8 +65,10 @@ Reduce motion: nothing flies — the whole stage cross-fades at `durFast`.
 ## Minimize replaces the Pen (same day)
 
 Super+Z **minimizes** (`special:minimized`, never toggled into view);
-Super+Shift+Z brings back the one minimized last; the dock's **Minimized**
-box shows them, a click opens a thumbnail panel ([[Dock Plugin]]). The Pen
+Super+Shift+Z brings back the one minimized last; **each minimized window
+is its own tile in the dock** — its picture with the app's icon, a click
+brings it back, exactly like macOS ([[Dock Plugin]] 1.2.1; the owner turned
+down 1.2.0's group box + thumbnail panel the same day). The Pen
 (`special:pen`, Super+S / grave / Z toggles, Super+Shift+S stash) is gone;
 windows left in it count as minimized. A restored window comes to the
 workspace you are on.

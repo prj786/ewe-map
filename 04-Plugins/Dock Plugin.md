@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-dock` ·
 [github.com/prj786/ewe-plugin-dock](https://github.com/prj786/ewe-plugin-dock)
-· v1.2.0 (in ewe 0.34.0-beta: Minimized + Downloads, the Pen gone; 1.1.0 in 0.25.1) · API 3 · **a first-party
+· v1.2.1 (in ewe 0.34.1-beta: minimized windows as tiles; 1.2.0 in 0.34.0-beta: Minimized + Downloads, the Pen gone; 1.1.0 in 0.25.1) · API 3 · **a first-party
 plugin since 0.25** (was `Dock.qml` + `PinnedApps.qml` / `LauncherPanel`).
 **Not installed on a fresh machine** — a new ewe has no dock until you add
 it; upgraders keep theirs
@@ -25,7 +25,7 @@ A small centred dock at the bottom of the main screen:
 |---|---|
 | `panel` kind — its **own PanelWindows**, namespaces **`quickshell:dock`** and **`quickshell:launcher`** | the dock + the pinned-apps popup (type to search every app; pin badge → `ewe-conf apps.pinned` via `Shell.setPinned`) |
 | dock items | renders `Shell.dockItems` (manifest `dockItem`s) filtered by `Shell.dockItemShown`; click → `Shell.runAction(action, anchor)`; lit while `Shell.isActive(action)` |
-| Minimized (1.2.0) | windows on `special:minimized` (Super+Z) and the retired `special:pen`: glyph + the newest three app icons + `+N`; click → `Minimized.qml`, an AnchoredPopup (`quickshell:minimized`, owner `ewe.dock.minimized`) of thumbnails — one `live: false` capture each, only while it shows; click = back to the current workspace, focused; ✕ drops the capture then closes; "Restore all". Order learnt from `movewindowv2` |
+| minimized windows (1.2.1) | windows on `special:minimized` (Super+Z) and the retired `special:pen`, **one tile each, like macOS's dock** (owner 2026-10-23: "we dont need group there … show actual thumbnails directly in dock"): the window's picture + the app icon on its corner, oldest first, newest at the right; click = back to the current workspace, focused. The picture: ONE `live: false` capture → `grabToImage` at 2× the tile → the capture is dropped (no live capture, no window-sized buffer in the dock); cached by address in `root.thumbs` with its aspect, forgotten when the window returns. The model only changes when the address list does (`minWinsNow` → `minWins`). Order learnt from `movewindowv2`. 1.2.0's group box + `Minimized.qml` panel are gone |
 | Downloads (1.2.0) | `Downloads.qml` watches the ewe browser's `$XDG_CONFIG_HOME/ewe-browser/downloads.json` (FileView; a 5 s re-try only while the file does not exist yet — a watch needs the file); shown while one runs (progress ring, Shapes) or one finished in the last day; click → AnchoredPopup `quickshell:downloads` (open, show in folder via FileManager1, Clear = `~/.local/state/ewe/dock-downloads.json`, local) |
 | Overview | slides out on `Shell.overviewOpen` (local `durFast` close beat), back when the cards have gone; the button calls `Shell.toggleOverview()` |
 | auto-hide | ducks when the workspace has a tiled/fullscreen window; returns at the bottom edge, while any dock popup is open (`Shell.activeCount > 0`), and for a moment after the pointer leaves |
