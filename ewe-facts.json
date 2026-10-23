@@ -5,7 +5,7 @@
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
     "ewe_de": "0.35.0-beta",
-    "ewe_os": "0.13.0-beta",
+    "ewe_os": "0.14.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
     "ewe_sync": "0.14.4-beta",
@@ -610,7 +610,7 @@
     {
       "rfc": "RFC-007",
       "topic": "ewe-companion desktop companion (island plugin + daemon)",
-      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders), P2.8 (runs proposed shell commands on a click), P2.9 (Safe, ewe browser, the finder) and P2.10 (wave 2: site search, more browser, desktop switches, timers, sums, proposals, the CLI knowledge) working; first released 2026-10-17 (ewe-companion 0.1.0-beta, plugin 0.4.0 in ewe 0.29.0-beta), 0.2.0-beta on 2026-10-18 (plugin 0.5.0 in ewe 0.30.0-beta) and 0.2.1-beta the same day (the pack's two-finger swipe direction); P7 open: Komble DISCOVER, website, QEMU e2e; the user-facing name is Shaun (decision 39)"
+      "status": "accepted 2026-10-14; P1, P2, P2.5 (notch + chat groundwork), P2.6 (notch fixes + built-in ewe knowledge pack, ewe-companion/knowledge/), P2.7 (open apps and folders), P2.8 (runs proposed shell commands on a click), P2.9 (Safe, ewe browser, the finder) and P2.10 (wave 2: site search, more browser, desktop switches, timers, sums, proposals, the CLI knowledge) working; first released 2026-10-17 (ewe-companion 0.1.0-beta, plugin 0.4.0 in ewe 0.29.0-beta), 0.2.0-beta on 2026-10-18 (plugin 0.5.0 in ewe 0.30.0-beta) and 0.2.1-beta the same day (the pack's two-finger swipe direction); P7 open: Komble DISCOVER, QEMU e2e (the website page /docs/apps/shaun/ landed 2026-10-23); the user-facing name is Shaun (decision 39)"
     },
     {
       "rfc": "RFC-008",
