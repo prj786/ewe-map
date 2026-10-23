@@ -26,8 +26,10 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+,` | Settings |
 | `Super+N` | toggle Quick Settings |
 | `Super` (tap, release bind) | Overview — the `ewe:overview` Hyprland global shortcut (0.25; bindable in `user.lua`) |
-| `Super+Z` | minimize the focused window (`special:minimized`; the dock's Minimized box) |
+| `Super+Z` | minimize the focused window (`special:minimized`; its own picture tile in the dock, Dock 1.2.1) |
 | `Super+Shift+Z` | bring back the window minimized last, onto this workspace |
+| `Super+1…8` / `Super+Shift+1…8` | workspace N **of the display you are on** / move the window there (and follow) — every display has its own 1, 2, 3 … ([[Workspaces Per Display]]; shared mode: all displays switch together) |
+| `Super+wheel` | the next / previous workspace of this display (scrolling layout: nudge the tape) — decided in Lua, no process per notch |
 | `Super+Shift+C` | Cast to TV — the [[Cast Plugin]]'s manifest keybind (`ewe.cast toggle`) |
 | `Super+P` | password fill picker ([[Passwords Plugin]] plugin) |
 | `Super+Shift+P` | Safe's Quick Access ([[Safe Plugin]] plugin, 0.27) |
@@ -64,9 +66,9 @@ Drag to move · drag edge/resize (see SHORTCUTS.md for the full set).
 
 | fingers | action |
 |---|---|
-| 3, left / right | switch the desktop's workspaces |
+| 3, left / right | switch the workspaces of the display you are on |
 | 3, up | Overview (`qs ipc call overview toggle`) |
-| 3, down | a new empty desktop (never piles up empty ones) |
+| 3, down | a new empty workspace on the display you are on (never piles up empty ones; `workspaces.lua`) |
 | 4, left / right | **only while ewe browser is focused:** its next / previous workspace (`ewe-browser workspace next\|prev`; fingers left → next); nothing elsewhere — ewe 0.30.0-beta, [[Four Fingers — ewe browser's workspaces]] |
 | 2, sideways | inside ewe browser's pages: back / forward — the browser's own gesture, not Hyprland's (with natural scrolling, fingers right = back) |
 

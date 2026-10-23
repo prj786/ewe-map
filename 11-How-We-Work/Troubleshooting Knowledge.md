@@ -783,7 +783,9 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
 - **The dock's Downloads button never appears** although the browser
   downloaded — a FileView cannot watch a file that does not exist yet;
   `Downloads.qml` re-tries every 5 s while `downloads.json` is missing.
-  Check `$XDG_CONFIG_HOME/ewe-browser/downloads.json` exists. A download
+  Check `$XDG_CONFIG_HOME/ewe-browser/downloads.json` exists. **No progress
+  while it runs, only when it ends** — ewe browser older than 0.5.2-beta wrote
+  the file through a trailing debounce (fixed: throttled). A download
   stuck "running" after a browser crash clears on the browser's next start
   (it rewrites `progressing` as `interrupted`).
 - **Minimized tiles are app icons, not pictures** — the toplevel has no
@@ -804,6 +806,23 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   (`promo/capture2/vptr`) maps commands onto a 1920×1080 frame whatever the
   output is: scale X by 1920/width and Y by 1080/height, and pass the
   button (`down left`) explicitly.
+
+## Workspaces on several displays (2026-10-23)
+
+- **A display shows "11" instead of "1"** — something shows a raw Hyprland
+  id; use `Globals.wsNumber(id)` / `Shell.workspaceNumber(id)`
+  ([[Workspaces Per Display]]).
+- **Shared mode: the other display does not follow** — `_G.ewe_workspaces_mode`
+  is not "shared" in the compositor (`generated/user.lua`, then `hyprctl
+  reload`), or the switch never fired `workspace.active`.
+- **Hyprland segfaults on `--verify-config` / at a reload** — an `hl.timer`
+  started from `config.reloaded` (it fires during the first parse, before the
+  event loop). Settle at once there.
+- **Testing two displays without hardware** — in the run-ewe nest
+  `hyprctl output create headless HEADLESS-2` adds one (`output remove` unplugs
+  it); `HS_EXTRA_LUA` appends Lua (e.g. `require` the repo's workspaces.lua
+  with `package.path` set) to the minimal config; Lua can write probe output
+  with `io.open` through `hyprctl eval`.
 
 ## Theming
 
