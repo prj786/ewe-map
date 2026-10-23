@@ -54,6 +54,17 @@ mindmap
       why decisions are a feature
     docs
       install
+      the desktop
+      apps
+        ewe browser
+        Safe
+        Shaun
+        Komble
+        Settings
+      plugins
+        built-in plugins
+        writing
+        api
       shortcuts
       updates
       ewe-conf
@@ -63,6 +74,8 @@ mindmap
       Google OAuth verification
     sitemap.xml
       generated from docs nav
+    docs/add-ons
+      308 to /docs/plugins/built-in
     philosophy
       308 to /how
     sync

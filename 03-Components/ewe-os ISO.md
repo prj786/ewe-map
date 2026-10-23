@@ -9,7 +9,7 @@ up: "[[Home]]"
 # ewe-os — the Distro / ISO
 
 `~/Projects/ewe/ewe-os` · [github.com/prj786/ewe-os](https://github.com/prj786/ewe-os) ·
-**0.13.0-beta** released 2026-10-04 (the ISO for ewe 0.25's plugins, ewe-os#15; distro has its own version line; the DE's `ewe` package has another)
+**0.14.0-beta** released 2026-10-23 (the ISO for ewe 0.35: all 16 plugins in the installer, ewe-os#18; before it 0.13.0-beta on 2026-10-04, the ISO for ewe 0.25's plugins, ewe-os#15; distro has its own version line; the DE's `ewe` package has another)
 
 The distro layer: the **archiso profile** that builds the live/install ISO.
 The DE, apps and packaging live in their own repos — this one turns them
