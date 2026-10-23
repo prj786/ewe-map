@@ -103,7 +103,12 @@ flowchart TB
   for this computer", `application=ewe-safe`). Cards and addresses live in
   the KDBX file like every item.
 - **ewe browser** keeps its profile in `~/.config/ewe-browser/` (not
-  `ewe.conf`). Synced through the account: `ewe/browser/bookmarks.json`,
+  `ewe.conf`). Its `downloads.json` (`{version: 1, entries: [{id, url,
+  filename, path, mime, received, total, speed, status, started, ended}]}`,
+  newest first, ms, ≤ 200, atomic writes ≤ 1/s) is **read by the dock**
+  since Dock 1.2.0 — a cross-repo contract: keep the path and the fields.
+  The dock's "Clear" mark is `~/.local/state/ewe/dock-downloads.json`
+  (`{clearedAt: ms}`, local, never synced). Synced through the account: `ewe/browser/bookmarks.json`,
   `history.json` (with clear records since 0.2.0-beta), `settings.json`,
   and `tabs-<id>.json` per machine (since 0.2.0-beta). See
   [[Browser History — SQLite, synced clear records]]. Since 0.4.0-beta the

@@ -26,7 +26,8 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+,` | Settings |
 | `Super+N` | toggle Quick Settings |
 | `Super` (tap, release bind) | Overview — the `ewe:overview` Hyprland global shortcut (0.25; bindable in `user.lua`) |
-| `Super+Z` | the Pen (stashed windows, `special:pen`) |
+| `Super+Z` | minimize the focused window (`special:minimized`; the dock's Minimized box) |
+| `Super+Shift+Z` | bring back the window minimized last, onto this workspace |
 | `Super+Shift+C` | Cast to TV — the [[Cast Plugin]]'s manifest keybind (`ewe.cast toggle`) |
 | `Super+P` | password fill picker ([[Passwords Plugin]] plugin) |
 | `Super+Shift+P` | Safe's Quick Access ([[Safe Plugin]] plugin, 0.27) |

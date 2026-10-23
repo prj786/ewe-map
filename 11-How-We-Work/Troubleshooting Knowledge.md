@@ -771,6 +771,30 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   passwords") — refused on purpose ([[Browser Passwords — Safe only]]);
   its files stay in `<userData>/Extensions`, not listed in Settings.
 
+## Overview and dock (2026-10-23)
+
+- **Every window shows twice while the Overview flies** — the wallpaper
+  patches under each window's real rectangle are missing or misplaced
+  (`lastIpcObject.at` minus the monitor's `x/y`); see
+  [[Overview Spreads the Windows]].
+- **The Overview's windows re-arrange when the workspace strip opens** —
+  something re-ran the spread with the smaller field; the strip must only
+  scale the card layer (one `Scale` transform), never change the layout.
+- **The dock's Downloads button never appears** although the browser
+  downloaded — a FileView cannot watch a file that does not exist yet;
+  `Downloads.qml` re-tries every 5 s while `downloads.json` is missing.
+  Check `$XDG_CONFIG_HOME/ewe-browser/downloads.json` exists. A download
+  stuck "running" after a browser crash clears on the browser's next start
+  (it rewrites `progressing` as `interrupted`).
+- **Minimized thumbnails are app icons, not pictures** — the toplevel has
+  no Wayland handle yet (`modelData.wayland`). Hyprland 0.56 does render a
+  window on a hidden special workspace for a toplevel capture (verified in
+  the nested harness).
+- **Testing pointer moves in the run-ewe nest** — the promo's `vptr`
+  (`promo/capture2/vptr`) maps commands onto a 1920×1080 frame whatever the
+  output is: scale X by 1920/width and Y by 1080/height, and pass the
+  button (`down left`) explicitly.
+
 ## Theming
 
 - **A colour ignores the accent** — a raw literal in QML; only tokens

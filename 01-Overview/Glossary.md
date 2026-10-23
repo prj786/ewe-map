@@ -34,7 +34,8 @@ Terms as the project itself uses them.
 | **Insomnia** | the user-facing name for "keep awake" (the idle inhibitor); the `ewe.insomnia` add-on. Namespace stays `quickshell:caffeine`. |
 | **`bundle.json`** | `plugins/bundle.json` in the ewe repo — repo, commit, version, `default`, `migrate` for every vendored add-on; written by `scripts/vendor-plugins.sh`. |
 | **migrate marker** | `~/.local/state/ewe/addons-migrated` — a local JSON list of add-on ids `ewe-plugin migrate` has already considered. |
-| **the Pen** | `special:pen` (Super+Z) — ewe's stashed-windows workspace; the dock add-on shows it while something is stashed. |
+| **the Pen** | *retired 2026-10-23* — was `special:pen`, the stashed-windows workspace; replaced by **Minimized**. |
+| **Minimized** | `special:minimized` (Super+Z; Super+Shift+Z brings the last one back) — the dock's Minimized box and its thumbnail panel. |
 | **portal / xdg-desktop-portal** | the sandbox-friendly API for screen capture etc. ewe-cast sources its stream from `ScreenCast`. |
 | **PipeWire** | the media plumbing; ewe-cast's screen stream travels over it. |
 | **Miracast** | Wi-Fi Direct screen mirroring (Samsung etc.). ewe-castd *listens* on RTSP port 7236 and the TV dials in. |
