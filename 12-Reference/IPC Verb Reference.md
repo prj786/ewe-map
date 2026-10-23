@@ -29,7 +29,7 @@ state), `toast` and `welcome` were missing from this sheet. (`cloud`,
 | target | verbs |
 |---|---|
 | `applauncher` | `toggle · show · hide` |
-| `overview` | `toggle · show · hide · find <text>` |
+| `overview` | `toggle · show · hide · find <text>` (`find` opens the **app launcher** with `<text>` since the Overview lost its search, 2026-10-23) |
 | `quicksettings` | `toggle · show · hide · tab <key> · powerdialog` (`tab`: `home wifi bt audio cal notifs` + plugin pages) |
 | `settings` | `toggle · show · hide · pane <n> · pickWallpaper · reload · ping · version` |
 | `store` | `toggle · show · hide` |

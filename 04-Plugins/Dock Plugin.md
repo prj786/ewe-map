@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-dock` ·
 [github.com/prj786/ewe-plugin-dock](https://github.com/prj786/ewe-plugin-dock)
-· v1.1.0 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **a first-party
+· v1.2.0 (in ewe 0.34.0-beta: Minimized + Downloads, the Pen gone; 1.1.0 in 0.25.1) · API 3 · **a first-party
 plugin since 0.25** (was `Dock.qml` + `PinnedApps.qml` / `LauncherPanel`).
 **Not installed on a fresh machine** — a new ewe has no dock until you add
 it; upgraders keep theirs
@@ -19,13 +19,14 @@ it; upgraders keep theirs
 
 A small centred dock at the bottom of the main screen:
 
-`[ sheep → pinned-apps popup ] [ Overview ] [ Komble ] [ plugin dock items: Music, Places … ] | [ the Pen ] [ workspace boxes ]`
+`[ sheep → pinned-apps popup ] [ Overview ] [ Komble ] [ plugin dock items: Music, Places … ] | [ workspace boxes ] | [ Minimized ] [ Downloads ]`
 
 | piece | what |
 |---|---|
 | `panel` kind — its **own PanelWindows**, namespaces **`quickshell:dock`** and **`quickshell:launcher`** | the dock + the pinned-apps popup (type to search every app; pin badge → `ewe-conf apps.pinned` via `Shell.setPinned`) |
 | dock items | renders `Shell.dockItems` (manifest `dockItem`s) filtered by `Shell.dockItemShown`; click → `Shell.runAction(action, anchor)`; lit while `Shell.isActive(action)` |
-| the Pen | `special:pen` (Super+Z) — shown only while something is stashed |
+| Minimized (1.2.0) | windows on `special:minimized` (Super+Z) and the retired `special:pen`: glyph + the newest three app icons + `+N`; click → `Minimized.qml`, an AnchoredPopup (`quickshell:minimized`, owner `ewe.dock.minimized`) of thumbnails — one `live: false` capture each, only while it shows; click = back to the current workspace, focused; ✕ drops the capture then closes; "Restore all". Order learnt from `movewindowv2` |
+| Downloads (1.2.0) | `Downloads.qml` watches the ewe browser's `$XDG_CONFIG_HOME/ewe-browser/downloads.json` (FileView; a 5 s re-try only while the file does not exist yet — a watch needs the file); shown while one runs (progress ring, Shapes) or one finished in the last day; click → AnchoredPopup `quickshell:downloads` (open, show in folder via FileManager1, Clear = `~/.local/state/ewe/dock-downloads.json`, local) |
 | Overview | slides out on `Shell.overviewOpen` (local `durFast` close beat), back when the cards have gone; the button calls `Shell.toggleOverview()` |
 | auto-hide | ducks when the workspace has a tiled/fullscreen window; returns at the bottom edge, while any dock popup is open (`Shell.activeCount > 0`), and for a moment after the pointer leaves |
 

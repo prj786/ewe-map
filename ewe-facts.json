@@ -4,7 +4,7 @@
   "generated": "2026-10-18",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.31.0-beta",
+    "ewe_de": "0.34.0-beta",
     "ewe_os": "0.13.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
@@ -27,9 +27,10 @@
       "ewe.phone": "1.0.1",
       "ewe.mail": "1.1.0",
       "ewe.cast": "1.0.1",
-      "ewe.dock": "1.1.0",
-      "ewe.safe": "1.0.1",
-      "ewe.companion": "0.5.0"
+      "ewe.dock": "1.2.0",
+      "ewe.safe": "1.1.0",
+      "ewe.companion": "0.5.0",
+      "ewe.slack": "0.3.0"
     },
     "ewe_safe": "0.3.0-beta",
     "ewe_companion": "0.2.1-beta"

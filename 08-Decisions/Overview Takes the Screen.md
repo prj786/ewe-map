@@ -8,6 +8,10 @@ up: "[[Decision Index]]"
 
 # Overview Takes the Screen
 
+> **2026-10-23:** the Overview was rebuilt — see [[Overview Spreads the
+> Windows]]. The full-screen rule, the bar/dock slide and the capture build
+> guards below still hold; the timeline, the search field and the pager do not.
+
 **Decided 2026-09-21.** The Overview takes the whole screen, wallpaper first.
 This reverses the earlier read that the Overview was a *mode of the desktop*
 — that the bar and dock stayed put and the cards sat under a bar-shaped
