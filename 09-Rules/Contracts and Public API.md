@@ -107,7 +107,8 @@ too (users bind it in `user.lua`).
 
 | | member |
 |---|---|
-| read | `apiVersion` (3) · `overviewOpen` `quickSettingsOpen` `lowPower` `onBattery` `locked` `dnd` · `bottomInset` `bottomReserved` `dockPresent` · `dockPrefs {enabled, autohide, iconSize}` · `pinnedApps` · `activeCount` · `dockItems` · `primaryScreenName` · `popupsClosing` |
+| read | `apiVersion` (3) · `overviewOpen` `overviewCover` (0.34) `workspacesShared` (0.35) `quickSettingsOpen` `lowPower` `onBattery` `locked` `dnd` · `bottomInset` `bottomReserved` `dockPresent` · `dockPrefs {enabled, autohide, iconSize}` · `pinnedApps` · `activeCount` · `dockItems` · `primaryScreenName` · `popupsClosing` |
+| call (0.35) | `workspaceNumber(id)` — a Hyprland workspace id as the number the user sees (each display owns ten ids; 11 → 1). A plugin never shows a raw id ([[Workspaces Per Display]]) |
 | call | `toast(text, kind)` · `openQuickSettings(tab)` `closeQuickSettings()` · `openSettings(page)` `openStore(page)` (`komble --<page>`, e.g. `addons`) · `launch(desktopId)` `focusApp([classes])` · `registerAction(name, fn)` `runAction(name, anchor)` · `setActive(name, on)` `isActive(name)` · `setDockItemShown(id, on)` `dockItemShown(id)` · `setBottomInset(id, px, reserved)` · `setPinned(id, on)` · `anchorFor(item, window)` → `{screen, x, y, edge, item}` · `toggleOverview()` · `closePopups(exceptId)` · **3.2:** `setSetting(pluginId, key, value)` (one of the plugin's own declared settings, live, through `ewe-plugin set`) |
 | signal | `aboutToSleep()` (logind bridge) · `resumed()` (Resume step 6) |
 

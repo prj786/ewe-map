@@ -33,6 +33,10 @@ schema = 1
   autohide = false               #   keys); `migrate` still reads `enabled`; nothing writes
   icon_size = "medium"
 
+[desktop.workspaces]             # 0.35, domain `workspaces` ([[Workspaces Per Display]])
+  mode = "separate"              # separate (each display its own 1, 2, 3 …) | shared (one set, switching one switches all)
+                                 #   → user-theme.json workspacesMode + `_G.ewe_workspaces_mode = "shared"` in user.lua; hyprctl reload, no theme rebuild
+
 [desktop.layout]                 # ← user.lua (ewe-conf set desktop.layout)
 [desktop.input]                  # ← input.lua + input-devices.json (ewe-conf set desktop.input)
 [desktop.wallpaper]              # ← wallpapers.conf

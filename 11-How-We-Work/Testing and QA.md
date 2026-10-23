@@ -43,6 +43,7 @@ it.
 | plugin seed/install/migrate/remove/keybinds + widget host (61 checks at the 0.25 pre-carve commit) | `ewe/tests/ewe-plugin-test.sh` |
 | global shortcuts (portal; `ewe:*` ignored, 12 checks) | `ewe/tests/ewe-globalshortcuts-test.sh` |
 | X11 scale at login (9 checks) | `ewe/tests/x11-scale-test.sh` |
+| workspaces per display: `workspaces.lua` against a fake `hl` + the `desktop.workspaces.mode` key (21 checks) | `ewe/tests/ewe-workspaces-test.sh` |
 | logind bridge (buffered reads, 17 checks) | `ewe/tests/logind-bridge-test.py` |
 | shell suite (17) | `ewe/tests/` |
 | plugins' own logic | `test.sh` in `ewe-plugin-{sysmon,cast,phone,mail,dock,passwords}` (sample.sh contract 18 checks; cast scripts vs fake tools; bridge framing; mail compat contract; dock manifest + Rule 8 sweep) |

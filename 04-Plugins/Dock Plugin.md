@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-dock` ·
 [github.com/prj786/ewe-plugin-dock](https://github.com/prj786/ewe-plugin-dock)
-· v1.2.1 (in ewe 0.34.1-beta: minimized windows as tiles; 1.2.0 in 0.34.0-beta: Minimized + Downloads, the Pen gone; 1.1.0 in 0.25.1) · API 3 · **a first-party
+· v1.3.0 (`c88fdc4`, in ewe 0.35.0-beta: workspace boxes per display: the focused display's own, or one per number when shared — [[Workspaces Per Display]]; 1.2.1 in ewe 0.34.1-beta: minimized windows as tiles; 1.2.0 in 0.34.0-beta; 1.1.0 in 0.25.1) · API 3 · **a first-party
 plugin since 0.25** (was `Dock.qml` + `PinnedApps.qml` / `LauncherPanel`).
 **Not installed on a fresh machine** — a new ewe has no dock until you add
 it; upgraders keep theirs
