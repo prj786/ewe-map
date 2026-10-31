@@ -24,6 +24,7 @@ flowchart TB
     end
     subgraph STATE["~/.local/state/ewe"]
         SYNC["sync.json — the sync record (ETag) = the conflict rule"]
+        FOLD["ewe-sync.json — folder state (paths, pauses, runs) ·<br/>sync-folders.json — the connected folders, for every app ·<br/>sync-now — the Sync now nudge · nextcloud-app/ (2026-10-31)"]
         BOOTS["plugin-boots.json — crash guard counter"]
         MIGR["addons-migrated — JSON list of add-on ids<br/>already considered (0.25, local, never synced)"]
         PSTATE["plugins/<id>/ — a plugin's own stateDir (0.25)"]

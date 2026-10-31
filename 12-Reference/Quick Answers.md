@@ -50,6 +50,8 @@ checking here, it's probably guessing.**
 | Can I put a secret in ewe.conf? | Never — it syncs to the cloud; keyring only; redesign the feature | [[Rules of the House]] · [[RFC-001 — The One File]] |
 | How do sync conflicts resolve? | The server's `If-Match` on the last-seen ETag: 412 = remote newer | [[Account and Sync]] · [[EWE-CONF Schema Reference]] |
 | What does the account layout look like remotely? | `ewe/ewe.conf`, `ewe/ewe.conf.meta.json`, `ewe/machines/<name>.json` | [[Contracts and Public API]] |
+| How does a new computer get everything back? | Sign in; ewe-sync's Overview shows **Welcome back** (what comes back) → *Bring everything back*: the one file, the folders (shared list), the browser (follows the account), Safe | [[Sync — sign in once, everything follows]] |
+| Which folders are synced, and by what? | `~/.local/state/ewe/sync-folders.json` (or `ewe-sync --status`) — every engine, including the Nextcloud desktop app's folders | [[Contracts and Public API]] |
 | Who may sync? | Only ewe-sync (and ewe-conf push/pull underneath) — no other sync buttons | [[RFC-006 — ewe-sync App]] |
 
 ## Architecture questions

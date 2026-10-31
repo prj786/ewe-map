@@ -8,12 +8,45 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-10-23**. Released: **ewe-os 0.14.0-beta** (2026-10-23, the ISO for ewe 0.35, with the website refresh — below); before it **ewe (DE) 0.35.0-beta** with **Dock 1.3.0** and **ewe-settings 0.20.0-beta** (2026-10-23, the owner's ask: every display its own workspaces, like macOS, or one shared set — below); before it **ewe browser 0.5.2-beta** (2026-10-23, the dock's Downloads ring moves while a download runs); before it **ewe (DE) 0.34.1-beta** with **Dock 1.2.1** (2026-10-23, the owner's follow-up: each minimized window is its own picture tile in the dock, like macOS — below); before it **ewe (DE) 0.34.0-beta** with **Dock 1.2.0** (2026-10-23, the owner's ask: a Mission-Control Overview, Super+Z minimize with a Minimized section in the dock, ewe browser downloads in the dock — below); before it **ewe 0.33.1-beta** (2026-10-21, sign-in links open your browser), **0.33.0-beta** (2026-10-20, ewe-conf sync merges key by key), **0.32.1-beta** and **0.32.0-beta** (2026-10-20, ewe browser back in the launcher; the Slack plugin); before them **ewe (DE) 0.31.0-beta** with **Safe 0.3.0-beta** and **ewe browser 0.5.0-beta** (2026-10-18, the owner's ask: unlock Safe with the login password, no more keyring prompt at every start, cards and addresses, every sign-up asks to save — below); before it **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-10-31**. Released: **ewe-os 0.15.0-beta**, **ewe 0.37.0-beta**, **ewe-sync 0.15.0-beta** and **ewe browser 0.6.0-beta** (2026-10-31, the owner's ask: sign in once and everything follows — below); before them **ewe 0.36.0-beta** (2026-10-27, the Alt+Tab switcher, Monocle) and **0.35.2-beta** (2026-10-26); before them **ewe-os 0.14.0-beta** (2026-10-23, the ISO for ewe 0.35, with the website refresh — below); before it **ewe (DE) 0.35.0-beta** with **Dock 1.3.0** and **ewe-settings 0.20.0-beta** (2026-10-23, the owner's ask: every display its own workspaces, like macOS, or one shared set — below); before it **ewe browser 0.5.2-beta** (2026-10-23, the dock's Downloads ring moves while a download runs); before it **ewe (DE) 0.34.1-beta** with **Dock 1.2.1** (2026-10-23, the owner's follow-up: each minimized window is its own picture tile in the dock, like macOS — below); before it **ewe (DE) 0.34.0-beta** with **Dock 1.2.0** (2026-10-23, the owner's ask: a Mission-Control Overview, Super+Z minimize with a Minimized section in the dock, ewe browser downloads in the dock — below); before it **ewe 0.33.1-beta** (2026-10-21, sign-in links open your browser), **0.33.0-beta** (2026-10-20, ewe-conf sync merges key by key), **0.32.1-beta** and **0.32.0-beta** (2026-10-20, ewe browser back in the launcher; the Slack plugin); before them **ewe (DE) 0.31.0-beta** with **Safe 0.3.0-beta** and **ewe browser 0.5.0-beta** (2026-10-18, the owner's ask: unlock Safe with the login password, no more keyring prompt at every start, cards and addresses, every sign-up asks to save — below); before it **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
+
+## 2026-10-31 — sign in once, everything follows (ewe-sync 0.15, ewe browser 0.6, ewe 0.37, ewe-os 0.15)
+
+The owner's ask: *log in and get everything you had before; set up the
+folders to sync and see every connected folder, in ewe and in ewe browser;
+the installer: sign in or skip, bring the plugins back and let me turn on
+others.* [[Sync — sign in once, everything follows]] (decision 46).
+ewe-sync#8 + #9, ewe-browser#17, ewe#76, ewe-os#19, then the `[ewe]`
+publish and the ISO. Research on the owner's own machine found three engines
+on `~/Nextcloud` (the Nextcloud desktop app, ewe-files' failing mount,
+ewe-sync's offer), a folder list that never travelled, one-way "on change",
+and a default-off browser switch.
+
+- **ewe-sync 0.15.0-beta**: the Overview, *Bring everything back*, Folders
+  (suggestions, a folder chooser, an account picker, pause per computer, the
+  Nextcloud app shown and taken over), remote-change polling,
+  `sync-folders.json`, GTK bookmarks, `--pane/--add-folder/--status`;
+  `tests/e2e-nextcloud.sh` against a real Nextcloud (podman) passes.
+- **ewe browser 0.6.0-beta**: sync follows the account; Files shows Synced
+  folders, a chip, *Keep in your account…*.
+- **ewe 0.37.0-beta**: `sync.folders` shared in the merge; ewe-files never
+  mounts over files; no second restore offer.
+- **ewe-os 0.15.0-beta**: the installer's *Your ewe account* step (the app
+  password into the new login keyring, the restore at install), the
+  backup's plugins pre-checked.
+- **Release snag:** ewe-sync's first `v0.15.0-beta` package build failed
+  (Tauri npm/crate minor mismatch after adding the dialog plugin; PR CI
+  never runs `tauri build`) — fixed in ewe-sync#9 with a CI check, the
+  unreleased tag moved. [[Troubleshooting Knowledge]]
+- **Open:** a QEMU pass of the 0.15 ISO (no sudo/archiso on the build
+  host); the takeover against a running Nextcloud app on the owner's
+  machine; a real second computer on metal; the TUI installer has no
+  account step.
 ## ewe-os 0.14.0-beta + the website refresh (released 2026-10-23)
 
 The owner's ask (2026-10-23): "update website … even limitations, because we
