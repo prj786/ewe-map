@@ -25,7 +25,8 @@ motion follow ewe live with no theming hook.
 | ewe piece | what ewe browser does with it |
 |---|---|
 | `theme-tokens.json` | the whole look, watched live (an atomic rename by ewe-conf is picked up) |
-| `ewe-cloud` | Nextcloud WebDAV sync of bookmarks, history and portable settings (`ewe/browser/`) |
+| `ewe-cloud` | Nextcloud WebDAV sync of bookmarks, history and portable settings (`ewe/browser/`) — under ewe it **follows the account** (signed in and `sync.browser` not false; `sync/ewe-link.ts`), no toggle or Sync now of its own (rule 6); runs a cycle when `~/.local/state/ewe/sync-now` changes (2026-10-31) |
+| ewe-sync | `sync-folders.json` → the file manager's **Synced** group, state glyphs, the "In your account" chip; *Keep in your account…* runs `ewe-sync --add-folder <path>`, the chip and Settings run `ewe-sync --pane …` (2026-10-31) |
 | `ewe-files` / `ewe-drive` | Nextcloud and Google Drive places in the file manager, *Connect* runs `… mount` |
 | Safe — **the only password filler** since 0.4.0-beta ([[Browser Passwords — Safe only]]) | `ewe-safe.sock`: `match` for the suggestion list, `passkey-*` for WebAuthn; `ewe-safe unlock --ask`, `ewe-safe-app`; Ctrl+Shift+L, the address field's key and the page menu open Safe's list. Up to 0.3.0-beta Ctrl+Shift+L went through `ewe-pass` (the [[Passwords Plugin]]'s tool, any manager) — removed; password-manager extensions are refused |
 | `ewe-conf set apps.startup` | "Start with ewe" adds `ewe-browser --background` |

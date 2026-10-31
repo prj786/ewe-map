@@ -11,9 +11,10 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-sync` · [github.com/prj786/ewe-sync](https://github.com/prj786/ewe-sync) ·
 Tauri v2 + Svelte 5 · RFC-006 (drafted under the working name **Flock**)
 
-**Your ewe account, in one place** — the Nextcloud account, the one file
-(`ewe.conf`), the machines that share it, and the folders that sync with it.
-A tray icon shows the state; the window is four panes.
+**Your ewe account, in one place** — sign in once and everything follows:
+settings and apps (the one file, `ewe.conf`), the browser, passwords (Safe)
+and folders, on every computer you sign in to. The bar shows the state; the
+window opens on the Overview ([[Sync — sign in once, everything follows]]).
 
 **Division of labour:** Komble installs apps and records them in the one
 file; ewe-settings edits the one file; **ewe-sync moves the one file and
@@ -23,15 +24,18 @@ your folders between your machines**. Nothing else in ewe has a sync button.
 
 | pane | what |
 |---|---|
+| Overview | (2026-10-31) everything the account keeps: settings & apps, browser, passwords, folders — state + this computer's switches (`sync.enabled`, `sync.browser`), one Sync now for everything; **Bring everything back** on a new computer (`restore_preview` reads the backup with `ewe-conf pull --out` first); the folders worth keeping on the first computer |
 | Account | sign in to *your* Nextcloud (any provider, or your own server) through the server's own login page; who you are, storage; sign out; links to provider signup pages |
 | Mail | any IMAP mailbox — add, change, remove, check unread. Password → keyring; only host/user/port reach `ewe.conf` |
 | Google | the optional extra: where your own `oauth-client.json` goes, connect/disconnect, Gmail + Drive state. ewe ships no Google client |
-| This machine | the one file: backup saved by which machine and when, last sync, auto-sync switch, Sync now / Back up / Restore |
+| Settings & apps | (was "This machine"; route id `machine`) the one file: backup saved by which machine and when, last sync, auto-sync switch, Sync now / Back up / Restore |
 | Machines | every machine that backed up to the account, with its ewe version and app count |
-| Folders | which folders sync where: two-way (Nextcloud engine) or one-way copies; on change / on a timer / at login; conflicts resolved in place |
+| Folders | every connected folder: ewe-sync's (open, sync now, pause on this computer, change, stop syncing), suggested user folders (one click), the Nextcloud app's (*Let ewe-sync take over*), the whole account (`~/Nextcloud`); a picker for the account's folders; conflicts resolved in place |
 
-Tray: state icon (idle · syncing · conflict · offline · signed out), menu
-with Sync now · Pause auto-sync · Open ewe-sync · Quit.
+No tray icon since 0.13: the bar's sync glyph (syncing · needs you · offline)
+is fed by `qs ipc call sync state`; a click opens the window. Command line:
+`--hidden`, `--pane <id>`, `--add-folder <path>` (both reach a running
+app), `--status` (prints `sync-folders.json`), `--check`.
 
 **The conflict banner** (This machine: *Restore… / Push anyway*) and the
 tray's conflict state key on `sync-status`'s **`conflict`** (an older
@@ -50,6 +54,8 @@ flowchart LR
     SY -->|"folder engines"| NCC["nextcloudcmd (two-way)<br/>rclone copy (one-way)"]
     SY -->|"keyring playbook"| AUTH["ewe-auth keyring-reset"]
     SY -->|"keep the shell card in step"| QS["qs ipc call cloud refresh"]
+    SY -->|"sync-folders.json · sync-now"| BR["ewe browser"]
+    SY -->|"ewe-safe status / sync"| SF["Safe"]
 ```
 
 Nothing needs root; there is no privileged helper. Storage layout and

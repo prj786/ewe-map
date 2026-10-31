@@ -843,6 +843,33 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   per-frame brightness (Chromium never shows it). ewe-settings and
   ewe-sync carry the same `.ewe-dialog[data-state="open"]` fade.
 
+## ~/Nextcloud "configured, not mounted"; files sync twice (2026-10-31)
+
+**Seen:** `ewe-files status` → `configured: true, mounted: false` forever,
+while `~/Nextcloud` was full of files — the official Nextcloud desktop app
+(`nextcloud --background`, its own autostart) was syncing it, and rclone
+refuses a non-empty mountpoint. ewe-sync's old "Get started" card would have
+put a THIRD engine there. **Now:** `ewe-files` reports `occupied`/`synced`
+and never mounts over files; ewe-sync lists the app's folders as connected,
+refuses a pair on them, and *Folders → Let ewe-sync take over* quits the app,
+moves its autostart entry to `~/.local/state/ewe/nextcloud-app/` and syncs
+the same folders. Check `~/.local/state/ewe/sync-folders.json` — every
+engine is in it. [[Sync — sign in once, everything follows]]
+
+## A Tauri app's release build fails "Found version mismatched Tauri packages" (2026-10-31)
+
+**Seen:** ewe-sync's `v0.15.0-beta` package build (makepkg → `npm run tauri
+build`) failed while the PR's CI was green. `npm install
+@tauri-apps/plugin-dialog` had let the `^` ranges float: `@tauri-apps/api`
+2.12.4 against the `tauri` crate 2.11.5, `plugin-dialog` 2.8.4 against
+`tauri-plugin-dialog` 2.7.3 — `tauri build` refuses any major.minor
+difference, and PR CI only runs `npm run build` + clippy. **Fix:** pin
+`@tauri-apps/*` with `~` to the crates' major.minor (ewe-sync#9); ewe-sync's
+CI now checks package-lock vs Cargo.lock. Before tagging a Tauri app after
+adding a plugin, run the release build itself (`npm run tauri build --
+--no-bundle`) — the dev build skips the check. The unreleased tag was moved
+to the fix (no release had been made).
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

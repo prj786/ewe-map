@@ -34,6 +34,17 @@ flowchart TB
     B <--> F3
 ```
 
+## A new computer — one click (2026-10-31)
+
+Sign in (Welcome or ewe-sync). If the account holds a backup and this
+computer never synced, ewe-sync's Overview shows **Welcome back** with what
+comes back — the machine and date, the apps Komble will offer, the folders
+with their download sizes, the browser, Safe — and **Bring everything
+back**: pull + apply the one file, auto-sync on, the folders it lists start
+at once, the browser and Safe are nudged. The browser needs nothing: it
+follows the account by itself. On the first computer the Overview offers the
+user folders worth keeping instead. [[Sync — sign in once, everything follows]]
+
 ## The one-file half
 
 - **Backup** — `ewe-conf push`: WebDAV PUT with `If-Match`. The server
@@ -50,8 +61,10 @@ flowchart TB
 | two-way | `nextcloudcmd` (Nextcloud client's headless engine) | syncs both directions; conflicts in place |
 | upload-only / download-only | `rclone copy` | adds and updates, **never deletes** |
 
-Triggers: on change (inotify + 5 quiet seconds) · every N minutes · at
-login. Conflicts land as `name (conflicted copy <date>).ext`; *Keep mine* /
+Triggers: automatic (the local folder changed — inotify + 5 quiet seconds —
+or the account folder's ETag moved, polled every 45 s; plus a catch-up after
+start) · every N minutes · at login. The folder LIST is shared in the merge,
+so every computer you sign in to gets it. Conflicts land as `name (conflicted copy <date>).ext`; *Keep mine* /
 *Keep theirs* resolves.
 
 ## The machines pane

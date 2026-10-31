@@ -59,8 +59,10 @@ schema = 1
   server = "cloud.example.org"
   user = "me"
   folder = "ewe"
-  enabled = true
-  [sync.folders]                 # ewe-sync folder pairs: local, remote, mode (two-way|upload|download), trigger, interval
+  enabled = true                 # per machine (merge: LOCAL) — like provider/server/user/folder
+  browser = true                 # per machine: this computer syncs its browser (absent = true; 2026-10-31)
+  [sync.folders]                 # (an array of tables) ewe-sync folder pairs: local, remote, mode (two-way|upload|download), trigger (change|interval|login), interval, exclude, hidden
+                                 #   SHARED in `ewe-conf sync` since 2026-10-31 — every computer gets the list
 
 [safe]                           # Safe (RFC-008) — read by ewe-safed; `ewe-conf set safe.*` applies nothing
   place = "nextcloud"            # local | nextcloud | webdav | folder | sftp | dropbox | gdrive (enum)
