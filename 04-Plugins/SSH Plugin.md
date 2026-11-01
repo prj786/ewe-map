@@ -36,6 +36,10 @@ saved for that host (paste-once editor; `SSH_HOST`, `SOCKS_PORT` default
 - No settings, no IPC target of its own: `qs ipc call quicksettings tab
   ssh` / `Shell.openQuickSettings("ssh")`. Requires `ssh`; kitty hard-coded.
 - One `qmldir` singleton `Ssh` behind the three entry points.
+- **1.1.0 (branch `feat/safe-gate`, not vendored yet):** with Safe installed
+  the page starts with "Keys come from Safe" → `ewe-safe-app --ssh`
+  (Safe's SSH page). Safe is the gate, so the plugin's terminals and
+  tunnels already use Safe's agent ([[RFC-008 — ewe Safe]] S21, S28).
 
 > **Build guard:** hiding a tile = hide the **host slot**
 > (`parent.visible`), never `Tile.visible` — the home grid collapses empty

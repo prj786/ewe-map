@@ -75,8 +75,10 @@ schema = 1
   clipboard_clear_seconds = 30
   generator_length = 20
   generator_words = 5
-  ssh_agent = false              # Safe's SSH agent on (`ewe-safe ssh enable`) — ewe#59, since 0.28.0-beta
+  ssh_agent = false              # Safe's SSH agent on (`ewe-safe ssh enable`) — ewe#59, since 0.28.0-beta;
+                                 #   SHARED: since Safe 0.4.0-beta every computer turns its SSH gate on/off from it (GATE.md S21)
   ssh_confirm = "first-use"      # first-use | every-time | never — noise reduction, not a boundary (ewe#59)
+  git_sign = ""                  # SHA256 fingerprint of the key that signs Git commits (`ewe-safe ssh sign-commits`; Safe 0.4.0-beta, S25)
                                  # never here: the safe, any password, the per-machine unlock-with-login key
 [remote]                         # Remote (RFC-009) — LOCAL_ONLY: sharing THIS computer never travels
   sharing = false                # bool; written by `ewe-remote share on|off` (the unit's state is the truth)

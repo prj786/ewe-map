@@ -106,8 +106,15 @@ flowchart TB
   `ssh-public.json` in `~/.local/state/ewe/safe/` lets the agent list keys
   while the safe is locked (public keys and titles only, written only while
   the agent is on); `ewe-safe ssh enable` writes
-  `~/.config/environment.d/90-ewe-safe-ssh.conf` (`SSH_AUTH_SOCK`) and never
-  edits `~/.ssh/config`. The private keys stay inside the KDBX file.
+  `~/.config/environment.d/90-ewe-safe-ssh.conf` (`SSH_AUTH_SOCK`). The
+  private keys stay inside the KDBX file. **Since Safe 0.4.0-beta (the SSH
+  gate, building):** two lines on top of `~/.ssh/config` (`Include
+  ~/.ssh/ewe-safe/config`; a one-time `~/.ssh/config.before-safe`) and
+  Safe's own `~/.ssh/ewe-safe/` (`config` = `Host *` → Safe's agent +
+  `known_hosts`; `key-<tag>.pub` public key files; `known_hosts` of GitHub,
+  GitLab, Bitbucket, Azure DevOps, Codeberg; `allowed_signers` for commit
+  signing); `ssh-used.json` (last use per key: fingerprint, time, program)
+  in `~/.local/state/ewe/safe/`. Rebuilt on every computer from the safe.
 - **Safe's login unlock and keyring** (Safe 0.3.0-beta, 2026-10-18), all
   in `~/.local/state/ewe/safe/`, `0600`, never synced: `login.key` (W under
   Argon2id of the login password), `master.wrap` (the master password under

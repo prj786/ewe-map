@@ -625,8 +625,15 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   `IdentityAgent` line in `~/.ssh/config` (1Password's
   `~/.1password/agent.sock` on the owner's machine) wins over
   `SSH_AUTH_SOCK`. `ewe-safe ssh status` lists them (`ssh_config_agents`);
-  replace that line with the one `ewe-safe ssh enable` prints. Safe never
-  edits `~/.ssh/config`.
+  replace that line with the one `ewe-safe ssh enable` prints. **Since Safe
+  0.4.0-beta (building, `docs/GATE.md`)** `ssh enable` puts Safe's gate on
+  top of `~/.ssh/config` (first value wins) and `ssh takeover` cleans the
+  ewe.conf hosts — the owner's `work`/`work-proxy` had exactly this.
+- **"Too many authentication failures" with Safe's agent** — the agent
+  offers every key and the server stops after `MaxAuthTries` (6). Point the
+  host at one key: `IdentityFile ~/.ssh/ewe-safe/key-<tag>.pub` +
+  `IdentitiesOnly yes` (`ewe-safe ssh host set <alias> --key <id>`; Connect
+  does it). Safe 0.4.0-beta.
 - **After upgrading Safe the agent's socket is missing** — the socket unit
   gained a second `ListenStream`: `systemctl --user daemon-reload &&
   systemctl --user restart ewe-safe.socket` (this locks the safe). The

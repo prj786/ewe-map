@@ -787,7 +787,8 @@
       "keyring-locked",
       "needs-login-module",
       "pam-missing",
-      "not-adopted"
+      "not-adopted",
+      "conflict"
     ],
     "passkey_format": "KeePassXC 2.7.7+: KPEX_PASSKEY_CREDENTIAL_ID (protected), KPEX_PASSKEY_PRIVATE_KEY_PEM (protected), KPEX_PASSKEY_RELYING_PARTY, KPEX_PASSKEY_USERNAME, KPEX_PASSKEY_USER_HANDLE (protected), KPEX_PASSKEY_FLAG_BE/_BS, tag Passkey",
     "passkey_aaguid": "452b824e-42d3-4324-bc6c-581888ca2851",
@@ -798,12 +799,13 @@
     "ssh_key_format": "KeeAgent: OpenSSH private key attachment + KeeAgent.settings; passphrase in the password; public_key + fingerprint plain fields; custom data ewe.kind = ssh-key",
     "ssh_agent_socket": "$XDG_RUNTIME_DIR/ewe-safe-ssh.sock (0600, SO_PEERCRED; second ListenStream of ewe-safe.socket)",
     "ssh_public_cache": "~/.local/state/ewe/safe/ssh-public.json (public keys + titles, 0600, only while the agent is on, never synced)",
-    "ssh_env_file": "~/.config/environment.d/90-ewe-safe-ssh.conf (SSH_AUTH_SOCK for new sessions; ~/.ssh/config never edited)",
+    "ssh_env_file": "~/.config/environment.d/90-ewe-safe-ssh.conf (SSH_AUTH_SOCK for new sessions); until 0.3.x ~/.ssh/config was never edited, since 0.4.0-beta (building) Safe owns two lines on its top (ssh_gate)",
     "ewe_conf_keys_added": {
-      "safe.ssh_agent": "bool, false until ewe-safe ssh enable",
+      "safe.ssh_agent": "bool, false until ewe-safe ssh enable; shared: since 0.4.0-beta every computer turns its SSH gate on/off from it",
       "safe.ssh_confirm": "first-use (default) | every-time | never — noise reduction, not a security boundary",
       "safe.unlock_at_login": "bool, default true — Safe opens at login when login unlock is on (ewe 0.31.0-beta)",
-      "safe.confirm_cards": "bool, default true — a card fill needs a password typed in the last 5 minutes (ewe 0.31.0-beta)"
+      "safe.confirm_cards": "bool, default true — a card fill needs a password typed in the last 5 minutes (ewe 0.31.0-beta)",
+      "safe.git_sign": "SHA256 fingerprint of the commit-signing key, empty = none; shared (Safe 0.4.0-beta, building)"
     },
     "origin_rule": "the browser decides the origin and RP ID; Safe checks only shapes",
     "browser_fill": "Safe only since ewe browser 0.4.0-beta (decision 40): no ewe-pass route in the browser; Ctrl+Shift+L, the key and the page menu open Safe's list; password-manager extensions refused before they load (36 Web Store ids, best effort). The desktop's Super+P keeps ewe-pass",
@@ -825,7 +827,39 @@
       "keyring-release",
       "keyring-unlock",
       "keyring-rm"
-    ]
+    ],
+    "ssh_gate": {
+      "status": "building 2026-11-01 (Safe 0.4.0-beta), contract ewe-safe/docs/GATE.md, RFC-008 S21-S28",
+      "gate": "two lines on TOP of ~/.ssh/config: a comment + 'Include ~/.ssh/ewe-safe/config' (Host * IdentityAgent = Safe's socket; GlobalKnownHostsFile adds ~/.ssh/ewe-safe/known_hosts); first value wins; backup ~/.ssh/config.before-safe once; ssh disable removes only Safe's lines/files",
+      "follows_account": "[safe] ssh_agent and [safe] git_sign are shared in ewe.conf; ewe-safed converges each computer at start and on a settings re-read",
+      "public_key_files": "~/.ssh/ewe-safe/key-<tag>.pub, tag = first 16 chars of the SHA256 fingerprint (+ -> -, / -> _)",
+      "verbs_added": [
+        "ssh-takeover",
+        "ssh-services",
+        "ssh-connect",
+        "ssh-test",
+        "ssh-hosts",
+        "ssh-host-set",
+        "ssh-host-remove",
+        "ssh-sign"
+      ],
+      "services": [
+        "github",
+        "gitlab",
+        "azure-devops (rsa 4096 only)",
+        "bitbucket",
+        "codeberg",
+        "gitea",
+        "azure-vm",
+        "aws",
+        "gcloud",
+        "digitalocean",
+        "hetzner",
+        "server (ssh-copy-id)"
+      ],
+      "owners": "keys + signing = Safe; which agent = Safe (gate); host definitions = ewe-conf [[network.ssh.hosts]]; ewe computers = ewe-remote (per-computer key); service web page = ewe browser",
+      "signing": "git config --global gpg.format ssh, user.signingkey <pub file>, gpg.ssh.program ewe-safe-ssh-sign, commit.gpgsign, tag.gpgsign, gpg.ssh.allowedSignersFile ~/.ssh/ewe-safe/allowed_signers"
+    }
   },
   "companion_protocol": {
     "status": "P2.9 (ewe-companion#1 + ewe-plugin-companion#1) released in ewe-companion 0.1.0-beta (2026-10-17); wave 2 (ewe-companion#3 + ewe-plugin-companion#3, 0.5.0) released in ewe-companion 0.2.0-beta + ewe 0.30.0-beta (2026-10-18); docs/PROTOCOL.md, additive only",
