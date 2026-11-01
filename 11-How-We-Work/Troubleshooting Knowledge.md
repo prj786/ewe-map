@@ -616,6 +616,17 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   gives 8 digits and rejects unpadded base32; Safe computes codes itself
   (`safe_core::otp`).
 
+### SSH hosts from the account — data, never code (ewe-conf, 2026-11-01)
+
+- **A host with `ProxyCommand` (or `LocalCommand`, `Match`, `Include` …)
+  doesn't come back on a second computer** — by design since the SSH-gate
+  security review: `[network.ssh] hosts` travel through the account, so
+  ewe-conf (`ssh_host_clean`, `SSH_NEVER_SYNC`) never adopts, stores or
+  writes an option that runs something, and refuses a host or value with a
+  newline. Your own lines keep them on the computer where you wrote them.
+  Test: `ewe/tests/ewe-conf-network-test.sh` step 7. Branch
+  `docs/safe-ssh-gate` (ewe), not released.
+
 ### Safe — 2026-10-15 (passkeys, SSH agent, CLI; Safe 0.2.0-beta)
 
 - **Saving an edited login in the Safe window does nothing** (0.1.0-beta,

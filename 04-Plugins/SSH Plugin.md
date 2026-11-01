@@ -30,6 +30,9 @@ saved for that host (paste-once editor; `SSH_HOST`, `SOCKS_PORT` default
 - **Install:** Komble → Plugins, or `ewe-plugin install ewe.ssh`.
 - **Stays core:** hosts are *added* in Settings → Network → SSH
   (`ewe-conf` `[network.ssh]` managed block); the plugin only reads them.
+  Since the SSH-gate review (2026-11-01, ewe `docs/safe-ssh-gate`) a synced
+  host is data, never code: no command options (`ProxyCommand` …), no
+  multi-line values ([[Troubleshooting Knowledge]]).
 - **Files kept where they were:** browse scripts in
   `~/.config/quickshell/ssh-browse/<host>.sh` (not `stateDir`, so nothing a
   user saved is lost; not synced, not in `ewe.conf`).
