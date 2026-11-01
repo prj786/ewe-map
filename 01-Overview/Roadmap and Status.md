@@ -48,13 +48,23 @@ product]] (decision 50). No ISO.
 - **ewe Browser 0.8** (ewe-browser#19 `2ab9c8d`): Settings with sections, every
   new tab opens Home (`app://newtab` retired), plain error pages, Undo after
   removing a workspace, window title "ewe Browser".
+- **Follow-ups the same evening** (owner: *"Fix all issues now"*): ewe 0.39.1-beta
+  (ewe#80: the launcher's footer painted square corners over the rounded panel — seen
+  in the new website shot), Komble 0.21.1-beta
+  (`StartupWMClass=komble` — the window class is the binary's name, checked in the
+  nest), ewe Browser 0.8.1-beta (**no application menu**: Electron's default Linux
+  menu kept Window → Minimize on Ctrl+M live, so the page-first mute also minimized;
+  found by running the e2e suite in a headless cage — 73 passed now), Shaun
+  0.2.3-beta (knowledge for 0.39: no rail, System monitor 2.0, Komble's sheet, ewe
+  Settings' page names, ewe Sync's words, the browser's exact Safe labels, the SSH
+  gate), the website's `check-engine` green again (bar = icons + space-xs, Glass
+  material at 80 %), and the home page's pictures reshot with sample data (user
+  "Sam Shepherd", Wi-Fi "Meadow"; kit `.wt/hero-capture/`).
 - **Open:** every app checked only in mocks / the nested shell — a real-desktop
   pass with a pointer; on the owner's box run **Move SSH to Safe** once after
-  updating (else ssh offers Safe's 6 keys first → MaxAuthTries); the site's hero
-  images still show the old names and rail; Shaun's knowledge still describes the
-  old Quick settings rail / Komble Options dialog and quotes "Save to ewe Safe?"
-  (the browser says "Save this login to ewe Safe?"); Komble's `StartupWMClass`
-  may not match its window class (check).
+  updating (else ssh offers Safe's 6 keys first → MaxAuthTries); the light-mode
+  selected nav item is faint and the focus ring is hard to see on ewellow buttons
+  in all four Tauri apps (a design-token call, not changed).
 
 ## 2026-11-01 — the network says what's true; share this computer (ewe 0.38, ewe browser 0.7, ewe-sync 0.15.1)
 
