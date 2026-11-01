@@ -78,6 +78,10 @@ schema = 1
   ssh_agent = false              # Safe's SSH agent on (`ewe-safe ssh enable`) — ewe#59, since 0.28.0-beta
   ssh_confirm = "first-use"      # first-use | every-time | never — noise reduction, not a boundary (ewe#59)
                                  # never here: the safe, any password, the per-machine unlock-with-login key
+[remote]                         # Remote (RFC-009) — LOCAL_ONLY: sharing THIS computer never travels
+  sharing = false                # bool; written by `ewe-remote share on|off` (the unit's state is the truth)
+  port = 3933                    # 1024–65535 (validated); the per-user sshd's port
+                                 # never here: keys, the pairing code, who may log in (~/.local/share/ewe/remote)
 ```
 
 ## Tool verbs

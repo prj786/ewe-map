@@ -69,8 +69,21 @@ flowchart TB
 - **Google caches** (`google-profile/events/mail.json` etc.) are
   non-secret and gitignored; the refresh token is keyring-only.
 - **Nextcloud account layout** (remote): `ewe/ewe.conf`,
-  `ewe/ewe.conf.meta.json`, `ewe/machines/<name>.json`; folder pairs
-  anywhere in the account.
+  `ewe/ewe.conf.meta.json`, `ewe/machines/<id>.json` (was `<name>.json`
+  until the 2026-11-01 fix — two computers with one hostname overwrote each
+  other), `ewe/remote/<id>.json` (RFC-009, discovery only); folder pairs
+  anywhere in the account. `<id>` = first 16 hex of
+  sha256("ewe:" + /etc/machine-id), the same in ewe-sync and ewe-remote.
+- **Remote (RFC-009)**: `~/.local/share/ewe/remote/` (0700) holds
+  `host_ed25519` (the sharing host key), `id_ed25519` (this computer's
+  client key — never leaves it), `authorized_keys` (who may log in here;
+  first line = the pairing key's forced command), `sshd_config` (generated
+  every start), `code` (0600), `pairing.json` (fails/last), `computers.json`
+  (who we paired with), `known_hosts` (pinned as `ewe-<id>`), `ssh_config`,
+  `registry.json` (cache), `published.json`; runtime
+  `$XDG_RUNTIME_DIR/ewe-remote/` (sshd pid, tunnels.json, ControlMaster
+  sockets). Unit: `~/.config/systemd/user/ewe-remote-sshd.service` (copied by
+  `lib/deploy.sh`, enabled only by `ewe-remote share on`).
 - **Plugin code is outside the payload** — upgrades never touch it; the
   payload's `plugins/<id>/` copies are the **plugins**, installed on
   request (`ewe-plugin install`), once for upgraders (`migrate`), refreshed

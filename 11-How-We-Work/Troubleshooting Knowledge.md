@@ -870,6 +870,38 @@ adding a plugin, run the release build itself (`npm run tauri build --
 --no-bundle`) — the dev build skips the check. The unreleased tag was moved
 to the fix (no release had been made).
 
+## "The cable is connected but there's no internet" (2026-11-01)
+
+**Seen (owner's work PC, ewe 0.35.2, Intel `igc`):** 28 Oct 18:15 the kernel
+OOM-killed ewe browser — **no swap at all** (phase 60 wrote the zram config
+only on laptops) — Tailscale's relay timed out, resolved flushed. After two
+reboots the cable had a link (at **100 Mb/s** on a 2.5G port) but **DHCP never
+answered**: `ip-config-unavailable` every 45 s, then NetworkManager **blocks the
+connection for 5 minutes after 4 failures**; the lease came at 18:38, right
+after a block. The bar knew only "ethernet connected or not". **Check:**
+`journalctl -b -1 -u NetworkManager | grep -E 'enp|dhcp4'`, `cat
+/sys/class/net/<dev>/speed`, `swapon --show`, `nmcli -t -f CONNECTIVITY
+general`. **Now:** `20-ewe-wired.conf` (a cable keeps asking, never fails
+into the block), honest Quick Settings states (waiting for an address · N
+min / no internet / sign in / 100 Mb/s hint) + Reconnect, zram everywhere.
+Also seen there: a Btrfs checksum error (ino 1227510) — `btrfs scrub`.
+The owner's laptop dock (RTL8153, `r8152`) never reported a carrier on any
+boot since 18 Oct — if a cable is in it, it's the dock or the cable.
+[[RFC-009 — ewe Remote]]
+
+## Tailscale "breaks the internet" / drops after resume or a VPN (2026-11-01)
+
+**Seen (owner's laptop):** in a month, 44 `no-derp-connection` and 34
+`captive-portal-detected` health errors, clustered at resume and at the work
+L2TP VPN's start (it takes the default route + DNS); the work network blocks
+UDP (`netcheck: UDP is blocked`), so Tailscale rides its relays over 443.
+**Check:** `journalctl -u tailscaled | grep 'health(warnable'`, `tailscale
+status --json | jq .Health`, `tailscale debug prefs` (ExitNodeID — an
+offline exit node takes ALL traffic down; RouteAll — an accepted subnet
+route can swallow a `192.168.1.0/24` LAN, and home and work both use it).
+**Now:** `ewe-tailscale status` + Quick Settings show health, relay-only and
+the exit node (one click off); ewe's setup sets `--accept-routes=false`.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

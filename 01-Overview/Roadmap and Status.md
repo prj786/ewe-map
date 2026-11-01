@@ -15,6 +15,31 @@ Snapshot as of **2026-10-31**. Released: **ewe-os 0.15.0-beta**, **ewe 0.37.0-be
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-01 — the network says what's true; share this computer (ewe 0.38, ewe browser 0.7, ewe-sync 0.15.1)
+
+The owner's ask: *"cable connected, indicator showing, still no internet —
+polish Wi-Fi/Ethernet"* and *"share my PC with my other ewe PC, fully over
+SSH, and a browser workspace that browses from it"*. [[RFC-009 — ewe Remote]]
+(decisions 47–48). ewe#77, ewe-browser#18, ewe-sync#10, then the `[ewe]`
+publish (no ISO).
+
+- **Network (ewe 0.38)**: the work desktop's journal — OOM with no swap,
+  then DHCP unanswered at 100 Mb/s behind NetworkManager's 5-minute block.
+  `20-ewe-wired.conf` (a cable keeps asking), zram on every chassis (also via
+  `ewe.install` on `pacman -Syu`), NetState (the bar shows the link in use, a
+  no-internet mark; plain wired states + Reconnect), `ewe-tailscale` (health,
+  exit node, one-prompt setup; Tailscale ships, off until set up).
+- **Remote (ewe 0.38)**: `ewe-remote`, a per-user sshd on 3933, pairing by
+  an 8-digit code (SPAKE2, single use), the Sharing tile/page and the bar's
+  share glyph.
+- **ewe browser 0.7**: + → *Browse from work-pc* — own session, SOCKS through
+  `ewe-remote tunnel`, fail closed, no history.
+- **ewe-sync 0.15.1**: `machines/<id>.json` (the owner's two "emoh"s).
+- **Open:** real pairing laptop ↔ work PC over Tailscale; the installed unit;
+  real `tailscale up --json` and pkexec setup; `ethtool` output on hardware;
+  the `ewe.vpn` plugin still lists `tailscale0`; ewe-settings has no
+  Remote/Tailscale cards yet.
+
 ## 2026-10-31 — sign in once, everything follows (ewe-sync 0.15, ewe browser 0.6, ewe 0.37, ewe-os 0.15)
 
 The owner's ask: *log in and get everything you had before; set up the
