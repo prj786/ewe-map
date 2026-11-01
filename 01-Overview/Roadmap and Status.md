@@ -48,7 +48,9 @@ product]] (decision 50). No ISO.
 - **ewe Browser 0.8** (ewe-browser#19 `2ab9c8d`): Settings with sections, every
   new tab opens Home (`app://newtab` retired), plain error pages, Undo after
   removing a workspace, window title "ewe Browser".
-- **Follow-ups the same evening** (owner: *"Fix all issues now"*): Komble 0.21.1-beta
+- **Follow-ups the same evening** (owner: *"Fix all issues now"*): ewe 0.39.1-beta
+  (ewe#80: the launcher's footer painted square corners over the rounded panel — seen
+  in the new website shot), Komble 0.21.1-beta
   (`StartupWMClass=komble` — the window class is the binary's name, checked in the
   nest), ewe Browser 0.8.1-beta (**no application menu**: Electron's default Linux
   menu kept Window → Minimize on Ctrl+M live, so the page-first mute also minimized;
