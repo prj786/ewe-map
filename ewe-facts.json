@@ -4,15 +4,15 @@
   "generated": "2026-10-23",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.37.0-beta",
+    "ewe_de": "0.38.0-beta",
     "ewe_os": "0.15.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.20.2-beta",
-    "ewe_sync": "0.15.0-beta",
+    "ewe_sync": "0.15.1-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.20.0-beta",
-    "ewe_browser": "0.6.0-beta",
+    "ewe_browser": "0.7.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
@@ -441,6 +441,39 @@
         "git-credential": "git's key=value lines, exit 0"
       },
       "since": "read/run/inject/git-credential, passkey, ssh: Safe 0.2.0-beta (ewe-safe#10, #11, #13 via #14; released 2026-10-15)"
+    },
+    {
+      "tool": "ewe-remote",
+      "job": "Remote (RFC-009): share this computer (per-user sshd), pair by code (SPAKE2), reach your others",
+      "verbs": [
+        "status",
+        "share",
+        "code",
+        "pair",
+        "forget",
+        "revoke",
+        "disconnect",
+        "terminal",
+        "tunnel",
+        "untunnel",
+        "tunnels",
+        "publish",
+        "prepare",
+        "pair-serve"
+      ]
+    },
+    {
+      "tool": "ewe-tailscale",
+      "job": "Tailscale: status/health, one-prompt setup, sign-in, exit node off",
+      "verbs": [
+        "status",
+        "setup",
+        "up",
+        "down",
+        "logout",
+        "reconnect",
+        "exit-node"
+      ]
     }
   ],
   "ipc": {
@@ -543,7 +576,8 @@
     "network.vpn",
     "network.ssh",
     "companion",
-    "safe"
+    "safe",
+    "remote"
   ],
   "keyring_services": [
     {
@@ -563,7 +597,8 @@
     "nextcloud": [
       "ewe/ewe.conf",
       "ewe/ewe.conf.meta.json",
-      "ewe/machines/<name>.json",
+      "ewe/machines/<id>.json",
+      "ewe/remote/<id>.json",
       "ewe/safe/passwords.kdbx",
       "ewe/browser/bookmarks.json",
       "ewe/browser/history.json (with clear records)",
@@ -617,6 +652,11 @@
       "rfc": "RFC-008",
       "topic": "Safe (ewe-safe) password manager: KDBX 4 file, places, merge on save, ewe-safed",
       "status": "accepted 2026-10-14; Safe 0.1.0-beta released 2026-10-15 (engine, daemon, CLI, window, import from 1Password, the ewe.safe plugin, Super+P provider); amended 2026-10-15 (passkeys + SSH agent leave the parked list, S8 lets the companion act; docs/TRIO.md): released as Safe 0.2.0-beta + ewe 0.28.0-beta + ewe browser 0.2.0-beta on 2026-10-15 (Safe built into the browser); the companion's side merged, not released"
+    },
+    {
+      "rfc": "RFC-009",
+      "topic": "ewe Remote — share this computer over SSH, pair by code, Tailscale between networks",
+      "status": "accepted 2026-11-01; released the same day in ewe 0.38.0-beta + ewe browser 0.7.0-beta + ewe-sync 0.15.1-beta"
     }
   ],
   "sync_contract": {

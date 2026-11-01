@@ -25,6 +25,25 @@ gnome-keyring PAM integration. Treat it accordingly until it stabilises.
    passwords on the command line (the App Store uses a **0700
    `SUDO_ASKPASS` helper** under `$XDG_RUNTIME_DIR`).
 
+## Remote (RFC-009) — what a report about it should look at
+
+A shared computer runs a **per-user sshd** (`ewe-remote-sshd.service`,
+port 3933): key-only, `UsePAM no`, `PermitRootLogin no`, `AllowUsers` = the
+owner, ewe's own `authorized_keys` (`~/.local/share/ewe/remote/`, 0600 in a
+0700 dir). In scope:
+
+1. **Escaping the pairing key's forced command** — the key is public on
+   purpose (every ewe has it); its line is `restrict,command="ewe-remote
+   pair-serve"`. Any shell, pty or forward through it is a bug.
+2. **Pairing without the code** — SPAKE2 on the 8-digit code, one try per 5 s,
+   10 wrong → new code; the host's HMAC over its host-key fingerprint is what
+   stops a man in the middle. The account record (`ewe/remote/<id>.json`)
+   is discovery only — anything that makes it *trusted* is a bug.
+3. **A session nobody sees** — the bar glyph shows whenever sharing is on and
+   counts live sessions (from the unit's `Accepted publickey` log + `ss`).
+4. Sharing is per machine (`[remote]` is LOCAL_ONLY) and ends with the
+   session; turning it off ends every remote session (KillMode=control-group).
+
 ## Reporting
 
 **Never a public issue for security problems.** GitHub private reporting:

@@ -79,6 +79,20 @@ appears becomes the output (and input); output returns to where it was when
 the headset leaves.** (WirePlumber won't do this once a user ever picked a
 default.) The bar's sound and mic glyphs read it.
 
+
+## RemoteState.qml — Share this computer (RFC-009)
+
+One source for the bar's share glyph, the Control Centre **Sharing** tile and
+the `remote` page (`RemotePage.qml`, a built-in tab). Every action is
+`bin/ewe-remote` (JSON, exit 0), one at a time, each followed by a status
+read. Event-driven: status at start, when Quick settings opens (with
+`--refresh`: the account listing), after each action, and on every
+`Accepted publickey` / disconnect line of `journalctl --user -u
+ewe-remote-sshd -f` — followed only while sharing is on. The glyph is a
+**security indicator**, not a bar preference: visible whenever sharing is
+on, accent + count while someone is connected; a newcomer also gets a toast.
+Turning sharing on is never one stray click (tile → page when off; tile →
+off when on).
 ## HyprMon.qml — displays (and the lid)
 
 Per-monitor-set profiles (`display-profiles.json` →
