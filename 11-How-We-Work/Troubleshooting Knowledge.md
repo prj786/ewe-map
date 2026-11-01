@@ -920,6 +920,32 @@ route can swallow a `192.168.1.0/24` LAN, and home and work both use it).
 **Now:** `ewe-tailscale status` + Quick Settings show health, relay-only and
 the exit node (one click off); ewe's setup sets `--accept-routes=false`.
 
+## The UI revamp's build lessons (2026-11-01)
+
+- **`node --test <dir>/` fails on Node 22** ("Cannot find module …/tests") but
+  passes on Node 26 — ewe Safe's new `npm test` went red in CI. Name the files
+  (`node --test tests/ui.test.js`) or a glob.
+- **mise's node shim refuses to run under a test's temp `HOME`** — put
+  `~/.local/share/mise/installs/node/lts/bin` first on `PATH` (ewe-sync's
+  `tests/*.sh` "frontend builds" step). Rust under a temp HOME needs
+  `RUSTUP_HOME`/`CARGO_HOME` pointed at the real ones.
+- **A Tauri `productName` with a space renames nothing that matters**: the
+  binary, app id and window class come from the crate name — "ewe Settings" is
+  still class `ewe-settings`. Never match a window by title (see
+  [[Contracts and Public API]] → App names).
+- **QML: never bind a size to a Row's implicit width that depends on that size**
+  — Quick settings' account plate spun the shell at 100 % CPU.
+- **Test notifications into the nest only:** `HS_PRIVATE_BUS=1` +
+  `driver.sh notify …`; the host bus would put them on the real desktop.
+- **Vendored-only fixes get lost:** ewe 0.35.2 patched `plugins/ewe.dock` but not
+  `ewe-plugin-dock`; a `vendor-plugins.sh --clone` would have dropped it (Dock
+  1.3.1 upstreamed it). Before vendoring, diff each `plugins/<id>` against its
+  recorded commit.
+- **Headless Brave on this box** works with `env -u WAYLAND_DISPLAY -u DISPLAY
+  brave --headless=new --ozone-platform=headless`, one warm profile, runs in
+  sequence (parallel or fresh profiles hang); `--screenshot` hangs — drive it
+  over the DevTools protocol.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

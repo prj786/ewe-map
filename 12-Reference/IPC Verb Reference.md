@@ -60,6 +60,7 @@ state), `toast` and `welcome` were missing from this sheet. (`cloud`,
 | [[Clipboard Plugin]] | `ewe.clipboard` | — | `toggle · toggleAt <x> · hide · isOpen` |
 | [[Screenshot Plugin]] | `ewe.screenshot` | — | `shoot full\|region\|activewindow · pop <path> · dismiss` |
 | [[Passwords Plugin]] | `ewe.passwords` | — | `toggle · hide` (`Super+P`) |
+| [[System Monitor Plugin]] | `ewe.sysmon` | — (new in 2.0.0, ewe 0.39) | `toggle · hide` — the card under the bar readout |
 | Companion ([[RFC-007 — ewe Companion]]) | `ewe.companion` | — (new) | `toggle · open · hide · status · ask <text>` (`Super+A`; `status` is JSON: connected, presence, pending, sessions, peek, screen, open, provider; `ask` types into the chat) |
 | third-party | `<ns>.<name>` | — | whatever the plugin registers |
 

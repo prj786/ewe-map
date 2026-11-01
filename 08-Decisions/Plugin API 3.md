@@ -17,7 +17,8 @@ works. Source of truth for the as-built surface: `ewe/docs/PLUGINS.md`
 ## What 3 adds
 
 - **Four kinds:** `quick-tile` (home-grid tile, `span` 1|2), `quick-page`
-  (a rail entry + page under `quickPage.key`), `bar-status` (a glyph inside
+  (a page under `quickPage.key` — a rail entry until 0.38, a shortcut tile or
+  its tile's arrow since 0.39; the manifest did not change), `bar-status` (a glyph inside
   the Quick settings pill, reads `item.shown` and gets `ink`), `dock-item`
   (no QML — a static button the dock draws, running
   `Shell.runAction(action, anchor)`).
