@@ -7,12 +7,12 @@
     "ewe_de": "0.39.0-beta",
     "ewe_os": "0.15.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.21.0-beta",
+    "komble": "0.21.1-beta",
     "ewe_sync": "0.16.0-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
     "ewe_settings": "0.22.0-beta",
-    "ewe_browser": "0.8.0-beta",
+    "ewe_browser": "0.8.1-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
@@ -33,7 +33,7 @@
       "ewe.slack": "0.3.0"
     },
     "ewe_safe": "0.4.0-beta",
-    "ewe_companion": "0.2.2-beta"
+    "ewe_companion": "0.2.3-beta"
   },
   "repos": [
     {

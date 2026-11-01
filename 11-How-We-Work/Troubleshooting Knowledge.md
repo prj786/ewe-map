@@ -941,6 +941,19 @@ the exit node (one click off); ewe's setup sets `--accept-routes=false`.
   `ewe-plugin-dock`; a `vendor-plugins.sh --clone` would have dropped it (Dock
   1.3.1 upstreamed it). Before vendoring, diff each `plugins/<id>` against its
   recorded commit.
+- **Electron keeps a default application menu on Linux** unless the app calls
+  `Menu.setApplicationMenu(null)`; its accelerators (Window → Minimize Ctrl+M, Close
+  Ctrl+W, …) stay live in a frameless window and fire for keys the app lets the page
+  handle first. ewe Browser 0.8.1 removed it. Run the browser's e2e suite in a
+  headless `cage` too — it saw what the owner's Hyprland run did not.
+- **A Tauri window's class is the binary's name** (`/usr/bin/komble` → `komble`), not
+  `productName`; `StartupWMClass` must match it exactly (ewe Safe sets its own with
+  `glib::set_prgname`). Check in the nest: `driver.sh spawn env HOME=<tmp> … <app>`,
+  then `driver.sh hc clients -j`.
+- **Website stills with sample data:** `.wt/hero-capture/` (a copy of the promo kit
+  for 0.39: user `sam` / "Sam Shepherd", host `ewe`, sample Wi-Fi/Bluetooth/mail,
+  `in.sh` refuses to run outside the nest). The promo kit's `ns-run.sh` covered
+  `/home` before mounting its own folder — fixed in the copy.
 - **Headless Brave on this box** works with `env -u WAYLAND_DISPLAY -u DISPLAY
   brave --headless=new --ozone-platform=headless`, one warm profile, runs in
   sequence (parallel or fresh profiles hang); `--screenshot` hangs — drive it
