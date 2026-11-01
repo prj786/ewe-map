@@ -28,6 +28,11 @@ option"): unlock with the login password, the keyring prompt at every start
 fixed, cards and addresses — see "Amendment 2026-10-18" below. Released the
 same day as Safe 0.3.0-beta, ewe 0.31.0-beta and ewe browser 0.5.0-beta.*
 
+*Amended again 2026-11-01 (owner): **Safe is the SSH gate** — it replaces
+1Password's agent for every `ssh` and `git`, follows the account, and
+connects GitHub, Azure and the others in a few clicks — see "Amendment
+2026-11-01" below. **Building** (Safe 0.4.0-beta), not released.*
+
 ## The idea
 
 One safe, one master password, two kinds of item (**Login**, **Note**), a
@@ -99,6 +104,38 @@ vendored); ewe-browser → **ewe browser 0.5.0-beta**; published to `[ewe]`.
 | S19 | **Filling a card asks for the login (or master) password again**, once per 5 minutes (`confirm`, `[safe] confirm_cards`, default on); never into `http://` pages; the PIN is never filled | like Chrome's card autofill; "don't ruin users' safety" |
 | S20 | **ewe browser offers "Save to Safe?" on every sign-up**, even when Safe is locked ("Unlock and save"); a sign-up saves a new login unless the same host *and* username exist | the old prompt was dropped silently when Safe was locked |
 
+## Amendment 2026-11-01 — the SSH gate
+
+The owner's words: "It should be main gate for ssh connections — now
+1Password manages it. One ecosystem: the password manager connected to the
+browser and ewe's SSH. Nothing outside it; everything the single source of
+truth for its job. Attach it to the account. SSH agents should connect to
+any system, Azure, GitHub and others, in an easy, intuitive way." Found on
+the owner's machine: Safe's agent was on with 6 keys, yet `work` and
+`work-proxy` (ewe.conf's managed block, so every computer) still said
+`IdentityAgent ~/.1password/agent.sock` and `emoh` used a key file.
+Contract: `ewe-safe/docs/GATE.md`. **Status: building 2026-11-01** —
+ewe-safe `feat/ssh-gate` (+ `feat/ssh-gate-app`), ewe `docs/safe-ssh-gate`,
+ewe-plugin-ssh `feat/safe-gate` (1.1.0); release Safe 0.4.0-beta with the
+owner's OK.
+
+| # | decision | why |
+|---|---|---|
+| S21 | **The gate: two lines Safe owns at the top of `~/.ssh/config`** (`Include ~/.ssh/ewe-safe/config`, whose `Host *` sets `IdentityAgent` = Safe's socket and adds Safe's `known_hosts`), written by `ssh enable`, removed by `ssh disable`, a one-time backup `config.before-safe`. Every computer converges on the shared `[safe] ssh_agent` at daemon start. Reverses TRIO.md's "Safe never edits `~/.ssh/config`" | `ssh` takes the **first** value of each option, so the top `Include` beats every later `IdentityAgent` (1Password's included; checked with `ssh -G`, OpenSSH 10.6), and a missing include file is no error. Turn it on once, every computer of the account follows |
+| S22 | **Public key files `~/.ssh/ewe-safe/key-<tag>.pub`** (tag = the first 16 characters of the SHA256 fingerprint, `+`→`-`, `/`→`_`), written from the public-key cache; a host picks its key with `IdentityFile` + `IdentitiesOnly yes` | the name never changes on a rename and is the same on every computer, so host definitions in ewe.conf work everywhere; no "too many authentication failures" |
+| S23 | **`ssh takeover`** moves SSH to Safe: imports private key files from `~/.ssh` (never deletes or changes them), removes other agents' `IdentityAgent` from ewe.conf hosts **through `ewe-conf`**, lists keys only another agent (1Password) has | one action ends 1Password's role; Safe can't take a private key out of another agent, so it says which to import |
+| S24 | **One service catalogue** (`ssh-services`) and **connect / test / hosts** verbs: GitHub, GitLab, **Azure DevOps (RSA 4096 — Azure Repos takes RSA only)**, Bitbucket, Codeberg, Gitea/Forgejo, Azure VM (Ed25519, GA 2024-10), AWS, Google Cloud, DigitalOcean, Hetzner, any server (`ssh-copy-id` in a terminal). Connect = a key, the public file, a host in ewe.conf, the key on the clipboard and the service's page **in ewe browser** (Safe fills that login there); **Check** runs `ssh -T` and reads the service's answer. New error `conflict` | "easy and intuitive": three steps on one sheet; the browser and Safe already work together for the sign-in |
+| S25 | **Sign Git commits with an SSH key** (`ssh sign-commits`): `git config --global` `gpg.format ssh` + `gpg.ssh.program ewe-safe-ssh-sign` (ssh-keygen with Safe's socket) + an `allowed_signers` file; `[safe] git_sign` (shared) makes every computer sign the same way ; Safe changes Git only where it applied it (a marker with the old values in `~/.local/state/ewe/safe/git-signing.json`; off restores them), and another computer's sync never overwrites your own signing setup | as 1Password does; signing reaches Safe even from a terminal opened before the gate |
+| S26 | **The services' host keys ship with Safe** (`~/.ssh/ewe-safe/known_hosts`: GitHub, GitLab.com, Bitbucket, Azure DevOps, Codeberg), each fingerprint checked in a test against the one the service publishes | the first connection never asks "Are you sure…?", and a fake server is caught |
+| S27 | **The agent says where a key goes** when ssh tells it (`session-bind@openssh.com`): "Allow *git* to use *GitHub key* for *github.com*?" It follows OpenSSH's own ssh-agent rules (no bind after a non-forwarding bind; forwarded is sticky; a userauth request must be for the bound session; first-use approval remembered per program, key **and destination**; a forwarded connection is asked every time). Safe's own **Check** forwards nothing (`-a`, `ClearAllForwardings`) and is the only unasked signer, and only when it is `/usr/bin/ssh` | the question means more when it names the server; the security review (2026-11-01) showed a remembered approval must not cover a different destination |
+| S28 | **The window's SSH page**: the gate card (off / "1Password still answers…" → Move SSH to Safe / all good), Connect grid + sheet, keys with "used by" and "last used", hosts (terminal, check), **your ewe computers** (from `ewe-remote`), a line that it follows the account; `ewe-safe-app --ssh`; the SSH plugin links to it (1.1.0) | one place for SSH; the Quick settings page leads there |
+| — | **ewe-remote keeps its own key per computer** (RFC-009); Safe only shows the computers and opens a terminal to them | a lost laptop is locked out alone; one source of truth per job (ewe-remote owns pairing) |
+
+Owners per job (GATE.md, "One owner for each job"): keys and signing →
+Safe; which agent `ssh` asks → Safe (the gate); host definitions →
+ewe-conf (`network.ssh.hosts`); your ewe computers → ewe-remote; the
+service's web page → ewe browser.
+
 ## How it reads the house rules
 
 - **Rule 6 (nothing else has a sync button):** Safe has no sync button. It
@@ -124,6 +161,10 @@ vendored); ewe-browser → **ewe browser 0.5.0-beta**; published to `[ewe]`.
 > into the shell; never test against the live account's `ewe/` folder or the
 > live keyring — nor the live safe, `~/.ssh` or browser profile. Never trust
 > an origin a page sent (S10), and never call `ssh_confirm` a security
-> boundary (S12). Never ship a PAM module the owner hasn't reviewed (S15);
+> boundary (S12). Safe touches only its two top lines of `~/.ssh/config`
+> and its own `~/.ssh/ewe-safe/` (S21) — never a key file, never the user's
+> own host lines, and ewe.conf hosts only through `ewe-conf`. Never ship a
+> service host key whose fingerprint wasn't checked against the service's
+> published one (S26). Never ship a PAM module the owner hasn't reviewed (S15);
 > `unix_chkpwd` reads a NUL-ended password — without the NUL a right
 > password is refused.

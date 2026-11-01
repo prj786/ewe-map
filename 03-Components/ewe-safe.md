@@ -14,6 +14,10 @@ Rust workspace (keepass-rs, vendored with one fix) · [[RFC-008 — ewe Safe]] �
 from `[ewe]` (`pacman -S ewe-safe`; the desktop plugin: [[Safe Plugin]]) —
 [[Roadmap — ewe-safe]].
 
+**Building: 0.4.0-beta — Safe is the SSH gate** (`docs/GATE.md`, RFC-008
+S21–S28): the agent answers every `ssh` through two lines on top of
+`~/.ssh/config`, Connect for GitHub/Azure/…, commit signing, an SSH page.
+
 One KDBX 4 file in a **place** you pick, held unlocked by a small daemon,
 filled into any app with `Super+P` through the [[Passwords Plugin]]
 (provider `ewe`). KeePassXC and the phone apps open the same file.

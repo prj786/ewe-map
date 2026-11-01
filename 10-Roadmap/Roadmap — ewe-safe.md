@@ -8,6 +8,18 @@ up: "[[Home]]"
 
 # Roadmap — ewe-safe
 
+**Building (2026-11-01): Safe 0.4.0-beta — Safe is the SSH gate.** The
+owner: Safe must replace 1Password as the gate for every `ssh` and `git`,
+follow the account, and connect GitHub, Azure and the others easily.
+Contract: `ewe-safe/docs/GATE.md`; decision: [[RFC-008 — ewe Safe]] →
+Amendment 2026-11-01 (S21–S28). Branches: ewe-safe `feat/ssh-gate`
+(daemon + CLI) and `feat/ssh-gate-app` (the window's SSH page), ewe
+`docs/safe-ssh-gate` (EWE-CONF.md + a test that ewe-conf keeps Safe's two
+lines on top), ewe-plugin-ssh `feat/safe-gate` (1.1.0: "Keys come from
+Safe" → `ewe-safe-app --ssh`). Not released. After it ships, on the owner's
+machine: `ewe-safe ssh takeover` (ends 1Password's `IdentityAgent` on
+`work`/`work-proxy`, imports `~/.ssh/id_ed25519`).
+
 **Current (2026-10-15): Safe 0.2.0-beta released** — "a real safe": the
 owner asked for what 1Password does today. Contract: `ewe-safe/docs/TRIO.md`;
 decision: [[RFC-008 — ewe Safe]] → Amendment 2026-10-15 (passkeys and the
@@ -48,12 +60,21 @@ Phases, tasks and gates in full: `ewe-safe/PLAN.md` §15. Decisions:
 | 2 ◐ | (released in 0.1.0-beta: the window, Import, the package, the desktop plugin; the ewe browser integration in ewe browser 0.2.0-beta; left: unlock with login/fingerprint (polkit, needs the owner), Komble listing, site docs) the app (Tauri), Emergency Kit, unlock with login/fingerprint (polkit spike first), TOTP, package + ewe-repo + Komble, site docs | a non-terminal user creates, fills, locks, unlocks; a second machine opens the safe |
 | 2++ ◐ | Safe, the browser and the companion (owner 2026-10-15, `docs/TRIO.md`): passkeys (S1, #11), SSH keys + an ssh-agent (S2, #13, ewe#59), a CLI like `op` and `Super+P` without 1Password (S3, #10, ewe-plugin-passwords#3), Safe in ewe browser (B1, ewe-browser#4), the companion's actions (C1, ewe-companion#1) | **released 2026-10-15**: Safe 0.2.0-beta, ewe 0.28.0-beta, ewe browser 0.2.0-beta; the companion's part released in ewe-companion 0.1.0-beta (2026-10-17). Since ewe browser 0.4.0-beta Safe is the browser's only filler ([[Browser Passwords — Safe only]]). Gate: the owner's real test — a passkey on a real site (GitHub), `git push` through Safe's agent, `Super+P` with no 1Password |
 | 2+++ ◐ | Safe and the system (owner 2026-10-18, `docs/SYSTEM.md`): unlock with the login password (S14) + open at login through the `login` keyring (S15), `keyring repair` for the prompt at every start (S16), cards and addresses (S18) with a password confirm before a card fill (S19), ewe browser's sign-up save + card/address fill (S20); ewe-safe#18, ewe#64, ewe.safe 1.0.1 | **released 2026-10-18**: Safe 0.3.0-beta, ewe 0.31.0-beta, ewe browser 0.5.0-beta. **Parked:** our own PAM module (the owner reviews it first, `.wt/parked-pam/`) and Safe as the Secret Service (`keyring adopt` refuses until then). Gate: the owner's `ewe-safe keyring repair` ends the prompt at the next boot; `ewe-safe login enable` → Safe opens at login; a card filled on a real shop |
+| 2++++ ◐ | **Safe is the SSH gate** (owner 2026-11-01, `docs/GATE.md`): the gate on top of `~/.ssh/config` following the account (S21), public key files (S22), `ssh takeover` (S23), Connect to GitHub/GitLab/Azure DevOps/Bitbucket/Codeberg/Gitea/Azure VM/AWS/Google Cloud/DigitalOcean/Hetzner/a server + Check + hosts (S24), commit signing (S25), shipped service host keys (S26), session-bind (S27, optional), the window's SSH page (S28) | **building**. Gate: on the owner's machine `ssh takeover` → `ssh -G work` shows Safe's socket, `git push` to GitHub through Safe asks once, a commit shows *Verified*; a second computer signed in to the account gets the gate and the hosts by itself |
 | 3 | any WebDAV (guard probe), synced folder (conflict copies merged), SSH, *Move safe…*, the ewe-sync row | a Syncthing conflict ends merged with no files left |
 | 4 | import (1Password, Bitwarden, browsers, KeePass, pass, Proton Pass) and export | a real 1Password export imports with matching counts |
 | 5 | Dropbox and Google Drive through `ewe-auth` | the race test passes against both |
 | 6 | ewe browser fill-on-click (released in 2++, ewe browser 0.2.0-beta), health, the companion's P8 (partly in P2.9: copy, lock, unlock, counts) | never fills without a click; the canary appears nowhere |
 
 ## Gotchas
+
+- **`ssh` takes the first value of each option** — that is why Safe's gate
+  is an `Include` on the very **top** of `~/.ssh/config`: it wins over any
+  later `IdentityAgent` (1Password's). Never move those two lines down, and
+  never write Safe's `IdentityAgent` into ewe-conf's managed block (it sits
+  at the end and would lose). A missing include file is no error.
+- **Azure DevOps takes RSA keys only** (rsa-sha2-256/512); its connect
+  makes RSA 4096. Azure **VMs** take Ed25519 (GA 2024-10).
 
 - **Never enable quick-xml's `overlapped-lists`** — saved passwords become
   garbage; CI guards it ([[Troubleshooting Knowledge]] → Safe).

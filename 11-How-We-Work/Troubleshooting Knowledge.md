@@ -616,6 +616,17 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   gives 8 digits and rejects unpadded base32; Safe computes codes itself
   (`safe_core::otp`).
 
+### SSH hosts from the account — data, never code (ewe-conf, 2026-11-01)
+
+- **A host with `ProxyCommand` (or `LocalCommand`, `Match`, `Include` …)
+  doesn't come back on a second computer** — by design since the SSH-gate
+  security review: `[network.ssh] hosts` travel through the account, so
+  ewe-conf (`ssh_host_clean`, `SSH_NEVER_SYNC`) never adopts, stores or
+  writes an option that runs something, and refuses a host or value with a
+  newline. Your own lines keep them on the computer where you wrote them.
+  Test: `ewe/tests/ewe-conf-network-test.sh` step 7. Branch
+  `docs/safe-ssh-gate` (ewe), not released.
+
 ### Safe — 2026-10-15 (passkeys, SSH agent, CLI; Safe 0.2.0-beta)
 
 - **Saving an edited login in the Safe window does nothing** (0.1.0-beta,
@@ -625,8 +636,15 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   `IdentityAgent` line in `~/.ssh/config` (1Password's
   `~/.1password/agent.sock` on the owner's machine) wins over
   `SSH_AUTH_SOCK`. `ewe-safe ssh status` lists them (`ssh_config_agents`);
-  replace that line with the one `ewe-safe ssh enable` prints. Safe never
-  edits `~/.ssh/config`.
+  replace that line with the one `ewe-safe ssh enable` prints. **Since Safe
+  0.4.0-beta (building, `docs/GATE.md`)** `ssh enable` puts Safe's gate on
+  top of `~/.ssh/config` (first value wins) and `ssh takeover` cleans the
+  ewe.conf hosts — the owner's `work`/`work-proxy` had exactly this.
+- **"Too many authentication failures" with Safe's agent** — the agent
+  offers every key and the server stops after `MaxAuthTries` (6). Point the
+  host at one key: `IdentityFile ~/.ssh/ewe-safe/key-<tag>.pub` +
+  `IdentitiesOnly yes` (`ewe-safe ssh host set <alias> --key <id>`; Connect
+  does it). Safe 0.4.0-beta.
 - **After upgrading Safe the agent's socket is missing** — the socket unit
   gained a second `ListenStream`: `systemctl --user daemon-reload &&
   systemctl --user restart ewe-safe.socket` (this locks the safe). The

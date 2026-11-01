@@ -30,12 +30,19 @@ saved for that host (paste-once editor; `SSH_HOST`, `SOCKS_PORT` default
 - **Install:** Komble → Plugins, or `ewe-plugin install ewe.ssh`.
 - **Stays core:** hosts are *added* in Settings → Network → SSH
   (`ewe-conf` `[network.ssh]` managed block); the plugin only reads them.
+  Since the SSH-gate review (2026-11-01, ewe `docs/safe-ssh-gate`) a synced
+  host is data, never code: no command options (`ProxyCommand` …), no
+  multi-line values ([[Troubleshooting Knowledge]]).
 - **Files kept where they were:** browse scripts in
   `~/.config/quickshell/ssh-browse/<host>.sh` (not `stateDir`, so nothing a
   user saved is lost; not synced, not in `ewe.conf`).
 - No settings, no IPC target of its own: `qs ipc call quicksettings tab
   ssh` / `Shell.openQuickSettings("ssh")`. Requires `ssh`; kitty hard-coded.
 - One `qmldir` singleton `Ssh` behind the three entry points.
+- **1.1.0 (branch `feat/safe-gate`, not vendored yet):** with Safe installed
+  the page starts with "Keys come from Safe" → `ewe-safe-app --ssh`
+  (Safe's SSH page). Safe is the gate, so the plugin's terminals and
+  tunnels already use Safe's agent ([[RFC-008 — ewe Safe]] S21, S28).
 
 > **Build guard:** hiding a tile = hide the **host slot**
 > (`parent.visible`), never `Tile.visible` — the home grid collapses empty
