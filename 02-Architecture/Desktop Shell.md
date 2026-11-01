@@ -19,7 +19,7 @@ flowchart TB
     subgraph QS["Quickshell (one process)"]
         BAR["top bar + indicators"]
         LAUNCH["app launcher · Overview"]
-        CC["Quick settings (home grid, rail pages)"]
+        CC["Quick settings (header, tiles, shortcut row, pages in place)"]
         NOTIF["notifications · toast"]
         OSD["OSD overlays"]
         LOCK["lock screen · polkit · Welcome"]
@@ -57,10 +57,20 @@ A fresh install has **no dock** until the user adds one.
 - **Top bar** — indicators; bar widgets and the Quick settings pill's
   glyphs are pluggable (`bar-widget`, `bar-status`); the clipboard
   scissors, screenshot camera, phone and mail glyphs are plugins'.
-- **Quick settings** — a home grid of tiles (built-ins first, then
-  plugins' `quick-tile`s; empty slots collapse) and a rail of pages
-  (`quick-page` keys; an unknown key falls back to `home`). Cast, VPN, SSH,
-  Mobile and Mail pages come from plugins (see [[Cast Flow]]).
+- **Quick settings** (the control centre; **no rail since 0.39**, the UI revamp —
+  [[UI Revamp — one product]]) — a header (you + today's date → ewe Sync;
+  Screenshot · Settings · Lock · Power), a grid of tiles with their icon circles
+  (built-ins first, then plugins' `quick-tile`s; empty slots collapse), a **shortcut
+  row** of small icon tiles (Calendar + every plugin `quick-page` whose own tile is
+  not on home — SSH, Mobile, Mail), volume (its arrow → the output list) and
+  brightness, the newest notifications **inline** (Show all → the full list), and a
+  footer with battery + power mode (each hidden when the machine lacks it). Pages
+  open **in place** from a tile's arrow, the shortcut row or the header (an unknown
+  key falls back to `home`); height follows the page up to 80 % of the screen; **Esc**
+  cancels a confirmation, then goes back one page, then closes. Built-in pages:
+  `home wifi bt audio cal notifs remote power` (Power = Suspend, Sign out, Restart,
+  Shut down). Cast, VPN, SSH, Mobile and Mail pages come from plugins (see
+  [[Cast Flow]]).
 - **Welcome** — first run; since 0.25 has an **Plugins step** (nothing
   pre-checked; *Install selected* / *Browse in Komble*).
 - **Greeter** — runs as its own session: `greetd → cage → Quickshell greeter`.

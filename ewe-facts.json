@@ -1,39 +1,39 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-10-23",
+  "generated": "2026-11-01",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.38.0-beta",
+    "ewe_de": "0.39.0-beta",
     "ewe_os": "0.15.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.20.2-beta",
-    "ewe_sync": "0.15.1-beta",
+    "komble": "0.21.0-beta",
+    "ewe_sync": "0.16.0-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.20.0-beta",
-    "ewe_browser": "0.7.0-beta",
+    "ewe_settings": "0.22.0-beta",
+    "ewe_browser": "0.8.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.1.2",
       "ewe.screenshot": "1.1.1",
-      "ewe.passwords": "1.3.0",
+      "ewe.passwords": "1.3.1",
       "ewe.insomnia": "1.0.1",
-      "ewe.sysmon": "1.1.0",
-      "ewe.ssh": "1.0.1",
-      "ewe.vpn": "1.0.1",
+      "ewe.sysmon": "2.0.0",
+      "ewe.ssh": "1.1.0",
+      "ewe.vpn": "1.0.2",
       "ewe.media": "1.0.2",
-      "ewe.places": "1.0.2",
+      "ewe.places": "1.0.3",
       "ewe.phone": "1.0.1",
-      "ewe.mail": "1.1.0",
-      "ewe.cast": "1.0.1",
-      "ewe.dock": "1.3.0",
-      "ewe.safe": "1.1.0",
-      "ewe.companion": "0.5.0",
+      "ewe.mail": "1.1.1",
+      "ewe.cast": "1.0.2",
+      "ewe.dock": "1.3.2",
+      "ewe.safe": "1.1.1",
+      "ewe.companion": "0.5.1",
       "ewe.slack": "0.3.0"
     },
-    "ewe_safe": "0.3.0-beta",
-    "ewe_companion": "0.2.1-beta"
+    "ewe_safe": "0.4.0-beta",
+    "ewe_companion": "0.2.2-beta"
   },
   "repos": [
     {
@@ -502,7 +502,8 @@
     "plugin_targets": [
       "example.hello",
       "ewe.companion",
-      "ewe.safe"
+      "ewe.safe",
+      "ewe.sysmon"
     ],
     "public_verbs": [
       "reload",
@@ -549,7 +550,9 @@
       "bt",
       "audio",
       "cal",
-      "notifs"
+      "notifs",
+      "remote",
+      "power"
     ],
     "global_shortcuts": [
       "ewe:overview"

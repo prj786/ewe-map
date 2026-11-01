@@ -21,9 +21,9 @@ Terms as the project itself uses them.
 | **ewe-auth** | the auth broker: owns the refresh token in the keyring, hands out access tokens. See [[Auth Broker]]. |
 | **keyring** | gnome-keyring via `secret-tool` — where secrets (tokens, app passwords) live. Never in `ewe.conf`. |
 | **Komble** | the software manager (repos + AUR + AppImages). See [[Komble]]. |
-| **ewe-settings** | the Settings app — a separate process that edits config files and pokes the shell. See [[ewe-settings]]. |
-| **ewe-sync** | the account & sync app — Nextcloud account, one-file sync, folder sync, machines. See [[ewe-sync]]. |
-| **Safe** | ewe's own password manager (`ewe-safe`, RFC-008): one KDBX 4 file, one master password, logins and notes; `ewe-safed` holds it unlocked. Not "the vault" — that word means this `project-map/`. See [[RFC-008 — ewe Safe]]. |
+| **ewe-settings** | **ewe Settings** (display name since 0.22, decision 50) — the Settings app, a separate process that edits config files and pokes the shell. See [[ewe-settings]]. |
+| **ewe-sync** | **ewe Sync** (display name since 0.16) — the account & sync app: Nextcloud account, one-file sync, folder sync, computers. See [[ewe-sync]]. |
+| **Safe** | **ewe Safe** (display name since 0.4, decision 50) — ewe's own password manager (`ewe-safe`, RFC-008): one KDBX 4 file, one master password, logins and notes; `ewe-safed` holds it unlocked. Not "the vault" — that word means this `project-map/`. See [[RFC-008 — ewe Safe]]. |
 | **place** | where Safe's one file lives: this computer, your Nextcloud, any WebDAV, a synced folder, an SSH server, Dropbox, Google Drive. See [[Roadmap — ewe-safe]]. |
 | **ewe-castd** | headless casting daemon: portal screencast → encode → Miracast/Chromecast. See [[ewe-cast]]. |
 | **`qs ipc`** | the shell's IPC bus; apps and plugins call verbs like `qs ipc call settings reload`. |

@@ -140,8 +140,33 @@ shell parse them), `seed --restore <id>`, `set`/`get`, **`bar <id>
 `komble --updates | --settings | --search[=q] | --addons | --plugins |
 --options[=]<id>` — `--addons` is what `Shell.openStore("addons")` and
 ewe-settings call; it is public (and stays, though the page is called
-Plugins). `--options=<id>` (D10) opens Plugins with that plugin's Options
-dialog — ewe-settings' "Dock options".
+Plugins). `--options=<id>` (D10) opens Plugins with that plugin's **sheet**
+(Komble 0.21 replaced the Options dialog; the route is unchanged) —
+ewe-settings' "Dock options".
+
+### App names (decision 50)
+
+Display names are **ewe + Word** — ewe Settings, ewe Sync, ewe Browser, ewe
+Safe, ewe Cast (Komble, Shaun). They are NOT contracts and may be reworded;
+what other code matches stays dashed and frozen: binaries, packages,
+desktop-file names, app ids / `StartupWMClass`, window classes, IPC targets,
+D-Bus and keyring names. Matching a window by **title** breaks on a rename —
+`hyprland.lua`'s settings-window rule matches both "ewe Settings" and "ewe
+settings" for that reason; match by class.
+
+### Manifest additions in ewe 0.39 (additive, API 3)
+
+`desktopWidget.visible` (bool, default `true`) — a widget can start hidden;
+a stored `place --visible` wins. `quickPage.key` `remote` and `power` are
+refused (they are the shell's pages). `quick-page` is shown as a shortcut
+tile or its tile's arrow — the rail is gone; the manifest is unchanged.
+
+### Apps' entry points that changed in this wave
+
+- ewe Browser 0.8: `app://newtab` is retired (redirects to Home); Settings
+  sections are URL anchors `#appearance … #shortcuts`.
+- ewe Sync 0.16: `--pane` also accepts `computers` and `settings`
+  (aliases; the old ids stay).
 
 ### `ewe-conf sync-status` (D12)
 

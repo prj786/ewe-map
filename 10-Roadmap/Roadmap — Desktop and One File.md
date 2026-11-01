@@ -53,7 +53,7 @@ The v3 token system landed (2026-09-17/18):
 
 - In-shell Settings/AppStore panels remain **fallbacks only** — the Tauri
   binaries are the real UIs.
-- Power menu in Quickshell is "on the list".
+- Power menu in Quickshell: **done in 0.39** — Quick settings' Power page (Suspend, Sign out, Restart, Shut down; the header's power button opens it).
 - Keep the two-singleton architecture (`Globals.qml`, `Theme.qml`) — new
   surfaces plug into it.
 

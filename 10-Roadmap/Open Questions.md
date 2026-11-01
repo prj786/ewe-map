@@ -79,7 +79,7 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 
 ## Desktop
 
-- **Quickshell power menu** — "on the list".
+- ~~**Quickshell power menu**~~ — answered in 0.39: Quick settings has a Power page.
 - **Text-size beyond 130?** — bar steps icon size at 130; where's the
   ceiling?
 - **More accessibility modes** — which remaps does the audit data suggest

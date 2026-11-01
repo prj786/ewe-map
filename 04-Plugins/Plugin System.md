@@ -93,7 +93,7 @@ flowchart LR
 | `bar-widget` | an `Item` with implicit size, packed into its bar section, once per monitor | + `screen`, `barWindow` |
 | `bar-status` | a glyph **inside the Quick settings pill**, after the shell's own, once per monitor — root on `BarStatusGlyph`, set `shown` (not `visible`) | + `screen`, `barWindow`, `ink` |
 | `quick-tile` | a `Tile` in the Quick settings home grid after the built-ins; the host sizes it (`span` 1 or 2) | + `panelOpen` |
-| `quick-page` | a `Column` the width of the panel + one rail entry; shown while its `key` is the tab; start with `QsPageHead` | + `panelOpen` |
+| `quick-page` | a `Column` the width of the panel, shown **in place** while its `key` is the tab (start with `QsPageHead`); opened from its tile's arrow or, when it has no tile on home, a small icon tile in the **shortcut row** (`quickPage.icon`, `label` as the tooltip) — the rail is gone since ewe 0.39 | + `panelOpen` |
 | `desktop-widget` | a sized `Item` on a card the host draws; dragged any time (hover toolbar grip or the card), pinned above the windows (`top`) or everything (`overlay`), lockable ([[Desktop Widgets — always movable, pin to a level]]) | the common set |
 | `dock-item` | **no QML** — the dock draws a button from `dockItem` and runs `Shell.runAction(action, anchor)`; lit while `Shell.isActive(action)`; hidden while `Shell.dockItemShown(id)` is false. No dock installed → no host, no error | — |
 
@@ -150,9 +150,10 @@ cd acme.weather && ewe-plugin dev .
 ```
 
 You own the QML. ewe owns where it lives and what the user may change
-(tile place, rail entry, bar section/visibility, widget placement and
+(tile place, shortcut tile, bar section/visibility, widget placement and
 pin, `settings` values — all in `ewe.conf`, widgets dragged and pinned on
-the desktop, the rest edited in Komble's Options dialog). The worked examples:
+the desktop, the rest edited in **the plugin's sheet in Komble** — Komble
+0.21 replaced the Options dialog). The worked examples:
 [[Example Plugin]] (API 2), `tests/fixtures/plugins/acme.v3demo` (every API
 3 kind in four files) and every plugin repo above.
 

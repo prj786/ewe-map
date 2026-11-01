@@ -15,6 +15,47 @@ Snapshot as of **2026-10-31**. Released: **ewe-os 0.15.0-beta**, **ewe 0.37.0-be
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-01 — one product: the UI revamp + Safe is the SSH gate (ewe 0.39, ewe Settings 0.22, Komble 0.21, ewe Sync 0.16, ewe Safe 0.4, ewe Browser 0.8)
+
+The owner's ask: *"revamp ui of control center and all apps. And also plugins in
+komble … plugin for ram usages should have one more section for internet speed.
+Totally remove it from control center … same naming style for apps"*. Mockups
+first (Design canvas "ewe UI revamp", approved: *"Both are great, start a new
+release"*), then one wave: *"yes merge and release all"*. The owner also chose to
+ship the waiting **SSH gate** (decision 49) in the same wave. [[UI Revamp — one
+product]] (decision 50). No ISO.
+
+- **Names = ewe + Word**: ewe Settings, ewe Sync, ewe Browser, ewe Safe, ewe Cast
+  (display only; every id unchanged), across the shell, the five apps, 10 plugins,
+  ewe Cast 0.13, Shaun 0.2.2, the installer and the website.
+- **ewe 0.39** (ewe#79 `db58e95`, incl. ewe#78): Quick settings without the rail
+  (header, shortcut row, inline notifications, battery + power-mode footer, a
+  Power page, Esc goes back); `desktopWidget.visible`; `remote`/`power` reserved
+  page keys; the bar's app label from the desktop entry; the shell speaks ewe
+  Sync's words. Vendors **System monitor 2.0.0** ([[System Monitor Plugin]]) and
+  the renamed plugins (safe 1.1.1, passwords 1.3.1, companion 0.5.1, dock 1.3.2,
+  mail 1.1.1, places 1.0.3, cast 1.0.2, vpn 1.0.2, ssh 1.1.0).
+- **ewe Settings 0.22** (ewe-settings#23 `331f236`): four nav groups, Find a
+  setting, one page grammar; fixes: Keyboard and mouse no longer writes on view,
+  `theme_scheme` pokes sync only on writes.
+- **Komble 0.21** (komble-arch#15 `e09fb9f`): one row per plugin + the plugin
+  sheet (Options dialog gone), Add plugin…, grouped nav, display names on Updates.
+- **ewe Sync 0.16** (ewe-sync#11 `51dad69`): "Needs you", one ⋯ per folder,
+  conflicts under their folder, "Computers", Geist bundled, no "Push anyway".
+- **ewe Safe 0.4** (ewe-safe#21 SSH gate + #22 revamp, `01448b2`): the shared app
+  frame, one header, the detail grid, ewe Sync's sync words, the SSH page;
+  fix: the generator no longer submits the form.
+- **ewe Browser 0.8** (ewe-browser#19 `2ab9c8d`): Settings with sections, every
+  new tab opens Home (`app://newtab` retired), plain error pages, Undo after
+  removing a workspace, window title "ewe Browser".
+- **Open:** every app checked only in mocks / the nested shell — a real-desktop
+  pass with a pointer; on the owner's box run **Move SSH to Safe** once after
+  updating (else ssh offers Safe's 6 keys first → MaxAuthTries); the site's hero
+  images still show the old names and rail; Shaun's knowledge still describes the
+  old Quick settings rail / Komble Options dialog and quotes "Save to ewe Safe?"
+  (the browser says "Save this login to ewe Safe?"); Komble's `StartupWMClass`
+  may not match its window class (check).
+
 ## 2026-11-01 — the network says what's true; share this computer (ewe 0.38, ewe browser 0.7, ewe-sync 0.15.1)
 
 The owner's ask: *"cable connected, indicator showing, still no internet —
