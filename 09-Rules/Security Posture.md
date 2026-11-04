@@ -79,16 +79,21 @@ angles: secrets in the keyring, identity in the file.
   hooks, no privileges at install. See [[Plugins Unsandboxed]].
 - **Safe (RFC-008)** — zero privileges. `ewe-safed`'s socket is `0600` in
   `$XDG_RUNTIME_DIR`, both ends check `SO_PEERCRED`; the daemon is not
-  dumpable (no core dumps, no same-uid ptrace) and locks on screen lock,
-  sleep and idle. Honest limit: malware running as you while the safe is
-  unlocked can ask the socket, like every desktop password manager.
+  dumpable (no core dumps, no same-uid ptrace). Since 2026-11-04 it opens once
+  per power-on and stays open until power-off, logout or Lock (decision 51):
+  locking on screen lock, sleep and idle are switches, off by default, so the
+  screen lock is what guards an open safe. Honest limit: malware running as you
+  while the safe is unlocked can ask the socket, like every desktop password
+  manager. The user unit must not use a mount namespace ([[RFC-008 — ewe Safe]],
+  amendment 2026-11-04).
 - **Safe's SSH agent (Safe 0.2.0-beta)** — its own socket
   `ewe-safe-ssh.sock` (`0600`, `SO_PEERCRED`), off until `ewe-safe ssh
   enable`; refuses adding/removing keys, SHA-1 `ssh-rsa`, DSA and `sk-` keys;
   32 connections at most. **`ssh_confirm` is noise reduction, not a
   boundary:** it names the program by its full path and marks one outside
   `/usr` and `/opt`, but any program running as you can use the agent while
-  Safe is unlocked. The master password is the boundary.
+  Safe is unlocked. The master password is the boundary. An SSH session on the
+  computer gets no question on its screen; a forwarded connection always does.
 - **Passkeys and the browser (Safe 0.2.0-beta, ewe browser 0.2.0-beta)**
   — **the browser decides the origin**: its main process takes it from the
   frame and checks the RP ID; Safe checks only shapes and never trusts a

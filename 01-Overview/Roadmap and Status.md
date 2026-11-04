@@ -15,6 +15,25 @@ Snapshot as of **2026-10-31**. Released: **ewe-os 0.15.0-beta**, **ewe 0.37.0-be
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-04 — once per power-on, and working from home (ewe Safe 0.5, ewe 0.40)
+
+The owner's ask: *"somehow safe asks all the time for allow"*, *"instead we can
+make it once per turn on"*, and the laptop goes home with nobody at the work PC.
+
+- **ewe Safe 0.5** (ewe-safe#23, `c608939`): the bug was the unit. Its mount
+  namespace hid every caller from the agent, so nothing was remembered, on every
+  installed machine since 0.2.0 ([[Troubleshooting Knowledge]]). Now one question
+  per power-on and nothing locks by itself by default; an SSH session asks nothing
+  on the computer's screen (decision 51).
+- **ewe 0.40** (ewe#81, `199dffa`): Remote holds through a Wi-Fi drop (15-minute
+  keepalive), the terminal reconnects by itself and offers to unlock a locked Safe
+  there, Wi-Fi power saving is off while connected.
+- **Open:** a real drop and a real second network are the owner's check before
+  leaving. After a reboot nobody has logged in to, sharing isn't running (no
+  linger, on purpose: RFC-009); `ssh <host>` on the system sshd is the way in.
+  One work repo (`health-reder`) is over HTTPS with no saved login, so it asks in
+  the terminal, here as at the desk.
+
 ## 2026-11-01 — one product: the UI revamp + Safe is the SSH gate (ewe 0.39, ewe Settings 0.22, Komble 0.21, ewe Sync 0.16, ewe Safe 0.4, ewe Browser 0.8)
 
 The owner's ask: *"revamp ui of control center and all apps. And also plugins in

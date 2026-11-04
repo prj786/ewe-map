@@ -4,7 +4,7 @@
   "generated": "2026-11-01",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.39.0-beta",
+    "ewe_de": "0.40.0-beta",
     "ewe_os": "0.15.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.21.0-beta",
@@ -32,7 +32,7 @@
       "ewe.companion": "0.5.1",
       "ewe.slack": "0.3.0"
     },
-    "ewe_safe": "0.4.0-beta",
+    "ewe_safe": "0.5.0-beta",
     "ewe_companion": "0.2.2-beta"
   },
   "repos": [
@@ -805,7 +805,7 @@
     "ssh_env_file": "~/.config/environment.d/90-ewe-safe-ssh.conf (SSH_AUTH_SOCK for new sessions); until 0.3.x ~/.ssh/config was never edited, since 0.4.0-beta (building) Safe owns two lines on its top (ssh_gate)",
     "ewe_conf_keys_added": {
       "safe.ssh_agent": "bool, false until ewe-safe ssh enable; shared: since 0.4.0-beta every computer turns its SSH gate on/off from it",
-      "safe.ssh_confirm": "first-use (default) | every-time | never — noise reduction, not a security boundary",
+      "safe.ssh_confirm": "once (default since 2026-11-04: one question per power-on for every app and key; a typed password is that question) | first-use | every-time | never — noise reduction, not a security boundary",
       "safe.unlock_at_login": "bool, default true — Safe opens at login when login unlock is on (ewe 0.31.0-beta)",
       "safe.confirm_cards": "bool, default true — a card fill needs a password typed in the last 5 minutes (ewe 0.31.0-beta)",
       "safe.git_sign": "SHA256 fingerprint of the commit-signing key, empty = none; shared (Safe 0.4.0-beta, building)"

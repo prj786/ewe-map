@@ -946,6 +946,20 @@ the exit node (one click off); ewe's setup sets `--accept-routes=false`.
   sequence (parallel or fresh profiles hang); `--screenshot` hangs — drive it
   over the DevTools protocol.
 
+## "Safe asks Allow all the time" (2026-11-04)
+
+**Seen:** the log says `ssh (its file can't be seen) (not a system program)` for
+every program, including `git` and `systemd`, and every signature asks. **Cause:**
+a mount-namespace directive in a **user** unit (`PrivateTmp=`, `ProtectSystem=`,
+…) puts the service in its own user namespace, and the kernel then hides
+`/proc/<pid>/exe` of everything outside it (`ptrace_may_access`). `comm` and
+`stat` still work, so nothing looks broken. **Check:** `readlink
+/proc/$(systemctl --user show -p MainPID --value ewe-safe.service)/ns/user`
+against `/proc/self/ns/user`: they must match. **Lesson for any ewe user unit:**
+these directives aren't free, and a test outside systemd can't catch this. Run
+the unit's directives through `systemd-run --user` when a daemon looks at other
+processes.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

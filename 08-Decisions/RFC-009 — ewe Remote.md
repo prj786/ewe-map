@@ -243,6 +243,29 @@ was showing … I still had problem". Evidence (work PC `emoh`, ewe 0.35.2,
   with an sshd the owner already runs.
 - **Screen sharing (RDP/VNC)** — not asked for ("not like rdp").
 
+## Amendment 2026-11-04 — working from home
+
+The owner takes the laptop home and can't touch the work PC. Nothing there may
+ask anything, and Wi-Fi must not end a session.
+
+- `git`/`ssh` in a remote session ask nothing on the shared computer's screen;
+  a locked Safe fails at once (RFC-008 amendment, decision 51).
+- `ewe-remote terminal` runs ssh in a loop (exit 255 = lost, try again; any other
+  exit = the user left) and offers `ewe-safe unlock` on login when the far Safe
+  is locked: the one place that can ask.
+- Keepalive 30 × 30 s = 15 minutes on both ends (`ALIVE_COUNT`), about where the
+  kernel gives up (`tcp_retries2`). Tailscale's address doesn't change, so a drop
+  only freezes the terminal. The tunnel no longer has its own 45-second limit.
+- `30-ewe-wifi.conf`: Wi-Fi power saving off, so a session isn't sticky.
+
+**No linger, on purpose.** After a reboot with nobody logged in, the per-user
+sshd isn't running. `loginctl enable-linger` would start it, but it also starts
+the user's other units before login, and `ewe-sync` touching
+`org.freedesktop.secrets` then starts gnome-keyring with no password: the
+keyring prompt at every boot that the 2026-10-18 keyring repair fixed. The system
+sshd on port 22 is the way in after a reboot, where it is enabled; that login
+starts sharing for as long as it lasts.
+
 ## Related
 
 [[RFC-005 — Nextcloud Account]] · [[RFC-006 — ewe-sync App]] ·
