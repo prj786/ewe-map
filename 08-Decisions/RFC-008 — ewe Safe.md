@@ -104,6 +104,30 @@ vendored); ewe-browser → **ewe browser 0.5.0-beta**; published to `[ewe]`.
 | S19 | **Filling a card asks for the login (or master) password again**, once per 5 minutes (`confirm`, `[safe] confirm_cards`, default on); never into `http://` pages; the PIN is never filled | like Chrome's card autofill; "don't ruin users' safety" |
 | S20 | **ewe browser offers "Save to Safe?" on every sign-up**, even when Safe is locked ("Unlock and save"); a sign-up saves a new login unless the same host *and* username exist | the old prompt was dropped silently when Safe was locked |
 
+## Amendment 2026-11-04 — once per power-on
+
+The owner's words: "somehow safe asks all the time for allow" and "instead we
+can make it once per turn on". Two things were wrong; decision 51 has the rule.
+
+**The bug.** `ewe-safe.service` had `PrivateTmp=` and `ProtectSystem=`. A
+**user** unit can only have those inside its own user namespace, and from there
+the kernel hides `/proc/<pid>/exe` of every program outside it. So on every
+installed machine since 0.2.0 each caller was "ssh (its file can't be seen)",
+never remembered, and asked every time: 20 questions an hour on the work PC.
+Unit tests never saw it because none run under systemd. Proved on real systemd
+(3 signatures: 3 questions with those lines, 1 without). The lines are gone and
+`the_unit_keeps_the_daemon_out_of_a_user_namespace` guards it. What stays:
+`NoNewPrivileges`, undumpable, `MemoryDenyWriteExecute`, the seccomp settings.
+Nothing else needed the mount namespace: the daemon keeps no files in `/tmp` and
+writes only under `$HOME` and `$XDG_RUNTIME_DIR`.
+
+**The policy.** Defaults changed (decision 51). An SSH session on the computer
+never gets a question on that computer's screen, because the person is elsewhere
+(`in_ssh_session`: parents lead to `sshd`/`sshd-session`, or `SSH_CONNECTION` was
+inherited). A same-uid program can fake that, as it can imitate an allowed app
+(`ssh_confirm` is not a boundary). `SSH_CONNECTION` stays on purpose: with parents
+alone, `git` in a tmux started from a session asks on a screen nobody sees.
+
 ## Amendment 2026-11-01 — the SSH gate
 
 The owner's words: "It should be main gate for ssh connections — now

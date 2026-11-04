@@ -69,15 +69,15 @@ schema = 1
   location = "ewe/safe/passwords.kdbx"
   webdav_url = ""                # place = webdav only; the password is in the keyring (service ewe-safe)
   webdav_user = ""
-  lock_after_minutes = 30
-  lock_on_screen_lock = true
-  lock_on_sleep = true
+  lock_after_minutes = 0         # 0 = never; defaults since 2026-11-04: the safe opens once per power-on (decision 51)
+  lock_on_screen_lock = false
+  lock_on_sleep = false
   clipboard_clear_seconds = 30
   generator_length = 20
   generator_words = 5
   ssh_agent = false              # Safe's SSH agent on (`ewe-safe ssh enable`) — ewe#59, since 0.28.0-beta;
                                  #   SHARED: since Safe 0.4.0-beta every computer turns its SSH gate on/off from it (GATE.md S21)
-  ssh_confirm = "first-use"      # first-use | every-time | never — noise reduction, not a boundary (ewe#59)
+  ssh_confirm = "once"           # once | first-use | every-time | never — noise reduction, not a boundary (ewe#59; once since 2026-11-04)
   git_sign = ""                  # SHA256 fingerprint of the key that signs Git commits (`ewe-safe ssh sign-commits`; Safe 0.4.0-beta, S25)
                                  # never here: the safe, any password, the per-machine unlock-with-login key
 [remote]                         # Remote (RFC-009) — LOCAL_ONLY: sharing THIS computer never travels

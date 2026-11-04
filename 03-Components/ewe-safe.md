@@ -42,7 +42,7 @@ flowchart LR
 |---|---|
 | `core` (`safe_core`) | open/create/save a KDBX file with a verified atomic write; the item model (Login, Note); the **write guard** (anything keepass-rs would drop → read-only); search; generator; TOTP; **Safe's own merge** |
 | `store` (`safe_store`) | places (`local`, `nextcloud`/WebDAV) with their conflict guard; the `Syncer`: cache, 20 backups, `sync.json`, stale → fetch, merge, verify, retry, pending offline, rollback warning |
-| `daemon` (`ewe-safed`) | socket-activated user service; holds the key only while unlocked; locks on screen lock, sleep, idle, `lock`; syncs on change, unlock, nudge, every 5 min |
+| `daemon` (`ewe-safed`) | socket-activated user service; holds the key only while unlocked; opens once per power-on and locks on `lock`, logout and power-off (screen lock, sleep and idle are switches, off by default — decision 51); syncs on change, unlock, nudge, every 5 min |
 | `cli` (`ewe-safe`) | the JSON verbs of `docs/PROTOCOL.md` v1 |
 | `login` (`safe_login`, 0.3.0) | this computer's session key W under Argon2id(login password) (`login.key`), blobs under W (`master.wrap`, `keyring.safe`); XChaCha20-Poly1305 |
 | `secrets` (`safe_secrets`, 0.3.0) | a Secret Service client (`keyring repair`, `status`, `list`, `import`, the carrier that keeps W in gnome-keyring's `login`) and Safe's own Secret Service server (built, parked: `adopt` refuses until the login module ships) |
