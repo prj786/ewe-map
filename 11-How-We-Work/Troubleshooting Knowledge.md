@@ -960,6 +960,41 @@ these directives aren't free, and a test outside systemd can't catch this. Run
 the unit's directives through `systemd-run --user` when a daemon looks at other
 processes.
 
+## "<computer> can't be reached" while plain ssh works (2026-11-05)
+
+**Symptom:** after a reboot, a computer that only joins others says its paired
+computer can't be reached: the browser's remote workspace shows that page, and
+the terminal says "Not connected. Trying again..." forever. Plain `ssh` to the
+same computer works, and the shared computer is fine. **Cause:** `ewe-remote`'s
+runtime directory (`$XDG_RUNTIME_DIR/ewe-remote`) is on tmpfs, and only sharing
+and pairing made it. `tunnel` then failed opening its log (`error: internal`,
+`FileNotFoundError`, which the browser shows under the same headline as a real
+network failure), and `ssh -F` logged in, then exited 255 at `unix_listener:
+cannot bind to path` because the generated `ControlPath` lived in that directory.
+**Check:** `ls -d /run/user/$UID/ewe-remote`, then `ewe-remote tunnel <name>`.
+**Fixed:** `main()` makes the directory for every verb, and the `ControlPath` sits
+beside it, so `ssh -F` needs no earlier `ewe-remote` call. **Lesson:** a file that
+survives a reboot can't point at a directory that doesn't, and a test that pairs
+and connects in one sitting can't see this. `tests/ewe-remote-test.sh` now empties
+the runtime directory between the steps.
+
+## The browser's Recent keeps reappearing; ewe Sync runs `ewe-conf` all day (2026-11-05)
+
+**Symptom:** Home's Recent cards blink every 2 to 3 seconds. **Cause, two bugs:**
+`ewe-sync`'s `watch_conf` watched `~/.config/ewe` and ran `ewe-conf get`, and the
+`notify` crate reports `OPEN` too (`WatchMask::OPEN` in its inotify backend), so
+reading `ewe.conf` woke the watcher: forever, every 2.3 s (the 2 s debounce plus the
+tool's run time), with two Python processes and a `pgrep` each round and a rewrite of
+`sync-folders.json` where only `updated_at` moved. And Home's `<For>` got new objects
+on every refresh, so it rebuilt every card and replayed the entrance. **Check:** watch
+that file's mtime, and sample the children of `ewe-sync` for `ewe-conf get sync.folders`.
+**Fixed:** ewe-sync 0.16.1 `is_real_change` (both watchers ignore every access event
+except a close after writing); ewe browser 0.8.2 announces `folders` only when the
+snapshot says something new, and reconciles Recent by key. **Lessons:** a `notify`
+watcher that reads what it watches wakes itself, so filter by event kind. And
+`Close(Write)` is an access event too, so don't drop all of them. A test of events
+must wait for them to stop: a write reports its own open first.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

@@ -15,6 +15,23 @@ Snapshot as of **2026-10-31**. Released: **ewe-os 0.15.0-beta**, **ewe 0.37.0-be
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-05 — Remote after a reboot, and the blink (ewe 0.40.1, ewe Sync 0.16.1, ewe Browser 0.8.2)
+
+The owner's report: *"my laptop is paired but emoh is unreachable. while simple ssh
+works just fine"*, then *"browser also blinks recent places... like reappears
+constantly"*.
+
+- **ewe 0.40.1** (ewe#82, `ee9792e`): a computer that only joins others lost Remote at
+  every reboot, because only sharing and pairing made the runtime directory. The reboot
+  asked for on 2026-11-04 is what exposed it.
+- **ewe Sync 0.16.1** (ewe-sync#12, `448cebf`): reading `ewe.conf` woke its own watcher,
+  every 2.3 s, for as long as the app ran.
+- **ewe Browser 0.8.2** (ewe-browser#21, `5018691`): the error page says whose problem
+  it is, and a refresh no longer rebuilds Home's cards.
+- **Open:** a real reboot and a second network; both fixes on the installed apps. A
+  restored browser tab can show the error page's title over Home (cause not found,
+  `ewe-browser/docs/PLAN.md`).
+
 ## 2026-11-04 — once per power-on, and working from home (ewe Safe 0.5, ewe 0.40)
 
 The owner's ask: *"somehow safe asks all the time for allow"*, *"instead we can

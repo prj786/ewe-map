@@ -266,6 +266,15 @@ keyring prompt at every boot that the 2026-10-18 keyring repair fixed. The syste
 sshd on port 22 is the way in after a reboot, where it is enabled; that login
 starts sharing for as long as it lasts.
 
+## Amendment 2026-11-05 — after a reboot
+
+The runtime directory (`$XDG_RUNTIME_DIR/ewe-remote`) is on tmpfs, so every verb makes
+it, and the generated `ssh_config`'s `ControlPath` sits beside it
+(`$XDG_RUNTIME_DIR/ewe-remote-cm-%C`): that file outlives a reboot, and ssh can read it
+before `ewe-remote` has run. The browser's error page now says "can't be reached" only
+when the other computer did not answer (`unreachable`, `tunnel`).
+[[Troubleshooting Knowledge]] has the story.
+
 ## Related
 
 [[RFC-005 — Nextcloud Account]] · [[RFC-006 — ewe-sync App]] ·
