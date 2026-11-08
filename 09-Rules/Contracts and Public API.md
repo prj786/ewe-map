@@ -35,6 +35,8 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.config/ewe/cloud.json` | `ewe-cloud` | ewe-sync, shell | no |
 | `~/.local/state/ewe/sync.json` | `ewe-conf` | the sync conflict rule — `id`, `remote_modified`, `remote_machine`, `machine_id`, `local_synced_at`, and since D12 `sha256` (bytes last pushed/pulled), `pending` (uploads in flight), `checked`, `adopted` ([[Sync Conflicts Are About Content]]) | no |
 | `~/.local/state/ewe/plugin-boots.json` | `ewe-plugin` | crash guard | no |
+| `$XDG_RUNTIME_DIR/ewe/game.json` (0.42) | `ewe-game` only (atomic, under `game.json.lock`) | shell `GameMode.qml` (FileView), Shaun's hub (`game_mode` in the snapshot), ewe Settings through `ewe-game status` | yes — `on`, `level`, `reasons` (manual / window / gamemode), `steps`, `undo`; tmpfs, gone at power-off — [[Game Mode — one, owned by the desktop]] |
+| `~/.config/gamemode.ini` (0.42) | `ewe-game setup` while its first line is `; ewe-game setup` | gamemoded | no — delete the first line to keep your own edits; `setup --force` replaces a file of yours |
 | `~/.local/state/ewe/sync-folders.json` (2026-10-31) | ewe-sync (atomic, every state change) | ewe browser's file manager, `ewe-files status`, `ewe-sync --status` | no — the connected-folders contract: `version` 1, `signed_in`, `account`, `auto`, `state` (idle\|syncing\|attention\|paused\|offline\|signed-out), `folders[]` {`key`, `name`, `local` (absolute, this machine), `remote`, `mode`, `engine` (ewe\|nextcloud-app), `state` (synced\|syncing\|pending\|paused\|error\|conflict\|offline), `last_sync` (epoch s), `conflicts`, `error`}, `account_folder` {`path`, `state` mounted\|synced\|off}; readers tolerate it missing and unknown fields |
 | `~/.local/state/ewe/sync-now` (2026-10-31) | ewe-sync's Sync now (epoch ms) | ewe browser (runs a sync cycle) | no — rule 6's nudge: no other app gets a sync button |
 | `~/.local/state/ewe/ewe-sync.json` | ewe-sync | ewe-sync | yes — per-machine folder state: local overrides, `paused`, last runs, conflicts, `remote_etag`, owned GTK bookmarks, the takeover record |
@@ -57,8 +59,8 @@ dedicated files win over stale lines in older `user.lua`.
 
 **Core targets** (0.25): `applauncher bar cloud display google lock osd
 overview picker plugins power quicksettings saver settings store sync toast
-updates welcome widgets` (verbs in [[IPC Verb Reference]]; there is no
-core `preview`).
+updates welcome widgets`, and since 0.42 `game` (toggle, on, off, status) (verbs in
+[[IPC Verb Reference]]; there is no core `preview`).
 **Plugin targets** — present only while the plugin is installed and
 enabled — with the legacy target each keeps as an **alias** (Rule 4):
 `ewe.cast` (`cast`), `ewe.dock` (`launcher`), `ewe.places` (`places`),

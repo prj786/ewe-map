@@ -37,6 +37,15 @@ schema = 1
   mode = "separate"              # separate (each display its own 1, 2, 3 …) | shared (one set, switching one switches all)
                                  #   → user-theme.json workspacesMode + `_G.ewe_workspaces_mode = "shared"` in user.lua; hyprctl reload, no theme rebuild
 
+[desktop.cursor]                 # 0.42, domain `theme` → user-theme.json cursorSize/cursorColor → colorscheme.sh
+  size = 24                      # 24 | 36 | 48 | 60 | 72 | 96 (the sizes Mocu draws; others refused)
+  color = "auto"                 # auto (white on dark, black on light) | white | black
+
+[desktop.game]                   # 0.42, domain `theme` → user-theme.json gameLevel/gameAuto/gameCloseApps ([[Game Mode — one, owned by the desktop]])
+  level = "ultra"                # ultra | balanced
+  auto = true                    # on while a Steam game / gamescope / a GameMode client runs
+  close_apps = true              # Ultra closes ewe Sync's service + ewe Browser's background process, reopens them
+
 [desktop.layout]                 # ← user.lua (ewe-conf set desktop.layout)
 [desktop.input]                  # ← input.lua + input-devices.json (ewe-conf set desktop.input)
 [desktop.wallpaper]              # ← wallpapers.conf

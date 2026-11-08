@@ -14,9 +14,9 @@ in a component. Every target and verb is public API (Rule 4).
 
 ## Core targets (the shell proper, 0.25)
 
-`applauncher bar cloud display google lock osd overview picker plugins
-power quicksettings saver settings store sync toast updates welcome
-widgets`
+`applauncher bar cloud display game google lock osd overview picker
+plugins power quicksettings saver settings store sync toast updates
+welcome widgets` (`game` since 0.42)
 
 Most expose `toggle` / `show` / `hide`. Checked against the `IpcHandler`
 targets in `dotfiles/quickshell/*.qml` and a live `qs ipc show`, 2026-10-14:
@@ -43,6 +43,7 @@ state), `toast` and `welcome` were missing from this sheet. (`cloud`,
 | `display` | `reset` (`Super+Shift+R`), `lid <state>` (internal) |
 | `power` | `kbdUp · kbdDown` |
 | `updates` | `refresh · count · working <bool>` |
+| `game` | `toggle · on · off · status` (0.42; `status` answers `off`, `ultra` or `balanced`) — the shell's door to `ewe-game` ([[Game Mode — one, owned by the desktop]]) |
 | `plugins` | `list · apiVersion · safeMode · reload` |
 | `cloud`, `google` | the account and Google state (see [[Contracts and Public API]]) |
 | `sync`, `picker` | internal (ewe-sync's state; the screen-share portal) |
