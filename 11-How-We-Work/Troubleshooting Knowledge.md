@@ -463,6 +463,16 @@ must point at the new path). The `cast` IPC target is an alias of
 
 ## The companion (RFC-007, 2026-10-14)
 
+- **Shaun takes 5–8 s to answer with Claude Code** (before 0.3). Each
+  question started `claude -p`, which loaded the user's own plugins, skills
+  and MCP servers (~94k tokens) and took ~4 s to start. 0.3 runs it lean
+  (`--disable-slash-commands --strict-mcp-config --setting-sources ""`)
+  and warm (started on the first keystroke and after an answer): ~1 s.
+  `--bare` is no fix: it refuses OAuth.
+- **A `claude` process sits idle at ~190 MB** (0.3): the warm one waiting
+  for a question. It goes after 3 idle minutes, or when the provider or
+  model changes.
+
 - **The notch looks darker or greyer than the bar** (Glass on). Its blur
   rule lacks `xray`: the notch shows the window under it through the
   translucent ground, the bar shows the wallpaper. `ewe.companion` ≥ the
