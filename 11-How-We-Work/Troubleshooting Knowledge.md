@@ -1017,6 +1017,44 @@ compositor (it exits with the bus); `ewe-cloud status` waits ~10 s for a keyring
 the sandbox bus does not have. Testing in `/tmp` costs RAM (tmpfs) — and a deleted
 file stays resident while a process holds it.
 
+## Chinese, Japanese or Korean text shows as boxes (2026-11-08)
+
+**Symptom:** CJK characters drew as hex boxes everywhere (shell, apps, browser).
+**Cause:** no CJK font was installed at all — `packages/common.list` had
+`noto-fonts` (no CJK) and nothing else; `fc-list :lang=zh` was empty. **Fixed (ewe
+0.42):** `adobe-source-han-sans-otc-fonts` (the Noto Sans CJK design, 112 MB vs
+299 MB, no serif) becomes an `ewe` dependency, and `dotfiles/fontconfig/fonts.conf`
++ `system/fontconfig/60-ewe-geist.conf` put **Source Han Sans SC** after Geist and
+Noto Sans Georgian, with rules that put `Source Han Sans` (JP), `… K`, `… TC`,
+`… HC` first for `lang` ja / ko / zh-tw / zh-hk. **Check without installing:**
+download the package into a scratch dir and point `FONTCONFIG_FILE` at a config
+that includes `/etc/fonts/conf.d/*` with the repo's `fonts.conf` in place of
+`50-user.conf`; `fc-match 'Geist:lang=ja:charset=3042'` and a `pango-view
+--no-display -o x.png` render show it. **Trap:** in a **monospace** context
+fontconfig 2.18 prefers the one cut it classes as monospace (`genericfamily` 3),
+the half-width **HW SC**, whatever the language — kana and hangul are right, a
+shared Han character keeps its Simplified shape. The family names in the OTC are
+`Source Han Sans` (Japanese), `… K`, `… SC`, `… TC`, `… HC` (+ `HW` cuts) —
+not `… JP`/`… KR`, which are the subset OTFs' names.
+
+## "Game mode does nothing" (2026-11-08)
+
+**Symptom:** the owner's game mode (Shaun's, then) changed nothing a game could
+feel. **Cause:** GameMode's polkit rule allows its helpers only to the
+`gamemode` group, which no ewe installer adds anyone to — `journalctl --user -u
+gamemoded` shows `pkexec … Not authorized` for `cpugovctl set performance` and
+`procsysctl split_lock_mitigate`. What did run: DND and animations off. **Fixed
+(ewe 0.42):** `system/tuning/70-ewe-gamemode.rules` (wheel), and game mode moved
+into the desktop as `ewe-game` with an Ultra level ([[Game Mode — one, owned by
+the desktop]]). **Trap:** RAPL energy (`/sys/class/powercap/intel-rapl*/energy_uj`)
+is root-only, so GameMode's own iGPU governor logic is blind — once allowed, its
+default would pin an integrated-GPU laptop's CPU at full speed; `ewe-game setup`
+writes `desiredgov` = the current governor there. **Test without touching the
+machine:** `tests/ewe-game-test.sh` (fakes for hyprctl, busctl, systemctl,
+gamemoded, a fake /proc and /sys); in the nest, `EWE_GAME_TOOL=<wrapper>` with
+the same fakes on PATH and `EWE_GAME_NO_SCOPE=1` — a real toggle there would set
+the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

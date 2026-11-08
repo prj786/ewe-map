@@ -4,14 +4,14 @@
   "generated": "2026-11-08",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.41.0-beta",
+    "ewe_de": "0.42.0-beta",
     "ewe_os": "0.15.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.22.0-beta",
     "ewe_sync": "0.16.2-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.22.0-beta",
+    "ewe_settings": "0.23.0-beta",
     "ewe_browser": "0.8.2-beta",
     "plugin_api": 3,
     "addons": {
@@ -33,7 +33,7 @@
       "ewe.slack": "0.3.0"
     },
     "ewe_safe": "0.5.0-beta",
-    "ewe_companion": "0.2.2-beta"
+    "ewe_companion": "0.2.4-beta"
   },
   "repos": [
     {
@@ -474,6 +474,18 @@
         "reconnect",
         "exit-node"
       ]
+    },
+    {
+      "tool": "ewe-game",
+      "job": "Game mode (0.42): Balanced or Ultra, on/off by hand, by a game window (SteamAppId, gamescope) or by GameMode's start/end hooks; one state in $XDG_RUNTIME_DIR/ewe/game.json",
+      "verbs": [
+        "status",
+        "on",
+        "off",
+        "toggle",
+        "scan",
+        "setup"
+      ]
     }
   ],
   "ipc": {
@@ -482,6 +494,7 @@
       "bar",
       "cloud",
       "display",
+      "game",
       "google",
       "lock",
       "osd",
@@ -580,7 +593,9 @@
     "network.ssh",
     "companion",
     "safe",
-    "remote"
+    "remote",
+    "desktop.cursor",
+    "desktop.game"
   ],
   "keyring_services": [
     {
