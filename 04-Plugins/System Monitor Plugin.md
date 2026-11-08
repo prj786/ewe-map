@@ -41,9 +41,12 @@ There is **no `quick-tile`** any more (1.x's span-2 tile and `Tile.qml` are gone
 - **`desktopWidget.visible: false`** in the manifest — the host's manifest default for
   a widget's visibility (ewe 0.39); a stored `place --visible` wins.
 - **Sampling only while held** (`hold()` ref-count): the readout while shown, the card
-  while open, the widget while visible. Every 1.5 s, **3 s on battery**
-  (`Shell.lowPower`). With the readout on by default that is one `sh` per tick for the
-  whole session (~5 ms).
+  while open, the widget while visible. Every 1.5 s while the card or the widget holds
+  (`hold(who, on, live)`), **3 s for the bar readout alone** (2.0.1), both doubled on
+  battery (`Shell.lowPower`). One `sh` per tick and nothing else (no `$(…)` subshells).
+- **Memory** (2.0.1): used = MemTotal − (MemAvailable + `GPUReclaim`) — the GPU
+  driver's reclaimable buffer pool (kernel 6.18+) is free memory; 4.47 GB of it read as
+  used on the owner's xe laptop.
 - `sample.sh` (one process per tick, one JSON object): `/proc/stat`, `/proc/meminfo`
   (+ swap, core count), and the **default-route interface** (lowest metric of the UP
   routes in `/proc/net/route`) with its `/proc/net/dev` byte counters. The rate is a

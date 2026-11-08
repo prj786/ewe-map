@@ -995,6 +995,28 @@ watcher that reads what it watches wakes itself, so filter by event kind. And
 `Close(Write)` is an access event too, so don't drop all of them. A test of events
 must wait for them to stop: a write reports its own open first.
 
+## "ewe uses too much RAM" / Chrome opens slowly (2026-11-08)
+
+**Symptom:** the memory meter read ~12 GB used on an idle 30 GB laptop; Chrome took
+over a second to open. **Causes, measured:** (1) `GPUReclaim` in `/proc/meminfo` — the
+xe/TTM pool of freed GPU buffers, 4.47 GB, outside `MemAvailable` (it fell to 62 MB on
+its own once memory was needed); (2) Chrome was a Komble AppImage — FUSE mount and
+decompression per launch, 1.1–1.3 s vs 0.5 s unpacked; (3) idle churn: 11 `hyprctl`
+per focus change (kb-per-window), a 1.5 s sysmon tick with 4 forks, two `nmcli
+monitor`, a 30 s global-shortcut sync, ewe Sync's hidden page polling every 30 s.
+**Check:** `grep -E 'MemAvailable|GPU' /proc/meminfo`; PSS per program (the loop in
+`ewe/docs/TROUBLESHOOTING.md`); a child sweep of `/proc/<pid>/task/*/children` at
+30 ms catches the spawns (a 100 ms `pgrep` loop misses a 5 ms `sh`). **Fixed:** ewe 0.41,
+Komble 0.22, ewe Sync 0.16.2, System monitor 2.0.1, VPN 1.0.3 ([[Roadmap and Status]]).
+**Lessons:** Qt's pixmap cache keys on `fillMode` too (the provider options), so a warm
+`Image` must match the drawing one in url, `sourceSize` AND `fillMode`. A Chrome you
+start with `gio launch` and close with `hyprctl closewindow` can keep running — time
+launches with a throwaway profile and kill the browser process by its profile path
+after. `dbus-run-session` starts a second `xdg-desktop-portal-hyprland` on the live
+compositor (it exits with the bus); `ewe-cloud status` waits ~10 s for a keyring that
+the sandbox bus does not have. Testing in `/tmp` costs RAM (tmpfs) — and a deleted
+file stays resident while a process holds it.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
