@@ -90,7 +90,10 @@ Debian with different command names:
    `pacman -U` is privileged (via a polkit helper). Reading the PKGBUILD
    first is a first-class part of the flow.
 3. **AppImages are per-user by nature** — `~/.local/share/appimages`,
-   no root at any point.
+   no root at any point. Since 0.22 each runs from an unpacked copy in
+   `.komble-run/<id>/` beside it (Exec `env APPIMAGE=… APPDIR=… <run dir>/AppRun`;
+   the `.AppImage` is the fallback for one that refuses to unpack) — a FUSE mount
+   and decompression on every launch cost Chrome 0.7 s.
 4. *(the fourth lives in the README's "four things" section — see the repo
    for the full accounting)*
 
