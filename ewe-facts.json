@@ -880,9 +880,10 @@
     }
   },
   "companion_protocol": {
-    "status": "P2.9 (ewe-companion#1 + ewe-plugin-companion#1) released in ewe-companion 0.1.0-beta (2026-10-17); wave 2 (ewe-companion#3 + ewe-plugin-companion#3, 0.5.0) released in ewe-companion 0.2.0-beta + ewe 0.30.0-beta (2026-10-18); docs/PROTOCOL.md, additive only",
+    "status": "P2.9 (ewe-companion#1 + ewe-plugin-companion#1) released in ewe-companion 0.1.0-beta (2026-10-17); wave 2 (ewe-companion#3 + ewe-plugin-companion#3, 0.5.0) released in ewe-companion 0.2.0-beta + ewe 0.30.0-beta (2026-10-18); docs/PROTOCOL.md, additive only; 0.3 / P2.11 (feat/shaun-wiser + ewe.companion 0.6.0, 2026-11-08, PRs open): streaming, chat.warm, look-ups, several actions, clock/units/system/windows/memory",
     "chat_reply_added": [
-      "rows"
+      "rows",
+      "kind partial (0.3)"
     ],
     "do_actions_added": [
       "browser {bin, args}",
@@ -912,20 +913,29 @@
       "run_shell",
       "theme_mode",
       "power",
-      "empty_trash"
+      "empty_trash",
+      "force_quit"
     ],
     "row_icons_added": [
       "download",
       "workspace",
       "timer",
-      "bluetooth"
+      "bluetooth",
+      "battery",
+      "cpu",
+      "memory",
+      "disk",
+      "network",
+      "trash",
+      "remember"
     ],
     "debug_verbs_added": [
       "debug.undo"
     ],
     "store_migrations": [
       "001_init",
-      "002_timers"
+      "002_timers",
+      "003_memory"
     ],
     "catalog_wave2": {
       "args_added": [
@@ -954,6 +964,42 @@
         "power",
         "empty_trash"
       ]
-    }
+    },
+    "hello_added": [
+      "caps (partial)"
+    ],
+    "welcome_caps_added": [
+      "stream",
+      "warm"
+    ],
+    "island_messages_added": [
+      "chat.warm"
+    ],
+    "catalog_03": {
+      "commands_added": [
+        "clock",
+        "date_math",
+        "convert",
+        "system_info",
+        "disk_usage",
+        "workspace",
+        "window",
+        "force_quit",
+        "remember",
+        "memories",
+        "forget"
+      ],
+      "looks": [
+        "clock",
+        "date_math",
+        "convert",
+        "calc",
+        "system_info",
+        "disk_usage",
+        "memories"
+      ],
+      "max_actions_per_reply": 3
+    },
+    "claude_code_lane": "lean: --disable-slash-commands --strict-mcp-config --setting-sources \"\" (never --bare: no OAuth); warm: one claude -p --input-format stream-json started on chat.warm and after an answer, dropped after 180 s idle"
   }
 }

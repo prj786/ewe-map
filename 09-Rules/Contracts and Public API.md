@@ -316,6 +316,21 @@ reply carries `confirm`, only the Run click runs them). Socket verb
 of tabs, bookmarks, downloads, workspaces and Bluetooth devices stay on the
 island (`tests/canary.sh` 9).
 
+**0.3 / P2.11** (feat/shaun-wiser, ewe-companion + ewe-plugin-companion 0.6.0,
+2026-11-08; added, nothing renamed): `hello` gains **`caps`** (`partial`: the
+island draws a streaming answer); `welcome.caps` gains `stream` and `warm`;
+`chat.reply` gains the kind **`partial`** (the answer so far, never an
+ACTION line, at most every 80 ms, only while every island says `partial`);
+island → daemon **`chat.warm`** (the first keystroke: start whoever answers;
+an older daemon ignores it). Row `icon` gains `battery`, `cpu`, `memory`,
+`disk`, `network`, `trash`, `remember`. New catalog commands: `clock`,
+`date_math`, `convert`, `system_info`, `disk_usage`, `workspace`, `window`
+(close only from a one-time token's button), `remember`, `memories`,
+`forget`, and **`force_quit`, a proposal like `run_shell`** (refused for the
+desktop's own processes, `commands::SESSION`). A model's reply may carry up
+to three ACTION lines; a reply of *looks* (`persona::LOOKS`) runs them and
+asks again with their `facts`. `companion.db` migration `003_memory`.
+
 ## The ewe.conf schema
 
 See [[EWE-CONF Schema Reference]].

@@ -29,7 +29,7 @@ flowchart TB
         MIGR["addons-migrated — JSON list of add-on ids<br/>already considered (0.25, local, never synced)"]
         PSTATE["plugins/<id>/ — a plugin's own stateDir (0.25)"]
         CAST["cast.log — cast debug trace (ewe.cast legacy path)"]
-        COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards, timers (002, 0.2.0-beta) (SQLite, per machine, never synced; RFC-007)"]
+        COMP["companion/companion.db (+ -wal/-shm) — the companion's history,<br/>sessions, cards, timers (002, 0.2.0-beta), memories (003, 0.3) (SQLite, per machine, never synced; RFC-007)"]
         SAFE["safe/ — sync.json · cache/passwords.kdbx (encrypted) ·<br/>backups/ (20, encrypted) · machine.json ·<br/>ssh-public.json (0.2.0-beta: public keys only, 0600)<br/>(RFC-008, never synced)"]
     end
     subgraph RUN["$XDG_RUNTIME_DIR"]
@@ -140,7 +140,9 @@ flowchart TB
 - **The companion keeps its own state** in `~/.local/state/ewe/companion/`
   (`companion.db`, 30-day retention), not in `ewe.conf`: history is per
   machine. Since 0.2.0-beta it also keeps timers and reminders there
-  (migration `002_timers`, 50 waiting at most), so they survive a restart. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
+  (migration `002_timers`, 50 waiting at most), so they survive a restart.
+  What the user asks Shaun to remember is `003_memory` (0.3, 100 at most,
+  secrets refused); it goes to the chosen provider with each question. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
   (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
   keyring, never the file.
 
