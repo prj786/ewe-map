@@ -26,6 +26,8 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.config/hypr/generated/hypridle.conf` | shell **by design** (battery-reactive) | hypridle | yes |
 | `~/.config/hypr/generated/kb-per-window.disabled` | ewe-settings (flag file) | `autostart.sh` | yes |
 | `~/.config/hypr/generated/plugin-keybinds.lua` | `ewe-plugin` verbs | `hyprland.lua` | yes |
+| `~/.config/hypr/generated/keybinds.lua` | `ewe-conf` (the `desktop.keybinds` records) | `hyprland.lua` | yes — since 0.43 each line is `hl.bind("<combo>", (ewe_launch or hl.dsp.exec_cmd)("<exec>"))`; `parse_keybinds_lua` reads that and the older `hl.dsp.exec_cmd` form |
+| `/etc/dconf/db/ewe.d/` + `/etc/dconf/profile/user` (0.43 on package installs) | phase 30 **and** `packaging/ewe.install` (profile only when absent or `system-db:ewe`) | GSettings (Nemo terminal, Files defaults, Engrampa) | yes — a user value in the user db wins |
 | `~/.config/quickshell/user-theme.json` | shell + ewe-settings (atomic, merged) | shell | no — shared, merge both sides |
 | `~/.config/quickshell/animations.json` | ewe-settings (source of truth) | shell `Theme.dur*/ease` on reload | no |
 | `~/.config/quickshell/window-rules.json` | ewe-settings | shell | no |
@@ -100,7 +102,8 @@ too (users bind it in `user.lua`).
   singleton** and the **public components** (`Tile`, `Qs*`, `QsFieldInput`,
   `Text*`, `Glyph`, `BarModule`, `BarSep`, `BarStatusGlyph`,
   `AnchoredPopup`, plus `Toggle Slider Meter ListWell ListRow SectionTitle
-  Badge Spinner Avatar Elevation`).
+  Badge Spinner Avatar Elevation`; since 0.43 `ContextMenu` and `Tooltip`
+  (one shared `TooltipHost`), and `tip:` on `QsIconButton` / `BarModule`).
 - Settings keys in `ewe.conf` under `[plugins.widgets]` /
   `[plugins.settings]`, keyed by **quoted id** (dots!) — always written as
   whole tables; setting keys match `^[a-z][a-z0-9_]{0,31}$`. Widget fields:
@@ -116,6 +119,7 @@ too (users bind it in `user.lua`).
 | read | `apiVersion` (3) · `overviewOpen` `overviewCover` (0.34) `workspacesShared` (0.35) `quickSettingsOpen` `lowPower` `onBattery` `locked` `dnd` · `bottomInset` `bottomReserved` `dockPresent` · `dockPrefs {enabled, autohide, iconSize}` · `pinnedApps` · `activeCount` · `dockItems` · `primaryScreenName` · `popupsClosing` |
 | call (0.35) | `workspaceNumber(id)` — a Hyprland workspace id as the number the user sees (each display owns ten ids; 11 → 1). A plugin never shows a raw id ([[Workspaces Per Display]]) |
 | call | `toast(text, kind)` · `openQuickSettings(tab)` `closeQuickSettings()` · `openSettings(page)` `openStore(page)` (`komble --<page>`, e.g. `addons`) · `launch(desktopId)` `focusApp([classes])` · `registerAction(name, fn)` `runAction(name, anchor)` · `setActive(name, on)` `isActive(name)` · `setDockItemShown(id, on)` `dockItemShown(id)` · `setBottomInset(id, px, reserved)` · `setPinned(id, on)` · `anchorFor(item, window)` → `{screen, x, y, edge, item}` · `toggleOverview()` · `closePopups(exceptId)` · **3.2:** `setSetting(pluginId, key, value)` (one of the plugin's own declared settings, live, through `ewe-plugin set`) |
+| call (0.43) | `entryForClass(cls)` `iconForClass(cls, fallback)` — THE window class → desktop entry / icon (id, `StartupWMClass`, reverse-DNS tail, Komble AppImages `komble-<id>`, Steam `steam_app_N` → `rungameid/N`); `screenPoint(item, x, y)` — an item point in screen coordinates (where a `ContextMenu` opens). Feature-detect: `("iconForClass" in Shell)` |
 | signal | `aboutToSleep()` (logind bridge) · `resumed()` (Resume step 6) |
 
 Injected into entry points when declared: `pluginId`, `pluginDir`,
@@ -330,6 +334,21 @@ ewe/safe/passwords.kdbx      Safe (RFC-008): the encrypted KDBX 4 file, written 
 ewe/browser/                 ewe browser: bookmarks.json, history.json (+ clear records since 0.2.0-beta), settings.json
 ewe/browser/tabs-<id>.json   ewe browser (since 0.2.0-beta): this machine's open tabs; <id> = 16 hex, salted sha256 of machine-id + profile
 ```
+
+## The compositor's launch globals (0.43)
+
+`workspaces.lua` defines two Lua globals that other code calls — renaming them breaks
+the shell and every machine's generated `keybinds.lua`:
+
+- `ewe_launched(hint)` — "the user just launched this app": the shell sends
+  `Hyprland.dispatch('function() if ewe_launched then ewe_launched("<hint>") end end')`
+  (a Lua function through the dispatch socket; the hint is a StartupWMClass / desktop id /
+  binary, kept to `[A-Za-z0-9._-]`). The next window of that app within 30 s is focused
+  and the view follows a Window Rules workspace ([[Who May Move You — launches, toasts and activation]]).
+- `ewe_launch(cmd[, hint])` — a bind dispatcher that marks the launch and runs `cmd`.
+
+The shell's own global shortcut `ewe:logout` (0.43; Super+Ctrl+Q, Ctrl+Alt+Delete) opens
+the Sign out confirmation, beside `ewe:power`.
 
 ## Related
 
