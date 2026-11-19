@@ -1104,6 +1104,6 @@
       "ffmpeg"
     ],
     "reversal_icon_theme": "pkgrel 2: hardlink -q -c usr/share/icons - 416 MiB -> ~14 MiB installed",
-    "iso_trim": "nvidia-open, cloud-init (+ cloud-init.target.wants units), clonezilla, partclone, partimage, fsarchiver, irssi, lynx, mc, nmap, tcpdump, refind, b43-fwcutter, darkhttpd, gpm, lftp, linux-atm, ndisc6, openpgp-card-tools, sequoia-sq, pptpclient, vpnc, wvdial; measured 7.5 -> 5.4 GB installed, 2.48 -> 1.90 GB compressed, ISO ~3.2 -> ~2.4 GB"
+    "iso_trim": "nvidia-open, cloud-init (+ cloud-init.target.wants units), clonezilla, partclone, partimage, fsarchiver, irssi, lynx, mc, nmap, tcpdump, refind, b43-fwcutter, darkhttpd, gpm, lftp, linux-atm, ndisc6, openpgp-card-tools, sequoia-sq, pptpclient, vpnc, wvdial; measured 7.5 -> 5.4 GB installed, 2.48 -> 1.90 GB compressed, ISO 3.2 -> 2.6 GB (2,591,948,800 bytes, v0.16.0-beta)"
   }
 }
