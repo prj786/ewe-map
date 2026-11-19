@@ -12,7 +12,10 @@ up: "[[Decision Index]]"
 ([[ewe-browser]]), a first-party app shipped like Komble: its own repo and
 release, collected by ewe-repo's `publish`, a dependency of the `ewe`
 package. Helium (`helium-browser-bin`) left `packages/aur.list` and
-`ewe-repo/aur-packages.txt`. Nemo stays the folder handler and Super+E.
+`ewe-repo/aur-packages.txt`. Nemo stayed the folder handler and Super+E —
+**until ewe 0.44 (2026-11-19)**, when ewe Files took folders
+([[ewe's Own Apps — Files, Player, Viewer]]; the browser's folder give-back
+names `ewe-files-app.desktop` since ewe Browser 0.8.4-beta).
 
 ## What changed in the desktop
 

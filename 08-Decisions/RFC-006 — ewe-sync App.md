@@ -36,6 +36,10 @@ desktop id `io.github.prj786.ewe-sync`.
 - **Login:** Nextcloud's Login Flow v2 is the only sanctioned way; yields an
   app password appearing as a device under the user's Security page.
   `ewe-cloud` implements it; ewe-sync drives that, never reimplements.
+  **Reversed 2026-11-19** ([[Password Sign-in — a reversal]], decision 58):
+  the default is a password typed in ewe Sync (or the installer), exchanged
+  once through OCS `core/getapppassword` for the same kind of app password;
+  Login Flow v2 stays for two-step verification and single sign-on.
 - **Registration:** impossible without admin credentials; ewe-sync links to
   provider signup pages instead. Running an owner-hosted Nextcloud to make
   registration work in-app was **rejected** (owner back in the loop as an

@@ -25,7 +25,7 @@ flowchart LR
     K["Komble window"] --> REPO["Repositories<br/>browse + search enabled repos<br/>filter by repo · install / remove"]
     K --> AUR["AUR<br/>search → read the PKGBUILD → build<br/>makepkg as YOU, only pacman -U is root"]
     K --> AI["AppImages<br/>AppImageHub catalog (~1600)<br/>→ ~/.local/share/appimages<br/>menu integration, no root ever"]
-    K --> UPD["Updates<br/>repo + AUR + AppImage in one view<br/>tray indicator + background check"]
+    K --> UPD["Updates<br/>repo + AUR + AppImage in one view<br/>the bar's own indicator counts (updates-check.sh)"]
     K --> ONEFILE["the one file<br/>ewe.conf [apps.installed]<br/>source: repo | aur | first-party"]
     ONEFILE -->|"For you"| K
 ```
@@ -33,6 +33,23 @@ flowchart LR
 - **The one file** — every install/removal is recorded through `ewe-conf`
   (as you, no root) with its source. **For you** reads that list back and
   offers whatever another ewe machine recorded that is missing here.
+- **Komble quits when its window closes** (2026-11-19). It has no tray and
+  no background duty the desktop relies on — the bar's update indicator is
+  the shell's own (`updates-check.sh`, live before Komble ever ran), Komble
+  only pokes `qs ipc call updates refresh` after a transaction. Until 0.22.1
+  "Minimize to tray on close" (default on) kept a windowless process with a
+  live WebKit page (~250 MB) after every `komble --updates`. The one
+  exception: a transaction in flight (`util::Working` — pacman under pkexec,
+  makepkg, an AppImage download/extraction) finishes windowless, then the
+  process leaves; a second launch meanwhile rebuilds the window
+  (`show_main`, `WebviewWindowBuilder`; routes and opened files are stashed
+  and the page told to take them). Decision: [[Apps Are Not Resident]]
+  (Komble 0.23.0-beta).
+- **Build tools come when needed** (0.23.0-beta): `base-devel` and `git`
+  left ewe's `depends` with [[The Package Diet]]; before the first AUR build
+  Komble's `ensure_build_tools` installs them through the same polkit helper
+  (deps, not apps — no `[apps.installed]` entry), so a fresh machine that
+  never builds from the AUR never carries a compiler.
 - **Komble never syncs** — it never fetches or restores the file itself;
   the account and the restore live in [[ewe-sync]] (RFC-005). A restore done
   there shows up in For you on the next look.

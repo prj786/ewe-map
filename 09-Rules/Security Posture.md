@@ -56,6 +56,7 @@ environment (GPU/driver, distro, ewe version).
 | secret | lives | never |
 |---|---|---|
 | Nextcloud app password | keyring, service `ewe-cloud` | never in `ewe.conf`, never on a command line |
+| the user's real Nextcloud password (0.44, [[Password Sign-in — a reversal]]) | nowhere — stdin → one https request to the typed server (`getapppassword`, redirects never followed) → the buffer zeroed | never argv, never a file, never a log, never kept; 2FA/SSO accounts use the browser flow |
 | Google refresh token | keyring, `ewe-auth` only | never in caches (only non-secret facts cached) |
 | VPN credentials | root-only NetworkManager profiles | one file records the *definition*, never secrets |
 | pairing keys (KDE Connect) | kdeconnectd | shell persists only seen-ids + device choice |

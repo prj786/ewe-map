@@ -34,6 +34,14 @@ motion follow ewe live with no theming hook.
 | the companion (Shaun) | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); since ewe-companion 0.1.0-beta it calls the command line — search, open, play, history, tabs, `page --text` (untrusted) — and since 0.2.0-beta a site's own search (`search --site`), bookmarks, back/forward, workspaces, downloads |
 | Hyprland (ewe 0.30.0-beta) | a 4-finger swipe left/right while the browser is focused runs `ewe-browser workspace next\|prev` ([[Four Fingers — ewe browser's workspaces]]) |
 
+## New in 0.8.4-beta (released 2026-11-19, ewe-browser#23)
+
+| what | how |
+|---|---|
+| **The `apps` permission kind** — "Open apps" | a link to another scheme (`mailto:`, `claude://`, `zoommtg:` …) asks per top-level site like every other permission ([[Site Permissions — ask per site]]): `kindsFor('openExternal')` → `['apps']`, the prompt "Open links in apps on this computer", stored in `permissions.json` (`{version: 1, sites: [{origin, permissions: {kind: allow \| block}, updated}]}`); allowed → Electron hands the link to `xdg-open`. Before: silently dropped ("Open Claude" from claude.ai did nothing) |
+| **Play in ewe Player** | the file manager's video action spawns `$EWE_PLAYER_BIN` (default `ewe-player`), falling back to `mpv --force-window=immediate -- <path>`; "No video player is installed" when neither exists. The op name stays `mpv` (contract); e2e sets `EWE_PLAYER_BIN` to a missing binary to test the fallback ([[ewe-apps]]) |
+| **Folders give-back** | *Use ewe browser for folders* off → `default-handler.ts` `FALLBACK = 'ewe-files-app.desktop'` (ewe 0.44; `nemo.desktop` before) |
+
 ## New in 0.4.0-beta — wave 2 (released 2026-10-18)
 
 The owner's ask (2026-10-18): finger gestures, more shortcuts, right-click
@@ -173,9 +181,11 @@ phase 20 installs it on the tarball path; Komble lists it in `first_party.rs`.
   namespaces, and the renderers run in their own user namespace with seccomp
   (checked on the package, 2026-10-14).
 - Desktop id `ewe-browser.desktop`, WM class / app-id `ewe-browser`, icon
-  `ewe-browser`. Folders stay with Nemo; the app's *Use ewe browser for
-  folders* writes its own hidden `ewe-browser-folders.desktop`, never an
-  entry that would shadow the packaged one.
+  `ewe-browser`. Folders stay with the desktop's file manager (ewe Files
+  since 0.44, Nemo before); the app's *Use ewe browser for folders* writes
+  its own hidden `ewe-browser-folders.desktop`, never an entry that would
+  shadow the packaged one, and gives the default back to
+  `ewe-files-app.desktop` when turned off (0.8.4-beta).
 - The Widevine CDM downloads into the profile on first launch; nothing
   proprietary ships in the package.
 

@@ -20,7 +20,7 @@ hyprland.lua — and exist only while their plugin is enabled.
 |---|---|
 | `Super+Return` | terminal (kitty) |
 | `Super+D` | launcher — fuzzy app/file search |
-| `Super+E` | file manager (nemo) |
+| `Super+E` | file manager — ewe Files (`ewe-files-app`, 0.44; Nemo before) |
 | `Super+B` | browser — the default from Settings → Default Apps, else ewe browser |
 | `Super+C` | calendar: GNOME Calendar when installed, else this month as a notification (`scripts/calendar.sh`) |
 | `Super+,` | Settings |

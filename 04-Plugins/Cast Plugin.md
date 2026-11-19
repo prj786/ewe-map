@@ -35,7 +35,10 @@ core).
   `~/.local/state/ewe/cast.log`. Plugin-local `CastState` singleton.
 - **Requires:** `ewe-cast`, `gnome-network-displays`, `avahi`, `iw`,
   `wireless-regdb`, `gst-plugin-va`, `gst-plugins-bad`; dev knob
-  `EWE_CASTD=/path/to/ewe-castd`.
+  `EWE_CASTD=/path/to/ewe-castd`. **Since ewe 0.44 `ewe-cast` and
+  `gnome-network-displays` left `ewe`'s depends and the lists** — Komble
+  installs them with the plugin ([[The Package Diet]]); the tarball
+  (`get.sh`) path still installs `ewe-cast`.
 - **Portal threshold:** the patched `xdg-desktop-portal-hyprland` must be
   **≥ 1.4.1-2.1** (stock Arch `1.4.1-2` reintroduced the #424 freeze; ewe
   ships `1.4.1-2.1` — phase 90's check and the plugin's README say so).

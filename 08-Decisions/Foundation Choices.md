@@ -63,7 +63,16 @@ or dark comes from the scheme.
 
 ## Traditional GTK apps (not Qt/KDE, not libadwaita)
 
-Shipped first-party apps are traditional GTK: **Nemo, Engrampa, imv,
+> **Superseded for the file manager, archives, pictures, documents and
+> media (2026-11-19):** those roles are **ewe's own apps** — ewe Files, ewe
+> Player, ewe Viewer (Tauri on WebKitGTK, repo `ewe-apps`) — and Nemo,
+> Engrampa, imv, Zathura and mpv left the package lists
+> ([[ewe's Own Apps — Files, Player, Viewer]], decision 56). What stands:
+> one `mimeapps.list` as the single source for defaults, no libadwaita, no
+> Qt/KDE first-party apps; kitty and Zed stay; mpv remains installed only
+> for `mpvpaper`. The text below is kept as history.
+
+Shipped first-party apps were traditional GTK: **Nemo, Engrampa, imv,
 Zathura, mpv** (+ kitty, Zed). Why:
 
 1. Traditional GTK apps use a menubar + server-side decorations → under
@@ -77,7 +86,9 @@ Zathura, mpv** (+ kitty, Zed). Why:
 
 > **Build guard:** do not propose reverting to Qt/KDE apps or
 > `plasma-integration`. Do not swap in libadwaita apps (they'd break the
-> borderless aesthetic).
+> borderless aesthetic). Since 0.44 do not add the old GTK apps back to the
+> lists either — a default goes to an ewe app or to the user's own pick in
+> ewe Settings → Default apps.
 
 ## The greeter stack
 

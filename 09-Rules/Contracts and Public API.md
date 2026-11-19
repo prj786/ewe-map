@@ -28,6 +28,9 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.config/hypr/generated/plugin-keybinds.lua` | `ewe-plugin` verbs | `hyprland.lua` | yes |
 | `~/.config/hypr/generated/keybinds.lua` | `ewe-conf` (the `desktop.keybinds` records) | `hyprland.lua` | yes — since 0.43 each line is `hl.bind("<combo>", (ewe_launch or hl.dsp.exec_cmd)("<exec>"))`; `parse_keybinds_lua` reads that and the older `hl.dsp.exec_cmd` form |
 | `/etc/dconf/db/ewe.d/` + `/etc/dconf/profile/user` (0.43 on package installs) | phase 30 **and** `packaging/ewe.install` (profile only when absent or `system-db:ewe`) | GSettings (Nemo terminal, Files defaults, Engrampa) | yes — a user value in the user db wins |
+| `~/.config/mimeapps.list` `[Default Applications]` | the user (ewe Settings → Default apps, `xdg-mime`); `ewe-setup` / phase 60 **seed only** where no working explicit choice exists (`_mime`: `ewe-files-app.desktop` folders + archives, `ewe-viewer.desktop` PDF/EPUB/comics/office/csv/pictures, `ewe-player.desktop` video + audio — 0.44) | GIO, every app, the shell's launcher | no — a user value wins; the one-time `_mime_take` (nemo/engrampa/imv/zathura/mpv → the ewe app) runs once behind `~/.local/state/ewe/default-apps-0.44.done` ([[ewe's Own Apps — Files, Player, Viewer]]) |
+| `~/.local/state/ewe/default-apps-0.44.done` (0.44) | `ewe-setup` / phase 60 | themselves | the migration marker — local, **never synced**; delete it to re-run the take-over |
+| D-Bus `org.freedesktop.FileManager1` at `/org/freedesktop/FileManager1` (0.44) | **ewe Files** (`ewe-files-app`, zbus) — not claimed while Nemo still owns it | every app's "Show in folder" (`ShowFolders`, `ShowItems`, `ShowItemProperties`) | the name is a freedesktop contract; ewe Files answers with `--folders` / `--select=` / `--properties` windows ([[ewe-apps]]) |
 | `~/.config/quickshell/user-theme.json` | shell + ewe-settings (atomic, merged) | shell | no — shared, merge both sides |
 | `~/.config/quickshell/animations.json` | ewe-settings (source of truth) | shell `Theme.dur*/ease` on reload | no |
 | `~/.config/quickshell/window-rules.json` | ewe-settings | shell | no |
@@ -88,7 +91,7 @@ too (users bind it in `user.lua`).
 
 | service | holds | managed by |
 |---|---|---|
-| `ewe-cloud` | Nextcloud app password | `ewe-cloud` (Login Flow v2) |
+| `ewe-cloud` | Nextcloud app password | `ewe-cloud` — obtained by `login <server> --user X --password-stdin` (OCS `core/getapppassword`, 0.44 — [[Password Sign-in — a reversal]]) or by Login Flow v2 (`login <server>`); the real password is never stored |
 | (Google) | refresh token | `ewe-auth` only |
 
 ## The plugin surface (API 2 | 3 — [[Plugin API 3]])
@@ -167,12 +170,75 @@ a stored `place --visible` wins. `quickPage.key` `remote` and `power` are
 refused (they are the shell's pages). `quick-page` is shown as a shortcut
 tile or its tile's arrow — the rail is gone; the manifest is unchanged.
 
-### Apps' entry points that changed in this wave
+### Apps' entry points that changed in the 0.39 wave
 
 - ewe Browser 0.8: `app://newtab` is retired (redirects to Home); Settings
   sections are URL anchors `#appearance … #shortcuts`.
 - ewe Sync 0.16: `--pane` also accepts `computers` and `settings`
   (aliases; the old ids stay).
+
+### The 0.44 wave (2026-11-19) — ewe's own apps, password sign-in
+
+Everything here is **added**; nothing renamed (rule 4). Decisions 56–59.
+
+- **Three new binaries**, package `ewe-apps` ([[ewe-apps]]): `ewe-files-app`
+  (desktop id `ewe-files-app.desktop`), `ewe-player` (`ewe-player.desktop`),
+  `ewe-viewer` (`ewe-viewer.desktop`); `StartupWMClass` = app_id = the
+  binary. **`--version`** → `{"ok":true,"name":"<binary>","product":"<ewe
+  Name>","version":"0.1.0-beta"}`, exit 0. Flags take their value as
+  `--key=value` only (never a separate token); `--` ends flags; `file://`
+  accepted. **Callers in ewe:** the launcher runs `ewe-files-app
+  --open-with=<path>` (Open with…) and `ewe-files-app <dir>` /
+  `--select=<path>` (Open containing folder); `hyprland.lua`'s
+  `fileManager = "ewe-files-app"` (Super+E); `warmup.sh` warms all three.
+  ewe Browser's *Play in ewe Player* runs **`$EWE_PLAYER_BIN`** (default
+  `ewe-player`), mpv as the fallback. Other flags: Files `--properties`,
+  `--tab`, `--folders`; Player `--enqueue`, `--scene=<name>`; Viewer
+  `--page=N`, `--find=`, `--sidebar=`, `--mode=`, `--zoom=`, `--night`,
+  `--present`, `--fill=`, `--toc`, `--flow=`, `--theme=`, `--spread`,
+  `--source`, `--sheet=N`, `--info`, `--slideshow`. Environment:
+  `EWE_BIN` (where ewe's tools are), `EWE_MUSIC_DIR`,
+  `EWE_APPS_MEDIA_SERVER_FILE` (tests). D-Bus: ewe Files owns
+  `org.freedesktop.FileManager1`; ewe Player is
+  `org.mpris.MediaPlayer2.ewe-player` (WebKitGTK also publishes an
+  `org.mpris.MediaPlayer2.org.webkit.*` player the shell must skip —
+  not done in 0.44).
+- **`ewe-cloud login <server-url> --user <login> --password-stdin`**
+  ([[Password Sign-in — a reversal]]): the password on stdin, one https
+  request to the typed server (`/ocs/v2.php/core/getapppassword`, no
+  redirects), the reply `{"ok": true, "server", "user", "login_name",
+  "display_name", "email", "quota", "keyring"}` — the same as the browser
+  flow's; errors `no-user no-password unauthorized forbidden too-many-tries
+  redirected not-nextcloud bad-reply http-<n> network`, with `browser: true`
+  where the browser flow would succeed. ewe Sync 0.17 and the ewe-os 0.16
+  installer call it; `login <server>` alone is still Login Flow v2.
+- **`ewe-settings --page <id>`** / `--page=<id>` honoured by a running
+  instance too (single-instance `open-page`); `Shell.openSettings(page)`
+  always passes it ([[ewe-settings]]).
+- **ewe Browser 0.8.4:** permission kind **`apps`** ("Open apps" — other
+  schemes such as `mailto:`, `claude://`) joins camera, microphone, …
+  in `permissions.json`; `EWE_PLAYER_BIN`; folder give-back
+  `ewe-files-app.desktop` ([[ewe-browser]]).
+- **ewe Sync 0.17:** the bar's `qs ipc call sync state <state> <detail>`
+  (states `signed-out offline syncing conflict idle`) now comes from Rust
+  (`bar.rs`) — same verb, same states; the `tray_state` /
+  `tray_pause_label` Tauri commands are gone (internal). The window is not
+  declared in `tauri.conf.json`; `--pane` / `--add-folder` still reach a
+  running app ([[Apps Are Not Resident]]).
+- **Komble 0.23:** quits on close unless a transaction runs; the
+  `minimizeToTray` setting is gone; `komble --…` routes unchanged.
+- **Packaging:** `vulkan-swrast` is **first** in `ewe`'s depends and the
+  publish gate blacklists `nvidia-utils`; `ewe-cast`, `kdeconnect`,
+  `qt5-wayland`, `base-devel`, `tesseract-data-eng`, `nemo`, `engrampa`,
+  `imv`, `zathura`, `zathura-pdf-mupdf`, `mpv`, `mpv-mpris` left the lists;
+  `ewe-apps` joined ([[The Package Diet]]). Phase 90 checks `apps: ewe
+  Files`, `apps: ewe Player + ewe Viewer`, `codecs: FFmpeg in GStreamer`.
+- **Launch globals:** `ewe_launched(hint, here)` gained a second argument
+  (`here = true` → the window is focused where it opens, the view does not
+  move: `Globals.markLaunch(hint, true)`, `system/bin/ewe-terminal-here`
+  for Nemo's / ewe Files' *Open in terminal*). The dconf key Nemo reads is
+  `/org/cinnamon/desktop/applications/terminal` `exec` + `exec-arg` (0.43
+  wrote `default-applications/terminal`, a path nothing reads).
 
 ### `ewe-conf sync-status` (D12)
 
@@ -340,11 +406,13 @@ ewe/browser/tabs-<id>.json   ewe browser (since 0.2.0-beta): this machine's open
 `workspaces.lua` defines two Lua globals that other code calls — renaming them breaks
 the shell and every machine's generated `keybinds.lua`:
 
-- `ewe_launched(hint)` — "the user just launched this app": the shell sends
+- `ewe_launched(hint[, here])` — "the user just launched this app": the shell sends
   `Hyprland.dispatch('function() if ewe_launched then ewe_launched("<hint>") end end')`
   (a Lua function through the dispatch socket; the hint is a StartupWMClass / desktop id /
   binary, kept to `[A-Za-z0-9._-]`). The next window of that app within 30 s is focused
   and the view follows a Window Rules workspace ([[Who May Move You — launches, toasts and activation]]).
+  Since 0.44 `here = true` (`Globals.markLaunch(hint, true)`, `ewe-terminal-here`) focuses
+  the window where it opens and leaves the view alone — a terminal opened "here".
 - `ewe_launch(cmd[, hint])` — a bind dispatcher that marks the launch and runs `cmd`.
 
 The shell's own global shortcut `ewe:logout` (0.43; Super+Ctrl+Q, Ctrl+Alt+Delete) opens

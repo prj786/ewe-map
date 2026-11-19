@@ -4,15 +4,15 @@
   "generated": "2026-11-19",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.43.0-beta",
-    "ewe_os": "0.15.0-beta",
+    "ewe_de": "0.44.0-beta",
+    "ewe_os": "0.16.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.22.1-beta",
-    "ewe_sync": "0.16.2-beta",
+    "komble": "0.23.0-beta",
+    "ewe_sync": "0.17.0-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.23.0-beta",
-    "ewe_browser": "0.8.3-beta",
+    "ewe_settings": "0.24.0-beta",
+    "ewe_browser": "0.8.4-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.2.0",
@@ -34,7 +34,9 @@
       "ewe.switcher": "1.0.1"
     },
     "ewe_safe": "0.5.0-beta",
-    "ewe_companion": "0.2.4-beta"
+    "ewe_companion": "0.2.4-beta",
+    "ewe_apps": "0.1.0-beta",
+    "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)"
   },
   "repos": [
     {
@@ -55,18 +57,18 @@
     },
     {
       "name": "komble-arch",
-      "role": "Komble software manager",
+      "role": "Komble software manager (0.23.0-beta, 2026-11-19: quits when its window closes unless a transaction runs, no tray; installs base-devel + git before the first AUR build)",
       "stack": "Tauri v2 + Svelte 5 + Tailwind 4",
       "license": "MIT"
     },
     {
       "name": "ewe-settings",
-      "role": "Settings app",
+      "role": "Settings app (0.24.0-beta, 2026-11-19: --page honoured by a running instance; Default apps rows Music player / Document viewer / Archives)",
       "stack": "Tauri v2 + Svelte 5"
     },
     {
       "name": "ewe-sync",
-      "role": "account & sync app (RFC-006)",
+      "role": "account & sync app (RFC-006; 0.17.0-beta, 2026-11-19: the bar glyph from Rust, the window only while shown, password sign-in)",
       "stack": "Tauri v2 + Svelte 5"
     },
     {
@@ -76,8 +78,14 @@
     },
     {
       "name": "ewe-browser",
-      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search",
+      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search; 0.8.4-beta (2026-11-19): the apps permission kind, Play in ewe Player (EWE_PLAYER_BIN), folder give-back ewe-files-app.desktop",
       "stack": "Electron 44 (castlabs ECS) + Solid, TypeScript",
+      "license": "GPL-3.0-only"
+    },
+    {
+      "name": "ewe-apps",
+      "role": "ewe Files (ewe-files-app), ewe Player (ewe-player), ewe Viewer (ewe-viewer): the desktop's file manager, media player and viewer; one package ewe-apps, a dependency of ewe since 0.44; replaced Nemo, Engrampa, imv, Zathura and mpv as defaults (decision 56; 0.1.0-beta released 2026-11-19)",
+      "stack": "Tauri 2 (Rust, system WebKitGTK) + Solid, TypeScript, Vite; GStreamer, pdf.js; crate ewe-app-core, npm @ewe/shared + @ewe/ui",
       "license": "GPL-3.0-only"
     },
     {
@@ -242,12 +250,32 @@
     },
     {
       "tool": "ewe-cloud",
-      "job": "Nextcloud account (Login Flow v2)",
+      "job": "Nextcloud account: password sign-in (OCS core/getapppassword, 0.44) or Login Flow v2",
       "verbs": [
-        "login",
+        "login <server-url> --user <login> --password-stdin",
+        "login <server>",
         "status",
-        "token"
-      ]
+        "token",
+        "avatar"
+      ],
+      "login_password_stdin": {
+        "since": "ewe 0.44.0-beta (2026-11-19, decision 58 - reverses 'ewe never sees your password')",
+        "flow": "password on stdin (never argv) -> one https GET <server>/ocs/v2.php/core/getapppassword?format=json with Basic auth, OCS-APIRequest: true, User-Agent 'ewe (<hostname>)'; redirects never followed; 200 -> ocs.data.apppassword; 403 -> the typed value verified as an app password and used as is",
+        "reply": "{ok: true, server, user, login_name, display_name, email, quota, keyring} - the same as the browser flow's",
+        "errors": [
+          "no-user",
+          "no-password",
+          "unauthorized (+browser: true)",
+          "forbidden (+browser)",
+          "too-many-tries (429)",
+          "redirected (+browser)",
+          "not-nextcloud (404)",
+          "bad-reply",
+          "http-<n>",
+          "network"
+        ],
+        "callers": "ewe-sync 0.17 Account pane, the ewe-os 0.16 installer; 'Sign in with the browser instead' = login <server> (Login Flow v2) for 2FA/SSO"
+      }
     },
     {
       "tool": "ewe-files",
@@ -306,7 +334,7 @@
     },
     {
       "tool": "komble",
-      "job": "software manager + add-ons catalogue (not in ewe/bin)",
+      "job": "software manager + plugins catalogue (not in ewe/bin); quits when its window closes unless a transaction runs (0.23, decision 59); installs base-devel + git before the first AUR build (ensure_build_tools)",
       "verbs": [
         "--updates",
         "--settings",
@@ -314,6 +342,75 @@
         "--addons",
         "--plugins"
       ]
+    },
+    {
+      "tool": "ewe-files-app | ewe-player | ewe-viewer",
+      "job": "ewe Files, ewe Player, ewe Viewer (package ewe-apps, not in ewe/bin; 0.1.0-beta, 2026-11-19)",
+      "verbs": [
+        "--version"
+      ],
+      "version_json": "{\"ok\":true,\"name\":\"<binary>\",\"product\":\"ewe <Name>\",\"version\":\"0.1.0-beta\"}",
+      "argv_rule": "flags are --key=value only (a flag's value is never a separate token); -- ends flags; file:// URLs decoded; --demo opens the kit gallery; single instance (a second launch emits 'launch'); nothing stays resident",
+      "flags": {
+        "ewe-files-app": [
+          "--select=<path>",
+          "--open-with=<path>",
+          "--properties",
+          "--tab",
+          "--folders",
+          "--shot=<scene>",
+          "--shot-width=900"
+        ],
+        "ewe-player": [
+          "--enqueue",
+          "--scene=controls|subs-menu|audio-menu|playlist|mini|music-albums|music-album|music-songs|music-now|music-playing",
+          "files, folders, .m3u, http(s) URLs"
+        ],
+        "ewe-viewer": [
+          "--page=N",
+          "--find=text",
+          "--sidebar=pages|contents",
+          "--mode=continuous|single|two",
+          "--zoom=page-width|page-fit|1.5|200",
+          "--night",
+          "--present",
+          "--fill=field=value",
+          "--toc",
+          "--flow=paged|scrolled",
+          "--theme=auto|light|sepia|dark",
+          "--spread",
+          "--source",
+          "--sheet=N",
+          "--info",
+          "--slideshow"
+        ]
+      },
+      "desktop_ids": [
+        "ewe-files-app.desktop",
+        "ewe-player.desktop",
+        "ewe-viewer.desktop"
+      ],
+      "dbus": {
+        "ewe-files-app": "owns org.freedesktop.FileManager1 (ShowFolders, ShowItems, ShowItemProperties); not claimed while Nemo holds it",
+        "ewe-player": "org.mpris.MediaPlayer2.ewe-player (WebKitGTK also publishes org.mpris.MediaPlayer2.org.webkit.* - the shell must skip it; open in 0.44)"
+      },
+      "env": [
+        "EWE_BIN",
+        "EWE_MUSIC_DIR",
+        "EWE_APPS_MEDIA_SERVER_FILE",
+        "EWE_PLAYER_BIN (read by ewe-browser, default ewe-player)"
+      ],
+      "callers": "ewe's launcher (--open-with=, --select=), hyprland.lua fileManager (Super+E), warmup.sh, ewe-browser 0.8.4 (Play in ewe Player), ewe-setup mime defaults",
+      "media_server": "127.0.0.1:<random> + 32-byte hex token (constant-time compare, 403 without); /raw/{name}?path=&t=, /thumb?path=&size=&t=, /cover?path=&t=; single-range 206, ETag/304; CORS echoes only tauri://localhost, http://tauri.localhost, http://localhost:*, http://127.0.0.1:* (Vary: Origin), Range preflight 204"
+    },
+    {
+      "tool": "ewe-settings",
+      "job": "the Settings app's command line (not in ewe/bin)",
+      "verbs": [
+        "--page <id>",
+        "--page=<id>"
+      ],
+      "note": "since 0.24.0-beta (2026-11-19) a running instance honours --page through single-instance (event open-page); Shell.openSettings(page) always passes it"
     },
     {
       "tool": "ewe-browser",
@@ -601,7 +698,7 @@
   "keyring_services": [
     {
       "service": "ewe-cloud",
-      "holds": "Nextcloud app password"
+      "holds": "Nextcloud app password (from the password sign-in's OCS getapppassword exchange since 0.44, or Login Flow v2); the real password is never stored"
     },
     {
       "service": "google",
@@ -710,7 +807,10 @@
     "Safe 0.2.0-beta not verified for real: a passkey on a real site, git push through Safe's agent, the approval window on screen",
     "ewe browser 0.4.0-beta: the two-finger swipe is tested with synthetic wheel events only (no real touchpad); printing untested by hand; location has no provider in Electron on Linux; third-party cookie blocking changes apply after a restart; password-manager extensions are refused by a 36-id list, not by capability",
     "ewe 0.30.0-beta: the 4-finger gesture's left/right not tried on a real touchpad (Hyprland's Lua hl.gesture does not validate direction strings)",
-    "ewe-companion 0.2.0-beta: tested against fakes only — the real ewe browser 0.4 CLI, ewe-bt with a paired device, the Insomnia plugin and a real timer banner are the owner's try after pacman -Syu; airplane mode remembers what it turned off in memory only"
+    "ewe-companion 0.2.0-beta: tested against fakes only — the real ewe browser 0.4 CLI, ewe-bt with a paired device, the Insomnia plugin and a real timer banner are the owner's try after pacman -Syu; airplane mode remembers what it turned off in memory only",
+    "ewe-apps 0.1.0-beta (2026-11-19): drag-and-drop not exercised headless; the shell's now-playing does not yet skip WebKitGTK's own org.webkit.* MPRIS player beside ewe Player; Nemo keeps org.freedesktop.FileManager1 until removed (the owner's one-time pacman -Rns)",
+    "password sign-in (0.44): accounts with 2FA or SSO must use 'Sign in with the browser instead' (Login Flow v2); ewe's Settings.qml still says 'ewe never sees your password' (follow-up); not yet tried against a real Nextcloud by the owner",
+    "ewe-os 0.16.0-beta: the ISO trim is measured on the package sum, not a built ISO; no QEMU pass yet; tagged by the owner after the [ewe] publish"
   ],
   "addons": {
     "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
@@ -956,5 +1056,54 @@
         "empty_trash"
       ]
     }
+  },
+  "default_apps": {
+    "since": "ewe 0.44.0-beta / ewe-apps 0.1.0-beta (2026-11-19, decision 56)",
+    "writer": "the user (ewe Settings -> Default apps, xdg-mime); ewe-setup and phase 60 seed only where no working explicit choice exists (_mime)",
+    "seeds": {
+      "ewe-files-app.desktop": "inode/directory + archives (zip, tar, gz, xz, bz2, 7z, rar, zstd, tar.gz/xz/zst)",
+      "ewe-viewer.desktop": "application/pdf, epub, comicbook zip/rar, docx, xlsx, ods, csv, png, jpeg, gif, webp, bmp, tiff, avif, svg",
+      "ewe-player.desktop": "video mp4/mkv/webm/mov/avi/mpeg/ogg/flv/3gp/wmv; audio mp3/flac/ogg/vorbis/opus/wav/mp4/m4a/aac/wma/ape/webm"
+    },
+    "migration": "_mime_take: an explicit default equal to nemo.desktop | engrampa.desktop | imv.desktop | org.pwmt.zathura.desktop | mpv.desktop is moved to the ewe app once; marker ~/.local/state/ewe/default-apps-0.44.done (local, never synced); gated on /usr/share/applications/ewe-files-app.desktop",
+    "settings_rows_0_24": [
+      "Video player (widened)",
+      "Music player",
+      "Document viewer",
+      "Archives"
+    ],
+    "old_apps_cleanup": "owner, once after the upgrade: sudo pacman -Rns nemo engrampa imv zathura zathura-pdf-mupdf mpv-mpris mpv-uosc-git (mpv stays for mpvpaper)"
+  },
+  "package_diet": {
+    "decision": "57 (2026-11-19)",
+    "finding": "zed depends on the virtual vulkan-driver; pacman -S ewe runs before the installer's GPU phase, so pacman picked nvidia-utils (1 GB, blacklists nouveau) on every machine",
+    "fix": "vulkan-swrast FIRST in the ewe PKGBUILD depends (dedupe filter: grep -vxF -e pipewire-jack -e vulkan-swrast), in packages/common.list and explicit in the ISO's packages.x86_64; ewe-repo's fresh-install gate blacklists nvidia-utils (grep -xE 'jack2|tesseract-data-afr|papirus-icon-theme|iwd|nvidia-utils')",
+    "left_ewe_depends": [
+      "ewe-cast (Cast plugin requires)",
+      "gnome-network-displays (AUR; Cast plugin requires)",
+      "kdeconnect + qt5-wayland (Phone plugin requires)",
+      "base-devel (Komble ensure_build_tools before the first AUR build; phase 10 only to build paru)",
+      "tesseract-data-eng",
+      "ttf-jetbrains-mono-nerd",
+      "nemo",
+      "engrampa",
+      "imv",
+      "zathura",
+      "zathura-pdf-mupdf",
+      "mpv",
+      "mpv-mpris",
+      "mpv-uosc-git (AUR)"
+    ],
+    "joined": [
+      "ewe-apps",
+      "vulkan-swrast",
+      "gst-plugins-base",
+      "gst-plugins-good",
+      "gst-plugins-ugly",
+      "gst-libav",
+      "ffmpeg"
+    ],
+    "reversal_icon_theme": "pkgrel 2: hardlink -q -c usr/share/icons - 416 MiB -> ~14 MiB installed",
+    "iso_trim": "nvidia-open, cloud-init (+ cloud-init.target.wants units), clonezilla, partclone, partimage, fsarchiver, irssi, lynx, mc, nmap, tcpdump, refind, b43-fwcutter, darkhttpd, gpm, lftp, linux-atm, ndisc6, openpgp-card-tools, sequoia-sq, pptpclient, vpnc, wvdial; measured 7.5 -> 5.4 GB installed, 2.48 -> 1.90 GB compressed, ISO ~3.2 -> ~2.4 GB"
   }
 }

@@ -34,7 +34,8 @@ mail, Cast, clipboard history, screenshots, password fill — [[Plugin System]])
   desktop; every runtime file is generated from it. See [[The One File]].
 - **Your account is your own** — the ewe account is a **Nextcloud** account
   (self-hosted or a hosted provider). No gatekeeper. See [[Account and Sync]].
-- **Curated GTK app set** — Nemo, Engrampa, imv, Zathura, mpv, kitty, Zed:
+- **Its own apps** — ewe Files, ewe Player, ewe Viewer ([[ewe-apps]], since
+  0.44; Nemo, Engrampa, imv, Zathura and mpv before), plus kitty and Zed:
   borderless under Hyprland, defaults managed in one `mimeapps.list`.
 - **Plugins** — `ewe-plugin add <git-url>` drops third-party bar widgets,
   panels and services into the shell. See [[Plugin System]].
