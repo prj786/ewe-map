@@ -1055,6 +1055,39 @@ gamemoded, a fake /proc and /sys); in the nest, `EWE_GAME_TOOL=<wrapper>` with
 the same fakes on PATH and `EWE_GAME_NO_SCOPE=1` — a real toggle there would set
 the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
 
+## The polish pass (2026-11-19, ewe 0.43)
+
+- **A rule-placed window still pulled the view with `follow = false`.** Hyprland focuses
+  a new window when it maps and switches to its workspace to do it. Quiet placement is a
+  static `no_initial_focus` rule; ewe focuses the window itself on `window.open` when the
+  user launched it ([[Who May Move You — launches, toasts and activation]]).
+- **Static rules and tags:** a rule matches a tag that an EARLIER rule set in the same
+  pass (`ewe-ws-quiet-N` after the generated `windowrules.lua`), by the exact tag only (a
+  pattern never matched); a tag added from `window.open_early` comes too late, and
+  `hl.dsp.window.set_prop` cannot set a static prop such as `no_initial_focus`.
+- **`hl.dispatch` takes a Lua function**, so the shell runs compositor Lua with no process:
+  `Hyprland.dispatch('function() … end')`. Globals persist between dispatches; `hyprctl
+  eval` prints nothing back. `Hyprland --verify-config --config <file>` parses the whole
+  Lua config and DOES report unknown config keys and rule fields — use it before a release.
+- **The nest is not ewe's compositor config** (`hypr-min.lua`): to test `workspaces.lua`
+  there, `driver.sh hc eval 'package.path = "<repo>/dotfiles/hypr/?.lua;" .. package.path;
+  require("workspaces").setup()'`, then `hc output create headless X` / `output remove X`
+  so its settle pass assigns the displays.
+- **The nest changed the owner's real cursor.** It shares the host's session bus, and
+  Hyprland's `cursor.sync_gsettings_theme` (default on) wrote the nest's startup cursor into
+  the live `org.gnome.desktop.interface cursor-theme` (black → white). The driver turns the
+  sync off since 0.43 — but an agent worktree branched from an OLDER commit runs the old
+  driver: check `gsettings get … cursor-theme` after parallel nests.
+- **Quickshell 0.3.2:** `HyprlandToplevel.urgent` is declared but never raised (track the
+  raw `urgent` / `activewindowv2` / `closewindow` events); `Notification.expireTimeout`
+  arrives in MILLISECONDS despite the docs. `notify-send` with `-A` blocks until an action
+  is chosen — background it in a test.
+- **Files' "Open in Terminal" does nothing:** cinnamon-desktop 6.8's schema default is
+  `velocitty`; ewe's dconf system db (kitty) reached only install.sh machines until 0.43.
+- **Merging parallel agent worktrees:** `git apply --3way` refuses files whose index
+  differs from the working tree; export with `git add -N . && git diff`, apply plainly or
+  with `--reject`, resolve the rejects (manifest versions: keep the higher bump).
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

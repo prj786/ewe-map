@@ -8,12 +8,53 @@ up: "[[Home]]"
 
 # Roadmap and Status
 
-Snapshot as of **2026-11-08**. Released: **ewe 0.42.0-beta**, **ewe Settings 0.23.0-beta** and **Shaun (ewe-companion) 0.2.4-beta** (2026-11-08, CJK text, the cursor, Ultra game mode — below); before them **ewe 0.41.0-beta**, **Komble 0.22.0-beta** and **ewe-sync 0.16.2-beta** (2026-11-08, the resource diet — below); before them **ewe-os 0.15.0-beta**, **ewe 0.37.0-beta**, **ewe-sync 0.15.0-beta** and **ewe browser 0.6.0-beta** (2026-10-31, the owner's ask: sign in once and everything follows — below); before them **ewe 0.36.0-beta** (2026-10-27, the Alt+Tab switcher, Monocle) and **0.35.2-beta** (2026-10-26); before them **ewe-os 0.14.0-beta** (2026-10-23, the ISO for ewe 0.35, with the website refresh — below); before it **ewe (DE) 0.35.0-beta** with **Dock 1.3.0** and **ewe-settings 0.20.0-beta** (2026-10-23, the owner's ask: every display its own workspaces, like macOS, or one shared set — below); before it **ewe browser 0.5.2-beta** (2026-10-23, the dock's Downloads ring moves while a download runs); before it **ewe (DE) 0.34.1-beta** with **Dock 1.2.1** (2026-10-23, the owner's follow-up: each minimized window is its own picture tile in the dock, like macOS — below); before it **ewe (DE) 0.34.0-beta** with **Dock 1.2.0** (2026-10-23, the owner's ask: a Mission-Control Overview, Super+Z minimize with a Minimized section in the dock, ewe browser downloads in the dock — below); before it **ewe 0.33.1-beta** (2026-10-21, sign-in links open your browser), **0.33.0-beta** (2026-10-20, ewe-conf sync merges key by key), **0.32.1-beta** and **0.32.0-beta** (2026-10-20, ewe browser back in the launcher; the Slack plugin); before them **ewe (DE) 0.31.0-beta** with **Safe 0.3.0-beta** and **ewe browser 0.5.0-beta** (2026-10-18, the owner's ask: unlock Safe with the login password, no more keyring prompt at every start, cards and addresses, every sign-up asks to save — below); before it **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
+Snapshot as of **2026-11-19**. Released: **ewe 0.43.0-beta** and **Komble 0.22.1-beta** (2026-11-19, the polish pass — below); before them **ewe 0.42.0-beta**, **ewe Settings 0.23.0-beta** and **Shaun (ewe-companion) 0.2.4-beta** (2026-11-08, CJK text, the cursor, Ultra game mode — below); before them **ewe 0.41.0-beta**, **Komble 0.22.0-beta** and **ewe-sync 0.16.2-beta** (2026-11-08, the resource diet — below); before them **ewe-os 0.15.0-beta**, **ewe 0.37.0-beta**, **ewe-sync 0.15.0-beta** and **ewe browser 0.6.0-beta** (2026-10-31, the owner's ask: sign in once and everything follows — below); before them **ewe 0.36.0-beta** (2026-10-27, the Alt+Tab switcher, Monocle) and **0.35.2-beta** (2026-10-26); before them **ewe-os 0.14.0-beta** (2026-10-23, the ISO for ewe 0.35, with the website refresh — below); before it **ewe (DE) 0.35.0-beta** with **Dock 1.3.0** and **ewe-settings 0.20.0-beta** (2026-10-23, the owner's ask: every display its own workspaces, like macOS, or one shared set — below); before it **ewe browser 0.5.2-beta** (2026-10-23, the dock's Downloads ring moves while a download runs); before it **ewe (DE) 0.34.1-beta** with **Dock 1.2.1** (2026-10-23, the owner's follow-up: each minimized window is its own picture tile in the dock, like macOS — below); before it **ewe (DE) 0.34.0-beta** with **Dock 1.2.0** (2026-10-23, the owner's ask: a Mission-Control Overview, Super+Z minimize with a Minimized section in the dock, ewe browser downloads in the dock — below); before it **ewe 0.33.1-beta** (2026-10-21, sign-in links open your browser), **0.33.0-beta** (2026-10-20, ewe-conf sync merges key by key), **0.32.1-beta** and **0.32.0-beta** (2026-10-20, ewe browser back in the launcher; the Slack plugin); before them **ewe (DE) 0.31.0-beta** with **Safe 0.3.0-beta** and **ewe browser 0.5.0-beta** (2026-10-18, the owner's ask: unlock Safe with the login password, no more keyring prompt at every start, cards and addresses, every sign-up asks to save — below); before it **ewe (DE) 0.30.0-beta** with **ewe browser 0.4.0-beta** and **ewe-companion 0.2.0-beta** (2026-10-18, wave 2: gestures, right-click menus, find, privacy and security, site search and Safe-only filling in the browser; Shaun's desktop switches, timers, sums and a site's own search — below); before it **ewe (DE) 0.29.0-beta** with **ewe-companion 0.1.0-beta** (2026-10-17, the companion's first release, named **Shaun**, its notch now the bar's own material — below); before it **ewe browser 0.3.0-beta** (2026-10-17, the owner's ask: workspaces and tools in a thin bottom bar across the window, + opens a new workspace on Home; [[Browser Bottom Bar — workspaces and tools]]); before it **ewe browser 0.2.2-beta** (2026-10-16, two bug fixes: Gmail's *browser no longer supported* banner in 0.2.1-beta, dead patches on websites in 0.2.2-beta; see [[ewe-browser]]); before it **ewe (DE) 0.28.0-beta** with **Safe 0.2.0-beta** and **ewe browser 0.2.0-beta** (2026-10-15, "a real safe": passkeys, an SSH agent, an `op`-like CLI, Safe inside the browser, browser history and sync — below); before it **ewe 0.27.0-beta** with **Safe 0.1.0-beta** (2026-10-15, Safe — ewe's own password manager — and its desktop plugin); before that **ewe 0.26.1-beta** (2026-10-14, light mode is official, companion groundwork); before that **ewe 0.26.0-beta** with **ewe browser 0.1.0-beta** and **Komble 0.20.2-beta** (2026-10-14, ewe browser replaces Helium); before that **ewe 0.25.2-beta** and **Komble 0.20.1-beta** (2026-10-11, bug fixes on 0.25.1-beta of 2026-10-10 with Komble
 0.20.0-beta, ewe-settings 0.18.0-beta and ewe-sync 0.14.4-beta; 0.25.0-beta on 2026-10-04), **ewe-os (distro) 0.13.0-beta**
 (2026-10-04, the ISO for ewe 0.25 with the installer's Plugins step, see
 [[ewe-os ISO]]; later releases stop at the ewe-repo publish). The README speaks of a
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
+
+## 2026-11-19 — the polish pass (ewe 0.43, Komble 0.22.1, nine plugins)
+
+The owner's ask: *"now i want to polish ewe once again … right clicks on files, like
+compress. icon missleading, options for menus … pointer is not changing, i cant open link
+from terminal, clicking on opened app like komble dont makes me to focus the window, but
+notification from steam makes me to goe on the workspace where steam is … we need ubuntu
+level polishment, everything we have must be working."* An audit (Files + packaging
+parity, shell interactions, window management) came first, then the fixes (ewe#85).
+
+- **Steam dragging you to its workspace** — a Window Rules workspace moved every `steam`
+  window with focus, toasts included. Now [[Who May Move You — launches, toasts and activation]]:
+  rule-placed windows open without focus; a launch you made takes you along.
+- **Clicks that missed** — a minimized app opened `special:minimized` as an overlay (new
+  windows landed in it); Komble AppImages and Steam games were not matched to their entry
+  (generic icon, a second copy on click: `Globals.entryForClass`, komble-arch#18 writes
+  `StartupWMClass`); a notification from a tray-only app did nothing.
+- **Links from the terminal** opened in a browser window on another workspace that never
+  came forward: `misc.focus_on_activate` (token-checked), XWayland urgent-only, urgent dots.
+  ewe Browser's "last focused window" fallback is staged in ewe-browser for the owner.
+- **The pointer** kept the login-time theme in every process: `XCURSOR_THEME=default`,
+  `cursor.sync_gsettings_theme` off — the nested harness (shared session bus) had flipped
+  the owner's cursor through that sync.
+- **Files** — Open in Terminal ran `velocitty` (cinnamon-desktop 6.8's default); the dconf
+  system db, the logind power-key drop-in, the Nemo actions and other phase-30 files never
+  reached pacman/ISO installs (the package hook and `ewe-setup` do now); Compress → .zip
+  with a clear icon, Extract To…, Set as Wallpaper, RAR (`unarchiver`), Open With
+  terminal apps (`xdg-terminal-exec`), 50 MB thumbnails, no Delete beside Trash.
+- **Shell** — shared `ContextMenu` + `Tooltip`; menus on dock tiles, pinned apps,
+  launcher results, Overview cards, the empty desktop, Places; notification action
+  buttons, hover-pause, critical stays; tray menu (icons, check/radio, nested flyouts,
+  Esc); pointer shapes; clearer icons; clipboard Clear all asks first.
+- **Keys** — Alt+F4, Ctrl+Alt+T, Super+B brings the browser forward, Super+Ctrl+Q and
+  Ctrl+Alt+Delete sign out after asking; dialogs over their parent, PiP for Chromium.
+- **Plugins** (merged in their repos, vendored): dock 1.4.0, places 1.1.0, clipboard
+  1.2.0, slack 0.4.0, mail 1.2.0, safe 1.2.0, switcher 1.0.1, companion 0.5.2, insomnia 1.0.2.
+- **Open:** the owner's `pacman -Syu` + a real Steam toast, a link from kitty, a Komble
+  AppImage click, hover tooltips; the ewe-browser diff to review; owner calls on focus
+  follows mouse, Super+L, the 5 s pointer auto-hide; next: drives/Trash reachability, PDF
+  thumbnails, gvfs-afc/gphoto2/wsdd, DNS + bluez tuning on pacman installs; then the new
+  tiling system.
 
 ## 2026-11-08 — CJK text, the cursor, Ultra game mode (ewe 0.42, ewe Settings 0.23, Shaun 0.2.4)
 
