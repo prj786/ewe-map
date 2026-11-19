@@ -11,7 +11,7 @@ up: "[[Decision Index]]"
 **Decided 2026-11-19** (owner; decision 57). Built for ewe 0.44.0-beta,
 Komble 0.23.0-beta, ewe-repo (`reversal-icon-theme` pkgrel 2, the publish
 gate) and the ewe-os 0.16.0-beta ISO. Measured on the ISO's package set:
-**7.5 → 5.4 GB installed, 2.48 → 1.90 GB compressed, the ISO ≈ 3.2 → ~2.4 GB**.
+**7.5 → 5.4 GB installed, 2.48 → 1.90 GB compressed, the ISO 3.2 → 2.6 GB (measured: 2,591,948,800 bytes)**.
 
 ## The finding that started it
 

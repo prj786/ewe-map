@@ -60,7 +60,7 @@ flowchart TB
   `openpgp-card-tools`, `sequoia-sq`, `pptpclient`, `vpnc`, `wvdial`.
   `archinstall`, the VM guest tools, `brltty` and `espeakup` stay. Measured
   package sum **7.5 → 5.4 GB installed, 2.48 → 1.90 GB compressed, the ISO
-  ≈ 3.2 → ~2.4 GB**.
+  3.2 → 2.6 GB (measured: 2,591,948,800 bytes)**.
 - **Password sign-in in the installer** (0.16.0-beta): the *Your ewe
   account* step asks *Your Nextcloud · Username or email · Password* and
   runs `ewe-cloud login <server> --user <name> --password-stdin` (the
