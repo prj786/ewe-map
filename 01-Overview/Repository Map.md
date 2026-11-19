@@ -8,7 +8,7 @@ up: "[[Home]]"
 
 # Repository Map
 
-The project is **11 product repos + 16 plugin repos** (14 plugins in the
+The project is **12 product repos + 16 plugin repos** (14 plugins in the
 payload, `ewe.companion`, and the example; plus this vault, the `design-mockups/` folder and dev worktrees in
 `.wt/`). All under the `prj786` GitHub org; checked out locally at
 `/home/scubba/Projects/ewe/`. The ten `ewe-plugin-*` repos created
@@ -25,6 +25,7 @@ creates the GitHub remotes and pushes.
 | [`ewe-sync`](https://github.com/prj786/ewe-sync) | the account & sync app (RFC-006, ex-"Flock") | Tauri v2 + Svelte 5 |
 | [`ewe-cast`](https://github.com/prj786/ewe-cast) | `ewe-castd` — headless casting daemon (RFC-004) | Python on GLib, GStreamer (C) |
 | [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]], 0.4.0-beta) | Electron 44 (castlabs) + Solid, TypeScript |
+| [`ewe-apps`](https://github.com/prj786/ewe-apps) | ewe Files, ewe Player, ewe Viewer — the desktop's file manager, media player and viewer, one package `ewe-apps`, a dependency of `ewe` ([[ewe-apps]], 0.1.0-beta, 2026-11-19; replaced Nemo/Engrampa/imv/Zathura/mpv) | Tauri 2 (Rust, system WebKitGTK) + Solid, TypeScript; GStreamer, pdf.js |
 | [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007; shown as Shaun; 0.2.1-beta, released, package in [ewe]) | Rust (tokio, rusqlite) |
 | [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.5.0, API 3; vendored in ewe 0.30.0-beta) | QML |
 | [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window, passkeys, an SSH agent ([[ewe-safe]], RFC-008, 0.2.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
@@ -66,6 +67,7 @@ graph LR
     K["komble-arch"] -->|"packaged into"| REPO["ewe-repo<br/>[ewe] pacman repo"]
     S["ewe-settings"] --> REPO
     SY["ewe-sync"] --> REPO
+    APPS["ewe-apps<br/>Files · Player · Viewer"] --> REPO
     EWE --> REPO
     CAST --> REPO
 
@@ -91,5 +93,5 @@ Notes on the graph:
 ## Per-repo deep dives
 
 [[ewe Desktop]] · [[ewe-os ISO]] · [[ewe-repo]] · [[Komble]] ·
-[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[Website]] · the plugins
-under [[Plugin System]]
+[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-apps]] · [[Website]] ·
+the plugins under [[Plugin System]]

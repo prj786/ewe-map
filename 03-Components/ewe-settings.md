@@ -55,6 +55,22 @@ The IPC verbs this app depends on (`reload`, `ping`, `version`) live in
 ewe's `Settings.qml`. They are **public API in both directions**: renaming
 one breaks an installed binary.
 
+**`ewe-settings --page <id>`** (also `--page=<id>`; 0.24.0-beta, 2026-11-19,
+ewe-settings#25) is the other direction's contract: the shell's
+`Shell.openSettings(page)` always runs `[settingsAppBin, "--page", page]`
+— a running instance receives it through single-instance as the
+`open-page` event and `goToPage(id)` (unknown ids ignored); a fresh one
+reads it once at mount (`start_page`). Until 0.23 a second `--page` reached
+an open window and did nothing.
+
+**Default apps rows** (0.24.0-beta, with [[ewe-apps]]): *Video player*
+widened (mp4, mkv, webm, mov, avi, mpeg, wmv), new **Music player** (mp3,
+flac, ogg/vorbis, opus, m4a/mp4, aac, wav), **Document viewer**
+(`application/pdf`, `application/epub+zip`) and **Archives** (zip, tar, gz,
+xz, bz2, 7z, rar, zstd, tar.gz) — each row writes its whole mime list
+through `setMimeDefault`, so a user's pick is explicit in `mimeapps.list`
+and `ewe-setup`'s seed never overrides it.
+
 ## Plugin awareness (0.25, branch `feat/addons`)
 
 Since D10 ([[Plugin Settings Live With the Plugin]], ewe-settings

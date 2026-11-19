@@ -38,7 +38,7 @@ flowchart TB
 | **`ewe-plugin`** | [[Plugin System]] — plugins and the plugins | `add` · `list [--json]` · `info` · **`install <id>`** · **`migrate [--fresh]`** (0.25) · `enable` · `disable` · `update` · `remove` · `restore` · `validate` · `seed` · `path` · `create` · `dev` · `place` · `set` · `get` |
 | **`ewe-auth`** | [[Auth Broker]] — one Google identity for every app | `status` · `login [--with-mail]` · `token` · `logout` · `keyring-reset` |
 | **`ewe-drive`** | your Drive as a folder (optional Google extra) | `setup` · `mount` · `unmount` · `status` |
-| **`ewe-cloud`** | the Nextcloud account tool (Login Flow v2) | `login <server>` · `status` · `token` |
+| **`ewe-cloud`** | the Nextcloud account tool | `login <server-url> --user <login> --password-stdin` (0.44: the password on stdin, one OCS `getapppassword` request, no redirects — [[Password Sign-in — a reversal]]) · `login <server>` (Login Flow v2, for 2FA/SSO) · `status` · `token` · `avatar` |
 | **`ewe-files`** | mount the account at `~/Nextcloud` (rclone remote from keyring) | `setup` · … |
 | **`ewe-caldav`** | CalDAV calendar sync for the shell widget | — |
 | **`ewe-mail`** | IMAP mailbox for the Control Centre badge | — |
@@ -67,7 +67,17 @@ and ewe's 4-finger swipe runs `workspace next|prev`
 
 Not in `ewe/bin` but equally a contract: **`komble --updates | --settings |
 --search[=q] | --addons | --plugins`** (the shell's `Shell.openStore(page)`
-and ewe-settings call these — [[Komble]]).
+and ewe-settings call these — [[Komble]]); **`ewe-settings --page <id>`**
+(the shell's `Shell.openSettings(page)`, honoured by a running instance since
+0.24 — [[ewe-settings]]).
+
+**The three apps of `ewe-apps`** (0.44, [[ewe-apps]]) — `ewe-files-app`,
+`ewe-player`, `ewe-viewer`: `--version` answers
+`{"ok":true,"name":"<binary>","product":"ewe …","version":"0.1.0-beta"}`;
+flags are `--key=value` only. ewe's launcher runs `ewe-files-app
+--open-with=<path>` and `ewe-files-app --select=<path>`; ewe Browser runs
+`$EWE_PLAYER_BIN` (default `ewe-player`). Files owns D-Bus
+`org.freedesktop.FileManager1`.
 
 Plugins carry their own small tools: `cast-check.sh` / `cast-audio.sh`
 ([[Cast Plugin]], under `~/.config/ewe/plugins/ewe.cast/`),

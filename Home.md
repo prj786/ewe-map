@@ -49,7 +49,7 @@ flowchart TB
 
 **01 — Overview**
 - [[What is ewe]] — the pitch, in detail
-- [[Repository Map]] — the 8 repos + 14 plugin repos and how they relate
+- [[Repository Map]] — the 12 product repos + 16 plugin repos and how they relate
 - [[Roadmap and Status]] — versions, RFCs, what's shipping vs planned
 - [[Glossary]] — Quickshell, layer-shell, Komble, the one file, …
 
@@ -64,7 +64,8 @@ flowchart TB
 
 **03 — Components** (one note per repo)
 - [[ewe Desktop]] · [[ewe-os ISO]] · [[ewe-repo]] · [[Komble]] ·
-  [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-safe]] · [[Website]]
+  [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-safe]] ·
+  [[ewe-browser]] · [[ewe-apps]] (ewe Files · ewe Player · ewe Viewer, 0.44) · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
 
 **04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)
@@ -105,6 +106,9 @@ flowchart TB
 - 2026-10-17/18: [[Browser Bottom Bar — workspaces and tools]] ·
   [[Browser Passwords — Safe only]] · [[Four Fingers — ewe browser's workspaces]] ·
   [[Site Permissions — ask per site]]
+- 2026-11-19 (0.44): [[ewe's Own Apps — Files, Player, Viewer]] ·
+  [[The Package Diet]] · [[Password Sign-in — a reversal]] ·
+  [[Apps Are Not Resident]]
 
 **09 — Rules** (the contracts)
 - [[Rules of the House]] · [[Contracts and Public API]] · [[Security Posture]]

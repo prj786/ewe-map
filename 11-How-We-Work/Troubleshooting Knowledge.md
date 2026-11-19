@@ -860,6 +860,21 @@ Details and the rerun recipe: `ewe-safe/docs/SPIKE-0.md`.
   WebKit2 4.1 window inside `WLR_BACKENDS=headless cage`, `grim` in a loop,
   per-frame brightness (Chromium never shows it). ewe-settings and
   ewe-sync carry the same `.ewe-dialog[data-state="open"]` fade.
+- **A closed Tauri window still leaves `WebKitWebProcess` (~90 MB) behind**
+  (ewe-sync / Komble, 2026-11-19): destroying the window finalises the
+  `WebKitWebView` (checked with a weak ref), but WebKitGTK 2.54 parks the
+  page-less web process in its process cache for up to 30 min and a new
+  window gets a fresh one anyway — so idle RAM did not fall after close.
+  There is no env knob any more (`WEBKIT_USE_SINGLE_WEB_PROCESS` is gone).
+  Fix: `webview.with_webview(|w| w.inner().terminate_web_process())` from
+  inside `WindowEvent::CloseRequested` (it runs synchronously on the main
+  thread before the teardown), then `malloc_trim(0)` a few seconds after
+  `Destroyed` (~20 MB back). `WebKitNetworkProcess` (~13 MB) stays: Tauri
+  keeps the web context for the app's lifetime on Linux (tauri#14626).
+  Measure with the sum of `Pss` over `/proc/<pid>/smaps_rollup` of the
+  app's process tree; close a window in headless cage with a tiny
+  wlr-foreign-toplevel client (cage speaks it; nested Hyprland does not
+  start under cage — xdg_wm_base v6 vs v5).
 
 ## ~/Nextcloud "configured, not mounted"; files sync twice (2026-10-31)
 
@@ -1087,6 +1102,76 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
 - **Merging parallel agent worktrees:** `git apply --3way` refuses files whose index
   differs from the working tree; export with `git add -N . && git diff`, apply plainly or
   with `--reject`, resolve the rejects (manifest versions: keep the higher bump).
+
+## ewe's own apps and the package diet (2026-11-19, ewe 0.44 / ewe-apps 0.1)
+
+- **"Why is `nvidia-utils` on my Intel laptop?"** `zed` depends on the virtual
+  `vulkan-driver`; `pacman -S ewe` ran before the installer's GPU phase, and with no
+  provider installed pacman takes the first alphabetical one — `nvidia-utils` (1 GB,
+  **blacklists nouveau** — the live ISO then had no GPU driver on NVIDIA, which is why
+  `nvidia-open` rode along). **Check:** `pacman -Qi nvidia-utils` → *Required By: zed*, or
+  `pacman -Sp --print-format %n ewe | grep nvidia` against a fresh database. **Fixed:**
+  `vulkan-swrast` first in the `ewe` depends, in `common.list` and the ISO list; the
+  publish gate blacklists `nvidia-utils` ([[The Package Diet]]). **Lesson:** every virtual
+  dependency (`vulkan-driver`, `jack`, `ttf-font` …) needs an explicit provider *before*
+  the package that asks, or the gate must name the wrong provider.
+- **A closed Tauri window's `WebKitWebProcess` (~90 MB) stays for 30 min** — WebKitGTK
+  2.54 caches page-less web processes; `terminate_web_process()` from
+  `CloseRequested`, then `malloc_trim(0)`; the network process (~13 MB) stays for the
+  app's life (details above, [[Apps Are Not Resident]]).
+- **`notify` reports `OPEN` events** — a watcher that reads what it watches wakes itself
+  (ewe-sync 0.16.1, and again in ewe-apps): drop `EventKind::Access` except
+  `Close(Write)` (the 2026-11-05 entry above).
+- **"Load failed" from pdf.js in a Tauri window:** WebKitGTK refuses a **module worker
+  from `tauri://`**. Bundle pdf.js's worker into the main bundle; pdf.js uses
+  `globalThis.pdfjsWorker` when it is already there (ewe Viewer).
+- **DOM `drop` never fires in a Tauri window:** Tauri's drag-drop handler returns true
+  for any uri-list drop and swallows it. Handle drops from `onDragDropEvent` by
+  hit-testing `[data-drop]` under the pointer; keep DOM `dragover` for the highlight and
+  DOM `drop` as a deduped fallback (ewe Files).
+- **`fetch()` to the loopback media server fails with a bare "Load failed"** while
+  `<img>`/`<video>` work: the webview origin is `tauri://localhost`, the server
+  `http://127.0.0.1` — CORS. The server must **echo the app's own origins** (never `*`
+  with a token in play), answer the `Range` preflight (OPTIONS 204) and expose
+  `Content-Range`/`Accept-Ranges`/`ETag` (ewe Viewer's text, PDF, book and sheet loads).
+- **`tauri build` refuses "version mismatched Tauri packages"** — pin the npm
+  `@tauri-apps/api` and `@tauri-apps/cli` to the crate's major.minor (2.12.x);
+  pinning the crate alone does not work (the 2026-10-31 entry, again in ewe-apps).
+- **`du` says the icon theme is 416 MiB (1.9 GB on btrfs):** Reversal's 24 colour variants
+  are full copies differing in ~285 of ~10,660 files. `hardlink -q -c usr/share/icons` in
+  the PKGBUILD → ~14 MiB; icon loaders see regular files. **Check:** `pacman -Qi
+  reversal-icon-theme` → *Installed Size*.
+- **WebKitGTK publishes its own MPRIS player** (`org.mpris.MediaPlayer2.org.webkit.app-<hash>.Sandboxed.instance-N`)
+  beside ewe Player's `org.mpris.MediaPlayer2.ewe-player`: the shell's now-playing
+  shows two players until it skips `org.webkit.*` (open in ewe 0.44).
+- **Videos with audio (5–20 MB) never start in a WebKitGTK `<video>`:** WebKit's media
+  download buffer; ewe Player sets `WPE_SHELL_MEDIA_DISK_CACHE_SIZE_BYTES=536870912`,
+  `…_NSEC=600000000000`, `WEBKIT_GST_ENABLE_HLS_SUPPORT=1`,
+  `WEBKIT_GST_ENABLE_DASH_SUPPORT=1` (only if unset). MPEG-4 Part 2, WMV/WMA, ALAC, AC-3,
+  DTS need `gst-libav`: `gst-inspect-1.0 avdec_h264` is phase 90's codec check.
+- **"Show in folder" from another app opens Nemo, not ewe Files:** Nemo still owns D-Bus
+  `org.freedesktop.FileManager1` while installed — ewe Files does not fight for the name
+  (stderr `FileManager1 not claimed`). Remove the old apps once after the upgrade:
+  `sudo pacman -Rns nemo engrampa imv zathura zathura-pdf-mupdf mpv-mpris mpv-uosc-git`
+  (keep `mpv`: `mpvpaper`).
+- **A PDF still opens in Zathura after the upgrade:** the one-time take-over
+  (`_mime_take`) moves only an explicit default that *is* the old app and only once —
+  marker `~/.local/state/ewe/default-apps-0.44.done`; delete it and run `ewe-setup`
+  again, or pick the app in ewe Settings → Default apps (the rows Document viewer /
+  Music player / Archives are new in 0.24).
+- **Nemo's "Open in Terminal" ran `velocitty` even after 0.43:** 0.43's dconf file wrote
+  `/org/cinnamon/desktop/default-applications/terminal/` — **the path is not the schema
+  id**; Nemo reads `/org/cinnamon/desktop/applications/terminal` `exec` + `exec-arg`.
+  0.44 writes `exec='ewe-terminal-here'`, `exec-arg='-e'`; check with `gsettings get
+  org.cinnamon.desktop.default-applications.terminal exec`.
+- **`ewe-cloud login` answers `unauthorized` with `browser: true`** for a correct
+  password: the account has two-step verification or single sign-on — the OCS exchange
+  cannot do those; use *Sign in with the browser instead* (Login Flow v2). `redirected`
+  means the typed server answered with a redirect — the password is **not** sent on;
+  type the final address.
+- **Measuring the apps' memory:** sum `Pss` over `/proc/<pid>/smaps_rollup` of the
+  process tree (ewe Files ~213 MB PSS / 540 MB RSS, ewe Player ~189 MB PSS) — RSS
+  double-counts WebKit's shared pages.
 
 ## Related
 

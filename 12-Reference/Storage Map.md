@@ -93,7 +93,11 @@ flowchart TB
   `ssh-browse/`) so an upgrade loses nothing; new plugin-private state goes
   in the injected `stateDir` (`~/.local/state/ewe/plugins/<id>/`).
 - **`addons-migrated`** is per machine — it must never move into `ewe.conf`
-  ([[Add-ons — one-time migration for upgraders]]).
+  ([[Add-ons — one-time migration for upgraders]]). The same goes for
+  **`~/.local/state/ewe/default-apps-0.44.done`** (0.44): the marker of the
+  one-time move from Nemo/Engrampa/imv/Zathura/mpv defaults to ewe Files /
+  Viewer / Player in `~/.config/mimeapps.list` — local, never synced;
+  delete it to re-run `_mime_take` ([[ewe's Own Apps — Files, Player, Viewer]]).
 - **`.dev-mock/`** folders in the Tauri repos hold mock data for frontend
   work — not shipped.
 - **Safe** ([[ewe-safe]]): the safe itself is one encrypted KDBX file in its

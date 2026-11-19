@@ -101,6 +101,9 @@ checking here, it's probably guessing.**
 | question | answer | detail |
 |---|---|---|
 | Where is this file/what writes it? | The ownership table | [[Contracts and Public API]] · [[Storage Map]] |
+| **Which file manager / player / viewer does ewe ship?** (0.44) | ewe's own: ewe Files (`ewe-files-app`), ewe Player (`ewe-player`), ewe Viewer (`ewe-viewer`) from the `ewe-apps` package — Nemo, Engrampa, imv, Zathura and mpv are gone from the lists; after upgrading remove them once (`sudo pacman -Rns nemo engrampa imv zathura zathura-pdf-mupdf mpv-mpris mpv-uosc-git`; mpv stays for mpvpaper) | [[ewe-apps]] · [[ewe's Own Apps — Files, Player, Viewer]] |
+| **Why does a fresh install pull `nvidia-utils`?** | It did until 0.44: zed's `vulkan-driver` virtual, claimed by the first provider — now `vulkan-swrast` is pinned first and the publish gate blacklists it | [[The Package Diet]] |
+| **Does ewe see my Nextcloud password?** | Since 0.44, once: typed in ewe Sync or the installer, sent over https to the typed server only (OCS `getapppassword`), never kept — the browser flow (Login Flow v2) stays for 2FA/SSO | [[Password Sign-in — a reversal]] |
 | What's the keymap? | The full table | [[Keymap Reference]] |
 | What version is everything? | The ledger | [[Version Ledger]] |
 | What's decided / parked / open? | Three notes, one table each | [[Decision Index]] · [[Parked and Rejected Ideas]] · [[Open Questions]] |

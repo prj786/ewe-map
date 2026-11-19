@@ -25,8 +25,13 @@ Server = https://github.com/prj786/ewe-repo/releases/download/x86_64
 
 `pacman -S ewe` installs the payload to `/usr/share/ewe` plus **every
 dependency**: the full package lists from the ewe repo, plus Komble,
-ewe-settings, ewe-sync, ewe-cast and ewe browser ([[ewe-browser]]), plus prebuilt copies of the AUR packages listed
-in `aur-packages.txt`. The payload carries the account tools — `ewe-cloud`,
+ewe-settings, ewe-sync, ewe browser ([[ewe-browser]]) and, since 0.44,
+`ewe-apps` ([[ewe-apps]]: ewe Files, ewe Player, ewe Viewer), plus prebuilt
+copies of the AUR packages listed in `aur-packages.txt`. **`vulkan-swrast`
+comes first** in the depends so that `zed`'s `vulkan-driver` is claimed by
+Mesa, not by `nvidia-utils` ([[The Package Diet]]); `ewe-cast`, `kdeconnect`
+and `base-devel` are no longer dependencies — a plugin's `requires` (Komble
+installs) and Komble's first AUR build bring them. The payload carries the account tools — `ewe-cloud`,
 `ewe-caldav`, `ewe-mail`, `ewe-conf` with its WebDAV sync — and **no Google
 client**.
 
@@ -34,7 +39,7 @@ client**.
 
 ```mermaid
 flowchart TB
-    TRIG1["new ewe / komble-arch /<br/>ewe-settings / ewe-sync /<br/>ewe-browser release"]
+    TRIG1["new ewe / komble-arch /<br/>ewe-settings / ewe-sync /<br/>ewe-browser / ewe-apps release"]
     TRIG2["manual workflow_dispatch"]
     TRIG3["repository_dispatch 'publish'"]
     TRIG4["Monday cron"]

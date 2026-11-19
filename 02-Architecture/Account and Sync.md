@@ -10,8 +10,10 @@ up: "[[Home]]"
 
 The ewe account is a **Nextcloud** account. The user signs in to *their*
 Nextcloud — self-hosted or a hosted provider (Murena, Disroot, Infomaniak,
-…) — through Nextcloud's own browser login flow. Everything ewe syncs lives
-in a folder of that account.
+…) — with their password typed in ewe Sync or the installer (exchanged once
+for a per-computer app password; since ewe 0.44 — [[Password Sign-in — a reversal]]),
+or through Nextcloud's own browser login flow (2FA, SSO). Everything ewe
+syncs lives in a folder of that account.
 
 **Why Nextcloud (RFC-005):** WebDAV, CalDAV and IMAP need nobody's
 verification — no unverified-app warning, no CASA audit, no client secret in
@@ -25,7 +27,7 @@ and the owner is out of the loop entirely.
 | **ewe-sync** | the account app (RFC-006): sign-in, the **Overview** of everything the account keeps (2026-10-31), the one file, machines, folders. *Nothing else has a sync button.* |
 | **`ewe-files`** | the whole account as `~/Nextcloud` (an rclone mount, files on demand) — never over a folder that holds files (a synced folder is already the account) |
 | **ewe browser** | syncs its bookmarks, history, open tabs and settings itself, **following the account** (`sync.browser`); its file manager shows the connected folders from `sync-folders.json` |
-| **`ewe-cloud`** | the account tool shipped in the `ewe` package: Nextcloud Login Flow v2, account facts, the app password |
+| **`ewe-cloud`** | the account tool shipped in the `ewe` package: `login <server> --user X --password-stdin` (OCS `getapppassword`, 0.44) or Login Flow v2 (`login <server>`), account facts, the app password |
 | **`ewe-conf`** | `push` / `pull` / `sync-status` of the one file, WebDAV with the server's own `If-Match` conflict guard |
 | **`nextcloudcmd`** / **`rclone`** | the folder-sync engines (two-way via Nextcloud's engine; one-way copies via rclone) |
 | **`ewe-auth`** | only for the keyring playbook (`keyring-reset`) — Google stays optional, see [[Auth Broker]] |

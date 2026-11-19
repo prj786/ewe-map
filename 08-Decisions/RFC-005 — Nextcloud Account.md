@@ -16,7 +16,9 @@ ewe-settings, ewe-os and the website; merges as one wave.*
 
 The user signs in to **their** Nextcloud — self-hosted or a hosted provider
 (Murena, Disroot, Infomaniak, …) — through Nextcloud's own browser login
-flow (Login Flow v2 → app password). Everything ewe syncs lives in a folder
+flow (Login Flow v2 → app password; since 2026-11-19 by default a password
+typed in ewe Sync, exchanged once for an app password — the browser flow
+stays for 2FA/SSO: [[Password Sign-in — a reversal]]). Everything ewe syncs lives in a folder
 of that account. **Google is demoted to an optional extra** for two things
 only — mail notifications and the Drive folder — and only when the user
 brings their own OAuth client file. **ewe ships no Google client at all.**

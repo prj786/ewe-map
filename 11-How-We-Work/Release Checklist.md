@@ -33,10 +33,15 @@ publish is the last step of every wave.**
 - [ ] `apiVersion` moved? Only if `Shell`, the public components or the
       manifest schema changed — then every plugin manifest moves with it.
 
-## 2. The Tauri apps (komble-arch, ewe-settings, ewe-sync)
+## 2. The Tauri apps (komble-arch, ewe-settings, ewe-sync, ewe-apps)
 
 - [ ] their own releases (GitHub releases; phase 20 installs from prebuilt
-      binaries; the PKGBUILD is Komble's packaging path).
+      binaries; the PKGBUILD is Komble's packaging path). `ewe-apps`
+      (ewe Files · Player · Viewer, since 0.44) releases on a `v*` tag the
+      same way — `VERSION`, the workspace `Cargo.toml`, the root
+      `package.json` and all three `tauri.conf.json` carry the version
+      ([[ewe-apps]]); the publish gate refuses a wave without an ewe-apps
+      release.
 - [ ] remember: ewe-settings' footer shows **ewe's** version, not its own —
       don't "fix" that.
 
@@ -52,7 +57,7 @@ publish is the last step of every wave.**
 ## 4. ewe-repo publish
 
 - [ ] Run the `publish` workflow after any ewe / komble-arch /
-      ewe-settings / ewe-sync release (triggers: manual `workflow_dispatch`,
+      ewe-settings / ewe-sync / ewe-browser / ewe-apps release (triggers: manual `workflow_dispatch`,
       `repository_dispatch` type `publish`, Monday cron).
 - [ ] It rebuilds everything from the latest releases + AUR PKGBUILDs and
       recreates the x86_64 release (`ewe.db` + packages).

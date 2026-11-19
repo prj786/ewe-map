@@ -32,13 +32,27 @@ your folders between your machines**. Nothing else in ewe has a sync button.
 | Machines | every machine that backed up to the account, with its ewe version and app count |
 | Folders | every connected folder: ewe-sync's (open, sync now, pause on this computer, change, stop syncing), suggested user folders (one click), the Nextcloud app's (*Let ewe-sync take over*), the whole account (`~/Nextcloud`); a picker for the account's folders; conflicts resolved in place |
 
-No tray icon since 0.13: the bar's sync glyph (syncing · needs you · offline)
-is fed by `qs ipc call sync state`; a click opens the window. Command line:
+**The bar's sync glyph** (signed-out · offline · syncing · conflict · idle;
+`qs ipc call sync state <state> <detail>`, public API — IpcHub.qml) is fed
+from Rust since 2026-11-19: `src-tauri/src/bar.rs` reads `ewe-cloud status`
+and `ewe-conf sync-status` every 2 min, the folder runner reports every
+change, Sync now / Bring everything back hold a busy guard. Until 0.16.2 the
+page's Svelte store derived it and poked the shell, which is why
+`ewe-sync --hidden` had to keep a WebKit page alive all session (~180 MB
+idle). **The window exists only while it is on screen**: built on demand
+(`tray.rs show_main`, not declared in tauri.conf.json), destroyed on close
+with its web process terminated (`terminate_web_process` — WebKit would
+otherwise cache the page-less process for 30 min), and the process stays
+(`RunEvent::ExitRequested` → `prevent_exit`). Hidden it costs ~20 MB. A
+deep link (`--pane`, `--add-folder`, the conflict notification) is stored
+first and the page told to take it, so a window built for it opens on the
+right pane (decision: [[Apps Are Not Resident]], ewe Sync 0.17.0-beta). No
+tray icon since 0.13. Command line:
 `--hidden`, `--pane <id>`, `--add-folder <path>` (both reach a running
 app), `--status` (prints `sync-folders.json`), `--check`.
 
 **The conflict banner** (This machine: *Restore… / Push anyway*) and the
-tray's conflict state key on `sync-status`'s **`conflict`** (an older
+bar's conflict state key on `sync-status`'s **`conflict`** (an older
 ewe-conf: `!in_sync` with a remote). Until 2026-10-10 they keyed on
 `error`, which `sync-status` never set to a conflict — a refused machine
 had **no way out** in the UI ([[Sync Conflicts Are About Content]]). The

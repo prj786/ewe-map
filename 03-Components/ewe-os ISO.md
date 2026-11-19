@@ -49,6 +49,24 @@ flowchart TB
 - **Rolling forward** — the ISO pins nothing; the `[ewe]` pacman repo is
   preconfigured, so live and installed systems update with plain
   `pacman -Syu`. See [[Packaging and Updates]].
+- **The trim (0.16.0-beta, 2026-11-19 — [[The Package Diet]])**:
+  `packages.x86_64` lost `nvidia-open` (it rode along only because
+  `nvidia-utils` was being pulled for `zed`'s `vulkan-driver` and blacklists
+  nouveau; now `vulkan-swrast` is explicit at the end of the list and
+  nouveau / i915 / xe / amdgpu drive the live desktop), `cloud-init` and its
+  `cloud-init.target.wants` units, `clonezilla`, `partclone`, `partimage`,
+  `fsarchiver`, `irssi`, `lynx`, `mc`, `nmap`, `tcpdump`, `refind`,
+  `b43-fwcutter`, `darkhttpd`, `gpm`, `lftp`, `linux-atm`, `ndisc6`,
+  `openpgp-card-tools`, `sequoia-sq`, `pptpclient`, `vpnc`, `wvdial`.
+  `archinstall`, the VM guest tools, `brltty` and `espeakup` stay. Measured
+  package sum **7.5 → 5.4 GB installed, 2.48 → 1.90 GB compressed, the ISO
+  ≈ 3.2 → ~2.4 GB**.
+- **Password sign-in in the installer** (0.16.0-beta): the *Your ewe
+  account* step asks *Your Nextcloud · Username or email · Password* and
+  runs `ewe-cloud login <server> --user <name> --password-stdin` (the
+  password + `\n` on stdin, the buffer zeroed); *Sign in with the browser
+  instead* keeps Login Flow v2 for 2FA/SSO (`browser: true` bolds that link)
+  — [[Password Sign-in — a reversal]].
 
 ## The installer app
 
