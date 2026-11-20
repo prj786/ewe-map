@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-dock` ·
 [github.com/prj786/ewe-plugin-dock](https://github.com/prj786/ewe-plugin-dock)
-· v1.3.0 (`c88fdc4`, in ewe 0.35.0-beta: workspace boxes per display: the focused display's own, or one per number when shared — [[Workspaces Per Display]]; 1.2.1 in ewe 0.34.1-beta: minimized windows as tiles; 1.2.0 in 0.34.0-beta; 1.1.0 in 0.25.1) · API 3 · **a first-party
+· **v1.5.0 (ewe 0.45): `display` = primary · all · none — [[Dock On Every Display]]; Downloads is a `BarPopup`** · v1.4.0 · v1.3.0 (`c88fdc4`, in ewe 0.35.0-beta: workspace boxes per display: the focused display's own, or one per number when shared — [[Workspaces Per Display]]; 1.2.1 in ewe 0.34.1-beta: minimized windows as tiles; 1.2.0 in 0.34.0-beta; 1.1.0 in 0.25.1) · API 3 · **a first-party
 plugin since 0.25** (was `Dock.qml` + `PinnedApps.qml` / `LauncherPanel`).
 **Not installed on a fresh machine** — a new ewe has no dock until you add
 it; upgraders keep theirs
@@ -40,8 +40,10 @@ without a dock. Primary screen from `Shell.primaryScreenName`.
 
 ## Settings (its own since 1.1.0 — [[Plugin Settings Live With the Plugin]])
 
-`autohide` (bool) and `icon_size` (`small` · `normal` · `large` → cell
-40/48/64 via `Theme.dockCellFor(size)`), in `[plugins.settings]."ewe.dock"`
+`autohide` (bool), `icon_size` (`small` · `normal` · `large` → cell
+40/48/64 via `Theme.dockCellFor(size)`) and, since 1.5.0, `display`
+(`primary` · `all` · `none` — which displays get a dock; others than the
+main one get a reduced dock, [[Dock On Every Display]]), in `[plugins.settings]."ewe.dock"`
 — Komble → Plugins → Dock → Options, or `ewe-plugin set ewe.dock …`. Each
 declares `legacy: "desktop.dock.<key>"`: until set, the old `[desktop.dock]`
 value stands (a `medium` there falls back to the default `normal`, same

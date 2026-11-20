@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-sysmon` ·
 [github.com/prj786/ewe-plugin-sysmon](https://github.com/prj786/ewe-plugin-sysmon)
-· **v2.0.0 (in ewe 0.39.0-beta, the UI revamp)**; 1.1.0 in 0.25.1, 1.0.0 in 0.25.0 · API 3 ·
+· **v2.1.0 (ewe 0.45): the card is the shell's `BarPopup` — its head became `PopupHead`, the one every bar card wears ([[One Bar Card — BarPopup]])** · v2.0.0 (in ewe 0.39.0-beta, the UI revamp); 1.1.0 in 0.25.1, 1.0.0 in 0.25.0 · API 3 ·
 **plugin since 0.25** (was the CPU + memory meters in Quick settings).
 
 **2.0.0 (owner, 2026-11-01): "plugin for ram usages should have one more section for

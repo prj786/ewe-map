@@ -72,6 +72,26 @@ Common to all three (`ewe-app-core`, **contracts** — [[Contracts and Public AP
 - **Memory**, measured: ewe Files ~213 MB PSS (540 MB RSS), ewe Player
   ~189 MB PSS — a WebKit app each; none at idle, since none is resident.
 
+## Narrow windows (0.1.1-beta, built 2026-11-20)
+
+The owner: "file manager, not truly responsive". Window-level tiers on top of
+the pane's own container tiers (one `ResizeObserver` in `App.tsx` sets
+`data-size`; CSS containers on the root):
+
+| app | tiers |
+|---|---|
+| ewe Files | **≥ 1100** as before · **760–1100** places 168 px (chips hidden), preview ≤ 38 % · **< 760** places become a drawer (places button; closes on a place, outside click, Esc) and Preview (F9) a right-side overlay — session only, `prefs.places`/`prefs.preview` untouched; Split · Preview · Operations · New window fold into one ⋯ · **< 480** the tabs scroll, others ellipsize at 96 px. Split (F3) refused with "Not enough room for two panes" under a 600 px main area (works from ≈ 770 with places shown — a half-screen tile at 800 is two 316 px panes). Properties / Compress fit 520 × 440 |
+| ewe Player | music nav: a column ≥ 720, an icon rail below, a segmented control above the list below 520; the video bar below 560 (measured on the video area, mini player excluded) moves time, speed, picture, audio into ⋯ |
+| ewe Viewer | PDF toolbar icon-only below 760, Find and the page modes into ⋯ below 560; the image info panel ≤ half the window |
+
+Also: grid thumbnails ask for the smallest of 128/256/512 that covers the tile
+at the screen's scale; the open tab always keeps its name; breadcrumbs scroll to
+the current folder; toasts size to their text and header tooltips open below
+(the shared UI kit, all three apps). Shots: `scripts/shot.sh … --shot-width=N
+--shot-height=N` (Player and Viewer take them too since 0.1.1); Files scenes
+`places`, `more`, `tabs`, `compress` are new. Open: drag-and-drop onto places
+in a narrow window (the drawer closes when a drag starts).
+
 ## How the desktop wires them in (ewe 0.44.0-beta)
 
 - **Package:** `ewe-apps` is a dependency of `ewe` (`PKGBUILD`), served

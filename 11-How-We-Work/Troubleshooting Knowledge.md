@@ -1173,6 +1173,41 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   process tree (ewe Files ~213 MB PSS / 540 MB RSS, ewe Player ~189 MB PSS) — RSS
   double-counts WebKit's shared pages.
 
+## The milestone polish (2026-11-20, ewe 0.45)
+
+- **"The external monitor goes black for a second when something goes fullscreen"**
+  (+ Hyprland's notice *"Monitor DP-1: wide color gamut is enabled but the display is not
+  in 10-bit mode"*): Hyprland's `render:cm_auto_hdr` (default 1) switched the output's
+  colour management for a fullscreen client asking for HDR / wide gamut, so the output
+  was committed again. Check `hyprctl getoption render:cm_auto_hdr` (0 from 0.45 →
+  [[No Automatic HDR]]); the aquamarine log shows `Modesetting DP-1 …` twice with no
+  hotplug when it happens.
+- **"Now playing lists the same song twice" / the wrong player:** WebKitGTK publishes
+  `org.mpris.MediaPlayer2.org.webkit.*` beside the app's own entry (ewe Player is both).
+  Music 1.1.0's `MprisPick` takes a WebKit entry only when nothing else qualifies (by
+  `dbusName`). Shaun's `NowPlaying` (ewe-plugin-companion) still lacks the filter.
+- **The clipboard says "cliphist isn't installed" on a fresh install:** `cliphist list`
+  exits 1 with "please store something first" until the first copy. Clipboard 1.3.0
+  runs `command -v cliphist || exit 127; cliphist list` and says "isn't installed" only
+  on 127.
+- **A row's grey icon tile vanished on hover** (Komble, ewe Sync, Safe, ewe Settings):
+  `.ewe-row__lead--tile` wears `surface-hover`, the hovered row's own fill. Fixed once in
+  `design/components.css` (+ `bundle.css`): the tile steps to `surface-pressed` with the
+  row; the app copies are refreshed (`design/check-tokens.sh`).
+- **Vendor plugins by id:** `scripts/vendor-plugins.sh ewe.dock ewe.clipboard …` — a
+  blanket run takes every `../ewe-plugin-*` checkout as it is, and the local
+  `ewe-plugin-companion` (0.2.0, dirty) is older than the bundle's 0.5.2: Shaun would
+  be downgraded.
+- **Dock: which display a minimized window came from** — `special:minimized` is ONE
+  workspace, so `hyprctl clients` reports the monitor that workspace last sat on, not
+  where the window was minimized. Dock 1.5.0 records it before the move
+  ([[Dock On Every Display]]).
+- **Harness:** a plugin under test runs from a scratch payload — `cp -a
+  ewe/plugins /tmp/<x>`, swap in the working tree, `HS_PLUGINS=1 HS_PAYLOAD=/tmp/<x>
+  HS_HEADLESS=1 driver.sh up` (headless keeps 1920×1200 when several nests run). Two
+  nests at once: separate `HS_WORK`. A shell edit hot-reloads every nest running that
+  checkout.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

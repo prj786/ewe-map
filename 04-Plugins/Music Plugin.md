@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-media` ·
 [github.com/prj786/ewe-plugin-media](https://github.com/prj786/ewe-plugin-media)
-· v1.0.2 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **plugin since 0.25** (was `MediaPlayer.qml` + the dock's
+· **v1.1.0 (ewe 0.45): the card is a `BarPopup` "Now playing" with the player's name as the head's subtitle; `MprisPick` passes over WebKit's `org.webkit.*` twin entries unless nothing else qualifies** · v1.0.2 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **plugin since 0.25** (was `MediaPlayer.qml` + the dock's
 music button).
 
 The now-playing card (artwork, source, title/artist, prev · play/pause ·

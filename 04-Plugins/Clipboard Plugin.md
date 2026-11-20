@@ -11,8 +11,13 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-plugin-clipboard` ·
 [github.com/prj786/ewe-plugin-clipboard](https://github.com/prj786/ewe-plugin-clipboard)
 
-First-party **plugin since 0.25** (API 2 manifest, v1.1.1 in
-`plugins/bundle.json`): shipped inside the payload, **not installed on a
+**1.3.0 (ewe 0.45): API 3 — the widget is a `BarModule` that runs `ewe.clipboard.toggle`
+with its anchor, the card is the shell's `BarPopup` (the System monitor's look,
+`exclusiveKeyboard` so the search types at once), Clear in the head, an empty history
+is not "cliphist isn't installed" ([[One Bar Card — BarPopup]]).**
+
+First-party **plugin since 0.25** (API 2 manifest until 1.3.0, v1.1.1 in
+`plugins/bundle.json` then): shipped inside the payload, **not installed on a
 fresh machine**, migrated once for upgraders who had it. Before 0.25 it was
 seeded on every install.
 
