@@ -39,7 +39,7 @@
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
     "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
     "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)",
-    "release_2026_11_21_shaun": "Shaun 0.3 + knowledge 2.0: ewe-companion 0.3.0-beta (ewe-companion#9), ewe.companion 0.7.0 (ewe-plugin-companion#7, d78fa46) vendored in ewe 0.47.0-beta (ewe#89); [ewe] publish run pending; decisions 54 and 71 (tags in the Version Ledger)"
+    "release_2026_11_21_shaun": "Shaun 0.3 + knowledge 2.0: ewe-companion 0.3.0-beta (ewe-companion#9), ewe.companion 0.7.0 (ewe-plugin-companion#7, d78fa46) vendored in ewe 0.47.0-beta (ewe#89); [ewe] publish run 44905371096; decisions 54 and 71 (tags in the Version Ledger)"
   },
   "repos": [
     {
