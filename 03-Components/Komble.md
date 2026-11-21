@@ -95,6 +95,21 @@ flowchart LR
 - Open: `plugin_create` KINDS in `plugins.rs` still list API 2 kinds — add
   the four API 3 kinds. Untested in a real Tauri window (dev-mock only).
 
+## What an installed app still needs (0.24.0-beta, built 2026-11-21 — not released)
+
+Branch `feat/stremio`, decision 69 ([[What an Installed App Still Needs]]).
+`needs.rs`: `app_needs(id)` → `{"needs": [{id, title, detail, action,
+ok}]}`, `fix_app_need(need)` → `{"ok": true, "need", "version", "bytes"}`;
+`AppNeeds.svelte` shows an unmet need as a warning card on the app's page and
+under its row in Installed, with one button. First need: **Stremio
+Enhanced's streaming server** — it looks for a Flatpak `com.stremio.Service`
+(ewe has no Flatpak) or `~/.config/stremio-enhanced/streamingserver/server.js`;
+Komble fetches Stremio's own `server.js` (≈ 7 MB, the version from
+`version.txt` or stremio-service's `Cargo.toml`), checks size and that it is
+not HTML, writes beside and renames. Curated Popular → Media: **Stremio** =
+`stremio-linux-shell` (AUR, the official app, server + mpv inside);
+*IntelliJ IDEA* = `intellij-idea-oss` (community edition left the repos).
+
 ## What Arch forced (not stylistic choices)
 
 Structural differences vs the earlier Debian-targeted build — Arch is not
@@ -126,3 +141,5 @@ Debian with different command names:
 > never records a plugin's package dependencies as apps.
 > Dialogs open in place and the scrim fades its colour, never its opacity —
 > an opacity fade blinks in WebKitGTK (0.20.1; [[Troubleshooting Knowledge]]).
+> An app's needs (0.24) are named per app id and fetched only from that
+> app's vendor, version and size checked — no Flatpak, no guesses.

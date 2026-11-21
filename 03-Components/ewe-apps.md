@@ -9,8 +9,9 @@ up: "[[Home]]"
 # ewe-apps — ewe Files, ewe Player, ewe Viewer
 
 `~/Projects/ewe/ewe-apps` · [github.com/prj786/ewe-apps](https://github.com/prj786/ewe-apps)
-(one repo, one package `ewe-apps`, three binaries; **0.1.0-beta**, released
-2026-11-19 with ewe 0.44.0-beta — decision 56, [[ewe's Own Apps — Files, Player, Viewer]])
+(one repo, one package `ewe-apps`, three binaries; **0.1.0-beta** released
+2026-11-19 with ewe 0.44.0-beta — decision 56, [[ewe's Own Apps — Files, Player, Viewer]];
+**0.1.1-beta** released 2026-11-20; **0.2.0-beta built 2026-11-21, not released** — below)
 
 The desktop's own file manager, media player and document/picture viewer.
 They replace **Nemo, Engrampa, imv, Zathura and mpv** as the defaults
@@ -91,6 +92,47 @@ the current folder; toasts size to their text and header tooltips open below
 --shot-height=N` (Player and Viewer take them too since 0.1.1); Files scenes
 `places`, `more`, `tabs`, `compress` are new. Open: drag-and-drop onto places
 in a narrow window (the drawer closes when a drag starts).
+
+## Links, languages, encodings, phone pictures (0.2.0-beta, built 2026-11-21 — not released)
+
+Branch `feat/player-links` (merged with `feat/text-images`); decisions 68
+and 70 ([[ewe Player Plays Links — yt-dlp]],
+[[Every Script Reads Right — encodings, phone pictures, right-to-left]]).
+Map: the repo's `AGENTS.md` "Links", "Errors", "Languages", "Text in any
+encoding", "Phone pictures", "User text direction".
+
+- **ewe Player plays web page links** — `ewe-player <url>`, Ctrl+L
+  (*Open URL…*), a dropped/pasted link, an M3U of page links, ewe Browser's
+  *Play in ewe Player*. `links.rs` `resolve_link`: direct media as is,
+  else `yt-dlp -J` → HLS master / progressive / muxed HLS / DASH; split-only
+  → *Open in mpv*; DRM → *locked*. Verified: YouTube, Twitch VOD + clip,
+  BBC News, a CORS-less CDN `.mp4`, an M3U of two pages. Vimeo: DRM/login.
+  No remux route yet.
+- **Honest errors** — `media_support` (`{libav, ytdlp, mpv}`, once):
+  gst-libav is named only when it is missing (`EWE_PLAYER_LIBAV=0|1`
+  forces it); a web page is called a web page; yt-dlp's own sentence;
+  the codec in words. Actions: Open with another app, Open in ewe
+  Browser, Open in mpv, Try again, Next.
+- **Track languages** — "English", "Русский · Commentary", "ქართული";
+  *Preferred language* submenus (audio, subtitles; `auto` = the system's,
+  which WebKit takes from the *installed* locale); bottom cues ride above
+  the visible control bar (`--vp-cue-lift`).
+- **Text in any encoding** — core `text.rs` + `/text` route (BOM → UTF-8 →
+  UTF-16 → chardetng + encoding_rs, hinted by `Movie.ru.srt` or the
+  locale): subtitles (*Subtitle encoding* menu), `.m3u` titles, the
+  Viewer's text/Markdown/CSV (encoding button, `--encoding=`,
+  `--encoding-menu`), Files' quick look + preview.
+- **Phone pictures** — HEIC/HEIF/HIF through `heif-dec` into a cached
+  upright JPEG (`/picture` route, `$XDG_CACHE_HOME/ewe-apps/pictures/`, LRU
+  512 MB); AVIF and JPEG XL show natively; thumbnails for all three.
+- **Right-to-left** — `dir="auto"` on every name/title/tag; Noto script
+  faces before `system-ui` in both font stacks.
+- **Packaging** — depends `+ yt-dlp` (pulls `yt-dlp-ejs` + `deno`),
+  `+ libheif`; optdepends `+ mpv`.
+- **Open:** the remux route for split-only sites; link drops from a
+  browser (not exercised headless); ID3v1/Latin-1-frame tags in cp1251 still
+  read as Latin-1 (lofty); copy / set-as-wallpaper of a HEIC uses the
+  original.
 
 ## How the desktop wires them in (ewe 0.44.0-beta)
 
@@ -182,6 +224,23 @@ AUR build ([[Komble]]). A machine that already has them keeps them.
   ewe yet**; the Music plugin will show two players until it is). WebKit's
   media download buffer: 5–20 MB videos with audio never started until the
   `WPE_SHELL_MEDIA_DISK_CACHE_*` values above.
+- **A `crossorigin` `<video>` cannot play links** (0.2): CDNs (googlevideo,
+  Twitch, BBC) send no `Access-Control-Allow-Origin`, so every remote load
+  failed as "format not supported" — the owner's "Cannot play watch". Only
+  the loopback server's files get `crossorigin`; links stay ≤ 100 % volume
+  (Web Audio plays a cross-origin source as silence) and a link after a
+  boosted file gets a fresh `<video>`.
+- **WebKit's automatic caption selection** flips a track set to `showing`
+  back off when more tracks arrive; the textTracks `change` event
+  re-applies the choice. Bottom cues sat under the control bar until
+  `--vp-cue-lift` moved the cue container (a `transform`, not `cue.line`).
+- **`system-ui` is not a fontconfig family on Arch** — WebKit drew Arabic
+  in FreeMono (unjoined) and Hebrew in FreeSans; name Noto faces first.
+  `text-overflow: ellipsis` follows the clipping element's direction —
+  `dir="auto"` goes on that element.
+- `heif-dec` writes `out-1.jpg`, `out-2.jpg` … for bursts (`picture::settle`
+  keeps the first); `chardetng` 1.0 has no confidence score (`confident` =
+  same guess with and without the hint, no decode errors).
 
 > **Build guard:** the three apps are **Tauri on the system WebKitGTK**, not
 > Electron — no bundled runtime, no second browser engine
@@ -190,7 +249,9 @@ AUR build ([[Komble]]). A machine that already has them keeps them.
 > `FileManager1` ownership are contracts (rule 4): ewe's launcher, ewe
 > Browser, `ewe-setup` and the shell bind to them. *Breaks if violated:*
 > "Open containing folder", "Play in ewe Player" and every mime default on
-> installed machines.
+> installed machines. Since 0.2: `ewe-player <http(s)-url>` is public too;
+> never put `crossorigin` on a remote `<video>`, never blame gst-libav
+> without `media_support`, decode user text only through the core's `/text`.
 
 ## Related
 

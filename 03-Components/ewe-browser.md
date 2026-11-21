@@ -34,6 +34,33 @@ motion follow ewe live with no theming hook.
 | the companion (Shaun) | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); since ewe-companion 0.1.0-beta it calls the command line — search, open, play, history, tabs, `page --text` (untrusted) — and since 0.2.0-beta a site's own search (`search --site`), bookmarks, back/forward, workspaces, downloads |
 | Hyprland (ewe 0.30.0-beta) | a 4-finger swipe left/right while the browser is focused runs `ewe-browser workspace next\|prev` ([[Four Fingers — ewe browser's workspaces]]) |
 
+## New in 0.9.0-beta (built 2026-11-21 — not released; changes STAGED, not committed, on `feat/spell-play`)
+
+- **Spelling follows ewe** (`main/spelling.ts`, `SpellingService`):
+  `[desktop.language]` `spellcheck` + `check_spelling` from ewe.conf,
+  live on every web session; hunspell names mapped to Chromium's own
+  `.bdic` dictionaries (`availableSpellCheckerLanguages`) — Georgian and
+  other languages Chromium lacks are skipped and said so. Chromium
+  downloads a `.bdic` from Google's dictionary server on a language's first
+  use. Menu: suggestions, Add to dictionary, **Ignore** (one run,
+  `spelling-ignored.json`). Settings → Browsing → Spelling: the switch
+  (writes ewe.conf; "Only on the ewe desktop" outside ewe), the languages,
+  *Change in ewe Settings* (`ewe-settings --page=language`). IPC
+  `ewe:spelling` (`app://settings` only). [[Spell Checking — hunspell and Chromium]].
+- **Play in ewe Player** on a video link, a video/audio element (its http(s)
+  file, else the page) and a video page — `isPlayableUrl` (`@ewe/shared`
+  `player.ts`, 22 site rules + media extensions) → `ewe-player <url>`
+  ([[ewe Player Plays Links — yt-dlp]]).
+- Tests: `tests/unit/spelling.test.ts`, `packages/shared/src/player.test.ts`,
+  `tests/e2e/spelling.spec.ts` (2 tests, fake `ewe-conf` / `ewe-player`).
+
+> **Build guard:** Chromium reads only `.bdic` — the system's hunspell
+> dictionaries never reach ewe Browser; map every name through
+> `session.availableSpellCheckerLanguages` and flag the ones that don't map
+> (`supported: false`). *Play in ewe Player* calls `$EWE_PLAYER_BIN <url>`
+> and nothing else. *Breaks if violated:* the settings page claims Georgian
+> is checked when nothing is; the menu bypasses the Player's yt-dlp path.
+
 ## New in 0.8.4-beta (released 2026-11-19, ewe-browser#23)
 
 | what | how |
