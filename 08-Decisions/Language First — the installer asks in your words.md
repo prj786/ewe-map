@@ -63,10 +63,15 @@ keyboard), `komble-arch/src-tauri/src/picks.rs`,
   never had `sudo` (base does not carry it; the installer only wrote
   `/etc/sudoers.d/wheel`) — `pacstrap` now adds it; the Disk screen listed
   the live system's zram swap, so nothing was preselected.
+- **The owner's calls after the release** (2026-11-21): "add sudo to ewe,
+  keep steam" — `sudo` is in ewe's `packages/common.list` (ewe#90, merged,
+  ships with the next ewe release), so machines installed with ISO ≤ 0.16
+  get it on their next update; picking Steam keeps turning on `[multilib]`.
 - **Not done here:** installer translations (the owner: "no translation for
   now"); Steam, AppImage picks, a real AUR build, the Chinese / Korean /
   Vietnamese / Indic paths and a restore after the language step were not
-  run in QEMU; repo apps installed by the installer are not recorded in
+  run in QEMU (Steam stays in the installer — the owner's call); repo apps
+  installed by the installer are not recorded in
   `[apps.installed]` (they do not follow the account yet); Mozc's layout
   under `jp` is `us` in ewe-ime (JIS symbol keys may differ).
 
