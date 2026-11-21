@@ -1369,6 +1369,29 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   `DISPLAY` unset, `EWE_IME_NO_SCOPE=1 EWE_IME_NO_SESSION=1` — never against
   the live bus or X server. `tests/ewe-ime-test.sh` uses fakes.
 
+## The installer in your language (2026-11-21, ewe-os 0.17)
+
+- **"command not found: sudo" on an installed ewe** — systems installed
+  with the graphical installer up to ISO 0.16 have no `sudo`: `base` does
+  not carry it and the installer only wrote `/etc/sudoers.d/wheel`. Fix:
+  `pkexec pacman -S sudo` (your password). 0.17's `pacstrap` adds it. Found
+  by the 0.17 QEMU pass.
+- **The Disk screen preselects nothing on a one-disk machine** (ISO ≤
+  0.16): the probe listed the live system's `zram0` swap as a second disk;
+  0.17 drops `zram*` names.
+- **The login screen is always US English** (ISO ≤ 0.16): cage reads
+  libxkbcommon's `XKB_DEFAULT_*`, which nothing set. 0.17's greeter wrapper
+  reads `/etc/X11/xorg.conf.d/00-keyboard.conf` (localectl's X11 keymap) at
+  every start; change it with `sudo localectl set-x11-keymap us,ge` and
+  `sudo systemctl restart greetd`.
+- **Apps marked "Komble" were not installed** — by design: the installer
+  never builds from the AUR or fetches AppImages. Komble → For you → *Apps
+  you picked while installing ewe* (`~/.local/state/ewe/install-picks.json`).
+- **Testing the installer in QEMU on a slow link:** a stalled GitHub
+  download kills `pacstrap`; serve packages from a host cache through
+  pacman's `CacheServer` (ewe-os `docs/TESTING.md`). `scripts/vm.sh` keeps
+  its work folder off tmpfs and gives each ISO boot fresh UEFI variables.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

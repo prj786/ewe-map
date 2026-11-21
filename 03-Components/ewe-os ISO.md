@@ -9,7 +9,7 @@ up: "[[Home]]"
 # ewe-os — the Distro / ISO
 
 `~/Projects/ewe/ewe-os` · [github.com/prj786/ewe-os](https://github.com/prj786/ewe-os) ·
-**0.15.0-beta** released 2026-11-01 (the ISO for ewe 0.37: the installer signs you in — *Your ewe account*, ewe-os#19); before it **0.14.0-beta** released 2026-10-23 (the ISO for ewe 0.35: all 16 plugins in the installer, ewe-os#18; before it 0.13.0-beta on 2026-10-04, the ISO for ewe 0.25's plugins, ewe-os#15; distro has its own version line; the DE's `ewe` package has another)
+**0.17.0-beta** released 2026-11-21 (the ISO for ewe 0.47: the installer asks your language first, apps for day one — ewe-os#22, [[Language First — the installer asks in your words]]); before it **0.16.0-beta** 2026-11-19 (the ISO for ewe 0.44, the trim, ewe-os#21) and **0.15.0-beta** 2026-11-01 (the ISO for ewe 0.37: the installer signs you in — *Your ewe account*, ewe-os#19); before it **0.14.0-beta** released 2026-10-23 (the ISO for ewe 0.35: all 16 plugins in the installer, ewe-os#18; before it 0.13.0-beta on 2026-10-04, the ISO for ewe 0.25's plugins, ewe-os#15; distro has its own version line; the DE's `ewe` package has another)
 
 The distro layer: the **archiso profile** that builds the live/install ISO.
 The DE, apps and packaging live in their own repos — this one turns them
@@ -71,12 +71,15 @@ flowchart TB
 ## The installer app
 
 `installer/` is a **Tauri GUI (`ewe-installer`)** — the guided install's
-face (RFC-003 in `ewe-os/docs/`): Welcome · Network · Time & place · Disk ·
-Your login · **Your ewe account** (0.15.0-beta) · **Plugins** (0.13.0-beta) ·
+face (RFC-003 in `ewe-os/docs/`): **Language** (0.17.0-beta; it replaced
+Welcome) · **Keyboard** (0.17.0-beta) · Network · Time & place (with
+**Formats**, 0.17.0-beta) · Disk · Your login · **Your ewe account**
+(0.15.0-beta) · **Plugins** (0.13.0-beta) · **Apps** (0.17.0-beta) ·
 Summary · Install. Nothing privileged runs in the app: every step is a verb
 of the pkexec'd `installer/helper/ewe-install-helper` (`partition mkfs
-pacstrap hibernate settz setlocale sethostname user layer upgrade account
-addons bootloader reboot`);
+pacstrap hibernate settz setlocale setkeymap sethostname user layer upgrade
+language account addons apps bootloader reboot`; `installer/tests/
+helper-test.sh` sources it with `EWE_HELPER_LIB=1`);
 `layer` and `addons` delegate to `ewe-install --layer-only` /
 `--addons-only` — one implementation, two faces.
 
@@ -111,6 +114,30 @@ same keyring at the first login, so the first boot is signed in — writes
 `cloud.json`, and with `yes` runs `ewe-conf pull` + `apply --no-hooks` as
 the user (recorded as synced; Welcome then skips its restore step). The
 TUI has no account step yet.
+
+**Language first, apps for day one** (0.17.0-beta, ewe-os#22 —
+[[Language First — the installer asks in your words]]). *Language* lists
+every UTF-8 locale glibc supports in its own words and pre-fills region,
+keyboards (a non-Latin layout gets `us` first), formats, the spelling
+dictionary and typing (fcitx5 + engine for CJK, Vietnamese, Indic). The
+helper's `setlocale <locale> [formats]` writes LANG + the five regional
+formats and always generates `en_US.UTF-8`; `setkeymap <layouts>
+<variants>` writes `/etc/X11/xorg.conf.d/00-keyboard.conf` and the console
+keymap (the first layout that types a–z, via systemd's `kbd-model-map`);
+`ewe-install` puts `XKB_DEFAULT_*` from that file into the greeter wrapper,
+so the login screen types with the chosen keyboards (it was always US).
+`language <user> <layouts> <variants> <ime> <dict> <pkgs>` runs one pacman
+for fcitx5/engine/hunspell (only `hunspell-*` / `fcitx5*` names pass) and
+writes `[desktop.input]`, `[desktop.ime]`, `[desktop.language]` through
+`ewe-conf` as the user, then `ewe-ime apply` — before `account`.
+`apps <user> <repo,pkgs> [aur:pkg|appimage:pkg …]` installs repo apps
+(Steam: `[multilib]` + the GPU's lib32 Vulkan driver) and writes the rest
+to `~/.local/state/ewe/install-picks.json` for Komble 0.25's For you.
+`pacstrap` adds **`sudo`** (GUI installs up to 0.16 had none) and the Disk
+screen hides zram. `release-iso.yml` has a **`test`** input: `gh workflow
+run release-iso.yml --ref <branch> -f test=true` keeps the ISO as the
+`ewe-test-iso` artifact and touches no release (a dispatch without it still
+attaches to the newest release).
 
 **The live session** is the one non-opt-in place: a fresh 0.25 account has
 no dock, and the stick pins *Install ewe* in the dock — so
