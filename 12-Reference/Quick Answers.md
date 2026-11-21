@@ -99,6 +99,13 @@ checking here, it's probably guessing.**
 | Screen sharing/file pickers dead? | `hyprland-session.target` missing | [[Security Posture]] |
 | Keyring keeps prompting? | `ewe-auth keyring-reset`, then re-login | [[Troubleshooting Knowledge]] |
 
+## Shaun (the companion)
+
+| question | answer | detail |
+|---|---|---|
+| **What can Shaun do?** | With no AI (0.3.0-beta, ewe 0.47): the desktop's switches with Undo (volume, Wi-Fi, Bluetooth, Do not disturb, game mode), apps and folders, files by name (plocate too), ewe Safe ("copy my GitHub password": Safe copies, Shaun never sees it), ewe Browser, timers and sums, the clock and units, this computer's battery/memory/CPU/disk/network, windows and workspaces, memories, music and links in ewe Player, "why won't this play", keyboard layouts, "what's new", the ArchWiki and manuals offline, answers about ewe from the pack. Settings (dark/light, the dock's displays, the bar's fold, power, the trash) are offered with Run, then Undo. With an AI picked (your own Claude Code/Codex/OpenCode login, an API key, a local model): any question, in your language, after a look-up when it depends on this computer; up to three things per reply; "translate this" | [[Roadmap — ewe-companion]] · [[Shaun 0.3 — faster and wiser]] · [[Knowledge 2.0 — Shaun follows ewe]] |
+| **How do I teach Shaun something?** | Put Markdown or text files in `~/Documents/Shaun` (two folders deep), or say "learn this: …" / "remember for later: …" (Undo deletes the note). Shaun searches them like its own pack, offline; a note that fits the question goes to the AI with it. Short facts: "remember that …" (memories, 100 at most, sent with every question; "forget …"). Passwords, PINs, keys and card numbers are refused and left out. For ewe itself, a topic in `ewe-companion/knowledge/*.md` (the coverage test fails until every shipped feature has one) | [[Knowledge 2.0 — Shaun follows ewe]] · [[Storage Map]] |
+
 ## Where things live
 
 | question | answer | detail |

@@ -146,7 +146,10 @@ flowchart TB
   machine. Since 0.2.0-beta it also keeps timers and reminders there
   (migration `002_timers`, 50 waiting at most), so they survive a restart.
   What the user asks Shaun to remember is `003_memory` (0.3, 100 at most,
-  secrets refused); it goes to the chosen provider with each question. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
+  secrets refused); it goes to the chosen provider with each question.
+  The user's own notes for Shaun are plain files in `~/Documents/Shaun`
+  (0.3.0-beta, `EWE_COMPANION_NOTES`; `.md`/`.txt`, written by the user or
+  by "learn this: …"): Shaun reads and indexes them, never syncs them. Its synced, non-secret prefs are `[companion]` in `ewe.conf`
   (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
   keyring, never the file.
 

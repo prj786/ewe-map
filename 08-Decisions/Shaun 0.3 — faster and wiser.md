@@ -14,6 +14,15 @@ smarter and faster. maybe more functions somehow"; the four groups and
 ewe-companion 0.3 and the plugin `ewe.companion` 0.6.0 (branches
 `feat/shaun-wiser`). Decision 54 in [[Decision Index]].
 
+**Released 2026-11-21** with knowledge 2.0 (decision 71,
+[[Knowledge 2.0 — Shaun follows ewe]]) as **ewe-companion 0.3.0-beta**
+(ewe-companion#9, which carries #8's commits) and the island
+**`ewe.companion` 0.7.0**
+(ewe-plugin-companion#7, merged as `d78fa46`; it carries 0.6.0's streaming
+and `chat.warm`) vendored in **ewe 0.47.0-beta** (ewe#89). 0.6.0 never
+shipped alone: ewe-companion#8 and ewe-plugin-companion#5 were closed in
+favour of the combined PRs.
+
 **Measured first, on the owner's laptop** (provider Claude Code, Haiku): "2+2"
 took **7.5 s**. `claude -p --system-prompt … --tools ""` still loaded the
 owner's own Claude Code setup (plugins, skills, MCP servers: ~94k tokens of
@@ -51,6 +60,23 @@ Rejected: warming on every notch open (190 MB for every glance at the
 agents); a second "fast" model slot (the warm process made one model fast
 enough); currencies and the public IP (both need a website).
 
-Not verified: the window commands on the live Hyprland (close and fullscreen's
-Lua arguments come from Hyprland's error strings; tests never touch the live
-compositor), a real Claude Code answer streaming in the notch.
+Not verified (still open after the release): the window commands on the
+live Hyprland (close and fullscreen's Lua arguments come from Hyprland's
+error strings; tests never touch the live compositor), a real Claude Code
+answer streaming in the notch, the warm `claude`'s memory over a day.
+
+> **Build guard:** keep `--disable-slash-commands --strict-mcp-config
+> --setting-sources ""` on every `claude -p` and never use `--bare`; keep
+> the system prompt the same for every question (the turn's notes ride in
+> `<notes>`); a window closes only from a one-time token's button and
+> `force_quit` stays in `commands::PROPOSALS`, refused for
+> `commands::SESSION`; a memory that `looks_secret` is refused and kept out
+> of the history. *Breaks if violated:* 7 s answers that read the user's
+> own Claude Code setup; the user's login stops working; the warm process
+> and Anthropic's cache miss every time; a model closes a window or kills
+> the compositor; a PIN reaches a model.
+
+## Related
+
+- [[RFC-007 — ewe Companion]] · [[Roadmap — ewe-companion]] ·
+  [[Knowledge 2.0 — Shaun follows ewe]] · [[Contracts and Public API]]
