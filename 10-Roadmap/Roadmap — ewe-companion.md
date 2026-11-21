@@ -8,7 +8,17 @@ up: "[[Home]]"
 
 # Roadmap — ewe-companion
 
-Current (2026-10-18): **RFC-007 accepted** (all nine proposals); **P1 done,
+Current (2026-11-21): **0.3.0-beta released** — P2.11 (faster, wiser, four
+new groups of functions — decision 54, [[Shaun 0.3 — faster and wiser]])
+and P2.12 (knowledge 2.0 — decision 71,
+[[Knowledge 2.0 — Shaun follows ewe]]) in one release: ewe-companion#9 (`v0.3.0-beta` on `82d6819`, carrying #8) and the
+island **0.7.0** (ewe-plugin-companion#7, `d78fa46`; 0.6.0 never shipped
+alone) vendored in **ewe 0.47.0-beta** (ewe#89). The package now depends on
+`arch-wiki-lite`. Released before that up to 0.2.4-beta (2026-11-08, game
+mode is ewe's own). **Next:** P3 (notifications); open from 0.3: the window
+commands, a real Claude Code stream and the real ewe Player / ewe Files /
+`ewe-ime` on the owner's desktop.
+Earlier (2026-10-18): **RFC-007 accepted** (all nine proposals); **P1 done,
 P2 working end to end, P2.5 to P2.10 done** (P2.9, Safe, ewe browser and the
 finder, merged 2026-10-15: ewe-companion#1, ewe-plugin-companion#1; P2.10,
 wave 2, released 2026-10-18 as **0.2.0-beta**: `v0.2.0-beta` on `30eb37f`,
@@ -37,6 +47,8 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 | P2.8 ✓ | the companion runs what it suggests: `run_shell` proposals (a model's, a knowledge topic's `run:`, the user's `$ command`) shown exactly with Run / In terminal, run only on that click; `shell::assess` refuses machine killers and house-rule breaks, warns on risky ones, sends sudo to a terminal | `tests/chat.sh` 21/21; Run and In terminal checked in the nested harness |
 | P2.9 ◐ | Safe, ewe browser and the finder (owner 2026-10-15; contract `ewe-safe/docs/TRIO.md` §C1, [[RFC-008 — ewe Safe]] S8′): "copy my GitHub password" (Safe copies; values never cross), lock/unlock/count, "log me in to GitHub" (opens the site; the fill stays a click); search/open/play/history/tabs/"what is this page about?" through ewe browser's CLI (`do browser` in the island; page text untrusted); "find my resume" (the finder: `$HOME` by name, 1.5 s); `rows` on the island; names stay local (`Outcome::private`); proposed commands that print a password manager's values are refused; island 0.3.0 | built; `tests/canary.sh` 8, `tests/chat.sh` 53, relay 26, island harness dark + light — all against fakes (`EWE_COMPANION_SAFE`, `EWE_COMPANION_BROWSER`). Merged 2026-10-15, released in 0.1.0-beta (2026-10-17). Not verified: the real Safe and the real browser CLI (both released 2026-10-15) |
 | P2.10 ✓ | more powers, wave 2 (owner 2026-10-18; on ewe browser 0.4.0-beta's CLI): **a site's own search** ("search men's shoes on zara" → `web_search {query, site}` → `search --site`; an unknown site or an older browser → a plain search of "X on Y"); **more browser** — bookmark this page, bookmarks, back/forward/reload/reopen, mute/pin a tab, close a tab (always a proposal), workspaces (switching needs the word "browser"), a site in a named workspace, downloads with Open / Show in folder, the browser's own pages; **the desktop** — Wi-Fi (`nmcli`), Bluetooth and paired devices (`ewe-bt`), airplane mode (Shaun's own: Wi-Fi + Bluetooth off, what was on comes back), keep awake (Insomnia), "install X" opens Komble's search; **a calculator** (offline); **timers and reminders** (`companion.db` migration 002, `notify-send` as Shaun, they survive a restart); **proposals only** for dark/light, power (`power.sh`) and emptying the trash (`commands::PROPOSALS`); the knowledge pack **91 → 122 topics** (new `cli.md`: every ewe command-line tool and the `qs ipc` targets; `browser.md` rewritten for 0.4); island row icons (0.5.0) | released 2026-10-18 in 0.2.0-beta; core 81 + daemon 31 unit, `tests/chat.sh` 112, `tests/canary.sh` 9 — every desktop tool a PATH shim in `tests/fakes/`. Not verified: the real browser 0.4 CLI, `ewe-bt` with a paired device, the Insomnia plugin, a real timer banner (the owner's try after `pacman -Syu`) |
+| P2.11 ✓ | **wiser, faster, more functions** (owner 2026-11-08: "i want it more wise. smarter and faster"): Claude Code **lean** (`--disable-slash-commands --strict-mcp-config --setting-sources ""`: the user's own setup was ~94k tokens, 7.5 s for "2+2") and **warm** (started on the first keystroke, `chat.warm`, and after an answer; 3 idle minutes; ~190 MB): 1.2 s to the whole answer; answers **stream** (`chat.reply` `partial` to islands that say `caps: ["partial"]`; plugin 0.6.0); a stable, cached system prompt with the turn's `<notes>` (the time, uptime, memory, load, online); **look-ups** (`persona::LOOKS`, facts back to the model as untrusted); up to three ACTIONs and two or three plain commands in one line, one Undo; and the owner's four picks: **clock, dates and units**, **system facts** (battery, memory, CPU, disk, network; Quit as a proposal, never for the desktop's own), **windows and workspaces** (close asks first through a one-time token), **memory** (`003_memory`, secrets refused and kept out of the history, in the model's notes); typo tolerance — decision 54 | built 2026-11-08 on `feat/shaun-wiser` (companion + plugin 0.6.0; core 107 + daemon 58 unit, `tests/chat.sh` 164, `tests/brain.sh` 25, canary 9, relay 26; island harness checked); **released 2026-11-21 in 0.3.0-beta** with P2.12 (ewe-companion#9; plugin 0.7.0, ewe-plugin-companion#7, in ewe 0.47.0-beta). Not verified: window commands on the live Hyprland, a real Claude Code answer in the notch |
+| P2.12 ✓ | **knowledge 2.0 and new powers** (owner 2026-11-21: "make shaun more powerfull. we can add knowledge."): the pack follows ewe 0.40–0.47 (**128 → 174 topics**; `media.md`, `languages.md`, `news.md`); a **coverage test** (`knowledge/coverage.json` from `scripts/coverage.py`, 72 items; `every_shipped_feature_has_a_topic` fails the build); **what's new** (`whats_new`, `scripts/news.sh`); **BM25F** search with synonyms and typos; the **ArchWiki offline** (`arch-wiki-lite`, a dependency) and **manuals**; **the user's notes** (`~/Documents/Shaun`, `learn`, `notes`); media (`play_local`, `play_link`, `now_playing`, `why_no_play`, `show_file`, `open_with`; the island's **`do app`**, plugin 0.7.0); languages (`keyboard_layout`, `typing_add`, "translate this", answers in the question's language); plocate in the finder; **settings by text** (`dock_display`, `bar_fold`, proposals with Undo; dark/light gains the Undo) — decision 71 | released 2026-11-21 in 0.3.0-beta (ewe-companion#9; plugin 0.7.0, ewe-plugin-companion#7, in ewe 0.47.0-beta, ewe#89); core 128 + daemon 67 unit, `tests/chat.sh` 213, `tests/brain.sh` 28, canary 10, relay 26; island harness dark + light at 1.8; the ewe 0.46 topics checked against the merged branches. Not verified: the real ewe Player playing a link, ewe Files `--select=`, the real `ewe-ime` |
 | P3 | notifications: ewe Plugin API 4 + `notifications` IPC + the watchdog; presenter; history; digest; the browser download notification | a broken presenter still gives a stock banner within 1.5 s |
 | P4 | the brain: chat; Anthropic / OpenAI / OpenAI-compatible (Gemini, OpenRouter, Ollama, LM Studio); keyring; tool tiers with confirm + undo; redaction | accent change with undo; offline on Ollama; the canary passes |
 | P5 | watchers (storage, updates, sync, mail, calendar) + `ewe-companion mcp` | a Claude session asks you through the island |
@@ -45,6 +57,27 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 | P8 | the password manager's metadata contract — Safe, [[RFC-008 — ewe Safe]] (S8: `summary` + events, never a title or value) | the canary in the vault appears nowhere |
 
 ## Gotchas known before the first line
+
+- **`claude -p` brings the user's whole Claude Code along** (2026-11-08):
+  `--system-prompt` and `--tools ""` still load their plugins, skills, MCP
+  servers and settings. Shaun passes `--disable-slash-commands
+  --strict-mcp-config --setting-sources ""`; never `--bare` (it reads no
+  OAuth, so the user's own login stops working).
+- **The system prompt must not change between questions** (0.3): the warm
+  `claude` is keyed by it and Anthropic caches it; the turn's notes ride
+  with the question.
+- **A one-word key is a confident match** (knowledge 2.0): "how do I use
+  rsync to exclude a folder" went to ewe Sync ("folders"). With no model,
+  "how do I use <program>" reads its manual first; a typo fix needs six
+  letters; a phrase never ends inside a hyphenated name. Probe with
+  `QS="q1|q2" cargo test -p companion-core calibrate -- --ignored --nocapture`.
+- **The pack must follow ewe, and the build says so:** a new Settings page,
+  `ewe-*` tool, app or built-in plugin → `scripts/coverage.py`, then a
+  topic until `cargo test` is green; an ewe release → a "What's new in ewe
+  X.Y" topic (`scripts/news.sh` lists the owed ones).
+- **The harness daemon reads the real home** (`tests/island.sh`): set
+  `EWE_MUSIC_DIR`, `XDG_CACHE_HOME` and `EWE_COMPANION_NOTES` in a scratch
+  dir before `up`, or a music search shows the owner's library.
 
 - **An unknown `ewe.conf` section triggers a full apply.** `ewe-conf set
   companion.*` regenerates everything and reloads Hyprland until a
@@ -124,12 +157,14 @@ phase live in `ewe-companion/docs/PLAN.md` §20, and what building taught us in
 - More in [[Troubleshooting Knowledge]] → *The companion*.
 
 > **Build guard:** never call `hub.store()` twice in one statement (bind the
-> first result with `let`); `run_shell`, `theme_mode`, `power` and
-> `empty_trash` stay in `commands::PROPOSALS` (a reply with `confirm`, run
-> only by the click); tab, bookmark, download, workspace and device names
+> first result with `let`); `run_shell`, `theme_mode`, `power`,
+> `empty_trash`, `force_quit`, `dock_display` and `bar_fold` stay in
+> `commands::PROPOSALS` (a reply with `confirm`, run only by the click);
+> never drop an item from `knowledge/coverage.json` to pass the test; tab, bookmark, download, workspace and device names
 > stay `private`. *Breaks if violated:* the daemon deadlocks when a timer
 > fires; the matcher restarts the machine from a sentence; names reach a
-> model (`tests/canary.sh` fails).
+> model (`tests/canary.sh` fails); the pack goes stale again without a red
+> build.
 
 ## Related
 

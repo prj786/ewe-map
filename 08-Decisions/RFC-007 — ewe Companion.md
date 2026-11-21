@@ -11,8 +11,9 @@ up: "[[Home]]"
 *Status: **accepted** 2026-10-14 (owner idea 2026-10-13; every proposed
 answer taken). P1 done, P2 working, P2.5–P2.10 done; released as
 ewe-companion 0.1.0-beta (2026-10-17, Shaun) and 0.2.0-beta (2026-10-18,
-wave 2: site search, desktop switches, timers, sums) — see
-[[Roadmap — ewe-companion]]. Full text: `ewe/docs/RFC-007-companion.md`;
+wave 2: site search, desktop switches, timers, sums), then 0.3.0-beta
+(2026-11-21: faster and wiser, knowledge 2.0 — decisions 54 and 71;
+the island 0.7.0 in ewe 0.47.0-beta) — see [[Roadmap — ewe-companion]]. Full text: `ewe/docs/RFC-007-companion.md`;
 build plan: `ewe-companion/docs/PLAN.md`.*
 
 ## The idea

@@ -463,6 +463,80 @@ must point at the new path). The `cast` IPC target is an alias of
 
 ## The companion (RFC-007, 2026-10-14)
 
+- **Shaun takes 5–8 s to answer with Claude Code** (before 0.3). Each
+  question started `claude -p`, which loaded the user's own plugins, skills
+  and MCP servers (~94k tokens) and took ~4 s to start. 0.3 runs it lean
+  (`--disable-slash-commands --strict-mcp-config --setting-sources ""`)
+  and warm (started on the first keystroke and after an answer): ~1 s.
+  `--bare` is no fix: it refuses OAuth.
+- **A `claude` process sits idle at ~190 MB** (0.3): the warm one waiting
+  for a question. It goes after 3 idle minutes, or when the provider or
+  model changes.
+- **An offline answer picks the wrong topic** ("how do I use rsync to
+  exclude a folder" → ewe Sync; "what is ewe-bt" → ewe). The pack's search
+  treats a key phrase said whole as a confident match, and a one-word key
+  is a phrase: ewe Sync's "folders" stems to "folder". Since 0.3, with no
+  model, "how do I use <program>" goes to its manual first, a typo fix needs
+  six letters ("rsync" is not "sync"), and a phrase never ends inside a
+  hyphenated name. Probe a change with `QS="q1|q2" cargo test -p
+  companion-core calibrate -- --ignored --nocapture`. Keep one spelling per
+  key: "ewe-browser" and "ewe browser" count twice.
+- **`cargo test` fails `every_shipped_feature_has_a_topic`** (0.3): an item
+  in `knowledge/coverage.json` (a Settings page, `ewe-*` tool, app or
+  built-in plugin) has no topic whose title or keys name it. Write the
+  topic; never drop the item. Re-run `scripts/coverage.py` when ewe gains
+  one (`--check` says the file is out of date; for the newest facts pass
+  `--facts` a copy of `origin/main:ewe-facts.json`).
+- **"What's new" talks about an older ewe**: `knowledge/news.md` has no
+  "What's new in ewe X.Y" topic for the installed version
+  (`/usr/share/ewe/VERSION`). `scripts/news.sh` lists the owed ones; write
+  them by hand, in the user's words.
+- **A word vanished from an answer** (an `<url>` in a topic showed as
+  nothing): Qt guessed rich text. The island draws answers as plain text
+  since `ewe.companion` 0.7.0; keep angle brackets out of a row's title
+  anyway (the shell's `ListRow` is not the plugin's).
+- **"wiki …" hangs or a dialog flashes**: `wiki-search` opens `dialog` when
+  it is installed and waits on a terminal; Shaun sets `wiki_width` on every
+  call. It also writes `/tmp/.wiki-search.$USER.tmp` (the tool's own file,
+  shared with the user's searches). "Find arch-wiki-lite in Komble" means
+  the dependency is missing (installed without its dependencies).
+- **"man rsync" shows `--help`**: no `man-db` (an optdepend; the dev box has
+  none). Programs on `lookup::NO_HELP` get neither.
+- **"play this link" says a Vimeo or Netflix link is locked**: by design
+  (DRM or a sign-in); ewe Player would show "This video is locked".
+  `why_no_play` reads yt-dlp's `has_drm`.
+- **"add japanese typing" opens ewe Settings instead of offering a
+  command**: `typing_add` proposes `ewe-ime add <id>` only when `ewe-ime
+  catalog` says nothing is missing (`installed`, `core`, `packages`);
+  otherwise Keyboard and mouse → Add a language… installs it. Before ewe
+  0.46 (no `ewe-ime`) it offers Updates.
+- **A music search in the island harness shows the owner's library**: the
+  harness daemon reads the real home. Set `EWE_MUSIC_DIR`, `XDG_CACHE_HOME`
+  and `EWE_COMPANION_NOTES` in a scratch dir before `tests/island.sh up`.
+- **"Remember my pin is …" was refused but stayed in the conversation**
+  (before 0.3's release): the store refused it, but the user's words went
+  into the history. A command line that `memory::looks_secret` is kept as a
+  placeholder now (`tests/brain.sh` checks the next request).
+- **A reminder's text came back changed** ("take a break" → "make a
+  break", 0.3 before release): the typo pass touched free text. Everything
+  after remind, remember, open, search, close, kill … is never corrected,
+  and "lock" is out of the vocabulary so "look" never becomes it.
+- **A CPU row offered Quit for Hyprland** (0.3 before release): the busiest
+  programs included the compositor and the shell. `commands::SESSION`
+  refuses them, so their rows carry no Quit. `pkill -x` matches the
+  15-character process name; names with spaces are skipped.
+- **`tokio::spawn` refuses a future "not `Send`"**: a `libc::tm` (it holds a
+  raw pointer) lived across an `.await`. Read its fields into numbers
+  first.
+- **A fake process exits at once in CI** ("coreutils: unknown program"):
+  the runner's coreutils is multi-call (uutils), so a renamed `sleep` dies.
+  A fake process with a name is `python3` through a link of that name.
+- **The window commands may be wrong on a live desktop**: never run on a
+  live compositor by rule. Close (`{ window = "address:…" }`) and
+  fullscreen's `action` arguments come from Hyprland 0.57.1's error
+  strings; `windows::dispatch` counts only error-looking output as a
+  failure. Check them on a real desktop before trusting a bug report.
+
 - **The notch looks darker or greyer than the bar** (Glass on). Its blur
   rule lacks `xray`: the notch shows the window under it through the
   translucent ground, the bar shows the wallpaper. `ewe.companion` ≥ the

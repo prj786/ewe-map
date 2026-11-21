@@ -470,6 +470,66 @@ reply carries `confirm`, only the Run click runs them). Socket verb
 of tabs, bookmarks, downloads, workspaces and Bluetooth devices stay on the
 island (`tests/canary.sh` 9).
 
+**0.3 / P2.11** (feat/shaun-wiser, ewe-companion + ewe-plugin-companion 0.6.0,
+built 2026-11-08; **released 2026-11-21** in ewe-companion 0.3.0-beta and
+`ewe.companion` 0.7.0, ewe 0.47.0-beta; added, nothing renamed): `hello` gains **`caps`** (`partial`: the
+island draws a streaming answer); `welcome.caps` gains `stream` and `warm`;
+`chat.reply` gains the kind **`partial`** (the answer so far, never an
+ACTION line, at most every 80 ms, only while every island says `partial`);
+island → daemon **`chat.warm`** (the first keystroke: start whoever answers;
+an older daemon ignores it). Row `icon` gains `battery`, `cpu`, `memory`,
+`disk`, `network`, `trash`, `remember`. New catalog commands: `clock`,
+`date_math`, `convert`, `system_info`, `disk_usage`, `workspace`, `window`
+(close only from a one-time token's button), `remember`, `memories`,
+`forget`, and **`force_quit`, a proposal like `run_shell`** (refused for the
+desktop's own processes, `commands::SESSION`). A model's reply may carry up
+to three ACTION lines; a reply of *looks* (`persona::LOOKS`) runs them and
+asks again with their `facts`. `companion.db` migration `003_memory`.
+
+**Knowledge 2.0** (P2.12, `feat/shaun-knowledge`; **released 2026-11-21** in
+ewe-companion 0.3.0-beta, ewe-companion#9, with `ewe.companion` **0.7.0**,
+ewe-plugin-companion#7, vendored in ewe 0.47.0-beta, ewe#89; added, nothing
+renamed — [[Knowledge 2.0 — Shaun follows ewe]]):
+
+- **`do app {bin, args}`** (plugin 0.7.0): the island starts one of ewe's
+  own apps with arguments, detached. `bin`'s name must be `ewe-player`,
+  `ewe-files-app` or `ewe-viewer`; `args` is argv (songs or a link for ewe
+  Player, `--select=<path>` / `--open-with=<path>` for ewe Files). An older
+  island answers "The island cannot do app." and the daemon falls back to
+  `launch` with one argument. `open {what: files}` opens ewe Files, else
+  Nemo. Row `icon` gains `music`, `note`, `book`, `news`; answers are drawn
+  as plain text (`Text.PlainText`).
+- **15 catalog commands:** `whats_new`, `wiki`, `man_page`, `now_playing`,
+  `why_no_play` (all five also *looks*), `learn`, `notes`, `play_local`,
+  `play_link`, `keyboard_layout`, `typing_add`, `show_file`, `open_with`, and
+  **`dock_display`, `bar_fold`, which, like `theme_mode`, never run from a
+  call** (`commands::PROPOSALS` is now `run_shell theme_mode power
+  empty_trash force_quit dock_display bar_fold`). After the Run click,
+  `dock_display`, `bar_fold` and `theme_mode` offer Undo (the old value,
+  read by the daemon).
+- **What Shaun calls** (their argv is now a contract with these repos):
+  `ewe-player <path…|url>` ([[ewe Player Plays Links — yt-dlp]]),
+  `ewe-files-app --select=|--open-with=`, `ewe-ime catalog|add|remove`
+  ([[Typing in Other Languages — fcitx5 on demand]]), `ewe-plugin set
+  ewe.dock display primary|all|none`, `ewe-conf set desktop.bar.collapse
+  true|false`, `ewe-theme scheme apply`, `hyprctl switchxkblayout`,
+  `wiki-search` (arch-wiki-lite), `man`, `ffprobe`, `gst-inspect-1.0`,
+  `yt-dlp -J`, `playerctl`, `plocate`, `wl-paste`; it reads
+  `/usr/share/ewe/VERSION` and ewe Player's music index
+  (`$XDG_CACHE_HOME/ewe-player/music-index.json`).
+- **Package:** `ewe-companion` **depends on `arch-wiki-lite`** (21 MB);
+  optdepends `arch-wiki-docs`, `ewe-apps`, `playerctl`, `ffmpeg`, `plocate`,
+  `man-db`.
+- **Environment:** `EWE_COMPANION_NOTES` (the notes folder instead of
+  `~/Documents/Shaun`), `EWE_COMPANION_EWE_VERSION` (the ewe version
+  `whats_new` reads instead of `/usr/share/ewe/VERSION`); the daemon also
+  reads `EWE_MUSIC_DIR` and `XDG_CACHE_HOME` as ewe Player does.
+- **The pack's contract:** `knowledge/coverage.json` (written by
+  `scripts/coverage.py`, never by hand) lists every Settings page, `ewe-*`
+  tool, app and built-in plugin; `every_shipped_feature_has_a_topic` fails
+  the build until each has a topic. `knowledge/news.md` topics are titled
+  exactly "What's new in ewe X.Y" (`Pack::news` parses it).
+
 ## The ewe.conf schema
 
 See [[EWE-CONF Schema Reference]].
