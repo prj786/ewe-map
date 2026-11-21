@@ -54,6 +54,7 @@ truth: `ewe/docs/PLUGINS.md` (branch `release/0.25.0-beta`). Decision:
 | `icon`, `category` | the catalogue card (Komble → Plugins, Welcome). Icons are Theme glyph **names** (`"icMusic"`), resolved by the host as `Theme[icon]`; Komble maps them through its `THEME_ICONS` snapshot (unknown → puzzle) |
 | `desktopWidget` | optional: `{ "x", "y", "layer": "desktop" \| "top" \| "overlay", "pinLevel": "top" \| "overlay", "locked": bool, "visible": bool }` defaults; user placement in ewe.conf wins. `visible` (0.39, default `true`) lets a widget start hidden until `ewe-plugin place <id> --visible on` (System monitor 2.0). `layer` desktop = under the windows, top = above them, overlay = above everything (fullscreen too); `pinLevel` is where the pin puts it (3.2) |
 | `barWidget.defaultSection` | `left` / `center` / `right` (default `right`) |
+| `barWidget.collapsible` | optional bool (ewe 0.45), default true: a right-section widget folds behind the bar's chevron with the tray; `false` keeps it beside the chevron — [[The Bar's Fold]] |
 | `barWidget` / `barStatus` `defaultShown`, `toggle` | optional bools (3.2): `defaultShown` (default true) = Show in bar before the user picks; `toggle: false` = the plugin's own settings place its button, so the host shows no Show in bar switch and `ewe-plugin bar` refuses (Music, Places) |
 | `settings` | optional typed schema `[{ "key", "type", "default", "label", "description"?, "choices"?, "min"?, "max"?, "legacy"? }]`, `type` ∈ `bool, int, string, choice, color`. **Keys match `^[a-z][a-z0-9_]{0,31}$`** (snake_case; camelCase refused). Reaches entry points as `settings`; rows in Komble's Options dialog (`description` under the label; a choice of ≤3 is a segmented control). `legacy` (3.2, **`ewe.` only**): a dotted ewe.conf key whose value stands until the user sets this one — how a setting moves out of ewe-settings without resetting anyone ([[Plugin Settings Live With the Plugin]]) |
 | `keybinds` | optional: `[{ "combo": "SUPER + SHIFT + C", "ipc": "ewe.cast toggle" }]` → `generated/plugin-keybinds.lua` while enabled; with `apiVersion` 3 the target **must be the plugin's own id or one of its `ipcAliases`** |
@@ -78,7 +79,9 @@ the property: `pluginId` (string), `pluginDir` (url), `stateDir` (path,
   `BarModule`, `BarSep`, `BarStatusGlyph`, `AnchoredPopup` (per-screen
   popup card: `openAt/toggleAt(anchor)`, `close()`, `name` = layer
   namespace suffix, `action` reports open state; above the dock for a
-  bottom anchor, under the bar for a top one), plus `Toggle`, `Slider`,
+  bottom anchor, under the bar for a top one; `exclusiveKeyboard` since
+  0.45), `BarPopup` + `PopupHead` (0.45: every bar card — [[One Bar Card — BarPopup]]),
+  plus `Toggle`, `Slider`,
   `Meter`, `ListWell`, `ListRow`, `SectionTitle`, `Badge`, `Spinner`,
   `Avatar`, `Elevation`.
 - **`Theme`** — Ewe v3 tokens under their QML names (colour roles, bar

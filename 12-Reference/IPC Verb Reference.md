@@ -33,7 +33,7 @@ state), `toast` and `welcome` were missing from this sheet. (`cloud`,
 | `quicksettings` | `toggle · show · hide · tab <key> · powerdialog` (`tab`: `home wifi bt audio cal notifs` + plugin pages) |
 | `settings` | `toggle · show · hide · pane <n> · pickWallpaper · reload · ping · version` |
 | `store` | `toggle · show · hide` |
-| `bar` | `toggle · show · hide` |
+| `bar` | `toggle · show · hide · extras` (0.45: show/hide the folded extras) |
 | `lock` | `lock · toggle` (`unlock` is emergency-only) |
 | `saver` | `show · hide · toggle · dim · undim` |
 | `welcome` | `toggle · hide · reset · step <n> · pick <id> · install · finish` |

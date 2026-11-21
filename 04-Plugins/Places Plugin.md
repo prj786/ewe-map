@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-places` ·
 [github.com/prj786/ewe-plugin-places](https://github.com/prj786/ewe-plugin-places)
-· v1.0.2 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **plugin since 0.25** (was `Places.qml`).
+· **v1.2.0 (ewe 0.45): still its own PanelWindow (the box-only mask lets a drag land on the app behind), restyled as a bar card — `grow(panelSm)`, a `PopupHead` with the folder's name over its path and back · home · pin** · v1.1.0 · v1.0.2 (in ewe 0.25.1; 1.0.1 in 0.25.0) · API 3 · **plugin since 0.25** (was `Places.qml`).
 
 A compact file browser in a popup: home, folders and files (no dotfiles),
 a path field with back/home, a **Pinned** strip; click or Up/Down/Enter/

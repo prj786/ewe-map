@@ -59,8 +59,11 @@ schema = 1
   [plugins.sources]              # id = git url (or "local") — THE installed set
   [plugins.widgets]              # desktop widgets: "ns.name" = { x, y, output, layer (desktop|top|overlay), visible, pin_level (top|overlay), locked }
   [plugins.settings]             # "ns.name" = { key = value } — always written as whole tables
-                                 #   e.g. "ewe.dock" = {autohide = true, icon_size = "small"}, "ewe.mail" = {notify = false}
+                                 #   e.g. "ewe.dock" = {autohide = true, icon_size = "small", display = "all"}, "ewe.mail" = {notify = false}
+                                 #   ewe.dock display = primary | all | none (Dock 1.5.0, [[Dock On Every Display]])
 
+[desktop.bar]
+  collapse = false               # 0.45: fold the tray, plugin bar widgets and the tiling switch behind a chevron (THEME_MAP barCollapse) — [[The Bar's Fold]]
 [desktop.bar.show]               # bar items; "plugin:<id>" = Show in bar (ewe-plugin bar), absent = manifest defaultShown
 
 [sync]

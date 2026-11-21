@@ -106,7 +106,10 @@ too (users bind it in `user.lua`).
   `Text*`, `Glyph`, `BarModule`, `BarSep`, `BarStatusGlyph`,
   `AnchoredPopup`, plus `Toggle Slider Meter ListWell ListRow SectionTitle
   Badge Spinner Avatar Elevation`; since 0.43 `ContextMenu` and `Tooltip`
-  (one shared `TooltipHost`), and `tip:` on `QsIconButton` / `BarModule`).
+  (one shared `TooltipHost`), and `tip:` on `QsIconButton` / `BarModule`;
+  since 0.45 `BarPopup` + `PopupHead` (the one bar card),
+  `AnchoredPopup.exclusiveKeyboard`, `Tile.wide` and the manifest's
+  `barWidget.collapsible` — all additive, `apiVersion` stays 3).
 - Settings keys in `ewe.conf` under `[plugins.widgets]` /
   `[plugins.settings]`, keyed by **quoted id** (dots!) — always written as
   whole tables; setting keys match `^[a-z][a-z0-9_]{0,31}$`. Widget fields:
