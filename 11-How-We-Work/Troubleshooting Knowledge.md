@@ -1208,6 +1208,93 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   nests at once: separate `HS_WORK`. A shell edit hot-reloads every nest running that
   checkout.
 
+## Media + languages (2026-11-21, the ewe 0.46 wave )
+
+- **ewe Player: "Cannot play watch … comes with the next update; install
+  gst-libav"** — the promise had been kept (gst-libav ships since 0.44); the
+  sentence was hard-coded and shown for *any* remote URL with no probe.
+  "watch" was the last path segment of a YouTube `watch?v=` page. Two bugs:
+  (1) the wrong blame — fixed by `media_support` (gst-libav named only when
+  it is missing) and the sentence removed from the repo; (2) the page link
+  itself — ewe-apps 0.2 plays it through yt-dlp
+  ([[ewe Player Plays Links — yt-dlp]]).
+- **Every remote video "format not supported"** even when it was an `.mp4`:
+  the `<video>` carried `crossorigin` (needed for the loopback server's
+  files), and CDNs (googlevideo, Twitch, BBC) send no
+  `Access-Control-Allow-Origin` — WebKit refuses the load. `crossorigin`
+  only for loopback files; links stay ≤ 100 % volume (Web Audio plays a
+  cross-origin source as silence).
+- **"A video link won't play"** — what the Player says next decides it:
+  *web page with no video* (not a video page), *needs yt-dlp* (`pacman -Qi
+  yt-dlp`), *locked (DRM)* (Vimeo's anonymous player), yt-dlp's own
+  sentence ("Private video."), *connection broke* (nothing loaded in 20 s
+  twice — one YouTube start in nine stalled with no error). Sites that serve
+  only split video + audio offer *Open in mpv* (no remux route yet).
+  Reproduce: `EWE_PLAYER_YTDLP=<path>`, `EWE_PLAYER_LIBAV=0|1`,
+  `GST_DEBUG=webkitmediaplayer:6`. A server that sends headers and then never
+  a byte froze the whole WebProcess in a test (one that never answers is
+  caught by the stall watchdog).
+- **Auto-picked subtitles never drew:** WebKit's automatic caption
+  selection flips a track set to `showing` back off when more tracks arrive
+  (in-band after the sidecars) — re-apply on the textTracks `change` event.
+  **Bottom subtitles under the control bar:** move the cue container with a
+  `transform` (`--vp-cue-lift`), not `cue.line` (it jumps and re-lays every
+  cue).
+- **Russian / Arabic / Chinese subtitles as mojibake:** `subs.rs` read
+  "UTF-8, else Latin-1". Since ewe-apps 0.2 one decoder (BOM → UTF-8 →
+  chardetng + encoding_rs, hinted by `Movie.ru.srt` or the locale); the
+  *Subtitle encoding* menu overrides a wrong guess.
+- **"Stremio doesn't play"** (Stremio Enhanced from Komble): it needs
+  Stremio's streaming server and on Linux looks for it only as a Flatpak
+  (`com.stremio.Service`) or as `server.js` in
+  `~/.config/stremio-enhanced/streamingserver/` — the owner's folder had
+  only `version.txt`, nothing on :11470, so no torrents and no
+  transcoding. Komble 0.24: the app's page → *Get the streaming server*,
+  then restart Stremio Enhanced; or install **Stremio**
+  (`stremio-linux-shell`, server + mpv inside)
+  ([[What an Installed App Still Needs]]).
+- **Arabic drawn unjoined, typewriter-spaced (Hebrew in FreeSans):**
+  `system-ui` is not a fontconfig family on Arch; WebKitGTK falls to
+  whatever fontconfig matches first, and with GNU FreeFont installed that is
+  FreeMono. Name Noto faces before `system-ui` (apps' `withScriptFonts`,
+  ewe's Geist stacks, the CSS tokens).
+- **LinOffice's Word/Excel/Outlook/OneNote/PowerPoint missing from the
+  launcher** + hundreds of `invalid line "[Desktop Entry]\r"` in the log:
+  Quickshell drops a CRLF `.desktop` file **entirely**.
+  `scripts/desktop-entries.py` writes LF copies to
+  `$XDG_CACHE_HOME/ewe/desktop-entries/applications` (on the shell's
+  `XDG_DATA_DIRS`); the warning for the originals stays. Test:
+  `tests/ewe-desktop-entries-test.sh`.
+- **Quickshell 0.3.2 crashed when fcitx5 started (in the nest):** fcitx5's
+  hidden tray item asked for an icon name the theme lacks (`fcitx-rime`) →
+  a QSocketNotifier from another thread. The tray delegate for fcitx5's
+  item loads no icon (a Loader) and the bar reads the engine through
+  `ewe-ime current`.
+- **Typing in other languages: nothing happens in an X11 or Qt 5 app** —
+  they read `XMODIFIERS` / `QT_IM_MODULE` at start, and the shell hands its
+  own environment to what it launches: sign out and back in after the first
+  language (`ewe-ime status` → `needs_signout`). Chromium/Electron apps need
+  a restart (the flags block). A placeholder showing through composed
+  letters = the field ignores `preeditText`.
+- **Pinyin asked "Enable Cloudpinyin?"** — never again: `ewe-ime apply`
+  seeds `CloudPinyinEnabled=False` + `FirstRun=False` in `conf/pinyin.conf`
+  where absent (privacy: typed text would go to an online service). The
+  user can still turn it on in fcitx5's Language options.
+- **fcitx5's profile reverts after `ewe-ime apply`:** fcitx5 rewrites
+  `~/.config/fcitx5/profile` when it exits — stop it first, then write,
+  then start (what `apply` does).
+- **ewe Browser doesn't underline Georgian:** Chromium has no Georgian
+  `.bdic`; the system's `hunspell-ka` (AUR) serves other apps only. Settings
+  says "isn't checked in ewe Browser yet" ([[Spell Checking — hunspell and Chromium]]).
+- **The Player's preferred language reads as en-US under `LANG=de_DE.UTF-8`:**
+  WebKit takes `navigator.language` from the *installed* locale
+  (`setlocale`); for a test build one with `localedef -i de_DE -f UTF-8
+  <dir>/de_DE.UTF-8` and pass `LOCPATH=<dir>`.
+- **Testing fcitx5 safely:** in the nest, run fcitx5 from a `pacman -Sp`
+  root overlaid on /usr with the shell's PRIVATE bus (`HS_PRIVATE_BUS=1`),
+  `DISPLAY` unset, `EWE_IME_NO_SCOPE=1 EWE_IME_NO_SESSION=1` — never against
+  the live bus or X server. `tests/ewe-ime-test.sh` uses fakes.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

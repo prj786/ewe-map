@@ -121,10 +121,33 @@ Options dialog. Settings only points there:
   fields `available` / `removed` / `plugins[].kinds`
   ([[Contracts and Public API]]).
 
+## Languages (0.26.0-beta, released 2026-11-21)
+
+Branch `feat/media-languages`; decisions 65–67. **Language** is its own
+page (id `language`): *Display language* (LANG, `set_locale`), **Spell
+checking** (`[desktop.language] spellcheck` / `check_spelling` through
+`ewe-conf set`; a name with no dictionary here shows "not on this computer"
+with Download / Open Komble; languages Chromium lacks are marked "Not in
+ewe Browser yet"), **Also for your apps** (Firefox / Thunderbird /
+LibreOffice packs for the display language, only for installed apps).
+Time and place → **Formats** (LC_TIME/NUMERIC/MONETARY/MEASUREMENT/PAPER
+from one region; "Applies after you sign out"). Keyboard and mouse →
+**Typing in other languages** (`ewe-ime`; the Add sheet shows each
+language's download size; "Online suggestions are off").
+[[Typing in Other Languages — fcitx5 on demand]] ·
+[[Language Lives in Two Places — ewe.conf and the locale]].
+
 ## Privileges
 
-**None.** Every file it touches is already owned by the user, so unlike
-Komble there is no polkit helper and no setuid anything.
+No helper and no setuid anything: the files it writes are the user's own.
+The few system changes go through **`pkexec`** — one polkit prompt each,
+fixed scripts, every value checked first: the time zone, the display
+language and the regional formats (`localectl set-locale`, generating the
+locale when needed), and on-demand installs — **`install_packages`**
+(0.26): official-repo packages of the families `hunspell-*`,
+`firefox-i18n-*`, `thunderbird-i18n-*`, `libreoffice-fresh-*` / `-still-*`,
+`fcitx5*` only, checked against the sync databases, `pacman -S --needed
+--noconfirm`. AUR-only dictionaries open Komble's search instead.
 
 ## Version
 
@@ -139,5 +162,6 @@ desktop rather than a product with its own release line.
 > **Build guard:** ewe-settings stays an ordinary window in its own
 > process, writes atomically and merges, needs no privileges, and never
 > renames the `reload`/`ping`/`version` verbs. A missing plugin IPC target
-> is never an error; `google`/`cloud` stay core. Rationale:
+> is never an error; `google`/`cloud` stay core. `install_packages` keeps
+> its family allow-list and never builds from the AUR. Rationale:
 > [[Process Split — Shell vs Apps]] and [[Contracts and Public API]].

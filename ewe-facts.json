@@ -1,18 +1,18 @@
 {
   "schema": 1,
   "project": "ewe",
-  "generated": "2026-11-19",
+  "generated": "2026-11-21",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.45.0-beta",
+    "ewe_de": "0.46.0-beta",
     "ewe_os": "0.16.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.23.1-beta",
+    "komble": "0.24.0-beta",
     "ewe_sync": "0.17.1-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.25.0-beta",
-    "ewe_browser": "0.8.4-beta",
+    "ewe_settings": "0.26.0-beta",
+    "ewe_browser": "0.9.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.3.0",
@@ -35,9 +35,10 @@
     },
     "ewe_safe": "0.5.1-beta",
     "ewe_companion": "0.2.4-beta",
-    "ewe_apps": "0.1.1-beta",
+    "ewe_apps": "0.2.0-beta",
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
-    "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)"
+    "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
+    "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)"
   },
   "repos": [
     {
@@ -58,13 +59,13 @@
     },
     {
       "name": "komble-arch",
-      "role": "Komble software manager (0.23.0-beta, 2026-11-19: quits when its window closes unless a transaction runs, no tray; installs base-devel + git before the first AUR build)",
+      "role": "Komble software manager (0.23.0-beta, 2026-11-19: quits when its window closes unless a transaction runs, no tray; installs base-devel + git before the first AUR build) 0.24.0-beta released 2026-11-21 (komble-arch#22): app_needs/fix_app_need - Stremio Enhanced's streaming server in one click; curated Stremio = stremio-linux-shell; IntelliJ IDEA = intellij-idea-oss (decision 69).",
       "stack": "Tauri v2 + Svelte 5 + Tailwind 4",
       "license": "MIT"
     },
     {
       "name": "ewe-settings",
-      "role": "Settings app (0.24.0-beta, 2026-11-19: --page honoured by a running instance; Default apps rows Music player / Document viewer / Archives)",
+      "role": "Settings app (0.24.0-beta, 2026-11-19: --page honoured by a running instance; Default apps rows Music player / Document viewer / Archives) 0.26.0-beta released 2026-11-21 (ewe-settings#28): the Language page (display language, Spell checking, Also for your apps), Time and place -> Formats, Keyboard and mouse -> Typing in other languages, install_packages (decisions 65-67).",
       "stack": "Tauri v2 + Svelte 5"
     },
     {
@@ -79,13 +80,13 @@
     },
     {
       "name": "ewe-browser",
-      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search; 0.8.4-beta (2026-11-19): the apps permission kind, Play in ewe Player (EWE_PLAYER_BIN), folder give-back ewe-files-app.desktop",
+      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search; 0.8.4-beta (2026-11-19): the apps permission kind, Play in ewe Player (EWE_PLAYER_BIN), folder give-back ewe-files-app.desktop 0.9.0-beta released 2026-11-21 (ewe-browser#24): spell checking follows ewe.conf [desktop.language] with Chromium's own dictionaries; Play in ewe Player on video links/pages (isPlayableUrl) (decisions 67, 68).",
       "stack": "Electron 44 (castlabs ECS) + Solid, TypeScript",
       "license": "GPL-3.0-only"
     },
     {
       "name": "ewe-apps",
-      "role": "ewe Files (ewe-files-app), ewe Player (ewe-player), ewe Viewer (ewe-viewer): the desktop's file manager, media player and viewer; one package ewe-apps, a dependency of ewe since 0.44; replaced Nemo, Engrampa, imv, Zathura and mpv as defaults (decision 56; 0.1.0-beta released 2026-11-19)",
+      "role": "ewe Files (ewe-files-app), ewe Player (ewe-player), ewe Viewer (ewe-viewer): the desktop's file manager, media player and viewer; one package ewe-apps, a dependency of ewe since 0.44; replaced Nemo, Engrampa, imv, Zathura and mpv as defaults (decision 56; 0.1.0-beta released 2026-11-19) 0.2.0-beta released 2026-11-21 (ewe-apps#2): web page links through yt-dlp (ewe-player <url>), honest errors, track languages, text in any encoding, HEIC via heif-dec, dir=auto (decisions 68, 70).",
       "stack": "Tauri 2 (Rust, system WebKitGTK) + Solid, TypeScript, Vite; GStreamer, pdf.js; crate ewe-app-core, npm @ewe/shared + @ewe/ui",
       "license": "GPL-3.0-only"
     },
@@ -315,6 +316,53 @@
       "verbs": []
     },
     {
+      "tool": "ewe-ime",
+      "job": "typing in other languages: fcitx5 on demand (decision 65); ewe 0.46.0-beta, released 2026-11-21",
+      "verbs": [
+        "status",
+        "catalog",
+        "sizes",
+        "current",
+        "add <id>",
+        "remove <id>",
+        "enable",
+        "disable",
+        "apply [--login]",
+        "toggle",
+        "configure"
+      ],
+      "errors": "{\"ok\": false, \"error\": \"<plain words>\", \"code\": \"<machine word>\"}, exit 0",
+      "prefs": "[desktop.ime] enabled + engines, written as one table through ewe-conf",
+      "catalog": "22 ids: pinyin (fcitx5-chinese-addons), mozc (fcitx5-mozc), hangul (fcitx5-hangul), unikey (fcitx5-unikey), m17n_<lang>_<name> (fcitx5-m17n: hi bn ta te mr gu pa kn ml or ne si th am bo km ur)",
+      "core_packages": [
+        "fcitx5",
+        "fcitx5-gtk",
+        "fcitx5-qt",
+        "fcitx5-configtool"
+      ],
+      "env_written": [
+        "XMODIFIERS=@im=fcitx",
+        "QT_IM_MODULE=fcitx",
+        "QT_IM_MODULES=wayland;fcitx",
+        "SDL_IM_MODULE=fcitx"
+      ],
+      "chromium_flags": [
+        "--enable-wayland-ime",
+        "--wayland-text-input-version=3"
+      ],
+      "keys": "Super+Space = Hyprland layout switch (fcitx5 group keys cleared); Ctrl+Space (+ Zenkaku_Hankaku, Hangul) = engine toggle",
+      "privacy": "conf/pinyin.conf CloudPinyinEnabled=False + FirstRun=False, only where absent",
+      "test_env": [
+        "EWE_IME_ROOT",
+        "EWE_IME_PACDB",
+        "EWE_IME_CONF",
+        "EWE_IME_NO_SESSION=1",
+        "EWE_IME_NO_SCOPE=1",
+        "EWE_IME_SELF=1 (ewe-conf skips its re-apply)"
+      ],
+      "callers": "ewe Settings Keyboard and mouse -> Typing in other languages, ImeState.qml (bar), autostart.sh (apply --login when fcitx5 is installed), ewe-conf apply after desktop.ime / desktop.input"
+    },
+    {
       "tool": "ewe-pass",
       "job": "password fill picker backend",
       "verbs": [
@@ -360,12 +408,15 @@
           "--tab",
           "--folders",
           "--shot=<scene>",
-          "--shot-width=900"
+          "--shot-width=900",
+          "--shot=grid (0.2, built)"
         ],
         "ewe-player": [
           "--enqueue",
           "--scene=controls|subs-menu|audio-menu|playlist|mini|music-albums|music-album|music-songs|music-now|music-playing",
-          "files, folders, .m3u, http(s) URLs"
+          "files, folders, .m3u, http(s) URLs",
+          "--scene=subs|subs-encoding (0.2, built)",
+          "<http(s) page url>: the video on a web page through yt-dlp; a second launch forwards it (0.2, built — the public entry ewe Browser and Shaun bind to)"
         ],
         "ewe-viewer": [
           "--page=N",
@@ -383,7 +434,9 @@
           "--source",
           "--sheet=N",
           "--info",
-          "--slideshow"
+          "--slideshow",
+          "--encoding=<WHATWG label> (0.2, built; not remembered)",
+          "--encoding-menu (0.2, built)"
         ]
       },
       "desktop_ids": [
@@ -399,10 +452,14 @@
         "EWE_BIN",
         "EWE_MUSIC_DIR",
         "EWE_APPS_MEDIA_SERVER_FILE",
-        "EWE_PLAYER_BIN (read by ewe-browser, default ewe-player)"
+        "EWE_PLAYER_BIN (read by ewe-browser, default ewe-player)",
+        "EWE_PLAYER_YTDLP=<path> (0.2: another yt-dlp; a missing path = not installed)",
+        "EWE_PLAYER_LIBAV=0|1 (0.2: forces media_support's gst-libav answer)"
       ],
       "callers": "ewe's launcher (--open-with=, --select=), hyprland.lua fileManager (Super+E), warmup.sh, ewe-browser 0.8.4 (Play in ewe Player), ewe-setup mime defaults",
-      "media_server": "127.0.0.1:<random> + 32-byte hex token (constant-time compare, 403 without); /raw/{name}?path=&t=, /thumb?path=&size=&t=, /cover?path=&t=; single-range 206, ETag/304; CORS echoes only tauri://localhost, http://tauri.localhost, http://localhost:*, http://127.0.0.1:* (Vary: Origin), Range preflight 204"
+      "media_server": "127.0.0.1:<random> + 32-byte hex token (constant-time compare, 403 without); /raw/{name}?path=&t=, /thumb?path=&size=&t=, /cover?path=&t=; single-range 206, ETag/304; CORS echoes only tauri://localhost, http://tauri.localhost, http://localhost:*, http://127.0.0.1:* (Vary: Origin), Range preflight 204",
+      "media_server_0_2": "/text/<name>?path=&t=[&enc=][&max=] -> UTF-8 + X-Ewe-Encoding, X-Ewe-Encoding-Confident, X-Ewe-Truncated (exposed through CORS; max default 2 MB, at most 32 MB); /picture/<name>?path=&t= -> HEIC/HEIF/HIF as a cached upright JPEG (heif-dec -q 92, $XDG_CACHE_HOME/ewe-apps/pictures, LRU 512 MB)",
+      "player_commands_0_2": "media_support -> {libav, ytdlp, mpv}; resolve_link -> {kind: direct|stream|playlist|page|failed, url, route: file|hls|dash|progressive, title, ...}; subtitle_vtt {path, encoding?} -> {vtt, encoding, confident}; open_in_browser; open_in_mpv"
     },
     {
       "tool": "ewe-settings",
@@ -411,7 +468,11 @@
         "--page <id>",
         "--page=<id>"
       ],
-      "note": "since 0.24.0-beta (2026-11-19) a running instance honours --page through single-instance (event open-page); Shell.openSettings(page) always passes it"
+      "note": "since 0.24.0-beta (2026-11-19) a running instance honours --page through single-instance (event open-page); Shell.openSettings(page) always passes it",
+      "page_ids_added_0_26": [
+        "language"
+      ],
+      "install_packages": "ewe Settings 0.26 (built): Tauri command install_packages(names: Vec<String>) -> {ok: true, installed: [...]} | {ok: true, installed: [], already: [...]}; errors as plain strings; families hunspell-*, firefox-i18n-*, thunderbird-i18n-*, libreoffice-fresh-*, libreoffice-still-*, fcitx5, fcitx5-*; official repos only (pacman -Sp check), pacman lock refused before the prompt, pkexec pacman -S --needed --noconfirm (one polkit prompt); AUR-only dictionaries -> komble --search=<pkg>"
     },
     {
       "tool": "ewe-browser",
@@ -694,7 +755,9 @@
     "safe",
     "remote",
     "desktop.cursor",
-    "desktop.game"
+    "desktop.game",
+    "desktop.ime",
+    "desktop.language"
   ],
   "keyring_services": [
     {
@@ -811,7 +874,13 @@
     "ewe-companion 0.2.0-beta: tested against fakes only — the real ewe browser 0.4 CLI, ewe-bt with a paired device, the Insomnia plugin and a real timer banner are the owner's try after pacman -Syu; airplane mode remembers what it turned off in memory only",
     "ewe-apps 0.1.0-beta (2026-11-19): drag-and-drop not exercised headless; the shell's now-playing does not yet skip WebKitGTK's own org.webkit.* MPRIS player beside ewe Player; Nemo keeps org.freedesktop.FileManager1 until removed (the owner's one-time pacman -Rns)",
     "password sign-in (0.44): accounts with 2FA or SSO must use 'Sign in with the browser instead' (Login Flow v2); ewe's Settings.qml still says 'ewe never sees your password' (follow-up); not yet tried against a real Nextcloud by the owner",
-    "ewe-os 0.16.0-beta: the ISO trim is measured on the package sum, not a built ISO; no QEMU pass yet; tagged by the owner after the [ewe] publish"
+    "ewe-os 0.16.0-beta: the ISO trim is measured on the package sum, not a built ISO; no QEMU pass yet; tagged by the owner after the [ewe] publish",
+    "ewe 0.46 wave (released 2026-11-21): typing in other languages verified in the nested harness only (GTK, Qt, kitty, the launcher) - not on real hardware with a physical keyboard; X11 / Qt 5 apps follow after a sign-out",
+    "the display language and Formats (LC_*): whether a sign-out suffices or a reboot is needed is not verified (ewe Settings says 'Applies after you sign out')",
+    "ewe Browser checks spelling with Chromium's .bdic dictionaries only: languages Chromium lacks (Georgian ...) are not checked there; Chromium downloads a .bdic from Google's dictionary server on a language's first use",
+    "ewe Player links: no ffmpeg remux route (sites that serve only split video + audio offer Open in mpv); Vimeo serves DRM or wants a login; link drops from a browser not exercised headless",
+    "ewe-apps 0.2: ID3v1 / Latin-1-frame tags in cp1251 still read as Latin-1 (lofty); copying or setting a HEIC as wallpaper uses the original file",
+    "Komble 0.24: the Stremio Enhanced streaming-server fix is verified in dev-mock screenshots; a real stream after the fix is not recorded"
   ],
   "addons": {
     "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
@@ -1106,5 +1175,65 @@
     ],
     "reversal_icon_theme": "pkgrel 2: hardlink -q -c usr/share/icons - 416 MiB -> ~14 MiB installed",
     "iso_trim": "nvidia-open, cloud-init (+ cloud-init.target.wants units), clonezilla, partclone, partimage, fsarchiver, irssi, lynx, mc, nmap, tcpdump, refind, b43-fwcutter, darkhttpd, gpm, lftp, linux-atm, ndisc6, openpgp-card-tools, sequoia-sq, pptpclient, vpnc, wvdial; measured 7.5 -> 5.4 GB installed, 2.48 -> 1.90 GB compressed, ISO 3.2 -> 2.6 GB (2,591,948,800 bytes, v0.16.0-beta)"
+  },
+  "media_languages": {
+    "status": "built 2026-11-21, NOT released (the owner: 'ask before releases'); decisions 65-70",
+    "branches": {
+      "ewe": "feat/media-languages (merged with feat/languages)",
+      "ewe-apps": "feat/player-links (merged with feat/text-images)",
+      "ewe-settings": "feat/media-languages",
+      "ewe-browser": "feat/spell-play (changes staged, not committed)",
+      "komble-arch": "feat/stremio"
+    },
+    "ewe_conf": {
+      "desktop.ime": {
+        "enabled": "bool",
+        "engines": "list of fcitx5 input method names",
+        "domain": "ime (ewe-conf apply -> ewe-ime apply, also after desktop.input on a machine that has/had [desktop.ime])"
+      },
+      "desktop.language": {
+        "spellcheck": "list of hunspell names, <= 16, ^[a-z]{2,3}(_[A-Z]{2})?(-[A-Za-z0-9]{2,12})?$; unset = display language's + en_US",
+        "check_spelling": "bool, default true (GET_DEFAULTS)",
+        "domain": "language (applies nothing)"
+      },
+      "never_in_ewe_conf": [
+        "LANG",
+        "LC_TIME",
+        "LC_NUMERIC",
+        "LC_MONETARY",
+        "LC_MEASUREMENT",
+        "LC_PAPER"
+      ]
+    },
+    "packages_added_to_ewe": [
+      "hunspell",
+      "hunspell-en_us",
+      "webp-pixbuf-loader",
+      "libdvdcss"
+    ],
+    "packages_added_to_ewe_apps": {
+      "depends": [
+        "yt-dlp",
+        "libheif"
+      ],
+      "optdepends": [
+        "mpv"
+      ]
+    },
+    "on_demand_only": [
+      "fcitx5 + fcitx5-gtk/-qt/-configtool + engines",
+      "hunspell-<lang> (AUR-only ones via Komble)",
+      "firefox-i18n-*",
+      "thunderbird-i18n-*",
+      "libreoffice-fresh-* / libreoffice-still-*"
+    ],
+    "player_links": "ewe-player <http(s)-url>; direct media (.mp4 .m3u8 .mpd ..., video/*, audio/*, HLS, DASH) plays as is, else yt-dlp -J --no-playlist --flat-playlist (60 s) -> HLS master, progressive (<=1080, mp4/H.264 first), muxed HLS, DASH; split-only -> unplayable (mpv offered); DRM -> locked; cached 1 h; re-resolved once on failure; 20 s stall watchdog; crossorigin only on loopback files",
+    "browser_play": "ewe Browser 0.9 page-menu rows player.link / player.media / player.page via isPlayableUrl (22 site rules + media extensions) -> $EWE_PLAYER_BIN <url>",
+    "spelling": "system: enchant + hunspell (/usr/share/hunspell); ewe Browser: Chromium .bdic in ~/.config/ewe-browser/Dictionaries, hunspell name -> Chromium tag via availableSpellCheckerLanguages, unsupported languages flagged; Ignore = ~/.config/ewe-browser/spelling-ignored.json (<=500, one run); IPC ewe:spelling (app://settings only)",
+    "app_needs": "Komble Tauri commands app_needs(id) -> {needs: [{id, title, detail, action, ok}]}, fix_app_need(need) -> {ok, need, version, bytes}; need stremio-server for stremio-enhanced(-bin|-git): server.js from dl.strem.io/server/<v>/desktop/server.js into ~/.config/stremio-enhanced/streamingserver/ (version from version.txt else stremio-service Cargo.toml [package.metadata.server]; 1-64 MB, not HTML)",
+    "text_encoding": "ewe-app-core text.rs: BOM -> UTF-8 -> BOM-less UTF-16 -> chardetng (hint: file-name language tag or LC_ALL/LC_CTYPE/LANG) + encoding_rs; route /text; Player subtitles + .m3u, Viewer text/Markdown/CSV, Files quick look + preview",
+    "pictures": "HEIC/HEIF/HIF via heif-dec into $XDG_CACHE_HOME/ewe-apps/pictures (LRU 512 MB); AVIF + JPEG XL native in WebKitGTK 2.54; thumbnails via heif-dec / djxl / avifdec / magick",
+    "rtl": "dir=auto on user text (apps), paragraphs follow their direction and labels sit by their icon (shell); LayoutMirroring off; Noto script faces named before system-ui (not a fontconfig family on Arch)",
+    "launcher_crlf": "scripts/desktop-entries.py writes LF copies of CRLF .desktop files to $XDG_CACHE_HOME/ewe/desktop-entries/applications (Quickshell dropped them entirely); Globals.englishName matches translated entries' English Name"
   }
 }

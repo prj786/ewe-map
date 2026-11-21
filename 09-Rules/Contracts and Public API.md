@@ -55,6 +55,14 @@ plugins, and cloud services bind to. Renaming or reshaping any of these is a
 | `~/.local/state/ewe/plugins/<id>/` (0.25) | the plugin (`stateDir`, created on demand) | the plugin | never synced |
 | `<payload>/plugins/<id>/` + `plugins/bundle.json` (0.25) | `scripts/vendor-plugins.sh` (repo side) | `ewe-plugin install/migrate/seed/list` | yes — vendored; fix the plugin in its repo |
 | `~/.config/quickshell/places.json` · `mail-state.json` · `google-mail.json` · `kdeconnect-state.json` · `ssh-browse/` | the plugins that replaced the built-ins (paths **kept**) | ewe-conf mirrors `places.json` ↔ `apps.places` | no |
+| `~/.config/hypr/generated/ime.env` (0.46, built) | `ewe-ime apply` only (written while typing in other languages is on, removed when off) | `start-hyprland.sh` — read, never sourced: only `XMODIFIERS QT_IM_MODULE QT_IM_MODULES SDL_IM_MODULE`, only while fcitx5 is installed | yes — [[Typing in Other Languages — fcitx5 on demand]] |
+| `~/.config/fcitx5/profile` · `config` · `conf/classicui.conf` + `~/.local/share/fcitx5/themes/ewe/` (0.46, built) | `ewe-ime apply` (the theme: `scripts/fcitx5-theme.sh`, also run by `colorscheme.sh`) — regenerated whole from `[desktop.ime]` and the first keyboard layout | fcitx5 | yes — fcitx5 rewrites `profile` when it exits, so `ewe-ime` stops it BEFORE writing |
+| `~/.config/fcitx5/conf/pinyin.conf` (0.46, built) | `ewe-ime apply` seeds `CloudPinyinEnabled=False` + `FirstRun=False` **only where absent**; after that the user (Language options) | fcitx5's Pinyin engine | no — a user choice stands |
+| `~/.config/{electron,electronNN,chromium,chrome,code,brave,helium-browser}-flags.conf` — the block between `# >>> ewe: typing in other languages` markers (0.46, built) | `ewe-ime apply` (the rest of the file is the user's / `helium-theme.sh`'s) | Chromium / Electron at start | the block only; a file that held only it is deleted when off |
+| `$XDG_CACHE_HOME/ewe/desktop-entries/applications/` (0.46, built) | `scripts/desktop-entries.py` (run by `qs-launch.sh` and by Globals when the entries change) | Quickshell's `DesktopEntries` (on the shell's `XDG_DATA_DIRS`, after `XDG_DATA_HOME`) | yes — LF copies of CRLF `.desktop` files; the user's files are never touched ([[Every Script Reads Right — encodings, phone pictures, right-to-left]]) |
+| `$XDG_CACHE_HOME/ewe-apps/pictures/<md5 uri>-<size>-<mtime>.jpg` (ewe-apps 0.2, built) | ewe-app-core `picture.rs` (`heif-dec -q 92`) | ewe Viewer, ewe Files (quick look, preview, thumbnails) | cache — LRU at 512 MB; a changed file gets a new copy |
+| `~/.config/ewe-browser/spelling-ignored.json` · `Dictionaries/*.bdic` (ewe Browser 0.9, built) | ewe Browser (`{version: 1, words}`, ≤ 500) · Chromium (downloaded on a language's first use) | ewe Browser's sessions | yes — Ignore lasts one run ([[Spell Checking — hunspell and Chromium]]) |
+| `~/.config/stremio-enhanced/streamingserver/server.js` + `version.txt` (Komble 0.24, built) | Komble `fix_app_need("stremio-server")` (Stremio Enhanced writes `version.txt` itself) | Stremio Enhanced (runs it with the system ffmpeg) | Stremio's own file — [[What an Installed App Still Needs]] |
 
 Sourcing order in `hyprland.lua`: `user.lua` → `input.lua` → `monitors.lua`
 → `windowrules.lua` → `animations.lua` (missing files are a no-op), so
@@ -242,6 +250,79 @@ Everything here is **added**; nothing renamed (rule 4). Decisions 56–59.
   for Nemo's / ewe Files' *Open in terminal*). The dconf key Nemo reads is
   `/org/cinnamon/desktop/applications/terminal` `exec` + `exec-arg` (0.43
   wrote `default-applications/terminal`, a path nothing reads).
+
+### The 0.46 wave (2026-11-21) — media + languages (released 2026-11-21)
+
+Everything here is **added**; nothing renamed (rule 4). Decisions 65–70.
+Branches: ewe `feat/media-languages`, ewe-apps `feat/player-links`, ewe
+Settings `feat/media-languages`, ewe Browser `feat/spell-play` (staged),
+Komble `feat/stremio`.
+
+- **`ewe-ime`** (new CLI in `ewe/bin`, `/usr/bin/ewe-ime`; one JSON object,
+  exit 0, errors `{"ok": false, "error", "code"}`): `status` (`enabled`,
+  `installed`, `on`, `running`, `engines` [{id, language, native, method,
+  label, glyph, package, installed}], `missing`, `current`, `active`,
+  `glyph`, `layout`, `needs_signout`, `cloud_pinyin`, `catalog`) ·
+  `catalog` · `sizes` (`{id: bytes}` to download here, `pacman -Sp
+  --needed`, cached in `~/.cache/ewe/ime-sizes.json` until the pacman
+  databases change) · `current` (the bar's reading) · `add <id>` ·
+  `remove <id>` · `enable` · `disable` · `apply [--login]` · `toggle`
+  (Ctrl+Space) · `configure` (`fcitx5-configtool`). Writes go through
+  `ewe-conf` (`[desktop.ime]` as one table). Test env: `EWE_IME_ROOT`,
+  `EWE_IME_PACDB`, `EWE_IME_CONF`, `EWE_IME_NO_SESSION=1`,
+  `EWE_IME_NO_SCOPE=1`; `EWE_IME_SELF=1` stops ewe-conf re-applying.
+  Callers: ewe Settings' Typing in other languages, the bar
+  (`ImeState.qml`), later Shaun ([[Typing in Other Languages — fcitx5 on demand]]).
+- **ewe.conf:** `[desktop.ime]` {`enabled`, `engines`} (domain `ime`;
+  `ewe-conf apply` re-runs `ewe-ime apply` after a `desktop.ime` **or
+  `desktop.input`** write — only on a machine that has or had
+  `[desktop.ime]`) and `[desktop.language]` {`spellcheck`,
+  `check_spelling`} (domain `language` — applies nothing; ewe Browser
+  watches the file) — [[EWE-CONF Schema Reference]].
+- **ewe Settings 0.26:** `install_packages(names: Vec<String>)` →
+  `{"ok": true, "installed": [...]}` or `{"ok": true, "installed": [],
+  "already": [...]}`, errors as plain strings (cancelled prompt, pacman
+  lock, "not in the official repositories: …") — the ONE on-demand install
+  path (families `hunspell-*`, `firefox-i18n-*`, `thunderbird-i18n-*`,
+  `libreoffice-fresh-*`, `libreoffice-still-*`, `fcitx5`, `fcitx5-*`;
+  official repos only; `pkexec pacman -S --needed --noconfirm`). New page id
+  **`language`** (`ewe-settings --page=language`; ewe Browser's "Change in
+  ewe Settings" opens it). Internal commands: `spell_info`,
+  `komble_search` (→ `komble --search=<q>`), `formats_info`,
+  `set_formats`, `language_packs`.
+- **ewe-apps 0.2:** **`ewe-player <http(s)-url>`** plays a web page's video
+  (yt-dlp; a second launch forwards it) — the public entry ewe Browser and
+  Shaun bind to; `--scene=subs|subs-encoding` added; ewe Viewer
+  `--encoding=<WHATWG label>` (not remembered) and `--encoding-menu`; ewe
+  Files `--shot=grid`. Media server routes **`/text/<name>?path=&t=[&enc=][&max=]`**
+  (UTF-8 out; `X-Ewe-Encoding`, `X-Ewe-Encoding-Confident`,
+  `X-Ewe-Truncated` exposed through CORS) and **`/picture/<name>?path=&t=`**
+  (HEIC → cached JPEG). Player Tauri commands `media_support` →
+  `{libav, ytdlp, mpv}`, `resolve_link` → `{kind: direct|stream|playlist|page|failed,
+  url, route: file|hls|dash|progressive, title, …}`, `subtitle_vtt {path,
+  encoding?}` → `{vtt, encoding, confident}`, `open_in_browser`,
+  `open_in_mpv`. Env: `EWE_PLAYER_YTDLP=<path>` (another yt-dlp; a missing
+  path = not installed), `EWE_PLAYER_LIBAV=0|1` (forces the answer) —
+  [[ewe Player Plays Links — yt-dlp]].
+- **ewe Browser 0.9:** page menu rows *Play in ewe Player* (`player.link`
+  on a video link, `player.media` on a video/audio element, `player.page`
+  on a video page; `isPlayableUrl` in `@ewe/shared` `player.ts` — 22 site
+  rules + media file extensions) → `$EWE_PLAYER_BIN <url>` (default
+  `ewe-player`), mpv outside ewe; IPC `ewe:spelling` (`app://settings`
+  only: status, `{enabled}` → `ewe-conf set desktop.language.check_spelling`,
+  `{open: 'settings'}`) — [[Spell Checking — hunspell and Chromium]].
+- **Komble 0.24:** Tauri commands `app_needs(id)` → `{"needs": [{id,
+  title, detail, action, ok}]}` and `fix_app_need(need)` → `{"ok": true,
+  "need", "version", "bytes"}`; need `stremio-server` for
+  `stremio-enhanced`, `stremio-enhanced-bin`, `stremio-enhanced-git`;
+  curated *Stremio* = `stremio-linux-shell` (AUR), *IntelliJ IDEA* =
+  `intellij-idea-oss` — [[What an Installed App Still Needs]].
+- **Packaging:** `ewe`'s depends gain `hunspell`, `hunspell-en_us`,
+  `webp-pixbuf-loader`, `libdvdcss` (through `common.list`; the PKGBUILD
+  computes depends from it) and the package installs `/usr/bin/ewe-ime`;
+  `ewe-apps` depends gain `yt-dlp` (pulls `yt-dlp-ejs` + `deno`) and
+  `libheif`, optdepends `mpv`. **On demand only, never in a list:** fcitx5
+  and its engines, other `hunspell-*` dictionaries, apps' language packs.
 
 ### `ewe-conf sync-status` (D12)
 

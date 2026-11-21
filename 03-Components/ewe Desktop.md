@@ -61,6 +61,21 @@ flowchart TB
   and [[Theming Pipeline]].
 - **Extras** — optional [[Google Extras]], [[Phone and VPN]], [[ewe-cast]].
 
+## Languages (0.46.0-beta, released 2026-11-21)
+
+Branch `feat/media-languages` (merged with `feat/languages`); decisions
+65–67, 70. **Typing in other languages** — `bin/ewe-ime` + `ImeState.qml`:
+fcitx5 on demand, one bar indicator (拼 あ 한), a token-themed candidate
+window, `Ctrl+Space` for the engine and `Super+Space` for the layout
+([[Typing in Other Languages — fcitx5 on demand]]). **Spelling** —
+`hunspell` + `hunspell-en_us` ship; `[desktop.language]` in ewe.conf.
+**The clock** follows the region's formats (`Globals.formatTime`, the week
+starts where LC_TIME says). **The launcher** shows CRLF `.desktop` apps
+(`scripts/desktop-entries.py`) and matches translated entries' English
+names. **Right-to-left** titles in the Overview and launcher; Arabic,
+Hebrew and Armenian Noto faces after Georgian in every Geist stack. Also in
+`common.list`: `webp-pixbuf-loader`, `libdvdcss`.
+
 ## Install paths
 
 - **Whole OS** — the ISO (recommended). See [[ewe-os ISO]], [[Install Flow]].
@@ -87,6 +102,16 @@ Full list: [[Keymap Reference]].
 > 4-finger action calls `ewe-browser workspace next|prev` only when the
 > active window's class is `ewe-browser`. *Breaks if violated:* a gesture
 > silently does nothing, or four fingers act on other windows.
+
+> **Build guard (0.46):** fcitx5 never becomes a dependency and its
+> variables are exported only while it is installed; the tray delegate for
+> fcitx5's item loads no icon (an icon name the theme lacks crashed
+> Quickshell 0.3.2); a text field's placeholder checks `preeditText` too;
+> CRLF `.desktop` files go through `desktop-entries.py` (Quickshell drops
+> them); never hard-code `"hh:mm AP"` — `Globals.formatTime`. *Breaks if
+> violated:* dead typing on a synced machine without fcitx5, a shell crash
+> in the tray, LinOffice apps missing from the launcher, a 12-hour clock in
+> a 24-hour region.
 
 ## Related
 

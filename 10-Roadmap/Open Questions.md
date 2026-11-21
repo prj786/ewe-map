@@ -84,6 +84,15 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
   ceiling?
 - **More accessibility modes** — which remaps does the audit data suggest
   next?
+- **Locale after a change: sign-out or reboot?** (2026-11-21) — the session
+  runs `/etc/profile`, whose `locale.sh` reads `/etc/locale.conf` only while
+  LANG is unset, and PID 1 reads it at boot; ewe Settings says "Applies after
+  you sign out" for the display language and Formats. Verify on a real
+  machine ([[Language Lives in Two Places — ewe.conf and the locale]]).
+- **ewe Browser's dictionaries from Google** (2026-11-21) — Chromium fetches a
+  `.bdic` from Google's dictionary server the first time a spelling language is
+  used. Keep (as Chrome does), ship `.bdic` files in `[ewe]`, or point
+  `setSpellCheckerDictionaryDownloadURL` elsewhere? ([[Spell Checking — hunspell and Chromium]])
 
 ## Distro
 
