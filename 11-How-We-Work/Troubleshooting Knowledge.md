@@ -1374,8 +1374,9 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
 - **"command not found: sudo" on an installed ewe** — systems installed
   with the graphical installer up to ISO 0.16 have no `sudo`: `base` does
   not carry it and the installer only wrote `/etc/sudoers.d/wheel`. Fix:
-  `pkexec pacman -S sudo` (your password). 0.17's `pacstrap` adds it. Found
-  by the 0.17 QEMU pass.
+  `pkexec pacman -S sudo` (your password). 0.17's `pacstrap` adds it, and
+  `sudo` is an ewe dependency after 0.47.0 (ewe#90), so the next ewe
+  update brings it too. Found by the 0.17 QEMU pass.
 - **The Disk screen preselects nothing on a one-disk machine** (ISO ≤
   0.16): the probe listed the live system's `zram0` swap as a second disk;
   0.17 drops `zram*` names.

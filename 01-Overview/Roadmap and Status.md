@@ -90,8 +90,9 @@ the same day** (ewe-os#22 + Komble 0.25.0-beta, komble-arch#23; decision
 72). Open after it: installer translations; Steam / AppImage picks / a
 real AUR build / Chinese, Korean, Vietnamese and Indic paths / a restore
 after the language step in QEMU; installer-installed repo apps are not in
-`[apps.installed]`; `sudo` for systems installed with ISO ≤ 0.16
-(`pkexec pacman -S sudo`); a real-hardware install.
+`[apps.installed]`; `sudo` for systems installed with ISO ≤ 0.16 is an ewe dependency
+since ewe#90 (ships with the next ewe release; until then `pkexec pacman -S sudo`);
+a real-hardware install.
 
 ## 2026-11-20 — the milestone polish (ewe 0.45, ewe Settings 0.25, ewe-apps 0.1.1, Komble 0.23.1, ewe Sync 0.17.1, ewe Safe 0.5.1, five plugins) — released
 

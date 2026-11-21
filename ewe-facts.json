@@ -1441,6 +1441,8 @@
       "Chinese/Korean/Vietnamese/Indic paths",
       "a restore after the language step",
       "real hardware"
-    ]
+    ],
+    "steam_multilib": "kept (owner 2026-11-21: \"keep steam\")",
+    "sudo_in_ewe": "packages/common.list has sudo since ewe#90 (merged 2026-11-21, after 0.47.0-beta; ships with the next ewe release)"
   }
 }
