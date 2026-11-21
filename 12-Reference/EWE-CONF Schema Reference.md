@@ -46,6 +46,17 @@ schema = 1
   auto = true                    # on while a Steam game / gamescope / a GameMode client runs
   close_apps = true              # Ultra closes ewe Sync's service + ewe Browser's background process, reopens them
 
+[desktop.ime]                    # 0.46 (built), domain `ime` → `ewe-ime apply` ([[Typing in Other Languages — fcitx5 on demand]])
+  enabled = false                # the switch (Settings → Keyboard and mouse → Typing in other languages)
+  engines = ["pinyin", "mozc"]   # fcitx5 input method names, in order (`ewe-ime catalog`); written as one table by ewe-ime
+                                 #   its own table: [desktop.input] is written whole; a machine without fcitx5 ignores it
+
+[desktop.language]               # 0.46 (built), domain `language` — applies nothing; ewe Browser watches the file
+  spellcheck = ["en_US", "ka_GE"] # hunspell names (≤ 16; ^[a-z]{2,3}(_[A-Z]{2})?(-[A-Za-z0-9]{2,12})?$); unset = the display language's + en_US
+  check_spelling = true          # bool; `ewe-conf get` answers true when unset (GET_DEFAULTS)
+                                 # NEVER here: LANG and LC_* (display language, Formats) — the machine's locale, localectl
+                                 #   ([[Language Lives in Two Places — ewe.conf and the locale]])
+
 [desktop.layout]                 # ← user.lua (ewe-conf set desktop.layout)
 [desktop.input]                  # ← input.lua + input-devices.json (ewe-conf set desktop.input)
 [desktop.wallpaper]              # ← wallpapers.conf

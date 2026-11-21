@@ -148,6 +148,25 @@ flowchart TB
   (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
   keyring, never the file.
 
+## The media + languages wave (0.46, built — not released)
+
+- **fcitx5** (only once someone adds a language): `~/.config/fcitx5/`
+  (`profile`, `config`, `conf/classicui.conf`, `conf/pinyin.conf`) and
+  `~/.local/share/fcitx5/themes/ewe/` — written by `ewe-ime apply`;
+  `~/.config/hypr/generated/ime.env`; a marked block in the
+  Chromium/Electron `*-flags.conf` files; `~/.cache/ewe/ime-sizes.json`.
+  `[desktop.ime]` in ewe.conf is the truth; everything else is regenerated.
+- **Spelling:** `[desktop.language]` in ewe.conf; dictionaries in
+  `/usr/share/hunspell` (packages); ewe Browser's `.bdic` files and
+  `spelling-ignored.json` in `~/.config/ewe-browser/`.
+- **Caches:** `$XDG_CACHE_HOME/ewe/desktop-entries/applications/` (LF copies
+  of CRLF `.desktop` files), `$XDG_CACHE_HOME/ewe-apps/pictures/` (HEIC as
+  JPEG, LRU 512 MB).
+- **Not ewe's, written by Komble on request:**
+  `~/.config/stremio-enhanced/streamingserver/server.js`.
+- The locale (display language, Formats) is `/etc/locale.conf` —
+  `localectl`, never ewe.conf.
+
 ## Related
 
 - [[Contracts and Public API]] · [[The One File]] · [[Account and Sync]] ·

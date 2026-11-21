@@ -58,6 +58,13 @@ hyprland.lua — and exist only while their plugin is enabled.
 | `Super+Alt+P` / `C` | own column / merge-split column |
 | `Super+Tab` / `Super+Shift+Tab` | cycle windows |
 
+## Typing
+
+| keys | action |
+|---|---|
+| `Super+Space` | the next keyboard layout (`hyprctl switchxkblayout current next`; nothing with one layout) — Hyprland's, never fcitx5's |
+| `Ctrl+Space` | **only while typing in other languages is on** (0.46, built): the language engine on / off — fcitx5's trigger (hold Ctrl, tap Space again to step through several); also `Zenkaku_Hankaku` and `Hangul`. The bar's layout letters show the engine's mark (拼 あ 한) — [[Typing in Other Languages — fcitx5 on demand]] |
+
 ## Mouse (hold `Super`)
 
 Drag to move · drag edge/resize (see SHORTCUTS.md for the full set).

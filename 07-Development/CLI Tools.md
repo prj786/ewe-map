@@ -48,6 +48,7 @@ flowchart TB
 | **`ewe-remote`** | [[RFC-009 — ewe Remote]] — share this computer (a per-user sshd), pair by code, reach your others | `status [--refresh\|--offline]` · `share on\|off` · `code [--new]` · `pair <id\|name\|user@host[:port]> <code>` · `forget` · `revoke` · `disconnect` · `terminal` · `tunnel <id> [--port N]` · `untunnel` · `tunnels` · `publish` · `prepare` (unit ExecStartPre) · `pair-serve` (sshd forced command) |
 | **`ewe-tailscale`** | Tailscale for ewe: status + health, one-prompt setup (enable tailscaled, operator = you), sign-in, exit node off | `status` · `setup` · `up [--login-server URL]` · `down` · `logout` · `reconnect` · `exit-node off` |
 | **`ewe-game`** | [[Game Mode — one, owned by the desktop]] — game mode, Balanced or Ultra; the tile, ewe Settings, Shaun and GameMode's hooks all use it (0.42) | `status` · `on [--level ultra\|balanced] [--by manual\|window\|gamemode]` · `off [--by …]` · `toggle` · `scan` (the shell, on a window opening/closing) · `setup [--force]` (`~/.config/gamemode.ini`) |
+| **`ewe-ime`** | [[Typing in Other Languages — fcitx5 on demand]] — fcitx5 on demand; ewe Settings, the bar's layout module and (later) Shaun use it (0.46, built) | `status` · `catalog` · `sizes` · `current` · `add <id>` · `remove <id>` · `enable` · `disable` · `apply [--login]` · `toggle` · `configure` |
 | **`ewe-pass`** | the tool behind the [[Passwords Plugin]] picker | `status` (says what it will do and why not) · `unlock` · `lock` (provider `ewe`) · `use-safe` (1.3.0, in ewe 0.28.0-beta: sets `provider = ewe` through `ewe-plugin set`; always exits 0) |
 | **`ewe-safe`** | [[ewe-safe]] — Safe, the password manager (its own repo; `docs/PROTOCOL.md` v1) | `status` · `summary` · `init` · `open` · `unlock [--ask]` · `lock` · `list` · `search` · `match` · `show` · `reveal [--json]` · `copy` · `add` · `edit` · `rm` · `restore` · `generate` · `sync` · `place` · `passwd` · `ping` · `version`. **Since 0.2.0-beta:** `read` · `run` · `inject` · `git-credential` (#10; rule-5 exceptions, they copy `op` and git) · `passkey list` (#11) · `ssh list\|add\|new\|adopt\|enable\|disable\|status` (#13) |
 | **`ewe-setup`** | per-user deployment of the installed payload | — |
@@ -78,6 +79,9 @@ flags are `--key=value` only. ewe's launcher runs `ewe-files-app
 --open-with=<path>` and `ewe-files-app --select=<path>`; ewe Browser runs
 `$EWE_PLAYER_BIN` (default `ewe-player`). Files owns D-Bus
 `org.freedesktop.FileManager1`.
+Since ewe-apps 0.2 (built, not released) **`ewe-player <http(s)-url>`** plays
+the video on a web page through yt-dlp — ewe Browser's *Play in ewe Player*
+and Shaun call exactly that ([[ewe Player Plays Links — yt-dlp]]).
 
 Plugins carry their own small tools: `cast-check.sh` / `cast-audio.sh`
 ([[Cast Plugin]], under `~/.config/ewe/plugins/ewe.cast/`),
