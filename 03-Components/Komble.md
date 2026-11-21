@@ -53,6 +53,16 @@ flowchart LR
 - **Komble never syncs** — it never fetches or restores the file itself;
   the account and the restore live in [[ewe-sync]] (RFC-005). A restore done
   there shows up in For you on the next look.
+- **Apps you picked while installing ewe** (0.25.0-beta, komble-arch#23):
+  the ewe-os 0.17 installer's Apps screen installs repo apps itself and
+  leaves AUR / AppImage picks (and any repo app that failed) in
+  `~/.local/state/ewe/install-picks.json`
+  (`{"version":1,"at":…,"picked":[{"pkg","source"}]}`). `picks.rs` reads
+  it, drops a pick once it is installed or dismissed and deletes the file
+  when none are left; For you shows the card (Install; Review… = the
+  PKGBUILD gate for the AUR; Dismiss), the sidebar counts the picks and
+  Komble opens on For you while any wait. `dev-mock.html?picks` for
+  screenshots. Decision: [[Language First — the installer asks in your words]].
 
 ## The Plugins catalogue (0.25, branch `feat/addons`)
 

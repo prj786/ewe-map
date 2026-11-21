@@ -28,6 +28,12 @@ Current: ewe-os **0.14.0-beta** (2026-10-23, the ISO for ewe 0.35); ewe-repo rol
 - `ewe-install` wraps archinstall (disks/locale/users/bootloader) then
   layers the `[ewe]` repo, the `ewe` package, the greeter stack, per-user
   deploy.
+- **0.17.0-beta (2026-11-21):** the GUI installer asks the language first,
+  in its own words, and suggests keyboards, formats, spelling and typing
+  from it; optional day-one apps (repo apps installed, AUR/AppImage picks
+  waiting in Komble) — [[Language First — the installer asks in your words]].
+  Still open: installer translations, the TUI (`ewe-install`) has no
+  language/apps step.
 - **Candidate polish for the standalone release:** installer progress/UX,
   a post-install first-login Welcome (already exists — verify it covers the
   Nextcloud restore offer), TROUBLESHOOTING coverage in `ewe-os/docs/`.
