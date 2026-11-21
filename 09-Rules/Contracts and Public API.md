@@ -251,7 +251,7 @@ Everything here is **added**; nothing renamed (rule 4). Decisions 56–59.
   `/org/cinnamon/desktop/applications/terminal` `exec` + `exec-arg` (0.43
   wrote `default-applications/terminal`, a path nothing reads).
 
-### The 0.46 wave (2026-11-21) — media + languages (built, **not released**)
+### The 0.46 wave (2026-11-21) — media + languages (released 2026-11-21)
 
 Everything here is **added**; nothing renamed (rule 4). Decisions 65–70.
 Branches: ewe `feat/media-languages`, ewe-apps `feat/player-links`, ewe

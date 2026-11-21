@@ -61,7 +61,7 @@ flowchart TB
   and [[Theming Pipeline]].
 - **Extras** — optional [[Google Extras]], [[Phone and VPN]], [[ewe-cast]].
 
-## Languages (0.46.0-beta, built 2026-11-21 — not released)
+## Languages (0.46.0-beta, released 2026-11-21)
 
 Branch `feat/media-languages` (merged with `feat/languages`); decisions
 65–67, 70. **Typing in other languages** — `bin/ewe-ime` + `ImeState.qml`:

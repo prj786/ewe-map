@@ -10,7 +10,7 @@ up: "[[Decision Index]]"
 
 **Decided 2026-11-21** (owner: "firstly upgrade our tools for good support
 for languages and multimedia"; decision 65). Built for ewe 0.46.0-beta +
-ewe Settings 0.26.0-beta on `feat/media-languages` — **not released**.
+ewe Settings 0.26.0-beta on `feat/media-languages` — **released 2026-11-21**.
 Code: `ewe/bin/ewe-ime`, `dotfiles/quickshell/ImeState.qml`,
 `scripts/fcitx5-theme.sh`; ewe Settings `TypingLanguages.svelte`.
 Contract: `ewe/docs/SETTINGS-BACKEND.md` "Typing in other languages".

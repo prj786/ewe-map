@@ -95,7 +95,7 @@ flowchart LR
 - Open: `plugin_create` KINDS in `plugins.rs` still list API 2 kinds — add
   the four API 3 kinds. Untested in a real Tauri window (dev-mock only).
 
-## What an installed app still needs (0.24.0-beta, built 2026-11-21 — not released)
+## What an installed app still needs (0.24.0-beta, released 2026-11-21)
 
 Branch `feat/stremio`, decision 69 ([[What an Installed App Still Needs]]).
 `needs.rs`: `app_needs(id)` → `{"needs": [{id, title, detail, action,

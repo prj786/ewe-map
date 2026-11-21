@@ -1208,7 +1208,7 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   nests at once: separate `HS_WORK`. A shell edit hot-reloads every nest running that
   checkout.
 
-## Media + languages (2026-11-21, the ewe 0.46 wave — built, not released)
+## Media + languages (2026-11-21, the ewe 0.46 wave )
 
 - **ewe Player: "Cannot play watch … comes with the next update; install
   gst-libav"** — the promise had been kept (gst-libav ships since 0.44); the

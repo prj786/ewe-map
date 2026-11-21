@@ -9,8 +9,8 @@ up: "[[Decision Index]]"
 # Spell checking — system hunspell for the apps, Chromium's own in ewe Browser
 
 **Decided 2026-11-21** (decision 67). Built for ewe 0.46.0-beta, ewe
-Settings 0.26.0-beta and ewe Browser 0.9.0-beta — **not released** (ewe
-Browser's changes are staged, not committed, on `feat/spell-play`).
+Settings 0.26.0-beta and ewe Browser 0.9.0-beta — **released 2026-11-21** (ewe
+Browser through ewe-browser#24).
 
 - **The system's engine:** `hunspell` + `hunspell-en_us` ship on every
   machine (`packages/common.list` → the ewe PKGBUILD's depends). enchant

@@ -10,7 +10,7 @@ up: "[[Decision Index]]"
 
 **Decided 2026-11-21** (decision 66; the owner: "go, no translation for
 now"). Built for ewe 0.46.0-beta + ewe Settings 0.26.0-beta on
-`feat/media-languages` — **not released**. Code: `ewe/bin/ewe-conf`
+`feat/media-languages` — **released 2026-11-21**. Code: `ewe/bin/ewe-conf`
 (`desktop.language`, `desktop.ime`), ewe Settings `backend.rs`
 (`install_packages`, `set_locale`) + `language.rs` (`spell_info`,
 `formats_info`, `set_formats`, `language_packs`, `komble_search`).

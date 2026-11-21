@@ -34,7 +34,7 @@ motion follow ewe live with no theming hook.
 | the companion (Shaun) | `browse {url}` prefers `ewe-browser` on `PATH` (`ewe-plugin-companion/Service.qml`); since ewe-companion 0.1.0-beta it calls the command line — search, open, play, history, tabs, `page --text` (untrusted) — and since 0.2.0-beta a site's own search (`search --site`), bookmarks, back/forward, workspaces, downloads |
 | Hyprland (ewe 0.30.0-beta) | a 4-finger swipe left/right while the browser is focused runs `ewe-browser workspace next\|prev` ([[Four Fingers — ewe browser's workspaces]]) |
 
-## New in 0.9.0-beta (built 2026-11-21 — not released; changes STAGED, not committed, on `feat/spell-play`)
+## New in 0.9.0-beta (released 2026-11-21, ewe-browser#24)
 
 - **Spelling follows ewe** (`main/spelling.ts`, `SpellingService`):
   `[desktop.language]` `spellcheck` + `check_spelling` from ewe.conf,

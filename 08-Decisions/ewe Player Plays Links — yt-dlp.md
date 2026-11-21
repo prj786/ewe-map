@@ -11,7 +11,7 @@ up: "[[Decision Index]]"
 **Decided 2026-11-21** (owner: "we are promising some next update — what's
 that? let's implement it already … now i cant even play a video from
 stremio"; decision 68). Built for ewe-apps 0.2.0-beta on
-`feat/player-links` (merged with `feat/text-images`) — **not released**.
+`feat/player-links` (merged with `feat/text-images`) — **released 2026-11-21**.
 Code: `ewe-apps/apps/player/src-tauri/src/{links,support,probe}.rs`,
 `packages/shared/src/{player,links,languages}.ts`; map: ewe-apps
 `AGENTS.md` "Links", "Errors", "Languages".

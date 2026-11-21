@@ -121,7 +121,7 @@ Options dialog. Settings only points there:
   fields `available` / `removed` / `plugins[].kinds`
   ([[Contracts and Public API]]).
 
-## Languages (0.26.0-beta, built 2026-11-21 — not released)
+## Languages (0.26.0-beta, released 2026-11-21)
 
 Branch `feat/media-languages`; decisions 65–67. **Language** is its own
 page (id `language`): *Display language* (LANG, `set_locale`), **Spell

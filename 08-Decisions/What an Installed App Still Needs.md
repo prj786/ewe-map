@@ -10,7 +10,7 @@ up: "[[Decision Index]]"
 
 **Decided 2026-11-21** (owner: "now i cant even play a video from
 stremio"; decision 69). Built for Komble 0.24.0-beta on `feat/stremio` —
-**not released**. Code: `komble-arch/src-tauri/src/needs.rs`,
+**released 2026-11-21**. Code: `komble-arch/src-tauri/src/needs.rs`,
 `src/lib/components/AppNeeds.svelte`, `src/lib/curated.js`.
 
 - **Cause (verified on the owner's box):** Stremio Enhanced (an Electron

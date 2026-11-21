@@ -4,16 +4,15 @@
   "generated": "2026-11-21",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.45.0-beta",
-    "ewe_de_next": "0.46.0-beta",
+    "ewe_de": "0.46.0-beta",
     "ewe_os": "0.16.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.23.1-beta",
+    "komble": "0.24.0-beta",
     "ewe_sync": "0.17.1-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.25.0-beta",
-    "ewe_browser": "0.8.4-beta",
+    "ewe_settings": "0.26.0-beta",
+    "ewe_browser": "0.9.0-beta",
     "plugin_api": 3,
     "addons": {
       "ewe.clipboard": "1.3.0",
@@ -36,10 +35,10 @@
     },
     "ewe_safe": "0.5.1-beta",
     "ewe_companion": "0.2.4-beta",
-    "ewe_apps": "0.1.1-beta",
+    "ewe_apps": "0.2.0-beta",
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
     "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
-    "built_2026_11_21": "the media + languages wave, built, NOT released (owner: ask before releases): ewe 0.46.0-beta (feat/media-languages), ewe-apps 0.2.0-beta (feat/player-links), ewe-settings 0.26.0-beta (feat/media-languages), ewe-browser 0.9.0-beta (feat/spell-play, staged, uncommitted), komble 0.24.0-beta (feat/stremio); VERSION files not bumped yet (the integrator bumps at release); decisions 65-70"
+    "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)"
   },
   "repos": [
     {
@@ -60,13 +59,13 @@
     },
     {
       "name": "komble-arch",
-      "role": "Komble software manager (0.23.0-beta, 2026-11-19: quits when its window closes unless a transaction runs, no tray; installs base-devel + git before the first AUR build) 0.24.0-beta built 2026-11-21, not released (feat/stremio): app_needs/fix_app_need - Stremio Enhanced's streaming server in one click; curated Stremio = stremio-linux-shell; IntelliJ IDEA = intellij-idea-oss (decision 69).",
+      "role": "Komble software manager (0.23.0-beta, 2026-11-19: quits when its window closes unless a transaction runs, no tray; installs base-devel + git before the first AUR build) 0.24.0-beta released 2026-11-21 (komble-arch#22): app_needs/fix_app_need - Stremio Enhanced's streaming server in one click; curated Stremio = stremio-linux-shell; IntelliJ IDEA = intellij-idea-oss (decision 69).",
       "stack": "Tauri v2 + Svelte 5 + Tailwind 4",
       "license": "MIT"
     },
     {
       "name": "ewe-settings",
-      "role": "Settings app (0.24.0-beta, 2026-11-19: --page honoured by a running instance; Default apps rows Music player / Document viewer / Archives) 0.26.0-beta built 2026-11-21, not released (feat/media-languages): the Language page (display language, Spell checking, Also for your apps), Time and place -> Formats, Keyboard and mouse -> Typing in other languages, install_packages (decisions 65-67).",
+      "role": "Settings app (0.24.0-beta, 2026-11-19: --page honoured by a running instance; Default apps rows Music player / Document viewer / Archives) 0.26.0-beta released 2026-11-21 (ewe-settings#28): the Language page (display language, Spell checking, Also for your apps), Time and place -> Formats, Keyboard and mouse -> Typing in other languages, install_packages (decisions 65-67).",
       "stack": "Tauri v2 + Svelte 5"
     },
     {
@@ -81,13 +80,13 @@
     },
     {
       "name": "ewe-browser",
-      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search; 0.8.4-beta (2026-11-19): the apps permission kind, Play in ewe Player (EWE_PLAYER_BIN), folder give-back ewe-files-app.desktop 0.9.0-beta built 2026-11-21, not released (feat/spell-play, changes staged): spell checking follows ewe.conf [desktop.language] with Chromium's own dictionaries; Play in ewe Player on video links/pages (isPlayableUrl) (decisions 67, 68).",
+      "role": "ewe browser: the desktop's browser, files and music app (replaced Helium); 0.4.0-beta (2026-10-18): fills logins with Safe only (decision 40), site permissions ask per site (decision 42), Privacy and security, site search; 0.8.4-beta (2026-11-19): the apps permission kind, Play in ewe Player (EWE_PLAYER_BIN), folder give-back ewe-files-app.desktop 0.9.0-beta released 2026-11-21 (ewe-browser#24): spell checking follows ewe.conf [desktop.language] with Chromium's own dictionaries; Play in ewe Player on video links/pages (isPlayableUrl) (decisions 67, 68).",
       "stack": "Electron 44 (castlabs ECS) + Solid, TypeScript",
       "license": "GPL-3.0-only"
     },
     {
       "name": "ewe-apps",
-      "role": "ewe Files (ewe-files-app), ewe Player (ewe-player), ewe Viewer (ewe-viewer): the desktop's file manager, media player and viewer; one package ewe-apps, a dependency of ewe since 0.44; replaced Nemo, Engrampa, imv, Zathura and mpv as defaults (decision 56; 0.1.0-beta released 2026-11-19) 0.2.0-beta built 2026-11-21, not released (feat/player-links): web page links through yt-dlp (ewe-player <url>), honest errors, track languages, text in any encoding, HEIC via heif-dec, dir=auto (decisions 68, 70).",
+      "role": "ewe Files (ewe-files-app), ewe Player (ewe-player), ewe Viewer (ewe-viewer): the desktop's file manager, media player and viewer; one package ewe-apps, a dependency of ewe since 0.44; replaced Nemo, Engrampa, imv, Zathura and mpv as defaults (decision 56; 0.1.0-beta released 2026-11-19) 0.2.0-beta released 2026-11-21 (ewe-apps#2): web page links through yt-dlp (ewe-player <url>), honest errors, track languages, text in any encoding, HEIC via heif-dec, dir=auto (decisions 68, 70).",
       "stack": "Tauri 2 (Rust, system WebKitGTK) + Solid, TypeScript, Vite; GStreamer, pdf.js; crate ewe-app-core, npm @ewe/shared + @ewe/ui",
       "license": "GPL-3.0-only"
     },
@@ -318,7 +317,7 @@
     },
     {
       "tool": "ewe-ime",
-      "job": "typing in other languages: fcitx5 on demand (decision 65); ewe 0.46.0-beta, built not released",
+      "job": "typing in other languages: fcitx5 on demand (decision 65); ewe 0.46.0-beta, released 2026-11-21",
       "verbs": [
         "status",
         "catalog",
@@ -876,7 +875,7 @@
     "ewe-apps 0.1.0-beta (2026-11-19): drag-and-drop not exercised headless; the shell's now-playing does not yet skip WebKitGTK's own org.webkit.* MPRIS player beside ewe Player; Nemo keeps org.freedesktop.FileManager1 until removed (the owner's one-time pacman -Rns)",
     "password sign-in (0.44): accounts with 2FA or SSO must use 'Sign in with the browser instead' (Login Flow v2); ewe's Settings.qml still says 'ewe never sees your password' (follow-up); not yet tried against a real Nextcloud by the owner",
     "ewe-os 0.16.0-beta: the ISO trim is measured on the package sum, not a built ISO; no QEMU pass yet; tagged by the owner after the [ewe] publish",
-    "ewe 0.46 wave (built, not released): typing in other languages verified in the nested harness only (GTK, Qt, kitty, the launcher) - not on real hardware with a physical keyboard; X11 / Qt 5 apps follow after a sign-out",
+    "ewe 0.46 wave (released 2026-11-21): typing in other languages verified in the nested harness only (GTK, Qt, kitty, the launcher) - not on real hardware with a physical keyboard; X11 / Qt 5 apps follow after a sign-out",
     "the display language and Formats (LC_*): whether a sign-out suffices or a reboot is needed is not verified (ewe Settings says 'Applies after you sign out')",
     "ewe Browser checks spelling with Chromium's .bdic dictionaries only: languages Chromium lacks (Georgian ...) are not checked there; Chromium downloads a .bdic from Google's dictionary server on a language's first use",
     "ewe Player links: no ffmpeg remux route (sites that serve only split video + audio offer Open in mpv); Vimeo serves DRM or wants a login; link drops from a browser not exercised headless",

@@ -11,7 +11,7 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-apps` · [github.com/prj786/ewe-apps](https://github.com/prj786/ewe-apps)
 (one repo, one package `ewe-apps`, three binaries; **0.1.0-beta** released
 2026-11-19 with ewe 0.44.0-beta — decision 56, [[ewe's Own Apps — Files, Player, Viewer]];
-**0.1.1-beta** released 2026-11-20; **0.2.0-beta built 2026-11-21, not released** — below)
+**0.1.1-beta** released 2026-11-20; **0.2.0-beta** released 2026-11-21 — below)
 
 The desktop's own file manager, media player and document/picture viewer.
 They replace **Nemo, Engrampa, imv, Zathura and mpv** as the defaults
@@ -93,7 +93,7 @@ the current folder; toasts size to their text and header tooltips open below
 `places`, `more`, `tabs`, `compress` are new. Open: drag-and-drop onto places
 in a narrow window (the drawer closes when a drag starts).
 
-## Links, languages, encodings, phone pictures (0.2.0-beta, built 2026-11-21 — not released)
+## Links, languages, encodings, phone pictures (0.2.0-beta, released 2026-11-21)
 
 Branch `feat/player-links` (merged with `feat/text-images`); decisions 68
 and 70 ([[ewe Player Plays Links — yt-dlp]],

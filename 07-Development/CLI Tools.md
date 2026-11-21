@@ -79,7 +79,7 @@ flags are `--key=value` only. ewe's launcher runs `ewe-files-app
 --open-with=<path>` and `ewe-files-app --select=<path>`; ewe Browser runs
 `$EWE_PLAYER_BIN` (default `ewe-player`). Files owns D-Bus
 `org.freedesktop.FileManager1`.
-Since ewe-apps 0.2 (built, not released) **`ewe-player <http(s)-url>`** plays
+Since ewe-apps 0.2 (released 2026-11-21) **`ewe-player <http(s)-url>`** plays
 the video on a web page through yt-dlp — ewe Browser's *Play in ewe Player*
 and Shaun call exactly that ([[ewe Player Plays Links — yt-dlp]]).
 

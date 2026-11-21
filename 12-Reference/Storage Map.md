@@ -148,7 +148,7 @@ flowchart TB
   (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
   keyring, never the file.
 
-## The media + languages wave (0.46, built — not released)
+## The media + languages wave (0.46, released 2026-11-21)
 
 - **fcitx5** (only once someone adds a language): `~/.config/fcitx5/`
   (`profile`, `config`, `conf/classicui.conf`, `conf/pinyin.conf`) and
