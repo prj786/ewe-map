@@ -29,6 +29,7 @@ creates the GitHub remotes and pushes.
 | [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007; shown as Shaun; 0.2.1-beta, released, package in [ewe]) | Rust (tokio, rusqlite) |
 | [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.5.0, API 3; vendored in ewe 0.30.0-beta) | QML |
 | [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window, passkeys, an SSH agent ([[ewe-safe]], RFC-008, 0.2.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
+| [`eep`](https://github.com/prj786/eep) | eep, the app manager: one card per app in `~/Applications`, apps prebuilt from the Nix binary cache, a server-made index and binary-patch updates; the data site is its GitHub Pages ([[eep]], RFC-010, 0.1.0-beta, opt-in in `[ewe]`) | Rust (client `eep`, server `eep-build`), Nix underneath |
 | [`prj786.github.io`](https://github.com/prj786/prj786.github.io) | the website | SvelteKit 2 + Svelte 5, static |
 | [`ewe-plugin-clipboard`](https://github.com/prj786/ewe-plugin-clipboard) | plugin: clipboard history + emoji (1.1.1, API 2) | QML |
 | [`ewe-plugin-screenshot`](https://github.com/prj786/ewe-plugin-screenshot) | plugin: screenshots (1.1.0, API 2) | QML |
@@ -68,6 +69,7 @@ graph LR
     S["ewe-settings"] --> REPO
     SY["ewe-sync"] --> REPO
     APPS["ewe-apps<br/>Files · Player · Viewer"] --> REPO
+    EEP["eep<br/>apps as cards (opt-in)"] --> REPO
     EWE --> REPO
     CAST --> REPO
 
@@ -93,5 +95,5 @@ Notes on the graph:
 ## Per-repo deep dives
 
 [[ewe Desktop]] · [[ewe-os ISO]] · [[ewe-repo]] · [[Komble]] ·
-[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-apps]] · [[Website]] ·
+[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-apps]] · [[eep]] · [[Website]] ·
 the plugins under [[Plugin System]]

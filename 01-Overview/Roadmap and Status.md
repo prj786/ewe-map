@@ -15,6 +15,31 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-22 — eep: apps as cards (eep 0.1, ewe 0.48.1, Komble 0.26, ewe-apps 0.3) — released
+
+The owner: "now i want you to look through plan for package manager and
+start building. i want fast well maintened package", then "go do it" and,
+after testing in the VM, "imagine installing eep from komble or from
+downloads its same as moving this file in Applications directori right
+click and delete removes app … also hide file extension". Decision 74,
+[[RFC-010 — eep]], component [[eep]]. **Released 2026-11-22:** eep
+`v0.1.0-beta` (prj786/eep, new repo, data site `prj786.github.io/eep`);
+ewe `v0.48.1-beta` on `a75e555` (ewe#92); Komble `v0.26.0-beta`
+(komble-arch#25); ewe-apps `v0.3.0-beta` (ewe-apps#4); ewe-repo#7 puts
+`eep` in `[ewe]` (opt-in); `[ewe]` publish run 45031083917; ewe-os#23
+(VM harness `EWE_VM_VGA`, `--vnc`; no ISO); website `/apps/`
+(prj786.github.io#17).
+
+| what | where | state |
+|---|---|---|
+| eep: one card per app in `~/Applications`, apps from cache.nixos.org, server-made index, zstd patch updates, crash journal, watcher, Mesa driver timer | prj786/eep `crates/`, `packaging/` | released; every go/no-go row passed in the VM (`bench/RESULTS.md`) |
+| the data site: index, cards, icons, patches rebuilt daily | eep `publish-index.yml` → `gh-pages` | live; one CI run so far (byte-identical rebuild); the patch step waits for the next nixos-unstable release |
+| Komble lists eep apps (search, install, update, remove, Ready in Settings) | komble-arch `src-tauri/src/eep.rs` | released; checked in dev-mock and in the VM with the real eep |
+| ewe Files: Applications under Home, cards as apps, Remove app | ewe-apps `crates/core` `eep`, Files | released; checked in the VM |
+| the launcher's file search skips hidden folders | ewe `Launcher.qml` | released; fake-home test + nested shell |
+| website `/apps/`: Get = the card, how install/remove/restore work | prj786.github.io `src/routes/apps/` | released |
+| real GPU (B11), a real boot with the 0.1.0-beta package, the owner's machine | after `pacman -Syu` + `pacman -S eep` and a new session | **not verified yet** |
+
 ## 2026-11-22 — one file picker (ewe 0.48, Komble 0.25.1, ewe Settings 0.26.1, ewe Sync 0.17.2, ewe Safe 0.5.2, ewe-apps 0.2.1) — released
 
 The owner: "cant we have one ewe like looking app? the popup dialog where we
@@ -655,6 +680,7 @@ project's memory:
 | RFC-004 | [[ewe-cast]] — casting without the foreign app | **phases A+B built** (2026-08-30), Miracast proven against a loopback sink; first real-TV field test pending |
 | RFC-005 | [[Account and Sync]] — the ewe account is a Nextcloud account | **accepted** (2026-09-02), implemented on a `nextcloud` branch across ewe, komble-arch, ewe-settings, ewe-os and the website; merges as one wave |
 | RFC-006 | [[ewe-sync]] — the account app (drafted as "Flock" for an afternoon) | **proposed → built** as a fourth first-party Tauri app, shipped preinstalled from ISO 0.9-alpha on |
+| RFC-010 | [[RFC-010 — eep]] — apps from the Nix binary cache, one card per app | **accepted + released** 2026-11-22 (eep 0.1.0-beta) |
 
 ## Component status
 
@@ -710,6 +736,7 @@ flowchart LR
 - [[Roadmap — ewe-safe]] — **Safe 0.2.0-beta released 2026-10-15** (passkeys, SSH agent, an `op`-like CLI; with ewe 0.28.0-beta and ewe browser 0.2.0-beta); **Safe 0.1.0-beta released 2026-10-15** (with ewe 0.27.0-beta); RFC-008 accepted 2026-10-14; phase 0 spike GO with five conditions (own merge, a write guard, tracked deletes, never quick-xml `overlapped-lists`, own TOTP); phase 1 done (the engine, `ewe-safed`, the `ewe-safe` CLI, the `[safe]` domain, provider `ewe` in the Passwords plugin; Super+P fills from a real safe in the nested harness); left in phase 2: unlock with login/fingerprint, the Komble listing, site docs
 - [[Roadmap — Distro and Repo]] — repo signing, standalone release; the ISO is 0.16.0-beta (2026-11-19, the trim + password sign-in) once tagged
 - [[ewe-apps]] — **0.1.0-beta released 2026-11-19** (ewe Files, ewe Player, ewe Viewer); open: skip WebKitGTK's `org.webkit.*` MPRIS player in the shell's now-playing, drag-and-drop not exercised headless, a git remote for the repo
+- [[eep]] — **0.1.0-beta released 2026-11-22**; open: real GPU (B11), a real boot with the package, the first CI patch set, more apps in `catalog/apps.toml`
 - [[Open Questions]] — deliberately unresolved
 
 ## Related
