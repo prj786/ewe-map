@@ -38,7 +38,7 @@ must read the reason first; it has usually not changed.
 | fcitx5 (or ibus) shipped to everyone | **rejected** (2026-11-21) | RAM and ISO size for a feature most people never use; installed on demand from ewe Settings ([[Typing in Other Languages — fcitx5 on demand]]). |
 | `GTK_IM_MODULE=fcitx` | **rejected** (2026-11-21) | not needed: GTK, kitty and Qt ≥ 6.7 type through the compositor's text-input protocol on Wayland (`bin/ewe-ime`, `docs/SETTINGS-BACKEND.md`); only X11, Qt 5 and SDL get variables. |
 | LANG / LC_* in `ewe.conf` | **rejected** (2026-11-21) | the file syncs — one machine's locale would land on another; the locale is the machine's (`localectl`). |
-| Flatpak (for Stremio Service or anything else) | **rejected** (2026-11-21) | ewe is pacman-only (rule 10); Komble places Stremio's own `server.js` where Stremio Enhanced looks ([[What an Installed App Still Needs]]). |
+| Flatpak (for Stremio Service or anything else) | **rejected** (2026-11-21) | rule 10: pacman for the system, eep for apps — no third manager; Komble places Stremio's own `server.js` where Stremio Enhanced looks ([[What an Installed App Still Needs]]). |
 | ewe Player remuxing split video + audio with ffmpeg | **parked** (2026-11-21) | none of the tested sites (YouTube, Twitch, BBC) needed it — HLS master / progressive / DASH cover them; split-only sites offer *Open in mpv* ([[ewe Player Plays Links — yt-dlp]]). |
 | Hunspell → `.bdic` conversion so ewe Browser checks Georgian | **parked** (2026-11-21) | needs Chromium's `convert_dict` or a renderer-side provider; ewe Browser says which languages it does not check ([[Spell Checking — hunspell and Chromium]]). |
 

@@ -33,7 +33,7 @@ repos. Everything about the machine's configuration lives in **one file**,
 7. **No Google client ships.** Google is optional, BYO OAuth client file.
 8. **No raw colour/size/duration in QML** — only design-system tokens.
 9. **Never edit `generated/` files or deployed `~/.config`** — repo is truth.
-10. **Arch only, pacman only** — no multi-distro branches, no partial upgrades.
+10. **Arch only; pacman for the system, eep for apps** ([[RFC-010 — eep]]) — no multi-distro branches, no partial upgrades.
 
 Full list with reasoning: [[Rules of the House]].
 

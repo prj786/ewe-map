@@ -134,6 +134,24 @@ encoding", "Phone pictures", "User text direction".
   read as Latin-1 (lofty); copy / set-as-wallpaper of a HEIC uses the
   original.
 
+## Applications and eep cards (0.3.0-beta, released 2026-11-22)
+
+ewe Files learns eep ([[eep]], [[RFC-010 — eep]]): the card in
+`~/Applications` is the app.
+
+- **Applications** sits right under Home in the sidebar (`$EEP_APPS_DIR` or
+  `~/Applications`), listed even before the folder exists; opening it
+  creates it. An empty Applications says where apps come from.
+- **Cards** (`*.eep`) show as their app everywhere: the card's `name`
+  without the extension, kind "App", the icon embedded in the card (core
+  module `eep`, cached per path + size + mtime + inode, served by the media
+  server's `/app-icon` route with `nosniff` + a sandbox CSP). Sort, filter
+  and search go by the app's name; Trash rows too.
+- **Open** runs `eep open <card>`; without eep the GIO default opens it.
+- **Remove app** / **Remove N apps** replaces Move to Trash when the whole
+  selection is cards in Applications (eep's watcher uninstalls). Rename
+  keeps `.eep`.
+
 ## How the desktop wires them in (ewe 0.44.0-beta)
 
 - **Package:** `ewe-apps` is a dependency of `ewe` (`PKGBUILD`), served

@@ -1425,6 +1425,44 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   `QFileDialog` immediately gets Qt's own dialog. Wait about a second first;
   `QT_QPA_PLATFORM=offscreen` loads no platform theme at all.
 
+
+## eep and Applications (2026-11-22, eep 0.1 / ewe 0.48.1)
+
+- **Searching "firefox" in the launcher listed hundreds of files from
+  `~/.local/share/containers`, `~/.config/zen`, Komble's AppImage prefixes**
+  (owner, 2026-11-22). The launcher's plocate index (`~/.cache/ewe/files.db`)
+  covered all of `$HOME`; only a short noise list was filtered, so apps'
+  insides (podman storage alone: 326k files) came back as results. Fixed in
+  ewe 0.48.1-beta: every hidden folder at the top of `$HOME` is pruned
+  (`updatedb --add-prunepaths`), and results inside any hidden folder show
+  only for a query that starts with a dot (`.zshrc`, `.env`). Check: search
+  a name that only exists under `~/.local` — nothing comes back.
+- **An eep app doesn't start or has no GL** — `eep doctor` first. Its usual
+  causes, all handled by the package, are worth knowing when it says
+  not-ready: the driver farm `/run/opengl-driver` comes from
+  `eep-driver.timer` (system); ewe's session exports Arch's
+  `__EGL_VENDOR_LIBRARY_FILENAMES`/Vulkan pins, which `eep run` clears; a
+  command-line app must go through its shim in `~/.local/share/eep/bin`
+  (it calls `eep run`), never the store path.
+- **Firefox from eep took 8.7 s to open** — Nix's glibc can't use Arch's
+  NSS modules, so the machine's own hostname didn't resolve until a timeout.
+  The driver step adds the hostname to `/etc/hosts`; `.local` mDNS names
+  still don't resolve for Nix apps.
+- **After a power cut an eep app crashes with an empty library** — Nix had
+  marked store paths valid whose files never reached the disk. eep keeps a
+  crash journal and `syncfs` after every fetch; to repair an older store:
+  `nix-store --verify --check-contents --repair`.
+- **An app installed by eep has no bar title or icon, or the app writes a
+  `userapp-*.desktop`** — the launcher entry must keep the app's own
+  desktop-file name (eep marks its entries with `X-Eep-Id`, never renames
+  them).
+- **eep updated but the old watcher kept running** — `eep watch` re-execs
+  itself when its binary is replaced; if a watcher predates that,
+  `systemctl --user restart eep-watch`.
+- **A card in the Trash keeps its app's disk** — on purpose: `eep gc` keeps
+  apps whose card is in the Trash so a restore needs no download; emptying
+  the Trash frees them on the next gc.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

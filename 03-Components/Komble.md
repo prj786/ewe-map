@@ -120,6 +120,18 @@ not HTML, writes beside and renames. Curated Popular → Media: **Stremio** =
 `stremio-linux-shell` (AUR, the official app, server + mpv inside);
 *IntelliJ IDEA* = `intellij-idea-oss` (community edition left the repos).
 
+## eep apps (0.26.0-beta, released 2026-11-22)
+
+Where `eep` is on PATH, Komble gets **eep apps** as a source ([[eep]],
+[[RFC-010 — eep]]): an "eep" source in Discover (also searched under All),
+an "eep apps" group in Installed and Updates (Update, Update all), the app
+page installs, updates, removes and links the homepage, and Settings ›
+System shows "eep apps — Ready / Not ready" (`eep doctor`). Everything runs
+through the `eep` CLI as the user (`src-tauri/src/eep.rs`), no password;
+eep always exits 0, so the JSON reply decides, never the exit status.
+Without eep nothing shows and nothing is spawned. Dev mock:
+`?noeep`, `?eepdown`, `?eepfail=install|update|remove`, `?eepnotready`.
+
 ## What Arch forced (not stylistic choices)
 
 Structural differences vs the earlier Debian-targeted build — Arch is not

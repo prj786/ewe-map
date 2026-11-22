@@ -4,10 +4,10 @@
   "generated": "2026-11-22",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.48.0-beta",
+    "ewe_de": "0.48.1-beta",
     "ewe_os": "0.17.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.25.1-beta",
+    "komble": "0.26.0-beta",
     "ewe_sync": "0.17.2-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
@@ -35,13 +35,15 @@
     },
     "ewe_safe": "0.5.2-beta",
     "ewe_companion": "0.3.0-beta",
-    "ewe_apps": "0.2.1-beta",
+    "ewe_apps": "0.3.0-beta",
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
     "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
     "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)",
     "release_2026_11_21_shaun": "Shaun 0.3 + knowledge 2.0: ewe-companion 0.3.0-beta (ewe-companion#9), ewe.companion 0.7.0 (ewe-plugin-companion#7, d78fa46) vendored in ewe 0.47.0-beta (ewe#89); [ewe] publish run 44905371096; decisions 54 and 71 (tags in the Version Ledger)",
     "release_2026_11_21_iso": "the installer wave: komble 0.25.0-beta (komble-arch#23, install picks), ewe-os 0.17.0-beta (ewe-os#22, language first + apps for day one); the ISO carries ewe 0.47.0-beta",
-    "release_2026_11_22": "one file picker (RFC-011): ewe 0.48.0-beta (ewe#91) + komble 0.25.1-beta (komble-arch#24), ewe-settings 0.26.1-beta (ewe-settings#29), ewe-sync 0.17.2-beta (ewe-sync#17), ewe-safe 0.5.2-beta (ewe-safe#25), ewe-apps 0.2.1-beta (ewe-apps#3); decision 73 (tags in the Version Ledger)"
+    "release_2026_11_22": "one file picker (RFC-011): ewe 0.48.0-beta (ewe#91) + komble 0.25.1-beta (komble-arch#24), ewe-settings 0.26.1-beta (ewe-settings#29), ewe-sync 0.17.2-beta (ewe-sync#17), ewe-safe 0.5.2-beta (ewe-safe#25), ewe-apps 0.2.1-beta (ewe-apps#3); decision 73 (tags in the Version Ledger)",
+    "eep": "0.1.0-beta",
+    "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)"
   },
   "repos": [
     {
@@ -104,6 +106,12 @@
       "role": "Safe, the password manager: one KDBX 4 file in a place you pick, ewe-safed daemon, ewe-safe CLI, the ewe-safe-app window, passkeys, SSH keys + an ssh-agent (RFC-008; 0.1.0-beta released 2026-10-15, 0.2.0-beta the same day; opt-in from [ewe])",
       "stack": "Rust (keepass-rs), Tauri v2 + Svelte 5",
       "license": "MIT"
+    },
+    {
+      "name": "eep",
+      "role": "eep, the app manager: one card per app in ~/Applications, apps prebuilt from the Nix binary cache, server-made index + binary-patch updates; data site on its GitHub Pages (prj786.github.io/eep); opt-in package in [ewe]",
+      "stack": "Rust (eep client, eep-build server), Nix",
+      "license": "GPL-3.0-or-later"
     },
     {
       "name": "prj786.github.io",
@@ -187,7 +195,7 @@
     "no Google client ships",
     "no raw colour/size/duration in QML",
     "never edit generated files or deployed ~/.config",
-    "arch only, pacman only, no partial upgrades",
+    "arch only; pacman for the system, eep for apps (RFC-010); no partial upgrades",
     "state that outlives the shell lives outside the shell",
     "the design system is the source of truth for every surface"
   ],
@@ -854,6 +862,11 @@
       "status": "accepted 2026-11-01; released the same day in ewe 0.38.0-beta + ewe browser 0.7.0-beta + ewe-sync 0.15.1-beta"
     },
     {
+      "rfc": "RFC-010",
+      "topic": "eep — apps from the Nix binary cache, one card per app in ~/Applications, server-made index, binary-patch updates",
+      "status": "accepted 2026-11-22; released the same day as eep 0.1.0-beta with ewe 0.48.1-beta + komble 0.26.0-beta + ewe-apps 0.3.0-beta"
+    },
+    {
       "rfc": "RFC-011",
       "topic": "one file picker: the portal's FileChooser + AppChooser go to ewe-portal, the shell draws them on an overlay layer, GTK is the fallback",
       "status": "accepted 2026-11-22; released the same day in ewe 0.48.0-beta + komble 0.25.1, ewe-settings 0.26.1, ewe-sync 0.17.2, ewe-safe 0.5.2, ewe-apps 0.2.1"
@@ -901,7 +914,8 @@
     "ewe Player links: no ffmpeg remux route (sites that serve only split video + audio offer Open in mpv); Vimeo serves DRM or wants a login; link drops from a browser not exercised headless",
     "ewe-apps 0.2: ID3v1 / Latin-1-frame tags in cp1251 still read as Latin-1 (lofty); copying or setting a HEIC as wallpaper uses the original file",
     "Komble 0.24: the Stremio Enhanced streaming-server fix is verified in dev-mock screenshots; a real stream after the fix is not recorded",
-    "ewe-companion 0.3.0-beta: window commands never run on a live Hyprland (close/fullscreen Lua arguments from 0.57.1's error strings), a real Claude Code answer streaming in the notch, the real ewe Player link / ewe Files --select / ewe-ime only through fakes; offline answers are English; the ArchWiki is arch-wiki-lite's snapshot"
+    "ewe-companion 0.3.0-beta: window commands never run on a live Hyprland (close/fullscreen Lua arguments from 0.57.1's error strings), a real Claude Code answer streaming in the notch, the real ewe Player link / ewe Files --select / ewe-ime only through fakes; offline answers are English; the ArchWiki is arch-wiki-lite's snapshot",
+    "eep 0.1.0-beta: no unfree apps (Chrome, Steam, Discord stay in Komble); first install ~2.9x pacman's bytes, disk ~2.6x; Nix apps can't resolve .local mDNS names; real GPU (bench B11) and a real systemd boot with the package not tested; publish-index's patch step not yet run in CI"
   ],
   "addons": {
     "model": "D1-D8 (2026-10-04, ewe 0.25.0-beta): first-party plugins vendored in the payload, not installed on a fresh machine, one-time migration for upgraders. Called 'add-ons' in 0.25.0; one name 'plugins' since D9 (2026-10-10)",
@@ -1500,5 +1514,21 @@
       "Java apps"
     ],
     "fallback": "no 'ok' from open, or two missed pings (2 s apart) -> the same request to org.freedesktop.impl.portal.desktop.gtk"
+  },
+  "eep": {
+    "rfc": "RFC-010",
+    "decision": 74,
+    "repo": "prj786/eep",
+    "data_site": "https://prj786.github.io/eep (gh-pages, one orphan commit per publish)",
+    "apps_folder": "~/Applications (EEP_APPS_DIR; ~/Apps migrated once)",
+    "card": "<Name>.eep, TOML, MIME application/x-eep, keys eep/id/name/kind/channel/release/version/out/exec/bin/installed + icon_type/icon_data (<= 96 KB)",
+    "launcher_ownership": "the app's own .desktop name with X-Eep-Id=<id>",
+    "cli_contract": "one JSON object on stdout, exit 0; errors {\"ok\":false,\"error\":...}",
+    "package": "eep in [ewe] (opt-in, depends on extra/nix): /etc/eep/config.toml, eep-driver.timer (system), eep-watch.service + eep-updates.timer (every user), /var/cache/eep/local 1777, !include /etc/nix/eep.conf",
+    "consumers": {
+      "komble": "0.26.0-beta eep source (search/install/update/remove via the CLI)",
+      "ewe_files": "ewe-apps 0.3.0-beta: Applications place, cards shown as apps, Remove app",
+      "website": "/apps/ (Get = the card; npm run apps)"
+    }
   }
 }

@@ -86,15 +86,22 @@ come up from a clean `git clone && ./install.sh`.
 - *Breaks:* your edit vanishes at the next apply, or the repo drifts from
   what machines actually run.
 
-## 10. Arch only, pacman only, no partial upgrades
+## 10. Arch only; pacman for the system, eep for apps; no partial upgrades
 
-No multi-distro branches. Installer phases route every mutating action
-through `run()`/`sudo_run()` (that's what makes `--dry-run` honest and the
-run re-runnable).
+No multi-distro branches. The system — the desktop, ewe's own apps,
+drivers, anything an installer phase installs — comes from pacman, and
+installer phases route every mutating action through `run()`/`sudo_run()`
+(that's what makes `--dry-run` honest and the run re-runnable). Apps a
+person adds may also come from **eep** ([[RFC-010 — eep]], 2026-11-22): one
+card per app in `~/Applications`, prebuilt from the Nix binary cache,
+beside pacman and never in its place (eep's command folder is last on
+PATH, so a pacman command of the same name wins).
 
 - *Breaks:* the all-or-nothing `pacman -S` reality plus the warn-and-skip
   resilience (a single bad package must never abort the run — the root
-  cause of a past "no greeter" failure).
+  cause of a past "no greeter" failure). An installer phase or a package
+  that needs an eep app would make the system depend on a second manager
+  and on cache.nixos.org — eep stays opt-in, nothing depends on it.
 
 ## 11. State that outlives the shell lives outside the shell
 
