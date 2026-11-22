@@ -15,6 +15,26 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-23 — every app is a card (eep 0.2, ewe 0.49, ewe-apps 0.3.1) — released
+
+The owner: "now i want you to release eveything about eep files. so i can
+test them in reality using real system. now gimp opens as file manager.
+also for now it would be great that every single package will be an eep
+file even default ewe applications. also the apps i am currently using. use
+fable … to check code for eep and otherwise extend it with opus". Decision
+75, [[Every App Is a Card — eep finds what is installed]]. **Released
+2026-11-23:** eep `v0.2.0-beta` (eep#2); ewe `v0.49.0-beta` (ewe#93, depends
+on eep); ewe-apps `v0.3.1-beta` (ewe-apps#5); ewe-repo#8 (eep required);
+`[ewe]` publish run 45065952675; eep's index rebuilt with 43 apps (run
+45064092952); website `/apps/` 40 apps (prj786.github.io#18).
+
+| what | where | state |
+|---|---|---|
+| every app on the computer gets a card; Trash = hidden, restore = shown, uninstalled = card gone | eep `crates/eep/src/system.rs` | released; unit tests + the owner's app list in a sandboxed HOME (61 apps, 59 icons); **the owner's real machine is the test** |
+| Fable's review of eep 0.1: 13 findings fixed (validation, ids, sure listings, open through the index, JSON errors, private scratch) | eep | released; container e2e 16/16, update 11/11 |
+| eep is part of ewe; the launcher skips cards as files; Files explains a card without eep | ewe `packaging/PKGBUILD`, `Launcher.qml`; ewe-apps Files | released; nested shell checked |
+| catalog 43 apps | eep `catalog/apps.toml` | live on the data site; Thunderbird waits for the cache |
+
 ## 2026-11-22 — eep: apps as cards (eep 0.1, ewe 0.48.1, Komble 0.26, ewe-apps 0.3) — released
 
 The owner: "now i want you to look through plan for package manager and

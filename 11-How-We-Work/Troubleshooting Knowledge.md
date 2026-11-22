@@ -1428,6 +1428,23 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
 
 ## eep and Applications (2026-11-22, eep 0.1 / ewe 0.48.1)
 
+- **An app's card opened as text, or something other than the app ("GIMP
+  opens as file manager")** (owner, 2026-11-22). eep was not installed on
+  the machine, so `GIMP.eep` was a plain TOML file to everything: the
+  launcher's file result went to `xdg-open` (text/plain → the editor), ewe
+  Files to the GIO default. Fixed in ewe 0.49 / ewe-apps 0.3.1 / eep 0.2:
+  ewe depends on eep (its package registers `application/x-eep` →
+  `eep open`), the launcher leaves `~/Applications/*.eep` out of file
+  results, Files says "update ewe" when eep is missing. Check: `xdg-mime
+  query filetype ~/Applications/GIMP.eep` says `application/x-eep`.
+- **An app vanished from the launcher but is still installed** (eep 0.2):
+  its card went to the Trash, so eep hides it — `~/.local/share/applications/<entry>`
+  carries `NoDisplay=true` + `X-Eep-Hides=sys-…`. Restore the card from the
+  Trash (or `eep install sys-…`); a permanently deleted card stays hidden
+  until then. Never delete an `X-Eep-Hides` file by hand while
+  `~/.local/share/eep/hidden/<entry>` holds the user's own original — `eep
+  install sys-…` puts it back.
+
 - **Searching "firefox" in the launcher listed hundreds of files from
   `~/.local/share/containers`, `~/.config/zen`, Komble's AppImage prefixes**
   (owner, 2026-11-22). The launcher's plocate index (`~/.cache/ewe/files.db`)

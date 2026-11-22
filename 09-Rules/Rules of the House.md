@@ -95,13 +95,19 @@ installer phases route every mutating action through `run()`/`sudo_run()`
 person adds may also come from **eep** ([[RFC-010 — eep]], 2026-11-22): one
 card per app in `~/Applications`, prebuilt from the Nix binary cache,
 beside pacman and never in its place (eep's command folder is last on
-PATH, so a pacman command of the same name wins).
+PATH, so a pacman command of the same name wins). Since ewe 0.49 the eep
+*client* is part of ewe (a dependency, from `[ewe]` through pacman) and
+every app has a card — the ones eep fetched and every app already
+installed ([[Every App Is a Card — eep finds what is installed]],
+decision 75); a found app's card only hides or shows it, pacman still
+installs and removes it.
 
 - *Breaks:* the all-or-nothing `pacman -S` reality plus the warn-and-skip
   resilience (a single bad package must never abort the run — the root
   cause of a past "no greeter" failure). An installer phase or a package
-  that needs an eep app would make the system depend on a second manager
-  and on cache.nixos.org — eep stays opt-in, nothing depends on it.
+  that needs an eep *app* would make the system depend on a second manager
+  and on cache.nixos.org — no part of the system needs an eep (Nix) app;
+  only eep's client is a dependency of ewe (decision 75).
 
 ## 11. State that outlives the shell lives outside the shell
 
