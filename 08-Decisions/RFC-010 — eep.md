@@ -58,6 +58,14 @@ shell leaks Arch's EGL/Vulkan pins to apps; Nix's glibc can't resolve the
 hostname without an /etc/hosts line; a watcher must re-exec itself when its
 binary is replaced.
 
+## Amendment 2026-11-22 — every app is a card
+
+Owner: "every single package will be an eep file even default ewe
+applications". eep 0.2.0-beta gives every app the launcher shows a card
+(`source = "system"`), hiding instead of uninstalling found apps; ewe 0.49
+depends on eep. See [[Every App Is a Card — eep finds what is installed]]
+(decision 75).
+
 ## Related
 
 - [[Decision Index]] · [[Rules of the House]] · [[eep]] · [[Komble]] · [[ewe-apps]] · [[Parked and Rejected Ideas]]

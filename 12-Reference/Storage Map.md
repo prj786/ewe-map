@@ -188,3 +188,16 @@ flowchart TB
 
 - [[Contracts and Public API]] · [[The One File]] · [[Account and Sync]] ·
   [[Plugin System]]
+
+## eep (0.1 / 0.2)
+
+| Path | What |
+|---|---|
+| `~/Applications/*.eep` | the cards — eep's apps and (0.2) every found app; the user's |
+| `~/.local/state/eep/` | `roots/` (GC roots), `lock`, the crash journal, `found.json` (found apps: `{id: {entry, hidden}}`) |
+| `~/.local/share/eep/` | `icons/`, `bin/` + `shims/` (PATH), `hidden/` (a user's own launcher entries while their app is hidden) |
+| `~/.local/share/applications/*.desktop` with `X-Eep-Id` / `X-Eep-Hides` | eep's launcher entries / the copies that hide found apps |
+| `~/.cache/eep/` | index, icons cache, `updates.json` |
+| `/var/cache/eep/local` (1777), `/var/tmp/eep/<uid>` (0700, 0.2) | the local binary cache for patched pieces; each user's private patch scratch space |
+| `/var/lib/eep/opengl-driver` → `/run/opengl-driver` | the Mesa driver farm for Nix apps (root's driver timer) |
+

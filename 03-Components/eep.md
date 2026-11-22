@@ -9,15 +9,20 @@ up: "[[Home]]"
 # eep — apps from the Nix binary cache
 
 `~/Projects/ewe/eep` · [github.com/prj786/eep](https://github.com/prj786/eep)
-(Rust workspace, GPL-3.0; **0.1.0-beta** released 2026-11-22 —
-[[RFC-010 — eep]], decision 74). Data site:
+(Rust workspace, GPL-3.0; **0.2.0-beta** released 2026-11-23 — every app
+is a card, [[Every App Is a Card — eep finds what is installed]], decision
+75; 0.1.0-beta 2026-11-22 — [[RFC-010 — eep]], decision 74). Data site:
 **<https://prj786.github.io/eep>** (the repo's `gh-pages`).
 
 ewe's app manager. **One card per app in `~/Applications`** (`Firefox.eep`,
 a small TOML file with the app's icon inside): card there = app in the
 launcher; card in the Trash = app gone; restored = app back with nothing to
-download. pacman stays the system's manager (Rule 10); eep is opt-in
-(`pacman -S eep` from `[ewe]`, or Komble), and nothing depends on it.
+download. pacman stays the system's manager (Rule 10). Since 0.2 / ewe
+0.49 **every app has a card**: eep also *finds* the apps already installed
+(pacman, Komble's AppImages, Steam games, the user's own entries, ewe's
+apps) and gives each a `source = "system"` card (`sys-<desktop id>`) —
+removing it hides the app, restoring shows it, nothing is downloaded or
+uninstalled. ewe depends on eep (decision 75).
 
 ```mermaid
 flowchart LR
@@ -43,6 +48,29 @@ flowchart LR
 | `packaging/` | the `eep` pacman package: driver timer (system), watcher + update timer (every user), the card MIME type + handler, `/var/cache/eep/local` (1777), `!include /etc/nix/eep.conf` added and removed by the install script |
 | `.github/workflows/` | `ci.yml`; `release.yml` (tag `v*` → `eep-*.pkg.tar.zst` + the bare binary); `publish-index.yml` (daily data site) |
 
+## Found apps (0.2)
+
+`crates/eep/src/system.rs`: one pass per watcher event (the watcher also
+follows `$XDG_DATA_HOME/applications` and every `$XDG_DATA_DIRS/*/applications`),
+under eep's lock, before any download. `~/.local/state/eep/found.json`
+records `{id: {entry, hidden}}`; hiding writes a full copy of the entry with
+`NoDisplay=true` + `X-Eep-Hides=<id>` into `~/.local/share/applications`
+(a user-level entry is copied aside to `~/.local/share/eep/hidden/` first);
+icons follow the icon theme spec (theme → `Inherits` → hicolor → pixmaps,
+`magick` for > 96 KB). The owner's machine (sandboxed HOME): 61 apps, 59
+with an icon, 0.6 s for the first pass.
+
+**Build-guard** (`eep/PROTOTYPE.md` §10, gotchas 33–38): hide with
+`NoDisplay`, never `Hidden` (GIO would forget the app — ewe Files would
+stop opening folders); a user-level entry replaces a system one entirely,
+so the copy is the whole entry; never walk an icon theme (Reversal has
+208,000 files); forget/hide only after a *sure* listing (a broken card or a
+moved `~/Applications` changes nothing; the watcher never recreates the
+folder after the first run); every index field is validated on fetch and
+load (root's driver timer reads it — Fable's review found `release =
+"/etc/cron.d"` and `eep remove '../..'` reaching outside eep's folders in
+0.1); `OnlyShowIn` entries get cards (ewe's launcher shows them).
+
 ## Where it meets ewe
 
 - **[[Komble]] 0.26.0-beta**: an "eep" source in Discover, an "eep apps"
@@ -51,7 +79,12 @@ flowchart LR
   sidebar, cards shown as their app (no `.eep`, embedded icon), **Remove
   app** for cards in Applications, Open runs `eep open`.
 - **[[ewe-repo]]**: the publish workflow takes the newest eep release's
-  package (opt-in, like ewe-safe) — ewe-repo#7.
+  package — ewe-repo#7; **required** since ewe 0.49 depends on it (a
+  missing package fails the fresh-install gate).
+- **ewe 0.49.0-beta**: `depends` eep (phase 20 installs it for get.sh); the
+  launcher leaves `~/Applications/*.eep` out of file results.
+- **[[ewe-apps]] 0.3.1-beta**: a card with no eep says "update ewe" instead
+  of opening as text.
 - **[[Website]]** `/apps/`: Get downloads the card; `npm run apps` refreshes
   the page from an eep release.
 - **ewe's launcher** (0.48.1-beta): file search skips hidden folders, so an
@@ -72,7 +105,12 @@ gone in 0.5 s. Costs: first install 2.9× pacman's bytes, disk 2.6×.
   nothing pushed); its patch step runs first on the next nixos-unstable
   release.
 - Unfree apps (Chrome, Steam, Discord) are not in the cache — Komble keeps
-  them.
+  them; since 0.2 they still get a found card.
+- The catalog is 43 apps (0.2); `publish-index.yml` must rebuild the
+  index with them (dispatched with the 0.2 release). Thunderbird was not
+  in the cache for `2786a2a72088` (unavailable until Hydra has it).
+- Found apps on the owner's real machine (first login with 0.2) and the
+  real-GPU hour (B11) are the owner's checks.
 
 ## Related
 
