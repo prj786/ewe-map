@@ -1393,6 +1393,38 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   pacman's `CacheServer` (ewe-os `docs/TESTING.md`). `scripts/vm.sh` keeps
   its work folder off tmpfs and gives each ISO boot fresh UEFI variables.
 
+## One file picker (2026-11-22, ewe 0.48)
+
+- **A file dialog looks like GTK again, or opens behind the app.** Since
+  0.48 every app's Open, Save and "Open with" is ewe's own picker, drawn by
+  the shell on an overlay layer, so it cannot be under the app. A GTK dialog
+  means one of three things:
+  - the shell couldn't answer (restarting, a QML error), so `ewe-portal` handed
+    THAT request to the GTK dialog on purpose (`journalctl --user -u ewe-portal`:
+    "GTK dialog for … — <why>");
+  - the app never asks the portal: GIMP, JetBrains, Steam, Wine and Java draw
+    their own; Firefox and GTK 3 need `GTK_USE_PORTAL=1` (a new session after
+    upgrading); Qt needs qt6ct `standard_dialogs=xdgdesktopportal`;
+  - the routing isn't deployed: `ewe-portal status` → `routing.ewe` false →
+    run `ewe-setup`, then `systemctl --user restart xdg-desktop-portal`.
+- **`qs ipc call` to a target the shell doesn't have exits 0** (it prints
+  "Target not found."). Never trust the exit code: ewe-portal checks the word
+  each verb returns (`ok`, `open`, `idle`). ewe-share-picker still trusts it
+  and waits 300 s when the `picker` target is missing.
+- **Testing the portal without touching the session:** `dbus-run-session` with
+  `XDG_DESKTOP_PORTAL_DIR=<dir>` holding `ewe.portal` AND the
+  `hyprland-portals.conf` (in that mode the frontend reads its config from
+  that folder only), a fake `qs` on PATH, `ewe-portal serve`, then
+  `ewe-portal test open …` (tests/ewe-portal-test.sh). For the nested shell:
+  `HS_PRIVATE_BUS=1 HS_HEADLESS=1 driver.sh up`, run the daemon with the
+  nested qs's environment and `EWE_QS_IPC="--pid <pid>"` — it goes between
+  `ipc` and `call`. Editing a QML file reloads the nested shell and drops an
+  open pick; the GTK dialog then appearing is the fallback working.
+- **Proving a toolkit reaches the portal:** Qt's portal theme asks for the
+  portal's FileChooser version asynchronously at start, so a test that opens
+  `QFileDialog` immediately gets Qt's own dialog. Wait about a second first;
+  `QT_QPA_PLATFORM=offscreen` loads no platform theme at all.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
