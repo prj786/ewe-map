@@ -153,6 +153,18 @@ flowchart TB
   (`ewe-conf` domain `companion`, applies nothing); API keys (P4) go in the
   keyring, never the file.
 
+## The file picker (0.48, released 2026-11-22)
+
+- **Routing is per user**: `~/.config/xdg-desktop-portal/hyprland-portals.conf`
+  (a link into the payload), `~/.local/share/xdg-desktop-portal/portals/ewe.portal`,
+  `~/.local/share/dbus-1/services/org.freedesktop.impl.portal.desktop.ewe.service`,
+  `~/.config/systemd/user/ewe-portal.service`, `~/.local/bin/ewe-portal` — all
+  from `deploy_portal`, no root. A request lives in
+  `$XDG_RUNTIME_DIR/ewe-portal/<id>.json` until answered; what the picker
+  remembers (last folder per app, list or grid, hidden files, sort) is
+  `~/.local/state/ewe/filepicker.json` — local, never synced
+  ([[RFC-011 — One File Picker]]).
+
 ## The media + languages wave (0.46, released 2026-11-21)
 
 - **fcitx5** (only once someone adds a language): `~/.config/fcitx5/`

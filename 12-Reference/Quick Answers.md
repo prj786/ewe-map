@@ -71,6 +71,7 @@ checking here, it's probably guessing.**
 | question | answer | detail |
 |---|---|---|
 | Cast froze / TV dropped / no sound? | The known classes + `sh ~/.config/ewe/plugins/ewe.cast/cast-check.sh`; portal must be ≥ 1.4.1-2.1 | [[Troubleshooting Knowledge]] · [[Cast Plugin]] |
+| A file dialog looks like GTK, or opens behind the app? | Since 0.48 every app's Open/Save/Open with is ewe's picker on an overlay layer; a GTK one means the shell couldn't answer (one-off fallback), the app draws its own (GIMP, JetBrains, Steam, Wine), or routing is off — `ewe-portal status` (`routing.ewe`) | [[RFC-011 — One File Picker]] · [[Troubleshooting Knowledge]] |
 | **Why did my dock disappear on a fresh install?** | It isn't a bug: since 0.25 the dock is a plugin and a fresh ewe installs none. Komble → Plugins → Dock, or `ewe-plugin install ewe.dock` | [[Dock Plugin]] · [[Add-ons — opt-in, not preinstalled]] |
 | **Where are the dock's settings?** | Komble → Plugins → Dock → **Options** (auto-hide, icon size), or `ewe-plugin set ewe.dock icon_size small`; Settings → Layout → "Dock options" opens it. Old `[desktop.dock]` values carry over | [[Dock Plugin]] · [[Plugin Settings Live With the Plugin]] |
 | How do I hide a plugin from the bar? | Komble → its Options → *Show in bar*, or `ewe-plugin bar <id> off` (Music/Places: their own "Where the button lives") | [[Plugin Settings Live With the Plugin]] |

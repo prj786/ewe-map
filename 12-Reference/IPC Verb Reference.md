@@ -16,7 +16,8 @@ in a component. Every target and verb is public API (Rule 4).
 
 `applauncher bar cloud display game google lock osd overview picker
 plugins power quicksettings saver settings store sync toast updates
-welcome widgets` (`game` since 0.42)
+welcome widgets filepicker appchooser` (`game` since 0.42; `filepicker`,
+`appchooser` since 0.48)
 
 Most expose `toggle` / `show` / `hide`. Checked against the `IpcHandler`
 targets in `dotfiles/quickshell/*.qml` and a live `qs ipc show`, 2026-10-14:
@@ -47,6 +48,8 @@ state), `toast` and `welcome` were missing from this sheet. (`cloud`,
 | `plugins` | `list · apiVersion · safeMode · reload` |
 | `cloud`, `google` | the account and Google state (see [[Contracts and Public API]]) |
 | `sync`, `picker` | internal (ewe-sync's state; the screen-share portal) |
+| `filepicker` | `open <request.json>` → `ok` · `close <id>` · `ping <id>` → `open`/`idle`/`unknown` · `select <answer-json>` (tests) · `cancel` — called by `ewe-portal` (0.48, [[RFC-011 — One File Picker]]); every verb returns a word because `qs ipc call` to a missing target exits 0 |
+| `appchooser` | `open <request.json>` · `update <request.json>` · `close <id>` · `ping <id>` · `select <desktop id>` (tests) · `cancel` — "Open with" (0.48) |
 
 ## Plugin targets — present only while the plugin is installed + enabled
 
