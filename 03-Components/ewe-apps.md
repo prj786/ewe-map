@@ -181,6 +181,39 @@ install button." ewe-apps#6; needs [[eep]] 0.3.
   (Komble), Paste, Select all, Grid/List, Refresh. An app dragged out is
   copied, never moved; only the Trash removes one.
 
+## Faster to open, one Open with (0.4.1-beta, released 2026-11-23)
+
+The owner's ask: Open with did not look like ewe, the Viewer and Files had to
+be fast and responsive, and the small bugs had to go.
+
+- **Open with** is one card in the kit (`OpenWith`, `AppRows` in
+  `packages/ui`), the design system's "File picker → Open with" and the same
+  as the shell's `AppChooser.qml`: rows with the app's own icon (the core
+  hands each app's icon file from the GTK icon theme, `AppInfo.iconPath`),
+  the default first and ticked, "Other apps…" (every app, a search field),
+  "Always use this app for <type> files", and "Find an app in Komble…" on
+  the left of the footer. ewe Files (the dialog, Properties → Open with,
+  `--open-with=<path>`) and ewe Viewer (the app menu, a picture's ⋯, the
+  "cannot show this" page) use it.
+- **Start-up is measured**: `scripts/perf.sh` launches a build in headless
+  cage with `EWE_APPS_TRACE=1` and prints the marks (Rust `main`, `setup`,
+  `window`; the page's `script`, `fonts`, `listed` / `painted` / `ready`).
+  2026-11-23, medians: ewe Files 568 → about 405 ms to a drawn folder, ewe
+  Viewer 597 → 470–500 ms to a 4000×3000 JPEG, 686 → about 560 ms to a
+  PDF's first page. What it took is in [[Troubleshooting Knowledge]] →
+  "The apps were slow to open".
+- **The picture view** decodes the next picture off the page and swaps it
+  in with its size (no flash of the old one at 100 %); the tab, the title
+  and the menus follow the picture shown; a touchpad swipe zooms as far as
+  it travels, a mouse wheel still steps; the toolbar folds under 640 and
+  430 px.
+- **Shortcuts** are matched with `comboKey(e)` (`@ewe/shared`): the letter
+  on the key, whatever the layout types — Georgian, Cyrillic, Caps Lock.
+- **ewe Files' operations**: a copy pasted into its own folder gets a new
+  name without a question; a merge moves child by child; a stopped copy
+  removes its half file; the job list never locks a job while the queue is
+  locked.
+
 ## How the desktop wires them in (ewe 0.44.0-beta)
 
 - **Package:** `ewe-apps` is a dependency of `ewe` (`PKGBUILD`), served

@@ -1504,6 +1504,44 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
   apps whose card is in the Trash so a restore needs no download; emptying
   the Trash frees them on the next gc.
 
+## The apps were slow to open, and small bugs (2026-11-23, ewe-apps 0.4.1)
+
+Measured with `scripts/perf.sh` (ewe-apps) and strace unpacked into a temp
+folder (`pacman -Sp strace`, nothing installed).
+
+- **All three apps re-applied the theme five times a second** — the theme
+  watcher (notify) took its own read of `theme-tokens.json` for a change:
+  inotify reports OPEN and CLOSE_NOWRITE. Every notify watcher must drop
+  `EventKind::Access(_)` (Files' folder watcher and ewe Sync's already did).
+- **~40 ms of every start went to a title bar nobody sees** — tao shows a
+  window before it turns the decorations off; on Wayland GTK builds its own
+  title bar for that moment and loads three symbolic icons, and since
+  gdk-pixbuf 2.44 an image is decoded by a sandboxed glycin loader that has
+  to be spawned (bwrap). Build the window hidden, then show it. Never load
+  a pixbuf on a start-up path.
+- **150–250 ms went to fonts** — the faces are web fonts; text laid out
+  before they arrive is measured with fallbacks, and WebKit finds a fallback
+  by trying every family of the stack in turn, opening each file: eighteen
+  Noto script faces, none with a Latin letter. Render after
+  `document.fonts.load()`, preload the files, and keep a Latin-capable face
+  ("Noto Sans") second in the stack — a single character Geist lacks (the
+  narrow no-break space in "5:45 PM") walked the same list.
+- **The first answers over Tauri's IPC come ~45 ms after the first call** —
+  what a window needs to draw its first screen (theme, launch, media
+  server) goes into an initialization script instead.
+- **"Ctrl+C does nothing"** on the Georgian layout or with Caps Lock —
+  `e.key` is the character typed, not the key. Match shortcuts on the Latin
+  letter, falling back to the physical key (`comboKey`).
+- **A file vanished after copy + paste in the same folder** — "Replace"
+  removed the destination, which was the source. The same queue could lock
+  up when a job finished while the page asked for the list (two locks taken
+  in opposite orders).
+- **A two-finger swipe zoomed a picture to 800 %** — a touchpad sends tens
+  of small wheel events per swipe; one step per event is wrong for it.
+- **`on(() => props.x.y, fn)` in Solid** runs `fn` whenever the source is
+  re-evaluated, not when the value changes: every folder was listed twice.
+  Give it a memo.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
