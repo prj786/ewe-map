@@ -10,7 +10,7 @@ up: "[[Plugin System]]"
 
 `~/Projects/ewe/ewe-plugin-phone` ·
 [github.com/prj786/ewe-plugin-phone](https://github.com/prj786/ewe-plugin-phone)
-· v1.0.0 · API 3 · **plugin since 0.25** (was `KdeConnect.qml` + the Mobile
+· v1.1.0 · API 3 · **plugin since 0.25** (was `KdeConnect.qml` + the Mobile
 page; narrative in [[Phone and VPN]]).
 
 Your phone through KDE Connect's daemon (UI all ewe): pairing, battery, its
@@ -49,6 +49,30 @@ reachable, battery + an accent dot for unread.
 Open: `autostart.sh` also started `kdeconnectd` (both guarded) — check the
 duplicate is gone after the carve-out.
 
+## 1.1.0 (2026-11-23, ewe-plugin-phone#1 — released in ewe 0.49.2-beta)
+
+Found while building [[ewe Mobile]] against a real phone:
+
+- **Messages never worked against a real phone.** The bridge asked
+  `…/devices/<id>/conversations` for the conversations interface — there is
+  no such object (`No such object path`, the page stayed on its spinner) —
+  and read a message as a dict; the daemon sends a **struct** in a variant.
+  Fixed: the interface is on the device object, `norm_message` takes the
+  struct (and still the dict), `requestConversations` sends what the daemon
+  has cached first (asked a second time it only says "loaded"), and
+  `sendToAddress` sends the recipient as the struct `(s)`. Run against the
+  owner's phone, read-only: 0 messages and one error before, 53 well-formed
+  messages after. `test.sh` holds the real shape (12 checks).
+- **The page opens ewe Mobile.** A head button (only where the app's desktop
+  entry exists — asked each time the page opens) runs
+  `ewe-mobile --page messages|phone` and brings its window forward. The page
+  stays the short version; the window has contacts, the player, files, the
+  remote.
+
+Vendored into `ewe` 0.49.2-beta (ewe#95, commit `b494f33` in `bundle.json`).
+`sshfs` is in `ewe`'s `common.list` from the same release — KDE Connect
+mounts the phone's storage with it.
+
 ## Related
 
-- [[Plugin System]] · [[Phone and VPN]] · [[Shell Singletons]] · [[Troubleshooting Knowledge]]
+- [[Plugin System]] · [[Phone and VPN]] · [[ewe Mobile]] · [[Shell Singletons]] · [[Troubleshooting Knowledge]]

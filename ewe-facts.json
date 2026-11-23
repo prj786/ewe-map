@@ -4,7 +4,7 @@
   "generated": "2026-11-22",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.49.1-beta",
+    "ewe_de": "0.49.2-beta",
     "ewe_os": "0.17.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.26.0-beta",
@@ -24,7 +24,7 @@
       "ewe.vpn": "1.0.3",
       "ewe.media": "1.1.0",
       "ewe.places": "1.2.0",
-      "ewe.phone": "1.0.1",
+      "ewe.phone": "1.1.0",
       "ewe.mail": "1.2.0",
       "ewe.cast": "1.0.2",
       "ewe.dock": "1.5.0",
@@ -46,7 +46,9 @@
     "release_2026_11_23_apps": "faster to open, one Open with: ewe-apps 0.4.1-beta (ewe-apps#7, d8b0dc5) — the kit's OpenWith card, start-up 20-30 % shorter, the theme watcher loop, thirty small bugs; [ewe] publish run 45210346787 (tags in the Version Ledger)",
     "release_2026_11_23_install": "installing shows: eep 0.3.0-beta (eep#3, af9922c) + ewe-apps 0.4.0-beta (ewe-apps#6, 49d823f) + ewe 0.49.1-beta (ewe#94, 5bce624, the eep-install window rule); [ewe] publish run 45163595840 (tags in the Version Ledger)",
     "release_2026_11_23_cards": "every app is a card (decision 75): eep 0.2.0-beta (eep#2, b8e52a4) + ewe 0.49.0-beta (ewe#93, depends on eep) + ewe-apps 0.3.1-beta (ewe-apps#5); ewe-repo#8 (eep required); site prj786.github.io#18 (40 apps); [ewe] publish run 45065952675 (tags in the Version Ledger)",
-    "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)"
+    "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)",
+    "ewe_mobile": "0.1.0-beta",
+    "release_2026_11_23_mobile": "ewe Mobile 0.1.0-beta (prj786/ewe-mobile, private; v0.1.0-beta on ca5f921) + ewe 0.49.2-beta (ewe#95: ewe.phone 1.1.0 from ewe-plugin-phone#1, sshfs in common.list); [ewe] published, run 45230302638"
   },
   "repos": [
     {
@@ -186,6 +188,12 @@
     {
       "name": "ewe-plugin-companion",
       "role": "plugin ewe.companion, shown as Shaun (decision 39): the island in the bar's centre + the card drop (RFC-007; 0.7.0, vendored in ewe 0.47.0-beta, opt-in: streaming answers, chat.warm, do app)"
+    },
+    {
+      "name": "ewe-mobile",
+      "role": "ewe Mobile: the phone in one window (messages, contacts, notifications, media, files, remote, devices) over KDE Connect's daemon; 0.1.0-beta released 2026-11-23; PRIVATE repo for now — the package is on its own release, not in [ewe]",
+      "stack": "Tauri v2 + Svelte 5, zbus",
+      "license": "MIT"
     }
   ],
   "rules": [
@@ -1358,7 +1366,8 @@
       "gst-plugins-good",
       "gst-plugins-ugly",
       "gst-libav",
-      "ffmpeg"
+      "ffmpeg",
+      "sshfs (0.49.2-beta, 2026-11-23 — owner: installed by default; KDE Connect mounts the phone's storage with it)"
     ],
     "reversal_icon_theme": "pkgrel 2: hardlink -q -c usr/share/icons - 416 MiB -> ~14 MiB installed",
     "iso_trim": "nvidia-open, cloud-init (+ cloud-init.target.wants units), clonezilla, partclone, partimage, fsarchiver, irssi, lynx, mc, nmap, tcpdump, refind, b43-fwcutter, darkhttpd, gpm, lftp, linux-atm, ndisc6, openpgp-card-tools, sequoia-sq, pptpclient, vpnc, wvdial; measured 7.5 -> 5.4 GB installed, 2.48 -> 1.90 GB compressed, ISO 3.2 -> 2.6 GB (2,591,948,800 bytes, v0.16.0-beta)"
@@ -1540,5 +1549,51 @@
     "install_flow": "eep 0.3 (released 2026-11-23): ready rule = $XDG_STATE_HOME/eep/roots/<id> links to the card's out; activity file $XDG_RUNTIME_DIR/eep/activity.json {eep_activity:0, updated, apps:[{id,name,card,what,state,done,total,download,error,pid}]}; new verbs `eep add <card>` (Install: the card moves into ~/Applications), `eep card <file>`, `eep open --ask` (the handler; hands a card that is not installed to `ewe-files-app --install=<card>` / $EEP_INSTALLER); ewe-apps 0.4.0-beta Install view + ewe's Hyprland rule eep-install (title 'Install an app', 400x380)",
     "found_apps": "every app the launcher shows gets a card (NoDisplay/Hidden/TryExec respected, OnlyShowIn not); card leaves -> hidden, restored -> shown, uninstalled -> card goes; state ~/.local/state/eep/found.json",
     "catalog": "43 apps (0.2): 40 gui/cli on the site, Thunderbird unavailable on 2786a2a72088"
+  },
+  "ewe_mobile": {
+    "status": "0.1.0-beta released 2026-11-23 (v0.1.0-beta on ca5f921) in a PRIVATE repo; not in [ewe], not on the website",
+    "decision": 76,
+    "backend": "kdeconnectd over the session bus (org.kde.kdeconnect); nothing of KDE Connect's own UI",
+    "binary": "ewe-mobile",
+    "desktop_id": "io.github.prj786.ewe-mobile",
+    "page_ids_public": [
+      "phone",
+      "messages",
+      "contacts",
+      "notifications",
+      "media",
+      "files",
+      "remote",
+      "devices"
+    ],
+    "cli": {
+      "--page <id>": "open on a page; a second launch tells the running window",
+      "--status": "one JSON line: installed, running, devices; never starts the daemon",
+      "--version": "one JSON line"
+    },
+    "env": {
+      "EWE_MOBILE_NO_DAEMON": "never start kdeconnectd (tests on a private bus)"
+    },
+    "shell_side": "the ewe.phone plugin (bar glyph, Quick settings page 'mobile'); its page opens the window",
+    "state": "none; the chosen device id in the webview's local storage; no ewe.conf key",
+    "package_depends": [
+      "webkit2gtk-4.1",
+      "gtk3",
+      "kdeconnect",
+      "sshfs"
+    ],
+    "wire_facts": {
+      "conversations_interface_on": "/modules/kdeconnect/devices/<id> (no /conversations child)",
+      "message_struct": "(i s a(s) x i i x i x a(xsss)) in a variant: event, body, addresses, date ms, type, read, thread, uid, sub, attachments",
+      "reply_needs_cached_thread": true,
+      "contacts": "~/.local/share/kpeoplevcard/kdeconnect-<id>/<uid>.vcf (vCard 2.1)"
+    },
+    "verified_on_a_phone": "reads only (devices, battery, signal, notifications, threads, a conversation's signals, contacts, media)",
+    "not_verified_on_a_phone": "every write: send, reply, dismiss, pair, ring, clipboard, share, dial, media controls, remote input, storage mount",
+    "repo": "prj786/ewe-mobile (private for now — owner 2026-11-23)",
+    "install_while_private": "gh release download v0.1.0-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst' && sudo pacman -U ewe-mobile-*.pkg.tar.zst",
+    "when_public": "add ewe-mobile to ewe-repo's publish list (opt-in, the ewe-safe pattern) and to the website's apps",
+    "plugin": "ewe.phone 1.1.0 (ewe-plugin-phone#1, vendored in ewe 0.49.2-beta): the Messages fix and the Open ewe Mobile button",
+    "sshfs": "installed by default: in ewe's packages/common.list since 0.49.2-beta (owner exception to the package diet) and a dependency of ewe-mobile"
   }
 }

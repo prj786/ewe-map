@@ -1542,6 +1542,76 @@ folder (`pacman -Sp strace`, nothing installed).
   re-evaluated, not when the value changes: every folder was listed twice.
   Give it a memo.
 
+## KDE Connect over D-Bus (ewe Mobile, 2026-11-23)
+
+What the daemon really does, found by asking a running `kdeconnectd` 26.08
+with a paired phone (`busctl --user introspect org.kde.kdeconnect <path>`;
+the daemon object itself needs `gdbus introspect` — busctl says "duplicate"):
+
+- **SMS is on the device object.** `org.kde.kdeconnect.device.conversations`
+  is an interface of `/modules/kdeconnect/devices/<id>`; a `/conversations`
+  child does not exist (`No such object path`). The `/sms` child is the
+  plugin's own, lower-level interface.
+- **A message is a struct, not a dict:** `(i s a(s) x i i x i x a(xsss))` in
+  a variant — event, body, addresses (each a struct `(s)`), date in ms, type
+  (1 received, 2 sent, 5 failed), read, thread id, uid, SIM id, attachments
+  (part id, mime, base64 thumbnail, unique id). A recipient for
+  `sendWithoutConversation(av s av)` is that same struct `(s)` in a variant.
+- **`replyToConversation` can do nothing, silently:** it looks the thread up
+  in the daemon's cache and returns when it is not there. Check
+  `activeConversations()` first, fall back to the addresses.
+- **`requestAllConversationThreads` twice:** the first time each thread's
+  newest message arrives as `conversationCreated`; asked again the daemon
+  only emits `conversationLoaded(thread, count)` per thread. Read
+  `activeConversations()` for what it already holds.
+- **Contacts are files, not D-Bus:** vCard 2.1 in
+  `~/.local/share/kpeoplevcard/kdeconnect-<id>/<uid>.vcf` — names as
+  `CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE` (soft line breaks end in `=`),
+  photos as folded `BASE64`.
+- **The daemon never says a call ended** (`telephony.callReceived` has
+  `ringing`, `talking`, `missedCall` and nothing after), and never reports
+  back on a sent message: the UI must not claim more than it knows.
+- **`busctl --user list` names services that COULD be started** (activatable)
+  beside the running ones; a test that asks "did this start kdeconnectd?"
+  wants `--acquired`.
+- **A match rule's `sender` does not keep strangers out.** The bus delivers a
+  signal sent straight at a client (a destination set) whatever that
+  client's rules say, and a client-side filter cannot resolve a well-known
+  name. Compare each signal's sender with `GetNameOwner` of the service
+  (ewe Mobile's `pump`; `tests/origin.sh` proves it with an impostor).
+- **A call to a unique name (`:1.42`) never starts a service** — the way to
+  talk to a daemon only if it is already there, with no race.
+- **Any method call on `org.kde.kdeconnect` starts the daemon** (D-Bus
+  activation). `EWE_MOBILE_NO_DAEMON=1` / `EWE_PHONE_NO_DAEMON=1` and a
+  private bus for every test, or the test is a new device on the network.
+
+Building the app:
+
+- **Svelte 5:** `const list = obj[k] ?? (obj[k] = [])` hands back the plain
+  array, not the reactive one — pushes to it are never seen (the compiler
+  warns `assignment_value_stale` in dev). Assign, then read it back. The same
+  for an object pushed into a `$state` array: mutate the one read back from
+  the array, not the literal.
+- **`node --test tests/` works on Node 26 and fails on Node 22**
+  (`MODULE_NOT_FOUND`: the older one takes the folder for a module to run).
+  CI sets up 22: name the files, `node --test tests/*.test.js`.
+- **A private repo's release is invisible to ewe-repo's publish workflow** —
+  its `github.token` reads its own repo and public ones. A first-party app
+  in a private repo is installed from its own release until it goes public
+  (or the workflow is given a token of its own).
+- **`gh repo create --public` is public at once**: ask which before creating
+  (ewe Mobile was public for two minutes before the owner said "private").
+- **A module imported from outside the page's graph is a second copy** — a
+  screenshot script that `import()`s `state.svelte.js` drives nothing. The
+  dev mock exposes the page's own (`window.__EWE_MOBILE_MOCK__.state`).
+- **Screenshots without a window on the desktop:** a GTK window with a
+  WebKit2 4.1 `WebView` inside `WLR_BACKENDS=headless cage`, then
+  `get_snapshot` — the engine Tauri uses, at any size. The real binary runs
+  in the same cage with `grim`. **The nested Hyprland harness does not start
+  inside a headless cage** (`CBackend::create() failed`, with pixman and with
+  the GPU renderer) — it needs the host session, and each failed try leaves
+  a crash report in `~/.cache/hyprland/`.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

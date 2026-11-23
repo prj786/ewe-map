@@ -38,6 +38,14 @@ generic QML D-Bus client, so the Python bridge owns every D-Bus call and
 speaks NDJSON over stdio to the `Phone` singleton (same pattern as BtAgent
 — see [[Shell Singletons]]).
 
+**The window (2026-11-23):** [[ewe Mobile]] is the same phone in a Tauri
+window — messages with the contacts' names and photos, the address book, the
+phone's player, files, a remote, pairing and per-feature switches — over the
+same daemon. The page here stays the short version and has a button that
+opens it ([[ewe Mobile — a window over KDE Connect]]). Released 2026-11-23
+as 0.1.0-beta in a private repo; the plugin fix (1.1.0: Messages against a
+real phone) and `sshfs` by default came with ewe 0.49.2-beta.
+
 **Secrets/state:** pairing keys stay in kdeconnectd; the shell persists
 only seen-notification ids (unread badge) and the chosen device
 (`kdeconnect-state.json`). MMS bodies often aren't exposed over D-Bus —
@@ -78,5 +86,5 @@ WireGuard from file) or `nmcli connection import type openvpn file x.ovpn`.
 
 ## Related
 
-- [[Phone Plugin]] · [[VPN Plugin]] · [[SSH Plugin]] · [[Shell Singletons]] ·
+- [[Phone Plugin]] · [[ewe Mobile]] · [[VPN Plugin]] · [[SSH Plugin]] · [[Shell Singletons]] ·
   [[Google Extras]] · [[System Architecture]] · [[Troubleshooting Knowledge]]
