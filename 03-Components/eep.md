@@ -71,6 +71,37 @@ load (root's driver timer reads it — Fable's review found `release =
 "/etc/cron.d"` and `eep remove '../..'` reaching outside eep's folders in
 0.1); `OnlyShowIn` entries get cards (ewe's launcher shows them).
 
+## Installing shows (0.3.0-beta, released 2026-11-23)
+
+Owner, after a day on the real machine: a card dropped into Applications
+"feels like installed but 1st start takes like forever", and a click on a
+card should open "a dialog with icon and name top of the install button".
+eep#3, with ewe-apps 0.4.0-beta and ewe 0.49.1-beta; the contract is
+`eep/docs/CARD.md`, "While an app installs".
+
+- **Ready or not.** An eep app can start when
+  `$XDG_STATE_HOME/eep/roots/<id>` links to the card's `out`. A card that
+  just arrived is not ready; a found app always is.
+- **How far.** `$XDG_RUNTIME_DIR/eep/activity.json` lists what eep fetches
+  now: `id`, `card`, `what` (install/update), `state` (waiting →
+  downloading → finishing, or failed + `error`), `done`/`total`/`download`
+  bytes, `pid` (an entry of a dead eep is ignored). Progress comes from
+  Nix's own JSON log (`nix-store --realise --log-format internal-json`).
+- **`eep add <card>`** = Install: the card MOVES into `~/Applications` and
+  the app is fetched; not started. **`eep card <file>`** says what a card
+  is before installing (`installed`, `ready`, `download`). **`eep open
+  --ask`** (the card handler): an installed app starts; any other card goes
+  to the installer (`ewe-files-app --install=<card>`, or `$EEP_INSTALLER`).
+- **A card that arrives is installed as the index has the app today**
+  (current version, patches; the card is rewritten) — only an app the index
+  does not have is fetched as its card names it.
+- **Robustness:** one app that can't be fetched never stops the others; a
+  failed install is tried again by `eep watch` (20 s, then less often);
+  taking the card out while it downloads stops the download; starting an
+  installed app no longer waits for eep's lock.
+- Tests: `test/run.sh install-flow.sh` in the container (real 264 MB
+  download with progress, cancel, a bad card beside a good one, `--ask`).
+
 ## Where it meets ewe
 
 - **[[Komble]] 0.26.0-beta**: an "eep" source in Discover, an "eep apps"
@@ -85,6 +116,12 @@ load (root's driver timer reads it — Fable's review found `release =
   launcher leaves `~/Applications/*.eep` out of file results.
 - **[[ewe-apps]] 0.3.1-beta**: a card with no eep says "update ewe" instead
   of opening as text.
+- **[[ewe-apps]] 0.4.0-beta**: Applications is a
+  place of apps — rings and "Installing 43%" on cards, its own menus, the
+  Install view. It also fixes the frozen Applications folder (see
+  [[Troubleshooting Knowledge]]).
+- **ewe 0.49.1-beta**: the Hyprland rule `eep-install` floats the small
+  Install window, centred, 400×380.
 - **[[Website]]** `/apps/`: Get downloads the card; `npm run apps` refreshes
   the page from an eep release.
 - **ewe's launcher** (0.48.1-beta): file search skips hidden folders, so an
