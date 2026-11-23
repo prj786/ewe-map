@@ -67,6 +67,7 @@ flowchart TB
   [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-safe]] ·
   [[ewe-browser]] · [[ewe-apps]] (ewe Files · ewe Player · ewe Viewer, 0.44) · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
+- [[ewe Mobile]] — your phone in one window, over KDE Connect's daemon (0.1.0-beta, 2026-11-23; a private repo for now)
 
 **04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)
 - [[Plugin System]] · [[Example Plugin]]

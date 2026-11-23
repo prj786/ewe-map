@@ -47,6 +47,17 @@ This is the mechanical half decision 22 promised: a plugin's `requires`
 already named these packages; now `ewe` stops carrying them for machines
 that never install the plugin.
 
+## 2026-11-23 — `sshfs` comes back in, on purpose
+
+The owner, releasing [[ewe Mobile]]: "make sshfs installed by default".
+`sshfs` is in `packages/common.list` since ewe 0.49.2-beta. It is what KDE
+Connect mounts the phone's storage with, and kdeconnect lists it only as
+optional — so "Browse its files" failed on every machine. This is an
+**owner exception** to the guard below (a plugin's package goes in its
+`requires`): 90 KB, its dependencies `fuse3` and `openssh` were already in
+the list, and it serves any remote folder, not one plugin. Do not move it
+back out.
+
 ## Not taken
 
 Splitting `ewe` into `optdepends` groups (Komble + `requires` already give

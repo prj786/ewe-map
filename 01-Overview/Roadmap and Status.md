@@ -15,6 +15,33 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-23 — ewe Mobile (0.1.0-beta, private) + Phone 1.1.0 + sshfs by default (ewe 0.49.2) — released
+
+The owner: "now i want you to generate new app. i want ewe mobile app. based
+on kde … create new tauri [app] which will use kde connect backend but will
+do everything with different ui … we need better ui, contacts, send message
+and stuff like we have on kde connect, everything offered from ewe
+perspective." An explicit new feature (the bugs-only rule stands otherwise).
+Then: "thats great release also make sshfs installed by default", and
+"create new repo … for now private in github".
+**Released 2026-11-23:** ewe Mobile `v0.1.0-beta` (`prj786/ewe-mobile`,
+**private**, tag on the merge `ca5f921`; release run 45230965959);
+ewe-plugin-phone#1 (1.1.0, `b494f33`); ewe `v0.49.2-beta` (ewe#95, the merge
+`92c4c65`); `[ewe]` published, run 45230302638.
+
+| what | where | state |
+|---|---|---|
+| **ewe Mobile 0.1.0-beta** — eight pages over `kdeconnectd` (Phone, Messages, Contacts, Notifications, Media, Files, Remote, Devices), `--page`, `--status`, `--version` | `prj786/ewe-mobile` (**private**), `v0.1.0-beta`; the package is on that release, **not in `[ewe]`** and not on the website while the repo is private | released; reads verified on the owner's phone, **nothing that writes has been tried on a phone** ([[ewe Mobile]]) |
+| **ewe.phone 1.1.0** — Messages against a real phone (wrong object path + message shape), a button that opens ewe Mobile | ewe-plugin-phone **#1**, vendored in ewe **#95** | released in ewe 0.49.2-beta ([[Phone Plugin]]) |
+| **`sshfs` by default** — in `packages/common.list`, so a dependency of the `ewe` package (KDE Connect mounts the phone's storage with it and lists it as optional) | ewe **#95** | released; an owner exception to [[The Package Diet]]'s "a plugin's package goes in its `requires`" |
+| decision 76 | [[ewe Mobile — a window over KDE Connect]] | recorded |
+
+**Open (owner):** `sudo pacman -Syu` (ewe 0.49.2: the plugin and `sshfs`);
+install the app from the private release (`gh release download v0.1.0-beta
+-R prj786/ewe-mobile -p '*.pkg.tar.zst'`, then `sudo pacman -U` it); send
+one message from it. **When the repo goes public:** add `ewe-mobile` to
+ewe-repo's publish list (opt-in, like ewe-safe) and to the website's apps.
+
 ## 2026-11-23 — faster to open, one Open with, thirty small bugs (ewe-apps 0.4.1) — released
 
 The owner: "i think open with options dialog not really ewe design. Fix it
