@@ -1542,6 +1542,28 @@ folder (`pacman -Sp strace`, nothing installed).
   re-evaluated, not when the value changes: every folder was listed twice.
   Give it a memo.
 
+## AppImages as cards (2026-11-23, eep 0.4 / ewe-apps 0.4.2)
+
+- **An AppImage card shows "Installing" for ever in ewe Files** — ewe
+  Files is older than 0.4.2: it compares eep's root link with the card's
+  `out` for equality, and an AppImage card's `out` is relative. Update
+  both (`sudo pacman -Syu`).
+- **eep says "bad card: unknown variant `appimage`"** — eep is older than
+  0.4. The card is kept, nothing is removed.
+- **"… was made from a file on another computer: there is nothing to
+  download"** — the card was made by dropping an `.AppImage` file, so it
+  has no `url`. Drop the file again on this computer.
+- **"The download is not the file its card names"** — the card pins a
+  `sha256` and the address now serves another file (a "latest" link, a
+  re-upload). Get a newer card, or `eep update <id>` for a card with a
+  `repo`.
+- **A dropped `.AppImage` stays a file** — it is not an AppImage (it does
+  not unpack and is no program), or it was still being copied: eep takes
+  it once it has been still for a moment, and asks about a refused file
+  only once until it changes.
+- **Testing `eep gc`** — never in a sandboxed home on a machine with Nix:
+  it runs the real `nix-store --gc`. The AppImage half is unit-tested.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
