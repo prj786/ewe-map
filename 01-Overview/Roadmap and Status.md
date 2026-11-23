@@ -15,6 +15,26 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-23 — faster to open, one Open with, thirty small bugs (ewe-apps 0.4.1) — released
+
+The owner: "i think open with options dialog not really ewe design. Fix it
+also ewe view must be fast and responsive same goes with files. Once again
+revisit and fix small bugs." Then: "release".
+**Released 2026-11-23:** ewe-apps `v0.4.1-beta` (ewe-apps#7, the merge
+`d8b0dc5`); `[ewe]` publish run 45210346787. Nothing else changed: the shell's own
+Open with (`AppChooser.qml`) already was the design system's card.
+
+| what | where | state |
+|---|---|---|
+| One Open with card in the kit — the apps' own icons, the default first and ticked, Other apps…, "Always use this app for …", Find an app in Komble… | [[ewe-apps]] | released |
+| Start-up, measured: ewe Files 568 → ~405 ms to a drawn folder, ewe Viewer 597 → 470–500 ms to a large JPEG, 686 → ~560 ms to a PDF (headless medians, `scripts/perf.sh`) | [[ewe-apps]], [[Troubleshooting Knowledge]] | released |
+| The theme watcher took its own read for a change: `theme-changed` five times a second in all three apps | [[Troubleshooting Knowledge]] | fixed, test fails without the fix |
+| ewe Files: a copy pasted into its own folder with Replace deleted the file; a merge with Skip deleted the skipped files; a lock-up between a finishing job and the list; half files after Stop | [[ewe-apps]] | fixed, tested |
+| ewe Viewer: no flash at 100 % between pictures, a touchpad swipe zooms as far as it travels, the picture toolbar folds, comics / books / PDF tabs / Markdown links | [[ewe-apps]] | released |
+| Shortcuts match the letter on the key: Ctrl+C, V, X… on the Georgian layout and under Caps Lock | [[ewe-apps]] | released, unit-tested |
+| AppImages as cards (`source = "appimage"` in eep) — asked, answered "yes, about 2–3 days", not started | [[eep]] | open |
+| The owner's real machine: `sudo pacman -Syu`, then a real touchpad, a real Georgian layout, how opening feels with the GPU | — | open |
+
 ## 2026-11-23 — installing shows (eep 0.3, ewe-apps 0.4, ewe 0.49.1) — released
 
 The owner, after a day with eep on the real machine: "now i want you to

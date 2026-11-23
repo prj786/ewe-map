@@ -35,7 +35,7 @@
     },
     "ewe_safe": "0.5.2-beta",
     "ewe_companion": "0.3.0-beta",
-    "ewe_apps": "0.4.0-beta",
+    "ewe_apps": "0.4.1-beta",
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
     "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
     "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)",
@@ -43,6 +43,7 @@
     "release_2026_11_21_iso": "the installer wave: komble 0.25.0-beta (komble-arch#23, install picks), ewe-os 0.17.0-beta (ewe-os#22, language first + apps for day one); the ISO carries ewe 0.47.0-beta",
     "release_2026_11_22": "one file picker (RFC-011): ewe 0.48.0-beta (ewe#91) + komble 0.25.1-beta (komble-arch#24), ewe-settings 0.26.1-beta (ewe-settings#29), ewe-sync 0.17.2-beta (ewe-sync#17), ewe-safe 0.5.2-beta (ewe-safe#25), ewe-apps 0.2.1-beta (ewe-apps#3); decision 73 (tags in the Version Ledger)",
     "eep": "0.3.0-beta",
+    "release_2026_11_23_apps": "faster to open, one Open with: ewe-apps 0.4.1-beta (ewe-apps#7, d8b0dc5) — the kit's OpenWith card, start-up 20-30 % shorter, the theme watcher loop, thirty small bugs; [ewe] publish run 45210346787 (tags in the Version Ledger)",
     "release_2026_11_23_install": "installing shows: eep 0.3.0-beta (eep#3, af9922c) + ewe-apps 0.4.0-beta (ewe-apps#6, 49d823f) + ewe 0.49.1-beta (ewe#94, 5bce624, the eep-install window rule); [ewe] publish run 45163595840 (tags in the Version Ledger)",
     "release_2026_11_23_cards": "every app is a card (decision 75): eep 0.2.0-beta (eep#2, b8e52a4) + ewe 0.49.0-beta (ewe#93, depends on eep) + ewe-apps 0.3.1-beta (ewe-apps#5); ewe-repo#8 (eep required); site prj786.github.io#18 (40 apps); [ewe] publish run 45065952675 (tags in the Version Ledger)",
     "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)"
