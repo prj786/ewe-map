@@ -152,6 +152,35 @@ ewe Files learns eep ([[eep]], [[RFC-010 — eep]]): the card in
   selection is cards in Applications (eep's watcher uninstalls). Rename
   keeps `.eep`.
 
+## Applications is a place of apps (0.4.0-beta, released 2026-11-23)
+
+Owner: "Applications directory becomes laggy not functional and makes UI
+to broke … it should be taking long time so I know it's installing … when
+I click on eep it should be opening dialog with icon and name top of the
+install button." ewe-apps#6; needs [[eep]] 0.3.
+
+- **The frozen folder (0.3.1) is fixed.** The windowed grid measured its
+  row height from the first rendered row; with one- and two-line app names
+  rows differed and the page never left a microtask loop. Now every tile is
+  one height and the measurement does not depend on what is rendered
+  (`listWindow` in `@ewe/shared`). Rule: never make a tile's height depend
+  on its content.
+- **A card that is still installing shows it**: its icon dims behind a ring
+  that fills, "Installing 43%" under the name, "43%" beside Applications in
+  the sidebar, "N installing" in the status line (eep's activity file,
+  followed by the Rust side).
+- **A click**: a ready app starts; one still installing says how far; a
+  card anywhere else opens the **Install view** — the app's icon and name
+  over **Install** ("Version x · N MB to download"). Install moves the card
+  into Applications (`eep add`), shows the bar, then **Open**. The same
+  view is a small window of its own for a card clicked outside Files
+  (`ewe-files-app --install=<card>`, sent by `eep open --ask`).
+- **Menus in Applications**: Open (or Install now / Try again) · Remove app
+  (a found app: Hide app; one still installing: Cancel install) ·
+  Properties. No Open with, Cut, Rename or Compress. Background: Get apps…
+  (Komble), Paste, Select all, Grid/List, Refresh. An app dragged out is
+  copied, never moved; only the Trash removes one.
+
 ## How the desktop wires them in (ewe 0.44.0-beta)
 
 - **Package:** `ewe-apps` is a dependency of `ewe` (`PKGBUILD`), served

@@ -1428,6 +1428,30 @@ the REAL power profile, stop the REAL ewe Sync and kill the REAL browser.
 
 ## eep and Applications (2026-11-22, eep 0.1 / ewe 0.48.1)
 
+- **Applications "becomes laggy, not functional, breaks the UI"** (owner,
+  2026-11-23, ewe-apps 0.3.1). Not eep and not the icons (SVG vs PNG
+  measured the same): ewe Files' windowed grid took its row height from the
+  FIRST RENDERED row. App names are one or two lines, so rows differed,
+  each window measured another height, each height asked for another
+  window — an endless microtask loop, the page frozen at 100 % CPU. The
+  `WebKitWebProcess` SIGABRT core dumps are only the 10 s watchdog of a
+  closed window whose page was stuck. Repro (headless): `--shot=applications
+  --shot-height=656`, eight Down keys. Fixed in ewe-apps 0.4 (one tile
+  height; measurement independent of what is rendered).
+- **"I moved the card in, it looks installed, the first start takes
+  forever"** (same day). Nothing showed that the app was still downloading,
+  and `eep open` waited for the watcher's lock — a click on ANY card hung
+  until the download ended, and three clicks started the app three times.
+  eep 0.3 + ewe-apps 0.4: the activity file and the ring; a ready app
+  starts with no lock.
+- **The Install window covers the whole screen.** A window that cannot be
+  resized floats on Hyprland by itself, but at the size of the screen (GTK
+  takes the first size it is offered). It is an ordinary window; ewe's
+  `eep-install` rule (title `Install an app`) gives it 400×380, centred.
+  The rule and ewe-apps' `INSTALL_TITLE` / `INSTALL_SIZE` change together.
+- **The first key of a `wtype` session is lost** in the cage harness: send
+  a harmless key (`wtype -k Shift_L`) before the one that matters.
+
 - **An app's card opened as text, or something other than the app ("GIMP
   opens as file manager")** (owner, 2026-11-22). eep was not installed on
   the machine, so `GIMP.eep` was a plain TOML file to everything: the

@@ -15,6 +15,27 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-23 — installing shows (eep 0.3, ewe-apps 0.4, ewe 0.49.1) — released
+
+The owner, after a day with eep on the real machine: "now i want you to
+polish eep installation and processes. somehow Applications directory
+becomes laggy not functionall and makes ui to broke. also when i download
+eep file and move it feels like installed but 1st start takes like forever
+… when i move eep there. it should be taking long time so i know its
+installing. also when i click on eep it should be opening dialog with icon
+and name top of the install button." Then: "thats great release".
+**Released 2026-11-23:** eep `v0.3.0-beta` (eep#3); ewe-apps `v0.4.0-beta`
+(ewe-apps#6); ewe `v0.49.1-beta` (ewe#94); `[ewe]` publish run 45163595840.
+
+| what | where | state |
+|---|---|---|
+| The frozen Applications folder (the windowed grid measured the first rendered row) | [[ewe-apps]], [[Troubleshooting Knowledge]] | fixed, reproduced before and after |
+| A card that is still installing shows it (ring, "Installing 43%", activity file, ready rule) | [[eep]], [[ewe-apps]] | released |
+| The Install view: icon and name over Install; a small floating window for a card clicked outside Files | [[ewe-apps]], ewe's `eep-install` rule | released |
+| Applications has its own menus; an app dragged out is copied | [[ewe-apps]] | released |
+| Retries, cancel by taking the card out, one bad card never stops the others | [[eep]] | released |
+| The owner's real machine: `sudo pacman -Syu`, a click on a downloaded card, a real slow download | — | open |
+
 ## 2026-11-23 — every app is a card (eep 0.2, ewe 0.49, ewe-apps 0.3.1) — released
 
 The owner: "now i want you to release eveything about eep files. so i can
