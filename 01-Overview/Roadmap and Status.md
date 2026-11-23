@@ -15,6 +15,27 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-23 — AppImages are cards (eep 0.4, ewe-apps 0.4.2) — released
+
+The owner: "give an answer if we can manage appimages same way as we are
+doing it for eep", then "start doing appimages same as eep apps", then
+"release". **Released 2026-11-23:** eep `v0.4.0-beta` (eep#4, the merge
+`1b8efa7`); ewe-apps `v0.4.2-beta` (ewe-apps#8, the merge `0896c6c`);
+`[ewe]` publish run 45230115798. The two ship together: an older ewe Files shows
+an AppImage card as installing for ever, an older eep calls it a bad card.
+
+| what | where | state |
+|---|---|---|
+| A third kind of card, `source = "appimage"`: `url`, `sha256`, `size`, `repo`; `out` relative to eep's data folder | [[eep]] | released |
+| An `.AppImage` dropped into `~/Applications` (or `eep add <file>`) becomes a card; a newer file moves the same card | [[eep]] | released |
+| Unpacked once, run from the tree; the Trash, the progress and `eep gc` as for every eep app | [[eep]] | released, tried with real AppImages in a sandboxed home |
+| Updates from a card's `repo` (the newest GitHub release, the installed flavour kept) | [[eep]] | released |
+| The ready rule: the root link's target ends with the card's `out` | [[eep]], [[ewe-apps]] | released |
+| Komble still installs AppImages its own way (they stay "found" apps) | [[Komble]] | open |
+| AppImage apps in eep's own index (addresses and hashes pinned by the server) | [[eep]] | open |
+| Double-clicking an `.AppImage` in ewe Files still opens the Run dialog | [[ewe-apps]] | open |
+| The owner's real machine: `sudo pacman -Syu`, then drop an AppImage into Applications | — | open |
+
 ## 2026-11-23 — faster to open, one Open with, thirty small bugs (ewe-apps 0.4.1) — released
 
 The owner: "i think open with options dialog not really ewe design. Fix it

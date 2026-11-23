@@ -214,6 +214,16 @@ be fast and responsive, and the small bugs had to go.
   removes its half file; the job list never locks a job while the queue is
   locked.
 
+## AppImage cards (0.4.2-beta, released 2026-11-23)
+
+ewe Files reads eep 0.4's ready rule ([[eep]] → AppImages are cards): a
+card's app is ready when eep's link `roots/<id>` points at the card's
+`out` — equal to it for an app from the Nix cache, ENDING with it for an
+AppImage card, whose `out` is relative (`appimage/<id>/<key>`). An
+AppImage card is an eep app in every menu: Open, Remove app, the ring
+while it downloads. ewe Files 0.4.1 and older show such a card as
+installing for ever: eep 0.4 and ewe-apps 0.4.2 ship together.
+
 ## How the desktop wires them in (ewe 0.44.0-beta)
 
 - **Package:** `ewe-apps` is a dependency of `ewe` (`PKGBUILD`), served

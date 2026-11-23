@@ -102,6 +102,42 @@ eep#3, with ewe-apps 0.4.0-beta and ewe 0.49.1-beta; the contract is
 - Tests: `test/run.sh install-flow.sh` in the container (real 264 MB
   download with progress, cancel, a bad card beside a good one, `--ask`).
 
+## AppImages are cards (0.4.0-beta, released 2026-11-23)
+
+An app that comes as one `.AppImage` file lives like every eep app: its card
+in `~/Applications` installs it, the Trash removes it, eep says how far the
+download is, `eep gc` frees the disk. The contract is `eep/docs/CARD.md`,
+"AppImages".
+
+- **The card** says `source = "appimage"` and names `url` (https only),
+  `sha256` (checked when the card names it; eep writes it once installed),
+  `size`, and optionally `repo` — a GitHub repository whose newest release
+  is the app's update. `out` is `appimage/<id>/<first 16 hex of the
+  sha256>`, relative to `~/.local/share/eep/`: a card carries no home
+  path, so the same card installs the same app on another computer.
+- **Ready** means eep's link `roots/<id>` points at that folder. For
+  readers (ewe Files) the rule is: the link's target ENDS WITH the card's
+  `out`, in whole path components. For an app from the Nix cache `out` is
+  absolute and the target equals it, as before.
+- **A file is enough.** An `.AppImage` dropped into `~/Applications`, or
+  given to `eep add`, becomes a card and the file goes. Such a card has no
+  `url`: it works here, and says so on another computer. A newer file of
+  the same app moves the same card.
+- **Unpacked once, run from the tree** (`--appimage-extract`; `eep run`
+  becomes its `AppRun` with `APPDIR` set and no `APPIMAGE`, so the app does
+  not try to replace itself). The downloaded file is not kept. A file that
+  will not unpack is kept whole and run as it is.
+- **Updates**: `eep updates` asks each `repo`'s newest release and keeps
+  the flavour of file that is installed; `eep update` downloads and
+  unpacks first, then switches. No rollback.
+- **What is different from a Nix app**, and worth saying wherever one is
+  offered: nothing is shared and nothing is patched (an update is the whole
+  file), and the app is as trustworthy as the address in its card — the
+  `sha256` pins the exact file.
+
+Not yet: Komble installs AppImages its own way (they stay found apps that
+can only be hidden); eep's index lists no AppImage apps.
+
 ## Where it meets ewe
 
 - **[[Komble]] 0.26.0-beta**: an "eep" source in Discover, an "eep apps"
