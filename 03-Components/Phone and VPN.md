@@ -46,6 +46,14 @@ opens it ([[ewe Mobile — a window over KDE Connect]]). Released 2026-11-23
 as 0.1.0-beta in a private repo; the plugin fix (1.1.0: Messages against a
 real phone) and `sshfs` by default came with ewe 0.49.2-beta.
 
+**One ecosystem (2026-11-26, ewe 0.50.0-beta, ewe.phone 1.2.0):** the phone's
+notifications are ewe cards (the app's icon, an accent outline, a phone chip,
+an inline reply — never "KDE Connect"), the plugin adds a dock button with the
+phone's apps and folders, and every KDE Connect window and launcher entry is
+hidden (`hide_kdeconnect`): `kdeconnectd` is the invisible engine, ewe Mobile —
+the window, and on the phone **ewe Mobile for Android** — the only face
+([[ewe Mobile — one ecosystem]]).
+
 **Secrets/state:** pairing keys stay in kdeconnectd; the shell persists
 only seen-notification ids (unread badge) and the chosen device
 (`kdeconnect-state.json`). MMS bodies often aren't exposed over D-Bus —

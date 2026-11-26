@@ -58,6 +58,7 @@ state), `toast` and `welcome` were missing from this sheet. (`cloud`,
 | [[Cast Plugin]] | `ewe.cast` | `cast` | `toggle · scan · start <sink-id> · stop · legacy` (there is no `status` verb) |
 | [[Dock Plugin]] | `ewe.dock` | `launcher` (`toggle · show · hide`) | `launcher · showLauncher · hideLauncher · isLauncherOpen` |
 | [[Places Plugin]] | `ewe.places` | `places` | `toggle · show · hide` |
+| [[Phone Plugin]] | `ewe.phone` (1.2.0) | — | `toggle · show · hide · tab <apps\|files> · search <text> · pick <folder-key>` |
 | [[Music Plugin]] | `ewe.media` | `player` (`toggle · hide`) | `toggle · show · hide` |
 | [[Mail Plugin]] | `ewe.mail` | `mail` | `status · refresh · fetch · setNotify <bool>` (`status` field set byte-identical to pre-0.25) |
 | [[Insomnia Plugin]] | `ewe.insomnia` | — (new) | `toggle · on · off · status` |

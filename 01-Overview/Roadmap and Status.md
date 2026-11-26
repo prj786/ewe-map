@@ -15,6 +15,40 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-26 (evening) — ewe Mobile, one ecosystem: ewe 0.50.0, ewe.phone 1.2.0, ewe Mobile 0.2.0, eep 0.4.1, the Android app's ewe face
+
+The owner: see the phone's screen on the PC and open the phone's apps in ewe;
+an Android app with ewe's own look ("minimal, modern, every feature KDE
+Connect has"); phone notifications that look like normal ewe notifications —
+no initials — marked so you know they came from the phone; no KDE Connect
+window anywhere, only ewe Mobile; a dock button with the phone's files and
+apps. "Imagine it as one ecosystem." Planned and built the same evening as
+parallel workstreams against six written contracts (C1–C6,
+`ewe-mobile/docs/ECOSYSTEM.md`); decisions 78–81, [[ewe Mobile — one ecosystem]].
+
+| what | where | state |
+|---|---|---|
+| **Phone notifications are ewe cards** — the phone app's icon and name, an accent outline, a phone chip, inline reply, the mirrored phone screen floats (`ewe-mobile-screen`); never "KDE Connect" | **ewe 0.50.0-beta** (ewe#98, `816a0bc`, `v0.50.0-beta`; `[ewe]` publish dispatched, run 45850423061) | released |
+| **The phone in the dock** — apps with real icons (open here or on the phone), folders into ewe Files; the apps cache; KDE Connect's launcher entries hidden (`hide_kdeconnect`) | **ewe.phone 1.2.0** (ewe-plugin-phone#2, `8533299`; vendored in ewe 0.50.0-beta), [[Phone Plugin]] | released |
+| **The phone's screen and apps as windows** — Screen (scrcpy over Wireless debugging), Apps, the C3 verbs, the launcher entries | **ewe Mobile 0.2.0-beta** (ewe-mobile#3, `v0.2.0-beta` on `8d52e99`), [[ewe Mobile]] | **released 2026-11-26** (private release; not in `[ewe]`) |
+| **No card for another app's entries** — `X-Eep-Skip=true` | **eep 0.4.1-beta** (eep#5, `4d036e6`, `v0.4.1-beta`), [[eep]] | released — **deploy before ewe Mobile 0.2.0** |
+| **ewe Mobile for Android** — the ewe face (Compose, ewe tokens), Home / Devices / Setup / Settings and the feature screens, the apps list with icons, the app icon in notifications | `ewe-connector-android` #2 (merged `ce3f5be1`), [[ewe Mobile]] | merged; **debug builds only — no release key yet** |
+
+**On the owner's phone** (Pixel 10 Pro XL, Android 17, 19:10–19:20): the new
+build installed over the old one and kept pairing and the accessibility
+service; 82 launchable apps arrived (604 KB with icons) and became the cache;
+Calculator opened on the phone from the PC and as its own window here; the
+mirrored screen came up as `ewe-mobile-screen`; notifications (Messenger,
+Messages, Wallet, Instagram, Weather, Calendar) carry the app's icon, no
+initials; the stock KDE Connect app was **uninstalled** and the PC lists one
+paired phone. **The deploy-order trap** bit once: ewe Mobile run against eep
+0.4.0 made 82 cards in a minute (cleaned up; [[Troubleshooting Knowledge]]).
+
+**Open:** the release key and getting the APK onto other phones; the screen
+inside ewe Mobile's window; whether the link drops come back now the stock app
+is gone; TBC Bank and Liberty refuse while Developer options is on ([[Open Questions]]).
+eep 0.4.0-beta (AppImage cards, eep#4) is documented in ewe-map#51, still open.
+
 ## 2026-11-26 — the Remote page works (ewe Mobile 0.1.1), the phone is a place in ewe Files (ewe-apps 0.5.0), RFC-012 accepted — released
 
 The owner: "now i want you to fix remote page its kinda not working at all.

@@ -12,23 +12,26 @@ up: "[[Home]]"
 now** — the owner, 2026-11-23) · Tauri v2 + Svelte 5 (the ewe Sync stack) ·
 binary `ewe-mobile` · **0.1.0-beta released 2026-11-23** (`v0.1.0-beta` on
 `ca5f921`) · **0.1.1-beta released 2026-11-26** (ewe-mobile#2, `v0.1.1-beta`
-on the merge `c64a5b4`: the Remote page) · decisions:
-[[ewe Mobile — a window over KDE Connect]], [[RFC-012 — ewe Mobile, both halves]]
+on the merge `c64a5b4`: the Remote page) · **0.2.0-beta, the same evening**
+(`d8f33b9`: Screen, Apps, the C3 verbs — "one ecosystem") · decisions:
+[[ewe Mobile — a window over KDE Connect]], [[RFC-012 — ewe Mobile, both halves]],
+[[ewe Mobile — one ecosystem]]
 
 **One ewe window instead of KDE Connect's five.** `kdeconnectd` keeps the
 link to the phone, the pairing keys and the caches; ewe Mobile is everything
 you see of it, in the ewe design system. The phone runs the stock KDE Connect
-app. An ewe app for Android is planned beside it (the owner, 2026-11-23:
-"beside ewe mobile there will be apk for android … kde connect + more
-stuff"); nothing is built for it yet. **The plan is decided:**
+app, or — since 2026-11-26 — **ewe Mobile for Android**, a GPL fork of it with
+ewe's face (below). **The plan is decided and built:**
 [[RFC-012 — ewe Mobile, both halves]] (accepted 2026-11-26) — the phone's
-folders in ewe Files (done, [[ewe-apps]] 0.5.0-beta), its screen and its apps
-as windows through scrcpy over Wi-Fi debugging (two new pages here, `screen`
-and `apps`, after the probes with the phone), and the APK as a GPL fork of
-the KDE Connect app in its own repo.
+folders in ewe Files ([[ewe-apps]] 0.5.0-beta), its screen and its apps as
+windows through scrcpy over Wi-Fi debugging (the `screen` and `apps` pages
+here, 0.2.0-beta), and the APK. "Imagine it as one ecosystem" (the owner):
+the phone's notifications are ewe cards, no KDE Connect window shows
+anywhere, the phone has a dock button — [[ewe Mobile — one ecosystem]].
 
 **Division of labour:** the bar's phone glyph and the Quick settings *Mobile*
-page are the [[Phone Plugin]]'s (layer-shell surfaces stay in the shell —
+page, **the dock button and its popup**, and the notification cards are the
+shell's and the [[Phone Plugin]]'s (layer-shell surfaces stay in the shell —
 rule 3); the window is this app. The plugin's page has a button that opens
 it.
 
@@ -40,11 +43,12 @@ publish workflow cannot read another private repo's release with its own
 token — and not on the website:
 
 ```
-gh release download v0.1.1-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst'
+gh release download v0.2.0-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst'
 sudo pacman -U ewe-mobile-*.pkg.tar.zst      # brings kdeconnect; sshfs comes with ewe since 0.49.2
 ```
 
-When it goes public: `ewe-mobile` joins ewe-repo's publish list as an opt-in
+**Update eep first** (`sudo pacman -Syu`, eep 0.4.1-beta or newer): the package
+conflicts with older ones. When it goes public: `ewe-mobile` joins ewe-repo's publish list as an opt-in
 package (the ewe-safe pattern) and the website's apps.
 
 ## The pages
@@ -60,6 +64,8 @@ The ids are `ewe-mobile --page <id>` — public, never renamed with a label.
 | `media` | Media | the phone's player: play, pause, skip, seek, volume, which player |
 | `files` | Files | send files (drop anywhere on the window), text, links; browse the phone's storage in ewe Files (`sshfs`); open what the phone sent |
 | `remote` | Remote | this computer's mouse and keyboard on the phone: a pad (tap, hold-then-drag to swipe or long-press, the wheel turns the page, Back / Home / Recents) and a box that types into the field open on the phone. **The phone must allow it once** (below) |
+| `screen` | Screen | the phone's screen in scrcpy's own window over Wireless debugging. Says what it costs first, pairs with the six-digit code once, then Mirror (phone's screen off, sound here, stay awake, a quality pick) |
+| `apps` | Apps | the phone's apps with their real icons (from ewe Mobile for Android, kept while the phone is away), search; a click opens an app in its own window here when the debugging link is up, else on the phone; a menu offers both; each app can also sit in the launcher |
 | `devices` | Devices | pair/unpair, pick the phone in use, name this computer, switch single features on and off; the welcome while nothing is linked |
 
 ## How it is built
@@ -83,7 +89,14 @@ flowchart LR
 - **Not in `ewe.conf`**: no key, no setting. Pairing keys are kdeconnectd's.
 - Command line (rule 5 — JSON, exit 0): `--version`, `--status` (the daemon
   and its devices, **never starts the daemon**), `--page <id>` (a second
-  launch tells the running window).
+  launch tells the running window), and since 0.2.0 the verbs of contract C3
+  ([[Contracts and Public API]]): `--apps`, `--open-app`, `--screen`,
+  `--adb-status`. The headless verbs never open the window and never start
+  `kdeconnectd`.
+- `apps.rs` — the list the phone sends (C1), checked key by key, the cache
+  every reader shares (C2) and the launcher entries (C4); `adb.rs` — the
+  debugging link and scrcpy's windows; `screen.rs` — the two pages' commands
+  and the C3 verbs.
 - `EWE_MOBILE_NO_DAEMON=1` — never start `kdeconnectd` (the bus starts it on
   ANY method call; a test on a private bus would be a new device on the
   network). The same guard as the plugin's `EWE_PHONE_NO_DAEMON`.
@@ -109,6 +122,67 @@ everything silently — the page "kinda not working at all" (the owner,
 - The typing box is a real, unseen `<textarea>`: a paste, a dead key and an
   input method reach it as text and go out as one packet a line
   (`text_send`).
+
+## The screen and the apps (0.2.0-beta, released 2026-11-26)
+
+- **The phone's apps come from ewe Mobile for Android.** It sends one entry per
+  launchable app (name, package, a 96 px PNG of the launcher icon) through
+  `kdeconnectd`'s `remotecommands`; a list without the `"ewe"` marker is
+  someone else's and is ignored. The stock KDE Connect app shows "Install ewe
+  Mobile on your phone" instead. The cache (`~/.cache/ewe-mobile/<device>/`)
+  is written by this app and by the plugin's bridge, and is what makes the dock
+  and the launcher work while the phone is away.
+- **"Here" needs Wireless debugging** (adb + scrcpy, both optional packages,
+  offered through Komble). Each window has a stable class
+  (`ewe-mobile-screen`, `ewe-mobile-app-<package>`) through `SDL_APP_ID`; the
+  mirrored screen floats at a phone's aspect (a rule in `hyprland.lua`), an
+  app tiles like any app.
+- **Every phone app is a launcher entry** `ewe-mobile-app-<package>.desktop`,
+  marked `X-Eep-Skip=true` so eep makes no card of it. `NoDisplay` follows the
+  setting "Show the phone's apps in the launcher". Entries of packages that left
+  the list, and all of them when the phone is unpaired, are deleted.
+- **Checked on the owner's phone** (Pixel 10 Pro XL, Android 17, 2026-11-26):
+  82 launchable apps (31 system) arrived, 604 KB with the icons; `--apps`
+  wrote 82 icons; `--open-app com.google.android.calculator --here` gave a
+  resizable window of that class; `--screen` gave `ewe-mobile-screen` titled
+  with the phone's name; `triggerCommand` opened Calculator on the phone
+  (background start through the accessibility service, phone unlocked);
+  `--adb-status` picked the phone over an emulator.
+- **Deploy order matters** — eep 0.4.1-beta first ([[Troubleshooting Knowledge]]).
+  The package says so: `conflicts=('eep<0.4.1beta')`.
+
+## ewe Mobile for Android
+
+`~/Projects/ewe/ewe-connector-android` · `github.com/prj786/ewe-connector-android`
+(#2, merged `ce3f5be1`) · GPL-3.0 · a fork of `kdeconnect-android`
+(tag v1.37.3, remote `upstream`) · the app is **ewe Mobile**, id
+`io.github.prj786.ewemobile` (debug: `….debug`) · **debug builds only — no
+release key yet** (the owner's to make; no key is ever committed). Plan and
+patch table: `docs/PLAN.md`; the face: `docs/EWE-UI.md` ([[ewe Mobile — one ecosystem]],
+decision 81).
+
+- **A product flavor.** The `ewe` flavor's source set `src/ewe/` (manifest,
+  Compose theme generated from the design system's `tokens.json`, Geist,
+  Lucide, the kit, the screens) merges over upstream's by name; upstream's
+  `src/main` carries only the patch table — the id, the launcher activity
+  forwarding every entry point to `EweActivity`, no Material You, `KdeTheme`
+  wrapping `EweTheme`, the labels, two `packageName` fixes, and the launcher icon
+  in notifications. Rebasing onto a new tag can only conflict in those rows.
+  Tasks: `assembleEweDebug lintEweDebug testEweDebugUnitTest`.
+- **The face:** Home (the computer at a glance), Devices, Setup (every
+  permission), Settings; Remote, Media, Commands, Send, Ring and Presenter as
+  feature screens. Tokens and glyphs are generated (`scripts/gen-theme.py`,
+  `gen-lucide.py`, `--check` holds the copies to their sources).
+- **`EweAppsPlugin`** sends the apps list (C1) and opens an app on
+  `triggerCommand(<package>)`; `ewe:refresh` sends the list again.
+- **Notifications carry the app's launcher icon**, not the large icon — the
+  "initials" were Google Messages' letter avatar.
+- **Checked:** 148 unit tests, lint and the token checks on the branch; on the
+  owner's phone the merged build installed over the old one and kept pairing and
+  the accessibility service. The stock KDE Connect app is **uninstalled** from
+  that phone; the PC lists one paired phone.
+- **Open:** the release key; getting it onto other phones; the link drops seen
+  with two apps on one phone (the cause was not found).
 
 ## What it takes on trust
 
@@ -165,6 +239,13 @@ first.
 > and turns one page past 500, forward when positive. A dead Remote page is
 > the phone's accessibility switch before it is a bug. See
 > [[Troubleshooting Knowledge]].
+>
+> **Build guard (0.2.0):** run ewe Mobile with an eep older than 0.4.1 and
+> its 82 launcher entries become 82 `~/Applications` cards within a minute —
+> deploy eep first (`conflicts=('eep<0.4.1beta')`); clean-up is deleting the
+> `ewe-mobile-app-*` entries (eep retires the cards itself), never the cards
+> (the watcher then hides the apps). `adb install -r` of an update keeps
+> Android 17's accessibility service on; `am force-stop` switches it off.
 
 ## Tests
 
@@ -181,4 +262,5 @@ people; `scene=`, `scheme=`, `thread=`, `still`; for Remote `keyboard=1`,
 ## Related
 
 - [[Phone Plugin]] · [[Phone and VPN]] · [[ewe Mobile — a window over KDE Connect]] ·
+  [[ewe Mobile — one ecosystem]] · [[eep]] ·
   [[Process Split — Shell vs Apps]] · [[Apps Are Not Resident]] · [[ewe-sync]]

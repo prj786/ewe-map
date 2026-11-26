@@ -82,11 +82,12 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 The nine questions of [[RFC-012 — ewe Mobile, both halves]] are answered.
 What is still open:
 
-- **The probes with the phone have not been run** (the RFC's §7: `scrcpy`,
-  Wireless debugging, an app on a virtual display, does the link come back
-  after a reboot, does the banking app still open). They decide whether
-  "Open here" works on this phone's Android and whether the fork needs to
-  hold the debugging link open (B4). Nothing of A2–A4 starts before them.
+- ~~**The probes with the phone**~~ — run 2026-11-26 (RFC §7, results in the
+  Android app's `docs/PLAN.md`): scrcpy works on Hyprland (lag is the Wi-Fi),
+  an app on its own display works on Android 17 (Calculator, Keep, BOG), the
+  debugging link returns by itself after Wireless debugging is toggled and after a
+  reboot — so B4 is not needed. **TBC Bank and Liberty refuse to open while
+  Developer options is on**: Screen and Apps cost two of the owner's three banks.
 - **The phone as the computer's touchpad on Hyprland** does not work today
   (kdeconnectd logs "Failed to create keymap" when the phone connects; its
   Wayland input goes through the RemoteDesktop portal, which
@@ -95,7 +96,16 @@ What is still open:
 - **Registering with Google's developer verification** (an ID and $25) is
   the owner's call, to be made before the APK goes public.
 - **The Remote page has not met a phone that accepts input** — the owner's
-  Pixel had KDE Connect's accessibility service off on 2026-11-26.
+  Pixel had KDE Connect's accessibility service off on 2026-11-26 (ewe Mobile
+  for Android's service, on since, opened Calculator from the PC).
+- **The release key for ewe Mobile for Android** — only debug builds exist; the
+  owner makes and stores the key before the first build anyone else installs
+  (and the repo goes public with it — GPL).
+- **The screen inside ewe Mobile's window** (RFC A3 step 2) — scrcpy's own
+  window for now.
+- **ewe Mobile's link dropped three times** on the owner's phone while both
+  KDE Connect apps were installed (cause not found; the stock app is gone now,
+  so watch whether it recurs).
 
 ## Desktop
 
