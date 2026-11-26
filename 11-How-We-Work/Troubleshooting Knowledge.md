@@ -1667,6 +1667,52 @@ Building the app:
   in that shell's own command line. Stop test processes by pid, or by exact
   name (`pkill -x`).
 
+## The phone as one ecosystem (2026-11-26, ewe 0.50 / ewe Mobile 0.2)
+
+- **82 phone-app launcher entries became 82 `~/Applications` cards within a
+  minute.** Cause: ewe Mobile 0.2.0 writes one
+  `ewe-mobile-app-<package>.desktop` per phone app on any run (even
+  `--apps`), and eep older than 0.4.1 finds every launcher entry and gives it
+  a card (decision 75). **Fix: deploy eep first** — eep 0.4.1-beta skips
+  entries marked `X-Eep-Skip=true`, and ewe-mobile's PKGBUILD says
+  `conflicts=('eep<0.4.1beta')` so pacman refuses the wrong order. **Clean-up
+  if it happened:** delete the marked entries (`~/.local/share/applications/
+  ewe-mobile-app-*.desktop`, or unpair the phone) and eep retires the cards by
+  itself; deleting the *cards* instead makes eep's watcher **hide the apps**
+  (a card leaving = app hidden). Done the same evening: 71 cards left, no hide
+  copies.
+- **A phone notification has the app's name as title and "title: text" as
+  body** — `kdeconnectd` sets `x-kde-display-appname` (and the sender as the
+  summary) only when the notification server **advertises** that capability
+  in `GetCapabilities`. The shell advertises it since 0.50; a server that does
+  not gets the old layout.
+- **KDE Connect's logo on a phone card.** Quickshell's `Notification.image`
+  falls back to `image://icon/<appIcon>` when the notification carries no
+  picture, so a card with no `image-data` drew the sender's `appIcon` — KDE
+  Connect's logo. `Globals.hasPicture` tells a real picture from the fallback;
+  with none the card shows ewe Mobile's entry icon, else the phone glyph, never
+  `appIcon`.
+- **"Initials" instead of the app's icon on a phone card** — the picture the
+  PC shows is the notification's **large icon** on Android, and an app picks
+  it (Google Messages sets a letter avatar of the contact). The fork now sends
+  the app's launcher icon first (`AppIcons.launcherIconBitmap`, 96 px, rounded
+  like the apps list) and falls back to the large or small icon only when that
+  returns nothing.
+- **`adb install -r` of an update keeps Android 17's accessibility service
+  on; force-stopping the app switches it off.** Update over `install -r` and
+  the pairing and the service survive (checked on the Pixel); `am force-stop`
+  (or "Force stop" in settings) turns the service off and the Remote page and
+  "open on the phone" from the background stop working until it is switched on
+  again. Never force-stop to make the app reload.
+- **Never `cat` the Android app's `shared_prefs`** — they hold the pairing's
+  private key.
+- **Two paired devices with one name** while the stock app and ewe Mobile for
+  Android are both on the phone: pick by id; a device is ewe Mobile when its
+  `remotecommands` list carries the `"ewe"` key. The stock app is uninstalled
+  from the owner's phone and its entry unpaired.
+- **Developer options on the phone is the price of "open here" and the
+  screen**: TBC Bank and Liberty refuse to open while it is on (BOG opens).
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

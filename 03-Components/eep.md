@@ -124,6 +124,13 @@ eep#3, with ewe-apps 0.4.0-beta and ewe 0.49.1-beta; the contract is
   Install window, centred, 400×380.
 - **[[Website]]** `/apps/`: Get downloads the card; `npm run apps` refreshes
   the page from an eep release.
+- **`X-Eep-Skip=true`** (0.4.1-beta, 2026-11-26): a launcher entry with it is
+  never found, so it gets no card. For entries another ewe app writes, updates
+  and deletes itself — ewe Mobile's phone apps (`ewe-mobile-app-<package>.desktop`,
+  [[ewe Mobile]] 0.2.0-beta), which a card's Trash would otherwise hide behind
+  the owner's back. Seen for real before the rule: 82 phone-app entries became
+  82 cards within a minute ([[Troubleshooting Knowledge]]). ewe Mobile's package
+  `conflicts=('eep<0.4.1beta')`. [[ewe Mobile — one ecosystem]], decision 80.
 - **ewe's launcher** (0.48.1-beta): file search skips hidden folders, so an
   app's insides never show up as results.
 

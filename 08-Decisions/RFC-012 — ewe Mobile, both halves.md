@@ -21,6 +21,18 @@ with sources and what was measured, is `ewe/docs/RFC-012-ewe-mobile-android.md`
 ([[ewe-apps]] 0.5.0-beta). **Not started:** the probes with the phone, the
 screen and apps pages, the APK.*
 
+*Update, **the same evening**: the rest was built and released as one wave
+(ewe 0.50.0-beta, ewe.phone 1.2.0, ewe Mobile 0.2.0-beta, eep 0.4.1-beta, and
+the Android app's ewe face on `ewe-connector-android`, PR #2). The §7 probes
+were run with the phone; A2–A4 (the adb link, Screen in scrcpy's window, Apps —
+open here or on the phone) and B1–B3 (the fork, the ewe face, the apps list
+with icons through `remotecommands`) are done, with what the owner added that
+day: [[ewe Mobile — one ecosystem]] (decisions 78–81). The plan and its
+contracts: `ewe-mobile/docs/ECOSYSTEM.md`. Still open: B4 (not needed — the
+link came back after a reboot), B5 (the release key), the screen inside the
+window. The repo is `prj786/ewe-connector-android` (the owner named it), not
+the `ewe-mobile-android` of answer 1.*
+
 ## What was found
 
 - **Four of the five wishes need no Android app.** The phone's folders in ewe
@@ -87,6 +99,6 @@ Android, not the phone's apps); a Cast or Miracast receiver.
 
 ## Related
 
-- [[ewe Mobile]] · [[ewe Mobile — a window over KDE Connect]] · [[ewe-apps]] ·
+- [[ewe Mobile]] · [[ewe Mobile — one ecosystem]] · [[ewe Mobile — a window over KDE Connect]] · [[ewe-apps]] ·
   [[Phone Plugin]] · [[Decision Index]] · [[Open Questions]] ·
   [[Troubleshooting Knowledge]]

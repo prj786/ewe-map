@@ -189,6 +189,14 @@ flowchart TB
 - [[Contracts and Public API]] · [[The One File]] · [[Account and Sync]] ·
   [[Plugin System]]
 
+## ewe Mobile and the phone (0.2, 2026-11-26)
+
+| Path | What |
+|---|---|
+| `$XDG_CACHE_HOME/ewe-mobile/<deviceId>/apps.json` + `icons/<package>.png` | the phone's apps (contract C2) — written by ewe Mobile and the ewe.phone bridge, read by the dock popup, the launcher entries and the Apps page; cache, atomic, an app that left the list loses its icon |
+| `~/.local/share/applications/ewe-mobile-app-<package>.desktop` · `ewe-mobile-screen.desktop` | the phone's apps as launcher entries (C4), `X-Eep-Skip=true`, `X-Ewe-Mobile-App=<deviceId>`; ewe Mobile deletes them when the app leaves the list or the phone is unpaired |
+| `~/.local/share/applications/` copies marked `X-Ewe-Phone-Hides=1`; `~/.local/state/ewe-phone/backup/` | KDE Connect's hidden launcher entries (`hide_kdeconnect`) and a user's own entry of the same name, kept byte for byte; `show` puts everything back |
+
 ## eep (0.1 / 0.2)
 
 | Path | What |

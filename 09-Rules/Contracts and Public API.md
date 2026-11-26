@@ -537,6 +537,83 @@ renamed — [[Knowledge 2.0 — Shaun follows ewe]]):
   the build until each has a topic. `knowledge/news.md` topics are titled
   exactly "What's new in ewe X.Y" (`Pack::news` parses it).
 
+### The 0.50 wave (2026-11-26) — ewe Mobile, one ecosystem
+
+Everything here is **added**; nothing renamed (rule 4). Decisions 78–81
+([[ewe Mobile — one ecosystem]]). The contracts were written first and every part
+built against them: `ewe-mobile/docs/ECOSYSTEM.md` (C1–C6) — that file wins if
+this one lags.
+
+- **C1 — the apps list (phone → PC), through `kdeconnectd`'s `remotecommands`.**
+  The phone announces `kdeconnect.runcommand` (out) and
+  `kdeconnect.runcommand.request` (in) and sends
+  `{"commandList": "<JSON string>", "canAddCommand": false}`. `commandList` is one
+  object: the key **`"ewe"`** =
+  `{"name": "ewe Mobile", "command": "", "v": 1, "count": N, "app": "<versionName>", "sdk": N}`
+  marks the list as ours (**a list without it is someone else's: ignore it**; `v`
+  versions it), and one entry per launchable app (`ACTION_MAIN` +
+  `CATEGORY_LAUNCHER`; ewe Mobile itself left out) keyed by package:
+  `{"name", "command": "<package>", "icon": "<base64 PNG>", "sys": bool}`. The icon is
+  the app's launcher icon, square, 96 px (72 if the list would pass ~700 KB), never
+  WebP. Sent on connect, on `ewe:refresh` and when a package is added, removed or
+  changed (debounced). PC → phone, `triggerCommand(key)` arrives as `{"key": key}`:
+  **`<package>`** starts that app on the phone; **`ewe:refresh`** sends the list again;
+  every other `ewe:` key is reserved, unknown keys are ignored. A device **is ewe
+  Mobile** when `/modules/kdeconnect/devices/<id>/remotecommands` exists and its
+  `commands` (bytes, UTF-8 JSON) parse with an `"ewe"` key whose `v` ≥ 1. Keys, names
+  and icons are strings someone else wrote: package `[A-Za-z0-9._]{1,255}`, name ≤ 200
+  characters, icon a PNG ≤ 256 KB.
+- **C2 — the apps cache on the PC**: `$XDG_CACHE_HOME/ewe-mobile/<deviceId>/apps.json`
+  (`{"v": 1, "device", "deviceName", "updated": ms, "apps": [{"package", "name", "sys",
+  "icon": "<path>"}]}`, sorted by name, case-insensitive) and
+  `icons/<package>.png`. Written atomically by **both** ewe Mobile (Rust) and the
+  ewe.phone bridge (Python); read by the dock popup, the launcher entries and the Apps
+  page. It is what keeps the dock and launcher useful while the phone is away.
+- **C3 — `ewe-mobile` command line** (JSON, exit 0 — rule 5). Since 0.1: `--page <id>`,
+  `--status`, `--version`. New in 0.2.0: **`--apps [--device <id>]`**
+  (`{"ok":true,"device","reachable","adb","apps":[C2 entries]}`),
+  **`--open-app <package> [--here|--phone] [--device <id>]`** (`--here`: its own window
+  on this PC through scrcpy, needs adb; `--phone`: start it on the phone, no adb;
+  neither: here when adb is connected, else the phone), **`--screen [--device <id>]`**,
+  **`--adb-status`** (`{"ok":true,"tools","paired","connected","serial"}`). **New public
+  page ids: `screen` and `apps`.** Headless verbs never open the window and never start
+  `kdeconnectd`; they spawn scrcpy detached and return at once. Failures:
+  `{"ok":false,"error":"<code>","message":"<words>"}` with the codes `no-device`,
+  `away`, `no-adb-tools`, `adb-not-paired`, `adb-not-connected`, `unknown-app`,
+  `scrcpy-failed`.
+- **C4 — the phone's windows and launcher entries.** scrcpy runs with `SDL_APP_ID`, so
+  the classes are stable: **`ewe-mobile-screen`** (title = the phone's name; floats,
+  centred, at a phone's aspect, ~80 % of the screen height — a rule in
+  `hyprland.lua`) and **`ewe-mobile-app-<package>`** (dots kept; title = the app's
+  name; tiles like any app). One entry per phone app:
+  `$XDG_DATA_HOME/applications/ewe-mobile-app-<package>.desktop` — `Name=<App>`,
+  `GenericName=On <phone name>`, `Icon=<C2 icon path>`, `Exec=ewe-mobile --open-app
+  <package>`, `StartupWMClass=ewe-mobile-app-<package>`, `Categories=X-EweMobilePhone;`,
+  `X-Ewe-Mobile-App=<deviceId>`, `NoDisplay=false` while the setting "Show the phone's
+  apps in the launcher" is on (default), `true` otherwise — plus
+  `ewe-mobile-screen.desktop` (`NoDisplay=true`). Packages that left the list lose their
+  entry; all go when the phone is unpaired.
+- **eep: `X-Eep-Skip=true`** (eep 0.4.1-beta) on a launcher entry means eep never finds
+  it — no card. Written by ewe Mobile on every phone-app entry; the PKGBUILD says
+  `conflicts=('eep<0.4.1beta')` ([[eep]]).
+- **C5 — phone notifications in the shell** (ewe 0.50.0-beta). `kdeconnectd` posts through
+  `org.freedesktop.Notifications` with the hints `x-kde-origin-name` and
+  `x-kdeconnect-source-device` (both the phone's name) and the app's icon as
+  `image-data`. The shell's server now advertises **`x-kde-display-appname`** (then the
+  summary is the sender, the body the text and the hint the app's name; without it the
+  summary is the app and the body "title: text") and **inline reply**
+  (`NotificationServer.inlineReplySupported`; `Notification.hasInlineReply`,
+  `inlineReplyPlaceholder`, `sendInlineReply()`). `Globals.phoneNote(n)` says whether a
+  notification is the phone's and gives app ("ewe Mobile" for the daemon's own, never
+  "KDE Connect"), phone name and group key (phone + app). The card: accent outline, the
+  app's icon tile, a phone chip; a click runs `ewe-mobile --page notifications`, else the
+  Mobile page. `Globals.hasPicture` tells a real picture from the fallback.
+- **C6 — no KDE Connect window anywhere.** ewe.phone 1.2.0: a **`dock-item`**
+  (`ewe.phone.toggle`, order 60, kind `panel` = `Popup.qml`) and the setting
+  **`hide_kdeconnect`** (bool, default `true`, reversible — [[Phone Plugin]]). The plugin's
+  IPC target `ewe.phone`: `toggle · show · hide · tab <apps|files> · search <text> ·
+  pick <folder-key>`.
+
 ## The ewe.conf schema
 
 See [[EWE-CONF Schema Reference]].
