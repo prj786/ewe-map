@@ -82,11 +82,18 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 The nine questions of [[RFC-012 — ewe Mobile, both halves]] are answered.
 What is still open:
 
-- **The probes with the phone have not been run** (the RFC's §7: `scrcpy`,
-  Wireless debugging, an app on a virtual display, does the link come back
-  after a reboot, does the banking app still open). They decide whether
-  "Open here" works on this phone's Android and whether the fork needs to
-  hold the debugging link open (B4). Nothing of A2–A4 starts before them.
+- **The probes ran on 2026-11-26** (RFC §7): "Open here" works on this
+  phone's Android 17 and the debugging link comes back by itself, even after
+  a reboot, so B4 is not needed. What they leave open: **two of the owner's
+  three banking apps refuse whenever Developer options is on** — is that a
+  price the owner keeps (Q2), or does ewe Mobile switch Developer options
+  off and on for them?
+- **[[ewe Mobile for Android]] lost its link three times** on 2026-11-26, at
+  a doze or network change, while the stock app beside it held. Cause not
+  found; next, the same steps with only one KDE Connect app linked.
+- **The release key** for [[ewe Mobile for Android]] (made and stored by the
+  owner, before the first build anyone else installs) and **whether its repo
+  goes public** — GPL requires the source once anyone else gets the APK.
 - **The phone as the computer's touchpad on Hyprland** does not work today
   (kdeconnectd logs "Failed to create keymap" when the phone connects; its
   Wayland input goes through the RemoteDesktop portal, which
@@ -94,8 +101,10 @@ What is still open:
   item.
 - **Registering with Google's developer verification** (an ID and $25) is
   the owner's call, to be made before the APK goes public.
-- **The Remote page has not met a phone that accepts input** — the owner's
-  Pixel had KDE Connect's accessibility service off on 2026-11-26.
+- **The Remote page has not been tried on a phone that accepts input.**
+  KDE Connect's accessibility service on the owner's Pixel was switched on
+  over adb on 2026-11-26 (§7 row 6) and `remoteState` reads `true`; the page
+  itself has not been driven against it.
 
 ## Desktop
 

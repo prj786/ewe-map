@@ -20,12 +20,16 @@ link to the phone, the pairing keys and the caches; ewe Mobile is everything
 you see of it, in the ewe design system. The phone runs the stock KDE Connect
 app. An ewe app for Android is planned beside it (the owner, 2026-11-23:
 "beside ewe mobile there will be apk for android … kde connect + more
-stuff"); nothing is built for it yet. **The plan is decided:**
+stuff"): [[ewe Mobile for Android]], a fork of the KDE Connect app — B1
+built on 2026-11-26 (installs beside the stock app, pairs, the pages here
+read through it), not released. **The plan is decided:**
 [[RFC-012 — ewe Mobile, both halves]] (accepted 2026-11-26) — the phone's
 folders in ewe Files (done, [[ewe-apps]] 0.5.0-beta), its screen and its apps
 as windows through scrcpy over Wi-Fi debugging (two new pages here, `screen`
-and `apps`, after the probes with the phone), and the APK as a GPL fork of
-the KDE Connect app in its own repo.
+and `apps`; the probes with the phone ran on 2026-11-26 and say go), and
+the APK as a GPL fork of the KDE Connect app in its own repo. **While both
+apps are on the phone it is two paired devices with the same name: pick the
+device by id** (the contract is in [[ewe Mobile for Android]]).
 
 **Division of labour:** the bar's phone glyph and the Quick settings *Mobile*
 page are the [[Phone Plugin]]'s (layer-shell surfaces stay in the shell —
