@@ -30,9 +30,9 @@ parallel workstreams against six written contracts (C1–C6,
 |---|---|---|
 | **Phone notifications are ewe cards** — the phone app's icon and name, an accent outline, a phone chip, inline reply, the mirrored phone screen floats (`ewe-mobile-screen`); never "KDE Connect" | **ewe 0.50.0-beta** (ewe#98, `816a0bc`, `v0.50.0-beta`; `[ewe]` publish dispatched, run 45850423061) | released |
 | **The phone in the dock** — apps with real icons (open here or on the phone), folders into ewe Files; the apps cache; KDE Connect's launcher entries hidden (`hide_kdeconnect`) | **ewe.phone 1.2.0** (ewe-plugin-phone#2, `8533299`; vendored in ewe 0.50.0-beta), [[Phone Plugin]] | released |
-| **The phone's screen and apps as windows** — Screen (scrcpy over Wireless debugging), Apps, the C3 verbs, the launcher entries | **ewe Mobile 0.2.0-beta** (ewe-mobile#3, `d8f33b9`), [[ewe Mobile]] | built; its PR open at the time of writing, private release on the merge |
+| **The phone's screen and apps as windows** — Screen (scrcpy over Wireless debugging), Apps, the C3 verbs, the launcher entries | **ewe Mobile 0.2.0-beta** (ewe-mobile#3, `v0.2.0-beta` on `8d52e99`), [[ewe Mobile]] | **released 2026-11-26** (private release; not in `[ewe]`) |
 | **No card for another app's entries** — `X-Eep-Skip=true` | **eep 0.4.1-beta** (eep#5, `4d036e6`, `v0.4.1-beta`), [[eep]] | released — **deploy before ewe Mobile 0.2.0** |
-| **ewe Mobile for Android** — the ewe face (Compose, ewe tokens), Home / Devices / Setup / Settings and the feature screens, the apps list with icons, the app icon in notifications | `ewe-connector-android` PR #2 (`b2-ewe-face`), [[ewe Mobile]] | built; **debug builds only — no release key yet**; PR open at the time of writing |
+| **ewe Mobile for Android** — the ewe face (Compose, ewe tokens), Home / Devices / Setup / Settings and the feature screens, the apps list with icons, the app icon in notifications | `ewe-connector-android` #2 (merged `ce3f5be1`), [[ewe Mobile]] | merged; **debug builds only — no release key yet** |
 
 **On the owner's phone** (Pixel 10 Pro XL, Android 17, 19:10–19:20): the new
 build installed over the old one and kept pairing and the accessibility

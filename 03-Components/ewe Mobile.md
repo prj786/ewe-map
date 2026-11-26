@@ -154,7 +154,7 @@ everything silently — the page "kinda not working at all" (the owner,
 ## ewe Mobile for Android
 
 `~/Projects/ewe/ewe-connector-android` · `github.com/prj786/ewe-connector-android`
-(PR #2, branch `b2-ewe-face`) · GPL-3.0 · a fork of `kdeconnect-android`
+(#2, merged `ce3f5be1`) · GPL-3.0 · a fork of `kdeconnect-android`
 (tag v1.37.3, remote `upstream`) · the app is **ewe Mobile**, id
 `io.github.prj786.ewemobile` (debug: `….debug`) · **debug builds only — no
 release key yet** (the owner's to make; no key is ever committed). Plan and

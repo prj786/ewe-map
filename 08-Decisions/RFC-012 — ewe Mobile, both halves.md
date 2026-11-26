@@ -23,7 +23,7 @@ screen and apps pages, the APK.*
 
 *Update, **the same evening**: the rest was built and released as one wave
 (ewe 0.50.0-beta, ewe.phone 1.2.0, ewe Mobile 0.2.0-beta, eep 0.4.1-beta, and
-the Android app's ewe face on `ewe-connector-android`, PR #2). The §7 probes
+the Android app's ewe face on `ewe-connector-android` #2, merged `ce3f5be1`). The §7 probes
 were run with the phone; A2–A4 (the adb link, Screen in scrcpy's window, Apps —
 open here or on the phone) and B1–B3 (the fork, the ewe face, the apps list
 with icons through `remotecommands`) are done, with what the owner added that
