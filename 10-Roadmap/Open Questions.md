@@ -77,6 +77,26 @@ decision note (or [[Parked and Rejected Ideas]]) and delete it here.
 - **A static `dock-item`** cannot be hidden by the Music/Places `button =
   bar` setting from an installed dock (only `setDockItemShown` at runtime).
 
+## ewe Mobile (after RFC-012)
+
+The nine questions of [[RFC-012 — ewe Mobile, both halves]] are answered.
+What is still open:
+
+- **The probes with the phone have not been run** (the RFC's §7: `scrcpy`,
+  Wireless debugging, an app on a virtual display, does the link come back
+  after a reboot, does the banking app still open). They decide whether
+  "Open here" works on this phone's Android and whether the fork needs to
+  hold the debugging link open (B4). Nothing of A2–A4 starts before them.
+- **The phone as the computer's touchpad on Hyprland** does not work today
+  (kdeconnectd logs "Failed to create keymap" when the phone connects; its
+  Wayland input goes through the RemoteDesktop portal, which
+  xdg-desktop-portal-hyprland is not known to provide) — untraced, its own
+  item.
+- **Registering with Google's developer verification** (an ID and $25) is
+  the owner's call, to be made before the APK goes public.
+- **The Remote page has not met a phone that accepts input** — the owner's
+  Pixel had KDE Connect's accessibility service off on 2026-11-26.
+
 ## Desktop
 
 - ~~**Quickshell power menu**~~ — answered in 0.39: Quick settings has a Power page.

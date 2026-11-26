@@ -11,7 +11,8 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-apps` · [github.com/prj786/ewe-apps](https://github.com/prj786/ewe-apps)
 (one repo, one package `ewe-apps`, three binaries; **0.1.0-beta** released
 2026-11-19 with ewe 0.44.0-beta — decision 56, [[ewe's Own Apps — Files, Player, Viewer]];
-**0.1.1-beta** released 2026-11-20; **0.2.0-beta** released 2026-11-21 — below)
+**0.1.1-beta** released 2026-11-20; **0.2.0-beta** released 2026-11-21;
+**0.5.0-beta** released 2026-11-26 — below)
 
 The desktop's own file manager, media player and document/picture viewer.
 They replace **Nemo, Engrampa, imv, Zathura and mpv** as the defaults
@@ -213,6 +214,46 @@ be fast and responsive, and the small bugs had to go.
   name without a question; a merge moves child by child; a stopped copy
   removes its half file; the job list never locks a job while the queue is
   locked.
+
+## The phone is a place in ewe Files (0.5.0-beta, released 2026-11-26)
+
+Step A1 of [[RFC-012 — ewe Mobile, both halves]]; ewe-apps#9, `v0.5.0-beta`
+on the merge `c7aace4`. (0.4.2-beta — AppImage cards, 2026-11-23 — is
+documented in ewe-map#51, which was still open when this was written.)
+
+A phone paired over KDE Connect ([[ewe Mobile]], the [[Phone Plugin]]) is a
+row under **Devices**: `Connect` while it is in reach, dimmed with no chip
+while it is away (a click says so), an eject button while its storage is
+mounted. KDE Connect mounts it with sshfs under `$XDG_RUNTIME_DIR`, where
+GIO's volume monitor does not look — which is why it never showed before.
+
+- `apps/files/src-tauri/src/phones.rs` is the only file that knows KDE
+  Connect: who is paired, in reach and mounted (device ids `kdc:<device>`);
+  Connect = the daemon's `mountAndWait`, Disconnect = `unmount`; a watcher
+  keeps the rows and emits `devices-changed` (a signal only means "look
+  again").
+- **It never starts the daemon.** A call to the name `org.kde.kdeconnect`
+  would (D-Bus activation), and a file manager must not put a new device on
+  the network by opening: every call goes to the daemon's unique bus address,
+  and nobody home means no phones.
+- A folder the phone names is only taken inside the phone's own mount; a
+  phone with two folders (an SD card) is a row per folder.
+- **Every mounted device is a crumb root and a tab title now** — "Pixel ›
+  DCIM", not `/run/user/1000/<id>/storage/emulated/0/DCIM` (`deviceRoots`,
+  `pathCrumbs` in `@ewe/shared`); drives too. Inside a device row "File
+  system" is no longer lit as well, and disconnecting a device sends the
+  panes inside it Home.
+- What shows is what Android gives any app with all-files access: shared
+  storage, never `Android/data`. The mount drops when the phone sleeps or
+  leaves the Wi-Fi; the row then reads Connect again.
+
+**Verified:** `scripts/test-phones.sh` (in CI) — on a private bus, looking
+for phones does not start `kdeconnectd`; then a stand-in daemon through
+list → Connect → Disconnect, a folder outside the mount refused. `live_mount`
+against the owner's Pixel: mounted, 15 entries, unmounted clean. The built
+window under a headless `cage` against the stand-in: the rows, Connect, the
+crumbs, the away message, Disconnect. **Not tried:** a phone with an SD
+card; the mount dropping while a pane is inside it.
 
 ## How the desktop wires them in (ewe 0.44.0-beta)
 

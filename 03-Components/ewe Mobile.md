@@ -11,14 +11,21 @@ up: "[[Home]]"
 `~/Projects/ewe/ewe-mobile` · `github.com/prj786/ewe-mobile` (**private for
 now** — the owner, 2026-11-23) · Tauri v2 + Svelte 5 (the ewe Sync stack) ·
 binary `ewe-mobile` · **0.1.0-beta released 2026-11-23** (`v0.1.0-beta` on
-`ca5f921`) · decision: [[ewe Mobile — a window over KDE Connect]]
+`ca5f921`) · **0.1.1-beta released 2026-11-26** (ewe-mobile#2, `v0.1.1-beta`
+on the merge `c64a5b4`: the Remote page) · decisions:
+[[ewe Mobile — a window over KDE Connect]], [[RFC-012 — ewe Mobile, both halves]]
 
 **One ewe window instead of KDE Connect's five.** `kdeconnectd` keeps the
 link to the phone, the pairing keys and the caches; ewe Mobile is everything
 you see of it, in the ewe design system. The phone runs the stock KDE Connect
 app. An ewe app for Android is planned beside it (the owner, 2026-11-23:
 "beside ewe mobile there will be apk for android … kde connect + more
-stuff"); nothing is built for it yet.
+stuff"); nothing is built for it yet. **The plan is decided:**
+[[RFC-012 — ewe Mobile, both halves]] (accepted 2026-11-26) — the phone's
+folders in ewe Files (done, [[ewe-apps]] 0.5.0-beta), its screen and its apps
+as windows through scrcpy over Wi-Fi debugging (two new pages here, `screen`
+and `apps`, after the probes with the phone), and the APK as a GPL fork of
+the KDE Connect app in its own repo.
 
 **Division of labour:** the bar's phone glyph and the Quick settings *Mobile*
 page are the [[Phone Plugin]]'s (layer-shell surfaces stay in the shell —
@@ -33,7 +40,7 @@ publish workflow cannot read another private repo's release with its own
 token — and not on the website:
 
 ```
-gh release download v0.1.0-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst'
+gh release download v0.1.1-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst'
 sudo pacman -U ewe-mobile-*.pkg.tar.zst      # brings kdeconnect; sshfs comes with ewe since 0.49.2
 ```
 
@@ -52,7 +59,7 @@ The ids are `ewe-mobile --page <id>` — public, never renamed with a label.
 | `notifications` | Notifications | by app: dismiss (on the phone too), reply where the app takes one; silent ones behind a switch |
 | `media` | Media | the phone's player: play, pause, skip, seek, volume, which player |
 | `files` | Files | send files (drop anywhere on the window), text, links; browse the phone's storage in ewe Files (`sshfs`); open what the phone sent |
-| `remote` | Remote | this computer's mouse and keyboard on the phone |
+| `remote` | Remote | this computer's mouse and keyboard on the phone: a pad (tap, hold-then-drag to swipe or long-press, the wheel turns the page, Back / Home / Recents) and a box that types into the field open on the phone. **The phone must allow it once** (below) |
 | `devices` | Devices | pair/unpair, pick the phone in use, name this computer, switch single features on and off; the welcome while nothing is linked |
 
 ## How it is built
@@ -80,6 +87,28 @@ flowchart LR
 - `EWE_MOBILE_NO_DAEMON=1` — never start `kdeconnectd` (the bus starts it on
   ANY method call; a test on a private bus would be a new device on the
   network). The same guard as the plugin's `EWE_PHONE_NO_DAEMON`.
+
+## The Remote page and the phone (0.1.1-beta, released 2026-11-26)
+
+The pointer and the keys go out whether or not anyone is listening. An
+Android phone takes them only once **KDE Connect is an accessibility
+service** there (KDE Connect → "Some plugins need permissions" → Mouse
+receiver → Accessibility settings; a copy from outside the Play Store first
+needs "Allow restricted settings" in its App info). Until then it drops
+everything silently — the page "kinda not working at all" (the owner,
+2026-11-26; the phone had it off).
+
+- Two things come back, and the page is built on them (KDE Connect for
+  Android 1.36+): `remoteState` is true while the phone takes input — the
+  page shows what to switch on while it is false — and every key the phone
+  really typed is acknowledged (`keyPressReceived` → the `keyEcho` event).
+  Keys with no answer went nowhere: no text field is open there.
+- What a gesture means is in `src/lib/remote.js` (plain functions, tested):
+  a press that stays put 450 ms puts the finger down (`singlehold`, lifted
+  with `singlerelease`); right-click is Back on a phone, as in scrcpy.
+- The typing box is a real, unseen `<textarea>`: a paste, a dead key and an
+  input method reach it as text and go out as one packet a line
+  (`text_send`).
 
 ## What it takes on trust
 
@@ -114,22 +143,40 @@ message, replying to a notification, dismiss, pairing, ring, clipboard, file
 send, the dialler, media controls, remote input, mounting storage. The D-Bus
 bodies follow the introspected signatures; the first real send is the test.
 
+**Remote, 2026-11-26:** every D-Bus method the app calls was held against
+the live daemon's introspection with the phone in reach — one had drifted
+(`sendKeyPress`, below). The Remote page's calls are tested against a
+stand-in daemon on a private bus (`tests/remote.sh`), and the built binary
+was driven with real pointer and key events under a headless `cage` (drag,
+tap, hold-swipe, right-click, wheel, the three buttons, typing, a dead key,
+a pasted selection) with the stand-in receiving each call. **Still not
+verified on a phone that accepts input** — the owner's has to be switched on
+first.
+
 > **Build guard:** SMS is on the **device** object (interface
 > `org.kde.kdeconnect.device.conversations`), there is no `/conversations`
 > child; a message is the **struct** `(i s a(s) x i i x i x a(xsss))` in a
 > variant. `replyToConversation` does nothing, silently, for a thread the
 > daemon has not cached. A second `requestAllConversationThreads` sends no
-> message again — read `activeConversations()` first. See
+> message again — read `activeConversations()` first.
+> `remotekeyboard.sendKeyPress` takes **seven** arguments since 26.08
+> (`key, specialKey, shift, ctrl, alt, super, sendAck`); with six, the last
+> is read as `super`. A phone's `scroll` is not a distance: it adds `dy` up
+> and turns one page past 500, forward when positive. A dead Remote page is
+> the phone's accessibility switch before it is a bug. See
 > [[Troubleshooting Knowledge]].
 
 ## Tests
 
 `npm test` (numbers, times, SMS parts, links) · `cargo test` (vCards, the
 message decoder, events, ids) · `tests/smoke.sh` (the CLI contract on a
-private bus) · `tests/origin.sh` (only the daemon's signals pass) · two `#[ignore]`d live tests that read the real phone and print
+private bus) · `tests/origin.sh` (only the daemon's signals pass) ·
+`tests/remote.sh` (the Remote page's calls arrive with the signatures the
+daemon declares, and a key's acknowledgement comes back) · two `#[ignore]`d live tests that read the real phone and print
 counts (`cargo test live_reads -- --ignored --nocapture`, `live_signals`).
 The UI alone: `npm run dev` → `http://localhost:5177/?mock=1` (made-up
-people; `scene=`, `scheme=`, `thread=`, `still`).
+people; `scene=`, `scheme=`, `thread=`, `still`; for Remote `keyboard=1`,
+`deaf=1`, and `trace=1` — every command the page sends, on the console).
 
 ## Related
 

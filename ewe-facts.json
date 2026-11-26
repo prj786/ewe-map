@@ -35,7 +35,7 @@
     },
     "ewe_safe": "0.5.2-beta",
     "ewe_companion": "0.3.0-beta",
-    "ewe_apps": "0.4.1-beta",
+    "ewe_apps": "0.5.0-beta",
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
     "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
     "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)",
@@ -47,7 +47,8 @@
     "release_2026_11_23_install": "installing shows: eep 0.3.0-beta (eep#3, af9922c) + ewe-apps 0.4.0-beta (ewe-apps#6, 49d823f) + ewe 0.49.1-beta (ewe#94, 5bce624, the eep-install window rule); [ewe] publish run 45163595840 (tags in the Version Ledger)",
     "release_2026_11_23_cards": "every app is a card (decision 75): eep 0.2.0-beta (eep#2, b8e52a4) + ewe 0.49.0-beta (ewe#93, depends on eep) + ewe-apps 0.3.1-beta (ewe-apps#5); ewe-repo#8 (eep required); site prj786.github.io#18 (40 apps); [ewe] publish run 45065952675 (tags in the Version Ledger)",
     "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)",
-    "ewe_mobile": "0.1.0-beta",
+    "ewe_mobile": "0.1.1-beta",
+    "release_2026_11_26": "the Remote page works + the phone in ewe Files + RFC-012 accepted (decision 77): ewe Mobile 0.1.1-beta (ewe-mobile#2, c64a5b4; private, on its own release) + ewe-apps 0.5.0-beta (ewe-apps#9, c7aace4; [ewe] published, run 45773051880) + ewe#96 (docs/RFC-012-ewe-mobile-android.md, 75b8a7f, no ewe version). ewe-apps 0.4.2-beta (AppImage cards, 2026-11-23) is documented in ewe-map#51, open at the time",
     "release_2026_11_23_mobile": "ewe Mobile 0.1.0-beta (prj786/ewe-mobile, private; v0.1.0-beta on ca5f921) + ewe 0.49.2-beta (ewe#95: ewe.phone 1.1.0 from ewe-plugin-phone#1, sshfs in common.list); [ewe] published, run 45230302638"
   },
   "repos": [
@@ -881,6 +882,11 @@
       "rfc": "RFC-011",
       "topic": "one file picker: the portal's FileChooser + AppChooser go to ewe-portal, the shell draws them on an overlay layer, GTK is the fallback",
       "status": "accepted 2026-11-22; released the same day in ewe 0.48.0-beta + komble 0.25.1, ewe-settings 0.26.1, ewe-sync 0.17.2, ewe-safe 0.5.2, ewe-apps 0.2.1"
+    },
+    {
+      "rfc": "RFC-012",
+      "topic": "ewe Mobile, both halves: the phone's folders in ewe Files, its screen and apps through scrcpy over Wi-Fi debugging, and an ewe app for Android as a fork of the KDE Connect app",
+      "status": "accepted 2026-11-26 (all nine proposed answers); A1 released the same day in ewe-apps 0.5.0-beta, with the Remote fix in ewe Mobile 0.1.1-beta; the probes with the phone, the screen/apps pages and the APK (ewe-mobile-android, a GPL-3.0 fork of kdeconnect-android, id io.github.prj786.ewemobile) not started"
     }
   ],
   "sync_contract": {
@@ -1551,8 +1557,10 @@
     "catalog": "43 apps (0.2): 40 gui/cli on the site, Thunderbird unavailable on 2786a2a72088"
   },
   "ewe_mobile": {
-    "status": "0.1.0-beta released 2026-11-23 (v0.1.0-beta on ca5f921) in a PRIVATE repo; not in [ewe], not on the website",
+    "status": "0.1.1-beta released 2026-11-26 (v0.1.1-beta on c64a5b4; the Remote page) — 0.1.0-beta 2026-11-23 (ca5f921) — in a PRIVATE repo; not in [ewe], not on the website",
     "decision": 76,
+    "plan": "RFC-012 (decision 77): next pages `screen` and `apps` (scrcpy over Wi-Fi debugging, optional deps scrcpy + android-tools), after the probes with the phone",
+    "remote_page": "the phone takes the pointer and keys only once KDE Connect is an accessibility service there; remoteState (false = show what to switch on) and keyPressReceived (the phone typed the key) are the only things it says back; sendKeyPress(key, specialKey, shift, ctrl, alt, super, sendAck) — seven arguments since kdeconnect 26.08; a phone's scroll is whole pages (dy summed, one page past 500)",
     "backend": "kdeconnectd over the session bus (org.kde.kdeconnect); nothing of KDE Connect's own UI",
     "binary": "ewe-mobile",
     "desktop_id": "io.github.prj786.ewe-mobile",
