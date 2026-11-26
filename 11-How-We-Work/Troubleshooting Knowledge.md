@@ -1584,6 +1584,41 @@ the daemon object itself needs `gdbus introspect` — busctl says "duplicate"):
 - **Any method call on `org.kde.kdeconnect` starts the daemon** (D-Bus
   activation). `EWE_MOBILE_NO_DAEMON=1` / `EWE_PHONE_NO_DAEMON=1` and a
   private bus for every test, or the test is a new device on the network.
+- **The Remote page does nothing on the phone** (2026-11-26) — before it is
+  a bug it is the phone: Android takes a pointer and keys from KDE Connect
+  only as an **accessibility service**, and drops them silently until it is
+  one. Check `busctl --user get-property org.kde.kdeconnect
+  …/devices/<id>/remotekeyboard org.kde.kdeconnect.device.remotekeyboard
+  remoteState` with the phone in reach: `false` = switched off on the phone
+  (KDE Connect for Android 1.36+; older ones say `true` only while their own
+  keyboard is up). The page says so while it is false.
+- **`sendKeyPress` has seven arguments since 26.08** — `super` came in
+  before `sendAck`. Qt exports one D-Bus method per number of arguments, so
+  six still "works" and the last one lands in `super`. Introspect before
+  trusting a signature from an older note; `tests/remote.sh` holds it.
+- **A phone's `scroll` is not a distance.** KDE Connect for Android adds
+  `dy` up and turns ONE page when the sum passes 500, forward when positive
+  — the opposite sign from a wheel, and a wheel notch (111 px in WebKitGTK)
+  sent as it comes never gets there. Send whole pages.
+- **A phone's storage, as the daemon tells it** (ewe Files 0.5.0, 2026-11-26,
+  a Pixel): `…/devices/<id>/sftp` only exists while the phone is in reach;
+  `mountAndWait()` → `b`, and the mount is sshfs at `mountPoint()` =
+  `/run/user/1000/<id>`; `getDirectories()` → `a{sv}`, folder → its name
+  (`/run/user/1000/<id>/storage/emulated/0` → "Internal shared storage").
+  GIO's volume monitor never sees it (it hides `$XDG_RUNTIME_DIR`). The
+  folders are the phone's words glued onto the mount point: take one only
+  when it is inside the mount with no `..` (`phones.rs`, `dir_ok`). A paired
+  device's `supportedPlugins` is remembered while it is away — that is how to
+  know a phone offers storage before it is back.
+- **Ask for a tool only when the thing it serves has failed.** ewe Files
+  checked for `sshfs` before asking the daemon anything: on a machine without
+  it (CI) a phone that was away read as "needs sshfs" and a stand-in daemon
+  could not be connected at all. Name the missing tool after the mount fails.
+- **What the phone makes of a click:** `singleclick` taps, `singlehold` /
+  `singlerelease` put the finger down and lift it, `middleclick` Home,
+  `backclick` Back, `forwardclick` and `doubleclick` Recents, `rightclick`
+  the menu key on Android 16+ (Back before). The phone answers none of them;
+  only a key is acknowledged (`sendAck` → `keyPressReceived`).
 
 Building the app:
 
@@ -1611,6 +1646,26 @@ Building the app:
   inside a headless cage** (`CBackend::create() failed`, with pixman and with
   the GPU renderer) — it needs the host session, and each failed try leaves
   a crash report in `~/.cache/hyprland/`.
+- **Real input without a window on the desktop** (2026-11-26): in that
+  headless cage, `wtype` types (also `-k dead_acute -k e`, a real
+  composition) and a forty-line client of `wlr-virtual-pointer-unstable-v1`
+  moves, presses, holds and scrolls — real pointer events in WebKitGTK, with
+  pointer capture. The page under test is `MiniBrowser
+  --enable-write-console-messages-to-stdout=true` on the dev mock
+  (`trace=1`), or the built binary on `dbus-run-session` with a stand-in
+  daemon. Three things the harness does that the app does not: the first key
+  after a click is lost when no keyboard was on the seat at the click (keep
+  one alive: `wtype -s 3000 -k Shift_L &`); `wl-copy` needs that keyboard
+  too; and Ctrl+V / Shift+Insert from `wtype` never reach GTK's key
+  bindings — paste with the middle button (`wl-copy --primary`).
+- **WebKitGTK and paste:** a `paste` event's `clipboardData` is EMPTY for a
+  pasted selection, on a text field and on anything else — the text arrives
+  afterwards as the field's `input`. Take pasted text from a real, unseen
+  `<textarea>`'s `input` event, never from the paste event; the same field
+  gets dead keys and input methods as composition events.
+- **`pkill -f <pattern>` kills the shell that runs it** when the pattern is
+  in that shell's own command line. Stop test processes by pid, or by exact
+  name (`pkill -x`).
 
 ## Related
 

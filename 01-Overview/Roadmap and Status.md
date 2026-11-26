@@ -15,6 +15,33 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-26 — the Remote page works (ewe Mobile 0.1.1), the phone is a place in ewe Files (ewe-apps 0.5.0), RFC-012 accepted — released
+
+The owner: "now i want you to fix remote page its kinda not working at all.
+also make a research how realistic it is to create new android app using kde
+backend once again, but now apk … plan those and fix issues with ewe mobile",
+then "on this session you need to release new ewe mobile and update files" —
+ewe Files, and all nine proposed answers of the RFC taken.
+**Released 2026-11-26:** ewe Mobile `v0.1.1-beta` (ewe-mobile#2, the merge
+`c64a5b4`; release run 45769593978; private, on its own release); ewe-apps
+`v0.5.0-beta` (ewe-apps#9, the merge `c7aace4`; release run 45771568802);
+`[ewe]` published, run 45773051880; RFC-012 in ewe (ewe#96, `75b8a7f`, docs
+only — no ewe version).
+
+| what | where | state |
+|---|---|---|
+| **The Remote page works** — the phone took nothing because KDE Connect was not an accessibility service there, and the page did not say so; the wheel sent 28 where the phone wants 500; `sendKeyPress` gained `super` in 26.08; the typing box was not a text field. Now: what to switch on, Back / Home / Recents, hold-then-drag, whole pages from the wheel, the phone's acknowledgement of each key | ewe-mobile **#2**, [[ewe Mobile]] | released, 0.1.1-beta; **not tried on a phone that accepts input** |
+| **The phone is a place in ewe Files** — a row under Devices (Connect / away / eject) through `kdeconnectd`'s sshfs mount; never starts the daemon; every mounted device is a crumb root | ewe-apps **#9**, [[ewe-apps]] | released, 0.5.0-beta; Connect and Disconnect run against the owner's Pixel |
+| **RFC-012** — the phone's screen and apps through scrcpy over Wi-Fi debugging, the APK as a GPL fork of the KDE Connect app using the stock daemon's `remotecommands` | ewe **#96**, [[RFC-012 — ewe Mobile, both halves]] | accepted (decision 77); nothing of it beyond A1 is built |
+
+**Open (owner):** `sudo pacman -Syu` (ewe-apps 0.5.0); install ewe Mobile
+from its private release (`gh release download v0.1.1-beta -R
+prj786/ewe-mobile -p '*.pkg.tar.zst'`, then `sudo pacman -U` it); on the
+phone, turn KDE Connect on under Accessibility (KDE Connect → "Some plugins
+need permissions" → Mouse receiver) and try the Remote page. **Next:** the
+half hour with the phone and `scrcpy` (the RFC's §7), before the screen and
+apps pages; the APK is a session of its own.
+
 ## 2026-11-23 — ewe Mobile (0.1.0-beta, private) + Phone 1.1.0 + sshfs by default (ewe 0.49.2) — released
 
 The owner: "now i want you to generate new app. i want ewe mobile app. based

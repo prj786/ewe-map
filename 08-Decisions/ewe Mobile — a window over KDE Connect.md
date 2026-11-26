@@ -56,7 +56,9 @@ a **private** repo: "create new repo … for now private in github".
 **Later, not decided here:** the Android app ("apk"), and whatever protocol
 "KDE Connect + more" becomes. The app's seams for it: `kdc.rs` is the only
 file that knows the daemon, and the page speaks in its own JSON (`api.js`),
-not in D-Bus.
+not in D-Bus. **Decided 2026-11-26:** [[RFC-012 — ewe Mobile, both halves]]
+— the APK is a fork of the KDE Connect app, and it reaches the unchanged
+daemon through its `remotecommands` plugin.
 
 ## Related
 
