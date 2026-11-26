@@ -1667,6 +1667,69 @@ Building the app:
   in that shell's own command line. Stop test processes by pid, or by exact
   name (`pkill -x`).
 
+## The phone and the Android fork (ewe Mobile for Android, 2026-11-26)
+
+Found on the owner's Pixel 10 Pro XL (Android 17) with
+[[ewe Mobile for Android]] and the stock KDE Connect side by side:
+
+- **Force-stopping an app switches its accessibility service off** —
+  Android removes it from `enabled_accessibility_services` (and sets
+  `accessibility_enabled` 0). Never `am force-stop` KDE Connect to make it
+  reload; the Remote page dies with it.
+- **KDE Connect for Android loads its plugins when a link is made**, not
+  when a permission changes. A permission granted while linked (over adb or
+  in Settings) counts from the next reconnect: wake the phone, or let the
+  Wi-Fi drop — `remoteState` turns `true` then.
+- **Switching accessibility on over adb:** `settings put secure
+  enabled_accessibility_services <pkg>/org.kde.kdeconnect.KdeConnectAccessibilityService`
+  and `accessibility_enabled 1`. Read the value first and append with `:` —
+  it is one list for every service. It survives a reboot.
+- **`isReachable` lies for one to two minutes** after a link dies; a call in
+  that window goes nowhere. An sshfs mount of the phone stays mounted and
+  answers every access with `Input/output error` until the daemon notices,
+  and `sftp.unmount` in that window does nothing.
+- **A dozing phone does not hear the computer.** It holds no multicast lock,
+  Wi-Fi drops broadcasts, so `forceOnNetworkChange` on the desktop does not
+  bring a link back; waking the phone does, within seconds.
+- **Android 17's local-network permission** is a prompt at first start;
+  until it is allowed the app does not broadcast ("Will not UDP broadcast,
+  missing ACCESS_LOCAL_NETWORK permission").
+- **Two KDE Connect apps on one phone** both hear UDP 1716 (`SO_REUSEADDR`)
+  and take the next free TCP port; at every network change they find each
+  other and fail a TLS handshake (noise). The fork's link also dropped three
+  times at such moments while the stock app's held — cause open.
+- **adb over Wi-Fi survives more than KDE Connect does:** a doze, a
+  five-second Wi-Fi blip, and — on Android 17 with a trusted network — a
+  reboot, before the first unlock. After Wireless debugging is switched off
+  and on, adb reconnects by mDNS on a new port, no new code.
+- **Logs roll out fast:** the phone's `main`/`system` buffers are 256 KiB
+  and `AdbWifiNetworkMonitor` writes every three seconds, so an app launch
+  from ten minutes ago is gone. Capture live: `adb logcat -v time -s <TAG>`.
+- **`scrcpy --list-apps` takes ~12 s** for 93 apps — cache it.
+- **Some banking apps refuse while Developer options is on**, debugging on
+  or off (TBC Bank, Liberty; BOG does not mind).
+
+Building the fork:
+
+- **AGP 9's built-in Kotlin:** a folder added to `java.directories` reaches
+  KSP but not the Kotlin compiler — the generated plugin index then names a
+  class that "does not exist" (`Unresolved reference 'github'`). Add it to
+  `kotlin.directories` too.
+- **AGP 9.5.1 asks for build-tools 36.0.0** even with `compileSdk = 37`, and
+  platforms now come as `android-37.0` / `.1` / `.2`. Accept the SDK licence
+  once and Gradle fetches what it is missing.
+- **Nothing prints the device's own keys:** the app's
+  `<pkg>_preferences.xml` holds `privateKey` beside the device name — read
+  one key with `grep -o`, never `cat` the file.
+
+The vault itself:
+
+- **`vault-check.sh` in a `.wt/` worktree fails the facts check for every
+  repo** ("has no checkout in the workspace"): `check-facts.py` takes the
+  vault's parent folder for the workspace, and a worktree's parent is
+  `.wt/`. Check a copy placed at the workspace's top level (`cp -a` the
+  worktree to `~/Projects/ewe/.vaultcheck-<name>`, drop its `.git`, run, delete).
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·

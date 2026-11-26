@@ -68,6 +68,7 @@ flowchart TB
   [[ewe-browser]] · [[ewe-apps]] (ewe Files · ewe Player · ewe Viewer, 0.44) · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
 - [[ewe Mobile]] — your phone in one window, over KDE Connect's daemon (0.1.1-beta, 2026-11-26; a private repo for now); what comes next, on the desktop and as an Android app: [[RFC-012 — ewe Mobile, both halves]]
+- [[ewe Mobile for Android]] — the phone half, a fork of KDE Connect for Android (`ewe-connector-android`, private; B1 built and the `remotecommands` door proven 2026-11-26, not released)
 
 **04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)
 - [[Plugin System]] · [[Example Plugin]]

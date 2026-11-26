@@ -18,8 +18,13 @@ those", and took **all nine proposed answers** when asked. The full text,
 with sources and what was measured, is `ewe/docs/RFC-012-ewe-mobile-android.md`
 (ewe#96). Built and released the same day: the Remote page fix
 ([[ewe Mobile]] 0.1.1-beta) and step A1, the phone in ewe Files
-([[ewe-apps]] 0.5.0-beta). **Not started:** the probes with the phone, the
-screen and apps pages, the APK.*
+([[ewe-apps]] 0.5.0-beta). **Later that day, with the phone:** the §7
+probes (Track A goes ahead as written), **B1** — [[ewe Mobile for Android]]
+builds, installs beside the stock app and pairs (repo
+`ewe-connector-android`, the owner's name for it; PR #1, not merged) — and
+the **B3 spike**, which proved the `remotecommands` door both ways against
+the stock daemon. **Not started:** the screen and apps pages (A2–A4), B3
+itself, B2.*
 
 ## What was found
 
@@ -71,12 +76,34 @@ screen and apps pages, the APK.*
 ## The order of work
 
 0. Half an hour with the phone and `scrcpy` (the RFC's §7: seven things to
-   try) — **before any more code**.
+   try) — **done 2026-11-26**, results below.
 1. A1, the phone in ewe Files — **done** ([[ewe-apps]] 0.5.0-beta).
 2. A2–A4 in `ewe-mobile`: the debugging link, a `screen` page, an `apps`
    page (two new public page ids).
-3. B1: the fork builds, pairs with the stock daemon, installs from ewe Mobile.
+3. B1: the fork builds, pairs with the stock daemon, installs from ewe
+   Mobile — **built 2026-11-26** over `adb install`; installing *from* ewe
+   Mobile waits for A2. The B3 spike ran with it.
 4. B3: apps and icons from the phone. 5. B2: the ewe face.
+
+## What the phone said (§7, 2026-11-26)
+
+On the owner's Pixel 10 Pro XL, Android 17:
+
+- **scrcpy** runs on Hyprland — "works, noticeable lag" (the owner); the
+  Wi-Fi round trip to the phone was 5–410 ms, so the lag is the network.
+- **`--list-apps`** lists 93 apps but takes 12.5 s: the Apps page caches it.
+- **"Open here" works** (`--new-display … --start-app`): a plain app, a
+  Google app and a banking app (BOG, login screen included), none black.
+- **The debugging link comes back by itself** — after Wireless debugging is
+  switched off and on, and after a reboot *before the first unlock*. B4 is
+  not needed for reboots.
+- **Two of the owner's three banks (TBC, Liberty) refuse whenever Developer
+  options is on**, debugging on or off. That is Q2's price.
+- **KDE Connect's accessibility service can be switched on over adb**; it
+  survives a reboot, and force-stopping the app switches it off.
+- **The storage mount** dies about a minute into doze and stays as a dead
+  `fuse.sshfs` (EIO) until the daemon notices; `isReachable` lags the same
+  one to two minutes.
 
 ## Not doing
 
@@ -87,6 +114,6 @@ Android, not the phone's apps); a Cast or Miracast receiver.
 
 ## Related
 
-- [[ewe Mobile]] · [[ewe Mobile — a window over KDE Connect]] · [[ewe-apps]] ·
+- [[ewe Mobile]] · [[ewe Mobile for Android]] · [[ewe Mobile — a window over KDE Connect]] · [[ewe-apps]] ·
   [[Phone Plugin]] · [[Decision Index]] · [[Open Questions]] ·
   [[Troubleshooting Knowledge]]

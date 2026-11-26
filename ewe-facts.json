@@ -195,6 +195,12 @@
       "role": "ewe Mobile: the phone in one window (messages, contacts, notifications, media, files, remote, devices) over KDE Connect's daemon; 0.1.0-beta released 2026-11-23; PRIVATE repo for now — the package is on its own release, not in [ewe]",
       "stack": "Tauri v2 + Svelte 5, zbus",
       "license": "MIT"
+    },
+    {
+      "name": "ewe-connector-android",
+      "role": "ewe Mobile for Android: a fork of kdeconnect-android v1.37.3 (app 'ewe Mobile', id io.github.prj786.ewemobile); upstream's code untouched, ours in src/ewe/; B1 built 2026-11-26 (PR #1), not released; PRIVATE repo",
+      "stack": "Kotlin, Android Gradle Plugin 9.5.1, JDK 21",
+      "license": "GPL-3.0-only"
     }
   ],
   "rules": [
@@ -886,7 +892,7 @@
     {
       "rfc": "RFC-012",
       "topic": "ewe Mobile, both halves: the phone's folders in ewe Files, its screen and apps through scrcpy over Wi-Fi debugging, and an ewe app for Android as a fork of the KDE Connect app",
-      "status": "accepted 2026-11-26 (all nine proposed answers); A1 released the same day in ewe-apps 0.5.0-beta, with the Remote fix in ewe Mobile 0.1.1-beta; the probes with the phone, the screen/apps pages and the APK (ewe-mobile-android, a GPL-3.0 fork of kdeconnect-android, id io.github.prj786.ewemobile) not started"
+      "status": "accepted 2026-11-26 (all nine proposed answers); A1 released the same day in ewe-apps 0.5.0-beta, with the Remote fix in ewe Mobile 0.1.1-beta; the same day the §7 probes ran (Track A goes ahead as written; B4 not needed for reboots), B1 was built (ewe-connector-android PR #1, not merged) and the B3 spike proved the remotecommands door both ways against the stock kdeconnectd 26.08.3; A2–A4, B3 and B2 not started"
     }
   ],
   "sync_contract": {
@@ -1559,7 +1565,7 @@
   "ewe_mobile": {
     "status": "0.1.1-beta released 2026-11-26 (v0.1.1-beta on c64a5b4; the Remote page) — 0.1.0-beta 2026-11-23 (ca5f921) — in a PRIVATE repo; not in [ewe], not on the website",
     "decision": 76,
-    "plan": "RFC-012 (decision 77): next pages `screen` and `apps` (scrcpy over Wi-Fi debugging, optional deps scrcpy + android-tools), after the probes with the phone",
+    "plan": "RFC-012 (decision 77): next pages `screen` and `apps` (scrcpy over Wi-Fi debugging, optional deps scrcpy + android-tools); the probes with the phone ran 2026-11-26 and say go",
     "remote_page": "the phone takes the pointer and keys only once KDE Connect is an accessibility service there; remoteState (false = show what to switch on) and keyPressReceived (the phone typed the key) are the only things it says back; sendKeyPress(key, specialKey, shift, ctrl, alt, super, sendAck) — seven arguments since kdeconnect 26.08; a phone's scroll is whole pages (dy summed, one page past 500)",
     "backend": "kdeconnectd over the session bus (org.kde.kdeconnect); nothing of KDE Connect's own UI",
     "binary": "ewe-mobile",
@@ -1602,6 +1608,19 @@
     "install_while_private": "gh release download v0.1.0-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst' && sudo pacman -U ewe-mobile-*.pkg.tar.zst",
     "when_public": "add ewe-mobile to ewe-repo's publish list (opt-in, the ewe-safe pattern) and to the website's apps",
     "plugin": "ewe.phone 1.1.0 (ewe-plugin-phone#1, vendored in ewe 0.49.2-beta): the Messages fix and the Open ewe Mobile button",
-    "sshfs": "installed by default: in ewe's packages/common.list since 0.49.2-beta (owner exception to the package diet) and a dependency of ewe-mobile"
+    "sshfs": "installed by default: in ewe's packages/common.list since 0.49.2-beta (owner exception to the package diet) and a dependency of ewe-mobile",
+    "android": {
+      "repo": "prj786/ewe-connector-android (private; named by the owner 2026-11-26 — the RFC said ewe-mobile-android)",
+      "app_name": "ewe Mobile",
+      "application_id": "io.github.prj786.ewemobile",
+      "debug_application_id": "io.github.prj786.ewemobile.debug",
+      "upstream": "kdeconnect-android v1.37.3 (remote 'upstream', pushing disabled)",
+      "license": "GPL-3.0-only",
+      "status": "B1 built 2026-11-26 (PR #1, not merged): installs beside the stock app over adb, pairs with the stock kdeconnectd, the desktop's pages read through it; debug signing only, no release key",
+      "two_devices": "while the stock app is installed the phone is two paired devices with the same name: pick by id",
+      "b3_spike": "proven 2026-11-26: a phone announcing kdeconnect.runcommand (out) and kdeconnect.runcommand.request (in) gets /modules/kdeconnect/devices/<id>/remotecommands; commands (ay) holds its commandList byte for byte; commandsChanged on every change; triggerCommand(s) arrives as {\"key\": s}; editCommands() as {\"setup\": true}; packets up to 32 MiB both ways",
+      "apps_list_proposed": "{\"<package>\": {\"name\": \"<label>\", \"command\": \"<package>\"}, \"ewe\": {\"name\": \"ewe Mobile\", \"command\": \"\", \"v\": 1}}; icons on a side channel, never in the list (decided in B3)",
+      "is_reachable_lag": "isReachable stays true 1-2 min after a link dies"
+    }
   }
 }

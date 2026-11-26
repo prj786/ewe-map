@@ -15,6 +15,22 @@ Snapshot as of **2026-11-22**. Released 2026-11-22: **one file picker** — ewe 
 `0.9.x` beta line and names the **1.0-beta release "Dolly"**.
 
 
+## 2026-11-26 (afternoon) — ewe Mobile for Android: B1, the B3 spike, the phone probes — built, not released
+
+The owner handed over the Track B brief ("you need to create android app")
+and named the repo: `ewe-connector-android`. The app stays "ewe Mobile",
+`io.github.prj786.ewemobile`.
+
+| what | where | state |
+|---|---|---|
+| **B1** — a fork of KDE Connect for Android 1.37.3: our id, name and icon beside upstream's untouched code (a 13-line patch on its files), installs beside the stock app, pairs with the stock `kdeconnectd`, the desktop's pages read through it; CI builds the debug APK | `ewe-connector-android` **#1** (private), [[ewe Mobile for Android]] | built and run on the owner's Pixel; PR open, not merged; no release key |
+| **The B3 spike** — the `remotecommands` door, both ways, against the unmodified daemon | the same PR | proven |
+| **The §7 probes** — scrcpy, the app list, apps on a virtual display, the link after Wi-Fi and reboot, banking, accessibility over adb, the mount when the phone sleeps | [[RFC-012 — ewe Mobile, both halves]] §7 (ewe, docs) | run; Track A goes ahead as written |
+
+**Open (owner):** the release key and whether the repo goes public; the
+banking result (two of three banks refuse while Developer options is on);
+ewe Mobile for Android's link drops (cause not found).
+
 ## 2026-11-26 — the Remote page works (ewe Mobile 0.1.1), the phone is a place in ewe Files (ewe-apps 0.5.0), RFC-012 accepted — released
 
 The owner: "now i want you to fix remote page its kinda not working at all.
