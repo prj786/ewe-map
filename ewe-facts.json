@@ -4,7 +4,7 @@
   "generated": "2026-11-22",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.50.0-beta",
+    "ewe_de": "0.50.1-beta",
     "ewe_os": "0.17.0-beta",
     "ewe_repo": "rolling-x86_64",
     "komble": "0.26.0-beta",
@@ -27,7 +27,7 @@
       "ewe.phone": "1.2.0",
       "ewe.mail": "1.2.0",
       "ewe.cast": "1.0.2",
-      "ewe.dock": "1.5.0",
+      "ewe.dock": "1.5.1",
       "ewe.safe": "1.2.0",
       "ewe.companion": "0.7.0",
       "ewe.slack": "0.4.0",
@@ -47,11 +47,12 @@
     "release_2026_11_23_install": "installing shows: eep 0.3.0-beta (eep#3, af9922c) + ewe-apps 0.4.0-beta (ewe-apps#6, 49d823f) + ewe 0.49.1-beta (ewe#94, 5bce624, the eep-install window rule); [ewe] publish run 45163595840 (tags in the Version Ledger)",
     "release_2026_11_23_cards": "every app is a card (decision 75): eep 0.2.0-beta (eep#2, b8e52a4) + ewe 0.49.0-beta (ewe#93, depends on eep) + ewe-apps 0.3.1-beta (ewe-apps#5); ewe-repo#8 (eep required); site prj786.github.io#18 (40 apps); [ewe] publish run 45065952675 (tags in the Version Ledger)",
     "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)",
-    "ewe_mobile": "0.2.0-beta",
+    "ewe_mobile": "0.2.1-beta",
     "release_2026_11_26": "the Remote page works + the phone in ewe Files + RFC-012 accepted (decision 77): ewe Mobile 0.1.1-beta (ewe-mobile#2, c64a5b4; private, on its own release) + ewe-apps 0.5.0-beta (ewe-apps#9, c7aace4; [ewe] published, run 45773051880) + ewe#96 (docs/RFC-012-ewe-mobile-android.md, 75b8a7f, no ewe version). ewe-apps 0.4.2-beta (AppImage cards, 2026-11-23) is documented in ewe-map#51, open at the time",
     "release_2026_11_23_mobile": "ewe Mobile 0.1.0-beta (prj786/ewe-mobile, private; v0.1.0-beta on ca5f921) + ewe 0.49.2-beta (ewe#95: ewe.phone 1.1.0 from ewe-plugin-phone#1, sshfs in common.list); [ewe] published, run 45230302638",
     "ewe_mobile_android": "debug builds only (ewe-connector-android#2 merged ce3f5be1; no release key yet)",
-    "release_2026_11_26_ecosystem": "ewe Mobile, one ecosystem (decisions 78-81): ewe 0.50.0-beta (ewe#98, 816a0bc; [ewe] publish run 45850423061) + ewe.phone 1.2.0 (ewe-plugin-phone#2, 8533299) + ewe Mobile 0.2.0-beta (ewe-mobile#3, v0.2.0-beta on 8d52e99, release run 45850967672; private) + eep 0.4.1-beta (eep#5, 4d036e6) + ewe Mobile for Android's ewe face (ewe-connector-android#2, merged ce3f5be1; debug builds only) (tags in the Version Ledger)"
+    "release_2026_11_26_ecosystem": "ewe Mobile, one ecosystem (decisions 78-81): ewe 0.50.0-beta (ewe#98, 816a0bc; [ewe] publish run 45850423061) + ewe.phone 1.2.0 (ewe-plugin-phone#2, 8533299) + ewe Mobile 0.2.0-beta (ewe-mobile#3, v0.2.0-beta on 8d52e99, release run 45850967672; private) + eep 0.4.1-beta (eep#5, 4d036e6) + ewe Mobile for Android's ewe face (ewe-connector-android#2, merged ce3f5be1; debug builds only) (tags in the Version Ledger)",
+    "release_2026_11_27_phone_fixes": "the phone fixes: ewe 0.50.1-beta (ewe#99, dbc574b; [ewe] publish run 45946984114; ewe.dock 1.5.1 from ewe-plugin-dock#4 — plugin buttons on every display's dock) + ewe Mobile 0.2.1-beta (ewe-mobile#4, v0.2.1-beta on e657066, release run 45946252743 — an app window is no longer black while the phone sleeps)"
   },
   "repos": [
     {
