@@ -35,19 +35,28 @@ mindmap
       verify
       write
       boot
-      the six screens
+      the eleven screens
     features
       the OS
-      shell
-      look
+      the desktop
       apps
-      cast
-      phone
+      plugins
+      the look
+      your account
       system
+    apps
+      eep cards, one per app
+      how install and remove work
     theming
       one accent in
       a whole system out
       LIVE derivation
+    design
+      tokens
+      color
+      typography
+      motion
+      components
     how
       the one file
       sync
@@ -56,24 +65,28 @@ mindmap
       install
       the desktop
       apps
-        ewe browser
+        ewe Browser
+        Files, Player, Viewer
+        ewe Mobile
         Safe
         Shaun
         Komble
         Settings
+      account
+      the one file
       plugins
-        built-in plugins
+        built-in plugins, seventeen
         writing
         api
+      CLI reference
       shortcuts
       updates
-      ewe-conf
-      limits
-      repos
+      repositories
+      troubleshooting
     privacy
       Google OAuth verification
     sitemap.xml
-      generated from docs nav
+      generated from the docs and design nav
     docs/add-ons
       308 to /docs/plugins/built-in
     philosophy
@@ -81,6 +94,14 @@ mindmap
     sync
       308 to /how
 ```
+
+Where the content comes from: the docs sidebar, `/docs/` cards, previous/next
+links and the sitemap all read `src/lib/docs/nav.js`; the plugin list
+(`/features/#plugins`, `/docs/plugins/built-in/`, `/docs/repositories/`) reads
+`src/lib/docs/addons.js`; the apps list on `/apps/` is generated from an eep
+release (`npm run apps`); the ISO version and download links are
+`src/lib/release.js`. ewe Mobile has a docs page, `/docs/apps/mobile/`
+([[ewe Mobile]], decision 82).
 
 ## The theme connection
 

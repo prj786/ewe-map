@@ -4,14 +4,15 @@
   "generated": "2026-11-22",
   "description": "Machine-readable facts about the ewe project. Curated mirror of the vault's reference sheets; validated by .vault/vault-check.sh. Humans read the Markdown notes; agents read this.",
   "versions": {
-    "ewe_de": "0.50.1-beta",
-    "ewe_os": "0.17.0-beta",
+    "ewe_de": "0.50.2-beta",
+    "ewe_de_next": "0.51.0-beta",
+    "ewe_os": "0.18.0-beta",
     "ewe_repo": "rolling-x86_64",
-    "komble": "0.26.0-beta",
-    "ewe_sync": "0.17.2-beta",
+    "komble": "0.26.1-beta",
+    "ewe_sync": "0.17.3-beta",
     "ewe_cast": "phases-A+B",
     "target_1_0": "Dolly",
-    "ewe_settings": "0.26.1-beta",
+    "ewe_settings": "0.26.2-beta",
     "ewe_browser": "0.9.0-beta",
     "plugin_api": 3,
     "addons": {
@@ -33,9 +34,9 @@
       "ewe.slack": "0.4.0",
       "ewe.switcher": "1.0.1"
     },
-    "ewe_safe": "0.5.2-beta",
+    "ewe_safe": "0.5.3-beta",
     "ewe_companion": "0.3.0-beta",
-    "ewe_apps": "0.5.0-beta",
+    "ewe_apps": "0.5.1-beta",
     "release_2026_11_19": "the 0.44 wave: ewe 0.44.0-beta, ewe-apps 0.1.0-beta, ewe-settings 0.24.0-beta, ewe-sync 0.17.0-beta, komble 0.23.0-beta, ewe-browser 0.8.4-beta; ewe-os 0.16.0-beta (tags in the Version Ledger)",
     "release_2026_11_20": "the 0.45 milestone wave: ewe 0.45.0-beta, ewe-settings 0.25.0-beta, ewe-apps 0.1.1-beta, komble 0.23.1-beta, ewe-sync 0.17.1-beta, ewe-safe 0.5.1-beta; plugins dock 1.5.0, clipboard 1.3.0, sysmon 2.1.0, media 1.1.0, places 1.2.0 (tags in the Version Ledger)",
     "release_2026_11_21": "the media + languages wave: ewe 0.46.0-beta, ewe-apps 0.2.0-beta, ewe-settings 0.26.0-beta, ewe-browser 0.9.0-beta, komble 0.24.0-beta; [ewe] publish run 44898072925; decisions 65-70 (tags in the Version Ledger)",
@@ -47,12 +48,13 @@
     "release_2026_11_23_install": "installing shows: eep 0.3.0-beta (eep#3, af9922c) + ewe-apps 0.4.0-beta (ewe-apps#6, 49d823f) + ewe 0.49.1-beta (ewe#94, 5bce624, the eep-install window rule); [ewe] publish run 45163595840 (tags in the Version Ledger)",
     "release_2026_11_23_cards": "every app is a card (decision 75): eep 0.2.0-beta (eep#2, b8e52a4) + ewe 0.49.0-beta (ewe#93, depends on eep) + ewe-apps 0.3.1-beta (ewe-apps#5); ewe-repo#8 (eep required); site prj786.github.io#18 (40 apps); [ewe] publish run 45065952675 (tags in the Version Ledger)",
     "release_2026_11_22_eep": "eep (RFC-010): eep 0.1.0-beta (prj786/eep v0.1.0-beta on d5c86ee, opt-in in [ewe] via ewe-repo#7) + ewe 0.48.1-beta (ewe#92, launcher skips hidden folders), komble 0.26.0-beta (komble-arch#25, eep source), ewe-apps 0.3.0-beta (ewe-apps#4, Applications + cards in ewe Files); [ewe] publish run 45031083917; site /apps/ prj786.github.io#17; decision 74 (tags in the Version Ledger)",
-    "ewe_mobile": "0.2.1-beta",
+    "ewe_mobile": "0.2.2-beta",
     "release_2026_11_26": "the Remote page works + the phone in ewe Files + RFC-012 accepted (decision 77): ewe Mobile 0.1.1-beta (ewe-mobile#2, c64a5b4; private, on its own release) + ewe-apps 0.5.0-beta (ewe-apps#9, c7aace4; [ewe] published, run 45773051880) + ewe#96 (docs/RFC-012-ewe-mobile-android.md, 75b8a7f, no ewe version). ewe-apps 0.4.2-beta (AppImage cards, 2026-11-23) is documented in ewe-map#51, open at the time",
     "release_2026_11_23_mobile": "ewe Mobile 0.1.0-beta (prj786/ewe-mobile, private; v0.1.0-beta on ca5f921) + ewe 0.49.2-beta (ewe#95: ewe.phone 1.1.0 from ewe-plugin-phone#1, sshfs in common.list); [ewe] published, run 45230302638",
     "ewe_mobile_android": "debug builds only (ewe-connector-android#2 merged ce3f5be1; no release key yet)",
     "release_2026_11_26_ecosystem": "ewe Mobile, one ecosystem (decisions 78-81): ewe 0.50.0-beta (ewe#98, 816a0bc; [ewe] publish run 45850423061) + ewe.phone 1.2.0 (ewe-plugin-phone#2, 8533299) + ewe Mobile 0.2.0-beta (ewe-mobile#3, v0.2.0-beta on 8d52e99, release run 45850967672; private) + eep 0.4.1-beta (eep#5, 4d036e6) + ewe Mobile for Android's ewe face (ewe-connector-android#2, merged ce3f5be1; debug builds only) (tags in the Version Ledger)",
-    "release_2026_11_27_phone_fixes": "the phone fixes: ewe 0.50.1-beta (ewe#99, dbc574b; [ewe] publish run 45946984114; ewe.dock 1.5.1 from ewe-plugin-dock#4 — plugin buttons on every display's dock) + ewe Mobile 0.2.1-beta (ewe-mobile#4, v0.2.1-beta on e657066, release run 45946252743 — an app window is no longer black while the phone sleeps)"
+    "release_2026_11_27_phone_fixes": "the phone fixes: ewe 0.50.1-beta (ewe#99, dbc574b; [ewe] publish run 45946984114; ewe.dock 1.5.1 from ewe-plugin-dock#4 — plugin buttons on every display's dock) + ewe Mobile 0.2.1-beta (ewe-mobile#4, v0.2.1-beta on e657066, release run 45946252743 — an app window is no longer black while the phone sleeps)",
+    "release_2026_11_27_wave": "the 0.50.2 wave: ewe 0.50.2-beta (ewe#100 + #101 via #102, fcd8bc3; [ewe] publish run 45982245581) + komble 0.26.1-beta (#26) + ewe-settings 0.26.2-beta (#30) + ewe-sync 0.17.3-beta (#18) + ewe-mobile 0.2.2-beta (#5 + #6) + ewe-safe 0.5.3-beta (#26) + ewe-apps 0.5.1-beta (#10) + ewe-os 0.18.0-beta (ewe-os#24, 286872b): Komble no longer vanishes, small tiles drawn true, hover ends on leave, panics in the journal, Files drops at scale 2, a new machine's restore, a wallpaper from the start, ewe's own login screen (tags in the Version Ledger)"
   },
   "repos": [
     {
@@ -195,7 +197,7 @@
     },
     {
       "name": "ewe-mobile",
-      "role": "ewe Mobile: the phone in one window (messages, contacts, notifications, media, files, remote, devices) over KDE Connect's daemon; 0.1.0-beta released 2026-11-23; PRIVATE repo for now — the package is on its own release, not in [ewe]",
+      "role": "ewe Mobile: the phone in one window (phone, messages, contacts, notifications, media, files, screen, apps, remote, devices) over KDE Connect's daemon; 0.2.1-beta released 2026-11-27; PUBLIC repo; opt-in package in [ewe] (decision 82)",
       "stack": "Tauri v2 + Svelte 5, zbus",
       "license": "MIT"
     }
@@ -1560,8 +1562,8 @@
     "catalog": "43 apps (0.2): 40 gui/cli on the site, Thunderbird unavailable on 2786a2a72088"
   },
   "ewe_mobile": {
-    "status": "0.2.0-beta 2026-11-26 (d8f33b9; ewe-mobile#3; Screen, Apps, the C3 verbs) — 0.1.1-beta 2026-11-26 (c64a5b4; the Remote page) — 0.1.0-beta 2026-11-23 (ca5f921) — in a PRIVATE repo; not in [ewe], not on the website",
-    "decision": 76,
+    "status": "0.2.1-beta 2026-11-27 (e657066; ewe-mobile#4; a phone app opened here no longer shows a black window while the phone sleeps) — 0.2.0-beta 2026-11-26 (d8f33b9; ewe-mobile#3; Screen, Apps, the C3 verbs) — 0.1.1-beta 2026-11-26 (c64a5b4; the Remote page) — 0.1.0-beta 2026-11-23 (ca5f921) — PUBLIC repo since 2026-11-27; opt-in package in [ewe] (decision 82)",
+    "decision": 82,
     "plan": "RFC-012 (decision 77) built in the 2026-11-26 ecosystem wave; open: the release key for the Android app, the screen inside the window",
     "remote_page": "the phone takes the pointer and keys only once KDE Connect is an accessibility service there; remoteState (false = show what to switch on) and keyPressReceived (the phone typed the key) are the only things it says back; sendKeyPress(key, specialKey, shift, ctrl, alt, super, sendAck) — seven arguments since kdeconnect 26.08; a phone's scroll is whole pages (dy summed, one page past 500)",
     "backend": "kdeconnectd over the session bus (org.kde.kdeconnect); nothing of KDE Connect's own UI",
@@ -1608,7 +1610,7 @@
     },
     "verified_on_a_phone": "reads only (devices, battery, signal, notifications, threads, a conversation's signals, contacts, media)",
     "not_verified_on_a_phone": "every write: send, reply, dismiss, pair, ring, clipboard, share, dial, media controls, remote input, storage mount",
-    "repo": "prj786/ewe-mobile (private for now — owner 2026-11-23)",
+    "repo": "prj786/ewe-mobile (private when created, owner 2026-11-23; public since 2026-11-27, decision 82)",
     "install_while_private": "eep first (>= 0.4.1-beta), then: gh release download v0.2.0-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst' && sudo pacman -U ewe-mobile-*.pkg.tar.zst",
     "when_public": "add ewe-mobile to ewe-repo's publish list (opt-in, the ewe-safe pattern) and to the website's apps",
     "plugin": "ewe.phone 1.2.0 (ewe-plugin-phone#2, vendored in ewe 0.50.0-beta): dock-item (ewe.phone.toggle, order 60) + panel Popup.qml, the apps cache, hide_kdeconnect; IPC target ewe.phone: toggle, show, hide, tab, search, pick",
@@ -1635,6 +1637,15 @@
       "id": "io.github.prj786.ewemobile (debug: .debug)",
       "flavor": "ewe (dimension face): src/ewe/ source set; upstream's src/main carries a short patch table (docs/PLAN.md)",
       "signing": "debug builds only; no release key yet (the owner's)"
-    }
+    },
+    "decisions": [
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82
+    ]
   }
 }

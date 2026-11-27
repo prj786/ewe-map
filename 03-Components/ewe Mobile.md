@@ -8,14 +8,16 @@ up: "[[Home]]"
 
 # ewe Mobile — your phone on your desktop
 
-`~/Projects/ewe/ewe-mobile` · `github.com/prj786/ewe-mobile` (**private for
-now** — the owner, 2026-11-23) · Tauri v2 + Svelte 5 (the ewe Sync stack) ·
-binary `ewe-mobile` · **0.1.0-beta released 2026-11-23** (`v0.1.0-beta` on
-`ca5f921`) · **0.1.1-beta released 2026-11-26** (ewe-mobile#2, `v0.1.1-beta`
-on the merge `c64a5b4`: the Remote page) · **0.2.0-beta, the same evening**
-(`d8f33b9`: Screen, Apps, the C3 verbs — "one ecosystem") · decisions:
-[[ewe Mobile — a window over KDE Connect]], [[RFC-012 — ewe Mobile, both halves]],
-[[ewe Mobile — one ecosystem]]
+`~/Projects/ewe/ewe-mobile` · `github.com/prj786/ewe-mobile` (**public**
+since 2026-11-27, decision 82) · Tauri v2 + Svelte 5 (the ewe Sync stack) ·
+binary `ewe-mobile` · **0.2.1-beta released 2026-11-27** (ewe-mobile#4,
+`v0.2.1-beta` on the merge `e657066`: a phone app opened here no longer shows
+a black window while the phone sleeps) · **0.2.0-beta 2026-11-26** (`d8f33b9`:
+Screen, Apps, the C3 verbs — "one ecosystem") · **0.1.1-beta 2026-11-26**
+(`c64a5b4`: the Remote page) · **0.1.0-beta 2026-11-23** (`ca5f921`) ·
+decisions: [[ewe Mobile — a window over KDE Connect]],
+[[RFC-012 — ewe Mobile, both halves]], [[ewe Mobile — one ecosystem]],
+[[ewe Mobile — public and opt-in]]
 
 **One ewe window instead of KDE Connect's five.** `kdeconnectd` keeps the
 link to the phone, the pairing keys and the caches; ewe Mobile is everything
@@ -37,19 +39,22 @@ it.
 
 ## Getting it
 
-The package is built by the repo's `release` workflow and sits on its GitHub
-release. While the repo is private it is **not in `[ewe]`** — ewe-repo's
-publish workflow cannot read another private repo's release with its own
-token — and not on the website:
+An **opt-in package in `[ewe]`**, like [[ewe-safe]] (decision 82, 2026-11-27):
+nothing installs it until you ask.
 
 ```
-gh release download v0.2.0-beta -R prj786/ewe-mobile -p '*.pkg.tar.zst'
-sudo pacman -U ewe-mobile-*.pkg.tar.zst      # brings kdeconnect; sshfs comes with ewe since 0.49.2
+sudo pacman -S ewe-mobile       # brings kdeconnect and sshfs
 ```
 
-**Update eep first** (`sudo pacman -Syu`, eep 0.4.1-beta or newer): the package
-conflicts with older ones. When it goes public: `ewe-mobile` joins ewe-repo's publish list as an opt-in
-package (the ewe-safe pattern) and the website's apps.
+The package is built by the repo's `release` workflow; ewe-repo's publish
+workflow takes the newest release's package (a warning, not a failure, when
+there is none). It `conflicts=('eep<0.4.1beta')`, so update eep first
+(`sudo pacman -Syu`). `android-tools` and `scrcpy` are optional (Screen and
+Apps; Komble offers them). The Phone plugin (bar glyph, Quick settings page,
+dock button) is a separate install: Komble → Plugins → Phone. How a phone is
+paired: [[Pairing a Phone]]. The next ISO (0.18.0-beta) offers ewe Mobile,
+unchecked, in a "From ewe" group on its Apps screen (ewe Safe is not offered
+there: the Plugins screen's ewe Safe plugin already brings the app).
 
 ## The pages
 
@@ -141,13 +146,14 @@ everything silently — the page "kinda not working at all" (the owner,
   marked `X-Eep-Skip=true` so eep makes no card of it. `NoDisplay` follows the
   setting "Show the phone's apps in the launcher". Entries of packages that left
   the list, and all of them when the phone is unpaired, are deleted.
-- **Checked on the owner's phone** (Pixel 10 Pro XL, Android 17, 2026-11-26):
+- **Checked on the owner's phone** (a Pixel on Android 17, 2026-11-26):
   82 launchable apps (31 system) arrived, 604 KB with the icons; `--apps`
   wrote 82 icons; `--open-app com.google.android.calculator --here` gave a
   resizable window of that class; `--screen` gave `ewe-mobile-screen` titled
   with the phone's name; `triggerCommand` opened Calculator on the phone
   (background start through the accessibility service, phone unlocked);
   `--adb-status` picked the phone over an emulator.
+- **The dock button** (ewe.phone, dock 1.5.1 on 2026-11-27) is on every display's dock.
 - **Deploy order matters** — eep 0.4.1-beta first ([[Troubleshooting Knowledge]]).
   The package says so: `conflicts=('eep<0.4.1beta')`.
 
@@ -209,8 +215,8 @@ string someone else may have written (two independent reviews, 2026-11-23):
 ## Verified, and not
 
 Verified 2026-11-23 on the owner's machine against a paired Pixel, reading
-only: devices, battery, signal, 10 notifications with icons, 53 threads,
-a conversation's messages as signals, 38 contacts with photos, the player
+only: devices, battery, signal, its notifications with icons, its message threads,
+a conversation's messages as signals, its contacts with photos, the player
 with its cover; the real binary's window (headless cage) on Devices and
 Files. **Not verified on a phone:** everything that writes — sending a
 message, replying to a notification, dismiss, pairing, ring, clipboard, file
@@ -261,6 +267,6 @@ people; `scene=`, `scheme=`, `thread=`, `still`; for Remote `keyboard=1`,
 
 ## Related
 
-- [[Phone Plugin]] · [[Phone and VPN]] · [[ewe Mobile — a window over KDE Connect]] ·
+- [[Pairing a Phone]] · [[Phone Plugin]] · [[Phone and VPN]] · [[ewe Mobile — a window over KDE Connect]] ·
   [[ewe Mobile — one ecosystem]] · [[eep]] ·
   [[Process Split — Shell vs Apps]] · [[Apps Are Not Resident]] · [[ewe-sync]]

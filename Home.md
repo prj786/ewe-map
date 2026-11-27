@@ -67,7 +67,7 @@ flowchart TB
   [[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-safe]] ·
   [[ewe-browser]] · [[ewe-apps]] (ewe Files · ewe Player · ewe Viewer, 0.44) · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
-- [[ewe Mobile]] — your phone in one window, over KDE Connect's daemon (0.2.0-beta, 2026-11-26; a private repo for now) — the phone's screen and apps as windows, its notifications as ewe cards, an Android app with ewe's face: [[ewe Mobile — one ecosystem]], [[RFC-012 — ewe Mobile, both halves]]
+- [[ewe Mobile]] — your phone in one window, over KDE Connect's daemon (0.2.1-beta, 2026-11-27; public, opt-in in `[ewe]`) — the phone's screen and apps as windows, its notifications as ewe cards, an Android app with ewe's face: [[ewe Mobile — one ecosystem]], [[RFC-012 — ewe Mobile, both halves]]
 
 **04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)
 - [[Plugin System]] · [[Example Plugin]]
@@ -78,7 +78,7 @@ flowchart TB
 
 **05 — Workflows**
 - [[Install Flow]] · [[Update Flow]] · [[Cast Flow]] ·
-  [[Sync and Backup Flow]] · [[Settings Flow]]
+  [[Sync and Backup Flow]] · [[Settings Flow]] · [[Pairing a Phone]]
 
 **06 — Design**
 - [[Design System]] · [[Theming Pipeline]] · [[Mockups and Screenshots]]
