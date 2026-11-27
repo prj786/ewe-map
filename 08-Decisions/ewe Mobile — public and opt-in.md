@@ -31,10 +31,9 @@ package on its own GitHub release, out of `[ewe]` and off the website.
 - **The installer.** The next ISO (0.18.0-beta) is to offer ewe Mobile and
   ewe Safe on its Apps screen, unchecked ([[Install Flow]]).
 - **The Android app stays private.** It has no public release and no store
-  listing, and is debug-signed only; the release key does not exist yet. Public
-  copy says it is not released yet, links nothing of it, and says nothing about
-  its signing. The stock KDE Connect app works for everything except real app
-  icons on the Apps page ([[ewe Mobile]]).
+  listing. Public copy says it is not released yet and links nothing of it.
+  The stock KDE Connect app works for everything except real app icons on the
+  Apps page ([[ewe Mobile]]).
 - **What stays out of public places.** The owner's decision, the same day: no
   bank names and no exact phone model in anything published, the vault
   included. Generic wording: "some banking apps refuse to run while Developer
