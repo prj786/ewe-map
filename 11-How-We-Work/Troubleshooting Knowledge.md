@@ -1711,7 +1711,7 @@ Building the app:
   `remotecommands` list carries the `"ewe"` key. The stock app is uninstalled
   from the owner's phone and its entry unpaired.
 - **Developer options on the phone is the price of "open here" and the
-  screen**: TBC Bank and Liberty refuse to open while it is on (BOG opens).
+  screen**: some banking apps refuse to open while it is on (others open).
 - **A phone app opened "here" shows a black window (2026-11-27, ewe Mobile
   0.2.1).** The app does start — on scrcpy's virtual display — but on
   Android 17 that display sits in the phone's display group 0 (`dumpsys

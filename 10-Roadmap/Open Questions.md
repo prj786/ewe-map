@@ -84,10 +84,10 @@ What is still open:
 
 - ~~**The probes with the phone**~~ — run 2026-11-26 (RFC §7, results in the
   Android app's `docs/PLAN.md`): scrcpy works on Hyprland (lag is the Wi-Fi),
-  an app on its own display works on Android 17 (Calculator, Keep, BOG), the
+  an app on its own display works on Android 17 (Calculator, Keep, a banking app), the
   debugging link returns by itself after Wireless debugging is toggled and after a
-  reboot — so B4 is not needed. **TBC Bank and Liberty refuse to open while
-  Developer options is on**: Screen and Apps cost two of the owner's three banks.
+  reboot — so B4 is not needed. **Some banking apps refuse to open while
+  Developer options is on**: Screen and Apps cost the owner two of the banking apps they use.
 - **The phone as the computer's touchpad on Hyprland** does not work today
   (kdeconnectd logs "Failed to create keymap" when the phone connects; its
   Wayland input goes through the RemoteDesktop portal, which

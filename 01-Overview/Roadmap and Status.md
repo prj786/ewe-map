@@ -34,7 +34,7 @@ parallel workstreams against six written contracts (C1–C6,
 | **No card for another app's entries** — `X-Eep-Skip=true` | **eep 0.4.1-beta** (eep#5, `4d036e6`, `v0.4.1-beta`), [[eep]] | released — **deploy before ewe Mobile 0.2.0** |
 | **ewe Mobile for Android** — the ewe face (Compose, ewe tokens), Home / Devices / Setup / Settings and the feature screens, the apps list with icons, the app icon in notifications | `ewe-connector-android` #2 (merged `ce3f5be1`), [[ewe Mobile]] | merged; **debug builds only — no release key yet** |
 
-**On the owner's phone** (Pixel 10 Pro XL, Android 17, 19:10–19:20): the new
+**On the owner's phone** (a Pixel on Android 17, 19:10–19:20): the new
 build installed over the old one and kept pairing and the accessibility
 service; 82 launchable apps arrived (604 KB with icons) and became the cache;
 Calculator opened on the phone from the PC and as its own window here; the
@@ -46,7 +46,7 @@ paired phone. **The deploy-order trap** bit once: ewe Mobile run against eep
 
 **Open:** the release key and getting the APK onto other phones; the screen
 inside ewe Mobile's window; whether the link drops come back now the stock app
-is gone; TBC Bank and Liberty refuse while Developer options is on ([[Open Questions]]).
+is gone; some banking apps refuse to run while Developer options is on ([[Open Questions]]).
 eep 0.4.0-beta (AppImage cards, eep#4) is documented in ewe-map#51, still open.
 
 ## 2026-11-26 — the Remote page works (ewe Mobile 0.1.1), the phone is a place in ewe Files (ewe-apps 0.5.0), RFC-012 accepted — released

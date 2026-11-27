@@ -141,7 +141,7 @@ everything silently — the page "kinda not working at all" (the owner,
   marked `X-Eep-Skip=true` so eep makes no card of it. `NoDisplay` follows the
   setting "Show the phone's apps in the launcher". Entries of packages that left
   the list, and all of them when the phone is unpaired, are deleted.
-- **Checked on the owner's phone** (Pixel 10 Pro XL, Android 17, 2026-11-26):
+- **Checked on the owner's phone** (a Pixel on Android 17, 2026-11-26):
   82 launchable apps (31 system) arrived, 604 KB with the icons; `--apps`
   wrote 82 icons; `--open-app com.google.android.calculator --here` gave a
   resizable window of that class; `--screen` gave `ewe-mobile-screen` titled
@@ -209,8 +209,8 @@ string someone else may have written (two independent reviews, 2026-11-23):
 ## Verified, and not
 
 Verified 2026-11-23 on the owner's machine against a paired Pixel, reading
-only: devices, battery, signal, 10 notifications with icons, 53 threads,
-a conversation's messages as signals, 38 contacts with photos, the player
+only: devices, battery, signal, its notifications with icons, its message threads,
+a conversation's messages as signals, its contacts with photos, the player
 with its cover; the real binary's window (headless cage) on Devices and
 Files. **Not verified on a phone:** everything that writes — sending a
 message, replying to a notification, dismiss, pairing, ring, clipboard, file
