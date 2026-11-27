@@ -1712,6 +1712,22 @@ Building the app:
   from the owner's phone and its entry unpaired.
 - **Developer options on the phone is the price of "open here" and the
   screen**: TBC Bank and Liberty refuse to open while it is on (BOG opens).
+- **A phone app opened "here" shows a black window (2026-11-27, ewe Mobile
+  0.2.1).** The app does start — on scrcpy's virtual display — but on
+  Android 17 that display sits in the phone's display group 0 (`dumpsys
+  display`: `displayGroupId 0`, `state OFF`), so while the phone dozes on the
+  desk nothing is drawn. scrcpy's default power-on does not wake it for a
+  `--new-display`. ewe Mobile now asks `mWakefulness` + `isKeyguardShowing`
+  in one `adb shell`, sends `KEYCODE_WAKEUP` to a sleeping phone, and runs
+  scrcpy with `--keep-active` (the phone stays awake while the window is
+  open; `--stay-awake` only works on a charger) and `--turn-screen-off` when
+  the phone is asleep or locked. The virtual display has
+  `FLAG_ALWAYS_UNLOCKED`, so a locked phone still draws the app.
+- **"There is no plugin" on the second display (2026-11-27, dock 1.5.1).**
+  With `[plugins.settings]."ewe.dock".display = "all"`, the displays other
+  than the primary (the owner's: eDP-1 primary, work on DP-1) got the
+  reduced dock, which had no plugin buttons until 1.5.1. The owner said it
+  twice; the first time it was only explained.
 
 ## Related
 
