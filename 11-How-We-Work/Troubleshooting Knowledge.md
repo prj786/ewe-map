@@ -1814,6 +1814,46 @@ Building the app:
   `ewe-mail-app`. A package or script that runs `ewe-mail` expecting a window
   gets JSON.
 
+## Before the demo: a nil workspace, a lost preview, Drive, a sleeping phone (2026-11-27, ewe 0.51.1)
+
+- **"Runtime error in lua: hl.timer callback: workspaces.lua:114: attempt to
+  compare number with nil" on a workspace switch.** `HL.Workspace.id` is
+  `integer|nil`: a workspace being torn down comes back with no id, and the
+  `workspace.created` timer compared it with `>= 1`. Read ids through
+  `wsid()`, never compare `w.id` directly ([[Workspaces Per Display]]).
+- **The screenshot preview "disappeared".** Two causes. (1) Quickshell
+  restarts itself after a crash as `/usr/bin/quickshell`, so `pgrep -x qs`
+  stopped matching and `screenshot.sh` never called `pop`; ask the shell
+  (`qs ipc call …`) instead of looking for a process name. A self-restarted
+  shell also logs DEBUG to the journal (~12 lines/s) until `ewe.service`
+  restarts. (2) A `PanelWindow` with no `screen` goes to the FIRST output:
+  the preview sat on the laptop while the owner worked on DP-1 — set `screen`
+  from `Hyprland.focusedMonitor` (ewe.screenshot 1.1.2).
+- **Quickshell crashes in `QIcon::pixmap` (SIGSEGV, twice that day).** Arch's
+  quickshell 0.3.2-1 is built against Qt 6.12.0 and the system had 6.12.1;
+  its own startup warning says to rebuild. Quickshell uses private Qt API, so
+  a patch-level Qt update needs a rebuild; until Arch ships one, a local
+  `makepkg` of the Arch PKGBUILD (`pkgrel=1.1`) fixes it.
+- **Google Drive empty after reconnecting in ewe Sync.** `rclone-drive.conf`
+  was a ONE-TIME copy of the client + refresh token (`ewe-drive setup`); the
+  owner later deleted that OAuth client → rclone: `deleted_client`. And ewe
+  Sync runs the HOME copy of `ewe-auth` (`~/.local/share/ewe/bin`), which
+  `ewe-setup` refreshes only at login: a reconnect right after
+  `pacman -Syu` ran the old one (no Drive scope, `gmail.readonly`). Since
+  0.51.1 every sign-in keeps the Drive scope when Drive is set up and
+  `ewe-drive refresh` rewrites the remote and remounts; `mount` re-reads the
+  sign-in too. `ewe-drive status` says `drive_scope` yes/no/unknown.
+- **rclone mount hangs about one start in eight** (on a futex, no
+  `/dev/fuse` open, never mounts; the same command again mounts in ~1 s).
+  `ewe-drive` gives each try 6 s, ends a hung rclone and tries again (three
+  tries), and waits for the old rclone to EXIT before a remount.
+- **The phone "needs reconnect".** KDE Connect drops the link when the phone
+  dozes and waits for the PHONE to announce itself; a phone that wakes on
+  the same Wi-Fi often does not. The Phone plugin (1.2.1) calls it back while
+  it is away: `forceOnNetworkChange` every 20 s for five minutes, then 90 s,
+  and the phone's last address in the daemon's `customDevices` (Wi-Fi power
+  saving drops broadcasts first) — [[ewe Mobile]].
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
