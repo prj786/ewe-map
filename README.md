@@ -45,7 +45,7 @@ Start at [[00 Onboarding]] — it's written to you. Then:
 | `02-Architecture/` | how the system fits together (one file, sync, packaging, shell) |
 | `03-Components/` | one note per repo/app |
 | `04-Plugins/` | the plugin system + the shipped plugins |
-| `05-Workflows/` | end-to-end flows: install, update, cast, sync, settings |
+| `05-Workflows/` | end-to-end flows: install, update, cast, sync, settings, pairing a phone |
 | `06-Design/` | the design system + mockups, with screenshots |
 | `07-Development/` | repo internals, CLI tools, dev worktrees |
 | `08-Decisions/` | ADR-style rationale — **why** things are the way they are |
