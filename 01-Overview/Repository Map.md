@@ -27,6 +27,7 @@ creates the GitHub remotes and pushes.
 | [`ewe-browser`](https://github.com/prj786/ewe-browser) | ewe browser — the desktop's browser, files and music app ([[ewe-browser]], 0.4.0-beta) | Electron 44 (castlabs) + Solid, TypeScript |
 | [`ewe-apps`](https://github.com/prj786/ewe-apps) | ewe Files, ewe Player, ewe Viewer — the desktop's file manager, media player and viewer, one package `ewe-apps`, a dependency of `ewe` ([[ewe-apps]], 0.1.0-beta, 2026-11-19; replaced Nemo/Engrampa/imv/Zathura/mpv) | Tauri 2 (Rust, system WebKitGTK) + Solid, TypeScript; GStreamer, pdf.js |
 | [`ewe-mobile`](https://github.com/prj786/ewe-mobile) (public) | ewe Mobile: your phone in one window — phone, messages, contacts, notifications, media, files, screen, apps, remote, devices — over KDE Connect's daemon; the bar glyph, the Quick settings page and the dock button stay the `ewe.phone` plugin's ([[ewe Mobile]], 0.2.1-beta released 2026-11-27; opt-in package in `[ewe]`) | Tauri v2 + Svelte 5, zbus |
+| [`ewe-mail`](https://github.com/prj786/ewe-mail) (public) | ewe Mail: Gmail and any other account in one inbox — read, reply, forward, write, search; binary `ewe-mail-app`; accounts stay in ewe Sync, notifications stay the `ewe.mail` plugin's ([[ewe Mail]], 0.1.0-beta released 2026-11-27; preinstalled since ewe 0.51.0-beta, the Mail plugin 2.0.0's one source) | Tauri 2.12 + Svelte 5 + Tailwind 4, Rust (async-imap, lettre, ammonia, rusqlite) |
 | [`ewe-companion`](https://github.com/prj786/ewe-companion) | the desktop companion: `ewe-companiond` daemon, `ewe-companion` CLI + Claude Code hook relay, the Claude Code plugin; later a window (RFC-007; shown as Shaun; 0.2.1-beta, released, package in [ewe]) | Rust (tokio, rusqlite) |
 | [`ewe-plugin-companion`](https://github.com/prj786/ewe-plugin-companion) | plugin `ewe.companion`: the island in the bar's centre + the card drop (0.5.0, API 3; vendored in ewe 0.30.0-beta) | QML |
 | [`ewe-safe`](https://github.com/prj786/ewe-safe) | Safe, the password manager: `ewe-safed` daemon, `ewe-safe` CLI, the `ewe-safe-app` window, passkeys, an SSH agent ([[ewe-safe]], RFC-008, 0.2.0-beta) | Rust (keepass-rs), Tauri v2 + Svelte 5 |
@@ -96,5 +97,5 @@ Notes on the graph:
 ## Per-repo deep dives
 
 [[ewe Desktop]] · [[ewe-os ISO]] · [[ewe-repo]] · [[Komble]] ·
-[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-apps]] · [[eep]] · [[ewe Mobile]] · [[Website]] ·
+[[ewe-settings]] · [[ewe-sync]] · [[ewe-cast]] · [[ewe-apps]] · [[eep]] · [[ewe Mobile]] · [[ewe Mail]] · [[Website]] ·
 the plugins under [[Plugin System]]

@@ -209,3 +209,15 @@ flowchart TB
 | `/var/cache/eep/local` (1777), `/var/tmp/eep/<uid>` (0700, 0.2) | the local binary cache for patched pieces; each user's private patch scratch space |
 | `/var/lib/eep/opengl-driver` → `/run/opengl-driver` | the Mesa driver farm for Nix apps (root's driver timer) |
 
+## ewe Mail (2026-11-27 — ewe Mail 0.1.0-beta, ewe 0.51.0-beta)
+
+| Path | What |
+|---|---|
+| `$XDG_CACHE_HOME/ewe-mail/mail.sqlite` | the app's cache: conversation rows, the Gmail `historyId` / IMAP `UIDVALIDITY` + highest UID per folder, the last 500 opened messages (parsed), people seen, trusted senders. Deleting it loses only time; an account that left the list has its rows dropped at the next start |
+| `$XDG_CACHE_HOME/ewe-mail/open/<random>/` | an attachment opened with "Open" (mode 0600, cleaned name); never a runnable type |
+| `ewe.conf` `accounts.mail` · `[mail]` | the accounts (no password) and ewe Mail's three settings, through `ewe-conf` (store-only domains) |
+| keyring `service ewe-mail host <host> user <user>` (SMTP: `host <smtp_host> user <smtp_user>`) | the mailbox passwords; read by the app with `secret-tool`, kept in Rust memory only |
+| the webview's localStorage | unsent drafts (a per-viewer convenience, nothing else) |
+| `~/.config/quickshell/mail-state.json` · `google-mail.json` | still the **plugin's** (cursors, the notified set); the app does not read them |
+
+See [[ewe Mail]].

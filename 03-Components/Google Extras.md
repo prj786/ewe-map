@@ -24,8 +24,8 @@ flowchart LR
     AUTH -->|"refresh token"| KEY["keyring"]
     AUTH -->|"short-lived access tokens"| SH["shell Google.qml — consumer"]
     SH -->|"calendar.readonly"| CAL["Calendar API"]
-    AUTH -->|"ewe-auth token --json"| MAIL["ewe.mail add-on (0.25)"]
-    MAIL -->|"gmail.readonly"| GMAIL["Gmail API"]
+    AUTH -->|"ewe-auth token --json"| MAIL["ewe Mail app (0.1; the ewe.mail plugin 1.x until 2.0)"]
+    MAIL -->|"gmail.modify (readonly through plugin 1.x)"| GMAIL["Gmail API"]
     SH -->|"drive.appdata"| DRIVE["Drive (ewe-drive mount)"]
     SH -.->|"fallback when signed out"| EDS["EDS (evolution-data-server)<br/>contacts + Accounts.events"]
 ```
@@ -94,7 +94,25 @@ id/secret) — under `~/.config/quickshell/`. The refresh token is keyring-only.
 > unverified-but-unrestricted; that's why BYO-client is the default story.
 > Policy rationale: [[RFC-002 — Auth Broker]].
 
+## Gmail in ewe Mail (ewe 0.51.0-beta, released 2026-11-27)
+
+[[ewe Mail]] is Gmail's one consumer from plugin 2.0.0 (the plugin runs
+`ewe-mail-app --inbox` and polls nothing; ewe Mail is public and
+preinstalled since ewe 0.51.0-beta). It reads and writes Gmail through the same broker (`ewe-auth token
+--json`, an access token in the app's memory only). That needs more than the
+read-only row above: personal clients now ask for **`gmail.modify`** (read,
+label, archive, trash, send; no permanent delete) — see [[Auth Broker]]. The
+shipped project client keeps `gmail.readonly` behind `--with-mail`, so the
+restricted-scope policy and the 100-test-user ceiling are unchanged. **An
+existing connection must be reconnected once in ewe Sync** (Disconnect →
+Connect); until then `ewe-auth status` says `mail: read`, the app reads Gmail
+but says "Reconnect Google in ewe Sync to send and organise mail". The Google
+page in ewe Sync shows the Gmail permission with a Reconnect button. IMAP
+accounts no longer take precedence: Gmail and every IMAP account share one
+inbox, in the app and (plugin 2.0.0) in the bar ([[Mail Plugin]]). The
+Gmail bullet above describes plugin 1.x; from 2.0.0 the app does the polling.
+
 ## Related
 
 - [[Auth Broker]] · [[Account and Sync]] · [[RFC-005 — Nextcloud Account]] ·
-  [[CLI Tools]] · [[Mail Plugin]]
+  [[CLI Tools]] · [[Mail Plugin]] · [[ewe Mail]]

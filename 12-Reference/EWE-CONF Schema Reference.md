@@ -103,6 +103,26 @@ schema = 1
   ssh_confirm = "once"           # once | first-use | every-time | never — noise reduction, not a boundary (ewe#59; once since 2026-11-04)
   git_sign = ""                  # SHA256 fingerprint of the key that signs Git commits (`ewe-safe ssh sign-commits`; Safe 0.4.0-beta, S25)
                                  # never here: the safe, any password, the per-machine unlock-with-login key
+[accounts.mail]                  # 2026-11-27 (ewe 0.51.0-beta), an ARRAY OF TABLES (the header has two brackets each side and repeats per account), domain `accounts` — STORE-ONLY (applies nothing,
+                                 #   like `safe`): a LIST of IMAP/SMTP mailboxes, written by `ewe-mail login|logout|set`
+                                 #   (through `ewe-conf set accounts.mail '<json list>'`); a single table (0.50) still reads as a list of one
+  email = "me@example.org"       # the id is "imap:" + email, lowercase ("" for an old record: id imap:<user>@<host>)
+  name = "Me Myself"             # the From name, may be ""
+  host = "imap.example.org"      # incoming; the old key names stay
+  port = 993
+  starttls = false
+  user = "me@example.org"
+  smtp_host = "smtp.example.org"
+  smtp_port = 465
+  smtp_security = "tls"          # tls (implicit) | starttls
+  smtp_user = "me@example.org"   # omitted = user
+                                 # never here: any password (keyring: service ewe-mail host <host> user <user>;
+                                 #   a different SMTP password under host <smtp_host> user <smtp_user>)
+[mail]                           # 2026-11-27 (ewe 0.51.0-beta), domain `mail` — STORE-ONLY: ewe Mail's settings, never rebuild the theme
+  remote_images = "ask"          # ask | always — pictures from the web in HTML mail
+  mark_read = "open"             # open | manual — when a message becomes read
+  signatures = {}                # "<email>" = "text"; plain-text signature added once to a new message
+                                 # never here: anything secret ([[ewe Mail]])
 [remote]                         # Remote (RFC-009) — LOCAL_ONLY: sharing THIS computer never travels
   sharing = false                # bool; written by `ewe-remote share on|off` (the unit's state is the truth)
   port = 3933                    # 1024–65535 (validated); the per-user sshd's port
