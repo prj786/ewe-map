@@ -52,8 +52,9 @@ there is none). It `conflicts=('eep<0.4.1beta')`, so update eep first
 (`sudo pacman -Syu`). `android-tools` and `scrcpy` are optional (Screen and
 Apps; Komble offers them). The Phone plugin (bar glyph, Quick settings page,
 dock button) is a separate install: Komble → Plugins → Phone. How a phone is
-paired: [[Pairing a Phone]]. The next ISO (0.18.0-beta) is to offer ewe Mobile
-and ewe Safe, unchecked, on its Apps screen.
+paired: [[Pairing a Phone]]. The next ISO (0.18.0-beta) offers ewe Mobile,
+unchecked, in a "From ewe" group on its Apps screen (ewe Safe is not offered
+there: the Plugins screen's ewe Safe plugin already brings the app).
 
 ## The pages
 

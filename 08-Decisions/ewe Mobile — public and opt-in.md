@@ -28,8 +28,10 @@ package on its own GitHub release, out of `[ewe]` and off the website.
   `conflicts=('eep<0.4.1beta')` ([[eep]]).
 - **On the website.** The docs have an ewe Mobile page and the plugin list
   describes the Phone plugin's part ([[Website]]).
-- **The installer.** The next ISO (0.18.0-beta) is to offer ewe Mobile and
-  ewe Safe on its Apps screen, unchecked ([[Install Flow]]).
+- **The installer.** The next ISO (0.18.0-beta) offers ewe Mobile, unchecked,
+  in a "From ewe" group on its Apps screen ([[Install Flow]]). ewe Safe is not
+  offered there a second time: the Plugins screen's ewe Safe plugin requires
+  the ewe-safe package, so picking that plugin installs the app.
 - **The Android app stays private.** It has no public release and no store
   listing. Public copy says it is not released yet and links nothing of it.
   The stock KDE Connect app works for everything except real app icons on the
