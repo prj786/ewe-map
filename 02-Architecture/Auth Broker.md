@@ -67,6 +67,27 @@ caches, while Komble ran a *separate* restore pipeline off files the shell
 wrote. The broker deletes that duplication: one token owner, one sign-in,
 consumers stay thin.
 
+## The Gmail scope (ewe 0.51.0-beta, released 2026-11-27)
+
+[[ewe Mail]] sends, archives and labels, so the mail scope changed:
+
+- `MAIL_SCOPE` for personal clients (`ewe`, `legacy`, `env`) is now
+  **`https://www.googleapis.com/auth/gmail.modify`** (it was `gmail.readonly`).
+  The shipped project client keeps `gmail.readonly` behind `--with-mail`
+  (restricted-tier rules unchanged).
+- The scopes Google granted are recorded (non-secret) in `auth.json` as
+  `scopes` at login and refreshed from each token response's `scope`.
+- **`ewe-auth status`** adds `scopes: [...]` and `mail: "none" | "read" |
+  "full"` — `full` = `gmail.modify` or `mail.google.com`; `read` =
+  `gmail.readonly` only; `none` = signed out or no mail scope. An old
+  `auth.json` with no `scopes` and a signed-in user reads as `"read"`.
+- **The consumer is ewe Mail, not the shell:** from Mail plugin 2.0.0 the
+  `ewe.mail` plugin asks the app (`ewe-mail-app --inbox`) and no longer calls
+  `ewe-auth token` — no Gmail token is in the shell any more.
+- **Existing users reconnect once** (ewe Sync → Google: Disconnect → Connect,
+  or its Reconnect button) to get `full`. Nothing about the token flow, the
+  keyring or the refresh token changed.
+
 ## Related
 
 - [[The One File]] · [[Account and Sync]] · [[CLI Tools]] ·

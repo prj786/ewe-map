@@ -646,6 +646,56 @@ the shell and every machine's generated `keybinds.lua`:
 The shell's own global shortcut `ewe:logout` (0.43; Super+Ctrl+Q, Ctrl+Alt+Delete) opens
 the Sign out confirmation, beside `ewe:power`.
 
+## ewe Mail (2026-11-27 — ewe Mail 0.1.0-beta, ewe 0.51.0-beta)
+
+Everything here is **added**; nothing renamed (rule 4). The source of truth is
+`ewe-mail/docs/PLAN.md` (it wins if this one lags). Decision 83
+([[ewe Mail — a window over your mail]]), [[ewe Mail]].
+
+- **`ewe-mail-app --inbox [--limit N]`** — **public API: the Mail plugin 2.0.0
+  depends on it.** One JSON line, exit 0, no window; N 1–50 (default 10). Every
+  account's inbox looked at now (Gmail by its history, IMAP by the newest
+  window), then read from the cache the window shares:
+  `{ok, unread, accounts:[{id,kind,email,name,state,message,can_send,unread,
+  host?,user?}], google:{client,signed_in,mail}, list:[{account,folder,id,
+  thread,from,subject,snippet,date,unread}], fetched_at}` (`list` newest first,
+  `id` = the thread's newest message; errors as `{ok:false,error,message}`; a
+  hung server costs only that account, 30 s; 50 s in all). Fields are added,
+  never renamed (rule 4); `ewe-mail/docs/PLAN.md` §4.8 wins.
+- **`ewe-mail-app`** — the binary of the app (the core's `ewe-mail` is the CLI;
+  never swap them). `--version` / `--status` (one JSON line, exit 0, no
+  network, no window), `--open <account> <folder> <id>`, `--compose [mailto:…]`,
+  a `mailto:` address; id `io.github.prj786.ewe-mail`, window class
+  `ewe-mail-app`, the `mailto:` handler. The `ewe.mail` plugin's rows and
+  notifications call `--open` (from 2.0.0 the plugin requires the package).
+  Preinstalled and seeded as the `mailto:` default from ewe 0.51.0-beta (only
+  where no mail app was chosen: `_mime io.github.prj786.ewe-mail.desktop
+  x-scheme-handler/mailto`); crash lines go to the journal
+  (`journalctl -t ewe-mail-app -p crit`).
+- **Account ids**: `google:<email>` (Gmail) and `imap:<email>` (lowercase; an
+  old record with no address is `imap:<user>@<host>`). Stable keys everywhere,
+  the plugin's rows included.
+- **`ewe-mail` verbs** (JSON, exit 0): `accounts`, `login … [--email E] [--name
+  N] [--smtp-host H] [--smtp-port N] [--smtp-security tls|starttls]
+  [--smtp-user U]` (password on stdin line 1, an optional line 2 = a different
+  SMTP password; tests IMAP and SMTP before storing; without `--smtp-host` the
+  old call keeps working — a failing SMTP test then only says
+  `smtp:{ok:false,…}`), `logout [<id>]` (`not-found`, `which`), `set <id> name`,
+  `autoconfig <email>` (`source` builtin|ispdb|domain|guess), `unseen
+  [--account ID | --all]`; `status` keeps its fields for the first account.
+  Test overrides: `EWE_MAIL_FAKE_KEYRING`, `EWE_MAIL_INSECURE=1`,
+  `EWE_MAIL_ISPDB`, `EWE_MAIL_AUTOCONFIG_URL`, `EWE_MAIL_GMAIL_API`.
+- **`ewe-auth status`** gains `scopes: [...]` and `mail: none|read|full`;
+  personal clients ask for `gmail.modify` ([[Auth Broker]]).
+- **`ewe.conf`**: `accounts.mail` (a list; a single table still reads) and
+  `[mail]` (`remote_images`, `mark_read`, `signatures`) — two **store-only**
+  domains (`accounts`, `mail`); [[EWE-CONF Schema Reference]].
+- **Cache**: `$XDG_CACHE_HOME/ewe-mail/mail.sqlite` (a cache, deletable) and
+  `$XDG_CACHE_HOME/ewe-mail/open/<random>/` (opened attachments, mode 0600);
+  [[Storage Map]].
+- **`ewe-sync --pane mail|google`** is how the app sends you to add or fix an
+  account (existing public pane ids).
+
 ## Related
 
 - [[Rules of the House]] · [[The One File]] · [[IPC Verb Reference]] ·

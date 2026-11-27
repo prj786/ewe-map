@@ -36,12 +36,12 @@ flowchart TB
 |---|---|---|
 | **`ewe-conf`** | [[The One File]] — the only writer | `get` · `set` · `dump` · `import` · `apply` · `push` · `pull` · `path` · `sync-status` |
 | **`ewe-plugin`** | [[Plugin System]] — plugins and the plugins | `add` · `list [--json]` · `info` · **`install <id>`** · **`migrate [--fresh]`** (0.25) · `enable` · `disable` · `update` · `remove` · `restore` · `validate` · `seed` · `path` · `create` · `dev` · `place` · `set` · `get` |
-| **`ewe-auth`** | [[Auth Broker]] — one Google identity for every app | `status` · `login [--with-mail]` · `token` · `logout` · `keyring-reset` |
+| **`ewe-auth`** | [[Auth Broker]] — one Google identity for every app | `status` (since 2026-11-27, branch: + `scopes`, `mail: none\|read\|full`) · `login [--with-mail]` · `token` · `logout` · `keyring-reset` |
 | **`ewe-drive`** | your Drive as a folder (optional Google extra) | `setup` · `mount` · `unmount` · `status` |
 | **`ewe-cloud`** | the Nextcloud account tool | `login <server-url> --user <login> --password-stdin` (0.44: the password on stdin, one OCS `getapppassword` request, no redirects — [[Password Sign-in — a reversal]]) · `login <server>` (Login Flow v2, for 2FA/SSO) · `status` · `token` · `avatar` |
 | **`ewe-files`** | mount the account at `~/Nextcloud` (rclone remote from keyring) | `setup` · … |
 | **`ewe-caldav`** | CalDAV calendar sync for the shell widget | — |
-| **`ewe-mail`** | IMAP mailbox for the Control Centre badge | — |
+| **`ewe-mail`** | the IMAP/SMTP accounts and the unread count (the [[Mail Plugin]] stopped calling `status`/`unseen` in 2.0.0); the accounts [[ewe Mail]] reads (many since ewe 0.51.0-beta, 2026-11-27) | `status` · `unseen [--limit N] [--account ID \| --all]` · `accounts` · `login <host> <user> [--port N] [--starttls] [--email E] [--name N] [--smtp-host H] [--smtp-port N] [--smtp-security tls\|starttls] [--smtp-user U]` (password on stdin; tests IMAP and SMTP before storing) · `logout [<id>]` · `set <id> name <v>` · `autoconfig <email>` |
 | **`ewe-theme`** | [[Theming Pipeline]] — schemes, tokens, imports | `scheme list/show/apply/import/export/set/from-wallpaper/duplicate/remove` · `set overrides.*` · `build` |
 | **`ewe-bt`** | bluetooth pairing for the Settings app (same as BtAgent) | — |
 | **`ewe-globalshortcuts`** | portal global shortcuts (1Password Quick Access…) | — |
@@ -53,6 +53,18 @@ flowchart TB
 | **`ewe-safe`** | [[ewe-safe]] — Safe, the password manager (its own repo; `docs/PROTOCOL.md` v1) | `status` · `summary` · `init` · `open` · `unlock [--ask]` · `lock` · `list` · `search` · `match` · `show` · `reveal [--json]` · `copy` · `add` · `edit` · `rm` · `restore` · `generate` · `sync` · `place` · `passwd` · `ping` · `version`. **Since 0.2.0-beta:** `read` · `run` · `inject` · `git-credential` (#10; rule-5 exceptions, they copy `op` and git) · `passkey list` (#11) · `ssh list\|add\|new\|adopt\|enable\|disable\|status` (#13) |
 | **`ewe-setup`** | per-user deployment of the installed payload | — |
 | **`ewe-share-picker`** | the portal's screen-share picker, backed by the shell | — |
+
+**`ewe-mail-app`** (ewe Mail's window; `github.com/prj786/ewe-mail`, public,
+released 2026-11-27, preinstalled since ewe 0.51.0-beta; a binary of its own package, not in
+`ewe/bin`) — `--version`, `--status` and `--inbox [--limit N]` print one JSON
+line and exit 0 and never open a window (`--status` = `{ok,
+accounts:[{id,kind,email,state,can_send}]}` from the tools alone: no network;
+**`--inbox`**, N 1–50 default 10, is the Mail plugin 2.0.0's one source — every
+inbox looked at now, then read from the app's cache: `{ok, unread, accounts,
+google, list, fetched_at}`; **public API**); `--open <account> <folder> <id>` opens a message
+(the plugin's rows and notifications); `--compose [mailto:…]` and a `mailto:`
+address open a new message; a second launch tells the running window
+([[ewe Mail]], [[Contracts and Public API]]).
 
 The website documents each tool: `prj786.github.io/docs/cli/<tool>`.
 

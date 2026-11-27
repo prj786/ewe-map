@@ -68,6 +68,7 @@ flowchart TB
   [[ewe-browser]] · [[ewe-apps]] (ewe Files · ewe Player · ewe Viewer, 0.44) · [[Website]]
 - [[Google Extras]] · [[Phone and VPN]] — the optional integrations
 - [[ewe Mobile]] — your phone in one window, over KDE Connect's daemon (0.2.1-beta, 2026-11-27; public, opt-in in `[ewe]`) — the phone's screen and apps as windows, its notifications as ewe cards, an Android app with ewe's face: [[ewe Mobile — one ecosystem]], [[RFC-012 — ewe Mobile, both halves]]
+- [[ewe Mail]] — Gmail and any other account in one inbox, one window (`ewe-mail-app`; 0.1.0-beta, 2026-11-27; preinstalled since ewe 0.51.0-beta) — accounts stay in ewe Sync, notifications stay the plugin's, [[ewe Mail — a window over your mail]]
 
 **04 — Plugins** (API 3; first-party ones not pre-installed since 0.25)
 - [[Plugin System]] · [[Example Plugin]]

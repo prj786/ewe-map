@@ -1794,6 +1794,26 @@ Building the app:
   to the session bus puts a real notification on the owner's desktop: point
   it at a dead bus address.
 
+## ewe Mail (2026-11-27, 0.1.0-beta)
+
+- **`tauri build` refused: the npm and the crate versions differ.** The
+  skeleton copied ewe Mobile's pin `@tauri-apps/api ~2.11` while cargo resolved
+  `tauri` 2.12. Keep the npm package and the crate on the same major.minor
+  (here 2.12) — [[ewe Mail]].
+- **A headless live run of the real window** (the way it was checked):
+  `WLR_BACKENDS=headless WLR_RENDERER=pixman cage -s -- ewe-mail-app` on a
+  private `dbus-daemon`, the tools on a temporary `EWE_REPO`, the stand-ins as
+  the servers. Set **`GIO_USE_VFS=local GVFS_DISABLE_FUSE=1`**: otherwise gvfsd
+  and the document portal mount FUSE inside the sandbox's `XDG_RUNTIME_DIR` and
+  `rm -rf` of the sandbox fails.
+- **"Reconnect Google in ewe Sync to send and organise mail".** The Google
+  token predates `gmail.modify` (`ewe-auth status` says `mail: read`). Disconnect
+  and Connect once in ewe Sync → Google; nothing is wrong with the account
+  ([[Auth Broker]]).
+- **Name clash:** `ewe-mail` is the core's CLI (`/usr/bin/ewe-mail`), the app is
+  `ewe-mail-app`. A package or script that runs `ewe-mail` expecting a window
+  gets JSON.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
