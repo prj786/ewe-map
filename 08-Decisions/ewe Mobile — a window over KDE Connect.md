@@ -48,7 +48,8 @@ a **private** repo: "create new repo … for now private in github".
   phone's storage with it and lists it only as optional, so "Browse its
   files" failed on every machine. An owner exception to
   [[The Package Diet]] (90 KB; `fuse3` and `openssh` were already there).
-- **Private for now.** The repo is private, so the package is on its own
+- **Private for now** (superseded 2026-11-27: the repo is public and the
+  package is in `[ewe]`, [[ewe Mobile — public and opt-in]]). The repo was private, so the package is on its own
   release only: not in `[ewe]` (ewe-repo's workflow cannot read a private
   repo's release), not on the website. Going public later is a list entry in
   ewe-repo's publish workflow and a page on the site.

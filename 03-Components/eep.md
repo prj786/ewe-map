@@ -9,8 +9,8 @@ up: "[[Home]]"
 # eep — apps from the Nix binary cache
 
 `~/Projects/ewe/eep` · [github.com/prj786/eep](https://github.com/prj786/eep)
-(Rust workspace, GPL-3.0; **0.2.0-beta** released 2026-11-23 — every app
-is a card, [[Every App Is a Card — eep finds what is installed]], decision
+(Rust workspace, GPL-3.0; **0.4.1-beta** (released 2026-11-26; `X-Eep-Skip`) — **0.2.0-beta**
+released 2026-11-23: every app is a card, [[Every App Is a Card — eep finds what is installed]], decision
 75; 0.1.0-beta 2026-11-22 — [[RFC-010 — eep]], decision 74). Data site:
 **<https://prj786.github.io/eep>** (the repo's `gh-pages`).
 
