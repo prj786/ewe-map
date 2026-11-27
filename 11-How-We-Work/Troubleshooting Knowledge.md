@@ -1729,6 +1729,71 @@ Building the app:
   reduced dock, which had no plugin buttons until 1.5.1. The owner said it
   twice; the first time it was only explained.
 
+## Small windows, a vanishing Komble, a new machine's restore (2026-11-27, the 0.50.2 wave)
+
+- **Komble disappeared five minutes after it started** (0.25.1 to 0.26.0; 14
+  core dumps in two days). The panic text was nowhere in the journal (a
+  desktop app's stderr goes nowhere) but sat on the crashed thread's stack in
+  the core: "Cannot start a runtime from within a runtime". The "updates are
+  ready" note went through `tauri-plugin-notification` → notify-rust →
+  `zbus::block_on` from a task of the async runtime; since Open and Save went
+  through the portal (0.25.1) zbus is built with its `tokio` feature (via
+  tauri-plugin-dialog → rfd → ashpd), and that call panics there; the release
+  profile aborts. **Fix (Komble 0.26.1):** the note is one async zbus call; the
+  plugin is gone. **Never add `tauri-plugin-notification` to an ewe app.**
+  How the text was found: `coredumpctl dump <pid>`, then gdb on the core,
+  reading (pointer, length) pairs off the panicking thread's stack.
+- **A panic in any ewe Tauri app is now one line in the journal** before the
+  abort: `journalctl -t <binary> -p crit` (`crash.rs` in Komble, ewe Settings,
+  ewe Sync, ewe Mobile, ewe Safe's window, and ewe-apps' core).
+- **In a small tile, hover and clicks landed beside what was drawn** (every
+  ewe Tauri app). Hyprland gives a tiled window its tile's size whatever
+  minimum it asks for; GTK keeps drawing at its minimum, and on a scaled
+  output Hyprland draws that bigger surface **squeezed** into the tile (at
+  scale 1: **cropped**), while the pointer is not squeezed. **Fix: no minimum
+  window size** on a resizable window, and the page must take any size. A
+  fixed-size, non-resizable prompt keeps its size (Hyprland floats it).
+- **A row stayed lit after the pointer left the window.** A Wayland pointer
+  leave carries no position; GDK fills the leave event with the last position
+  (inside the window), WebKit forwards it and the page keeps `:hover`. **Fix:**
+  `pointer.rs` moves the leave event's point outside the view before WebKit's
+  handler reads it (connect `leave-notify-event` on the web view).
+- **A file dropped in ewe Files at scale 2 went to the wrong folder.** Tauri
+  calls the drag position `PhysicalPosition`, but on Linux wry hands GTK's
+  coordinates through unchanged, and they are already CSS pixels; Files divided
+  by `devicePixelRatio` and hit-tested half the coordinates. **Fixed in
+  ewe-apps 0.5.1.** Look again after a wry bump.
+- **`ewe-safe-app` aborted at every login** (seven dumps since 2026-11-22): the
+  SSH agent is asked for a signature before the compositor is up, and the
+  unlock prompt had no display. **Fix (ewe Safe 0.5.3):** no prompt without a
+  display; it counts as an unanswered one (no signature, the same pause).
+- **Flat grey desktop after sync.** `ewe.conf` carries a wallpaper as a path;
+  a path chosen on another computer (`/home/<other user>/…`) does not exist
+  here, and `wallpaper.sh` fell back to a flat colour. **Fix (ewe 0.50.2):**
+  the fallback is the shipped wallpaper, and at `apply` a dead path never
+  replaces a working one. A fresh install also gets the shipped wallpaper on
+  first deploy (it came up grey too).
+- **A new machine merged into the account about 2 s after sign-in**, before
+  the restore question, and pushed its empty app list over the backup's.
+  **Fix (ewe 0.50.2):** a never-synced machine gets `remote-exists`
+  (`never_synced: true`) while the account holds a file; `sync --join` is the
+  explicit merge. A restore on the desktop now brings back the backup's
+  first-party plugins (`ewe-plugin restore --bundled`), and ewe Sync 0.17.3
+  calls it too: a restored desktop had no dock.
+- **One emoji anywhere in `ewe.conf` made every later write fail** (the
+  emitter wrote a surrogate pair TOML refuses). **Fixed in ewe 0.50.2.**
+- **Testing an app's window without touching the session:** a nested Hyprland
+  (Wayland backend) whose host window is moved to a special workspace at once,
+  `hyprctl output create headless SHOT` at any mode and scale, a private
+  session bus with **no service directories** (nothing can be D-Bus
+  activated: ewe Mobile and ewe Files would otherwise start a second
+  `kdeconnectd`, a new device on the network), a private short
+  `XDG_RUNTIME_DIR` (socket paths over 108 bytes fail), a scratch `HOME`, and
+  `promo/capture2/vptr` for the pointer. A headless cage cannot host Hyprland
+  (wlroots offers `xdg_wm_base` 5, aquamarine binds 6). A unit test that talks
+  to the session bus puts a real notification on the owner's desktop: point
+  it at a dead bus address.
+
 ## Related
 
 - [[Testing and QA]] · [[Development Loops]] · [[Rules of the House]] ·
